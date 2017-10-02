@@ -3,6 +3,12 @@
 - name: Remove the web folder
   file: path=/var/www/{{ web_dirname }} state=absent
 
+- name: Disable cache for nginx on dev
+  replace:
+    dest: /etc/nginx/nginx.conf
+    regexp: 'sendfile on;'
+    replace: 'sendfile off;'
+
 - name: Setup sync folder symlink
   file: path=/var/www/{{ web_dirname }}
           src=/vagrant
