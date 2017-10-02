@@ -1,0 +1,37 @@
+---
+
+- name: Remove apache
+  become: yes
+  apt:
+    name: apache2
+    state: absent
+
+- name: Install nginx
+  become: yes
+  apt:
+    name: nginx
+    state: latest
+
+- name: Disable default site
+  become: yes
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Add custom sites
+  become: yes
+  copy:
+    src: config/etc/nginx/sites-available/{{ item }}.conf
+    dest: /etc/nginx/sites-available/{{ item }}.conf
+  with_items: "{{ sites | default([]) }}"
+
+- name: Enable custom sites
+  become: yes
+  file:
+    src: /etc/nginx/sites-available/{{ item }}.conf
+    path: /etc/nginx/sites-enabled/{{ item }}.conf
+    force: yes
+    state: link
+  with_items: "{{ sites | default([]) }}"
+  notify:
+    - restart nginx

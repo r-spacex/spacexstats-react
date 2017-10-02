@@ -1,0 +1,75 @@
+# Provisionning partiel du serveur
+
+- name: "FIX: Ubuntu 16.04 LTS doesn't come with certain modules, required by ansible"
+  raw: apt-get install python-minimal aptitude -y
+  become: true
+  become_user: root
+  become_method: sudo
+
+- name: Update the package repositories
+  apt:
+    update_cache=yes
+    upgrade=safe
+    cache_valid_time=3600
+
+- name: Set the hostname
+  hostname: name={{ hostname }}
+  when: hostname|default(False) != False
+
+- name: Configure the locale
+  lineinfile:
+    dest=/etc/environment
+    regexp='^LC_ALL='
+    line='LC_ALL=en_US.UTF-8'
+
+- name: Generate the locale
+  command: locale-gen en_US.UTF-8
+  register: command_result
+  changed_when: "'done' in command_result.stdout"
+
+- name: Create the group www-admin
+  group: name=www-admin state=present
+
+- name: Add www-data to the www-admin group
+  user: name=www-data groups=www-admin append=yes
+
+- name: Create the user
+  user:
+    name: "{{ web_user }}"
+    comment: Manager of web applications
+    shell: /bin/bash
+    groups:
+        - www-admin
+        - www-data
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_repo_pull
+
+- name: Authorize the Vagrant key to connect as the web user
+  command: sudo cp .ssh/authorized_keys ~{{ web_user }}/.ssh/
+  when: vagrant|default(False)
+
+- name: Authorize the Core Team public keys for the user
+  authorized_key:
+    user={{ web_user }}
+    key="{{ item.key }}"
+    state={{ item.state }}
+  with_items: "{{public_keys}}"
+  tags: [ssh-keys]
+
+- name: Ensure GIT, libs and co. are installed
+  apt:
+    name={{ item }}
+    state=latest
+  with_items: "{{apt_packages}}"
+
+- name: Give the permissions to the /var/www/ dir to www-admin
+  file: path=/var/www state=directory group="www-admin" mode="g+wx"
+
+- stat:
+    path: /var/www/{{ web_dirname }}
+  register: var_directory
+
+- name: Ensure directory is present
+  file: path=/var/www/{{ web_dirname }} state=directory group=www-admin owner={{ web_user }}
+  when: var_directory.stat.exists == False

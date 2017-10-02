@@ -1,0 +1,22 @@
+---
+
+- name: Remove the web folder
+  file: path=/var/www/{{ web_dirname }} state=absent
+
+- name: Setup sync folder symlink
+  file: path=/var/www/{{ web_dirname }}
+          src=/vagrant
+          state=link
+          force=yes
+  notify: restart nginx
+
+- name: Change initial working directory
+  lineinfile:
+    path: /home/ubuntu/.profile
+    line: 'cd /vagrant'
+
+- name: Install the project - JS dependencies
+  shell: "yarn install --silent"
+  ignore_errors: yes # Somewhat running Yarn fails Ansible randomly
+  args:
+      chdir: "/var/www/{{ web_dirname }}/"
