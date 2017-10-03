@@ -1,17 +1,20 @@
+import nextLaunches from 'helpers/nextLaunches';
 import launchCount from 'helpers/launchCount';
 import launchHistory from 'helpers/launchHistory';
+import moment from 'moment';
 
 const computeStats = (pastLaunches, upcomingLaunches) => {
+  const nextLaunchesData = nextLaunches(upcomingLaunches);
   const launchCountData = launchCount(pastLaunches);
   const launchHistoryData = launchHistory(pastLaunches);
 
   return {
     nextLaunch: [{
-      title: upcomingLaunches[0].payloads[0].payload_id,
+      title: nextLaunchesData.nextLaunch.payloadName,
       tabTitle: 'Next Launch',
-      type: 'date',
-      data: upcomingLaunches[0].launch_date_utc,
-      text: '',
+      type: 'countdown',
+      data: moment(nextLaunchesData.nextLaunch.date),
+      text: nextLaunchesData.nextLaunch.payloadDesc,
     }],
     launchCount: [{
       title: 'Total',

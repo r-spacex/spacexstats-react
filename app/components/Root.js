@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { goToAnchor } from 'react-scrollable-anchor';
+
+import ContentBlock from 'components/ContentBlock';
 import apiGet from 'api/api';
 import computeStats from 'helpers/main';
-import ContentBlock from 'components/ContentBlock';
 import 'style.styl';
 
 export default class Root extends Component {
@@ -32,6 +34,10 @@ export default class Root extends Component {
     });
   }
 
+  moveTo = (targetAnchor) => {
+    goToAnchor(targetAnchor);
+  };
+
   render() {
     if (!this.state.stats) {
       return <div />;
@@ -42,16 +48,23 @@ export default class Root extends Component {
         <ContentBlock
           titlePrefix="Next Launch"
           backgroundImage="dscovrlaunch.jpg"
+          anchor="nextlaunch"
+          onMoveDown={() => { this.moveTo('launchcount'); }}
           stats={this.state.stats.nextLaunch} />
 
         <ContentBlock
           titlePrefix="Launch Count"
           backgroundImage="seslaunch.jpg"
+          anchor="launchcount"
+          onMoveUp={() => { this.moveTo('nextlaunch'); }}
+          onMoveDown={() => { this.moveTo('launchhistory'); }}
           stats={this.state.stats.launchCount} />
 
         <ContentBlock
           titlePrefix="Launch History"
           backgroundImage="orbcommliftoff.jpg"
+          anchor="launchhistory"
+          onMoveUp={() => { this.moveTo('launchcount'); }}
           stats={this.state.stats.launchHistory} />
       </div>
     );

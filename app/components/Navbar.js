@@ -25,7 +25,7 @@ class Navbar extends Component {
     return (
       <nav className="Navbar fx-row fx-wrap">
         {this.props.tabs.map((tab, index) => (
-          <div key={index} className="Navbar__linkWrapper fx-col-xs-4 fx-col-sm-3 fx-col-md-2">
+          <div key={index} className="fx-col-xs-4 fx-col-sm-3 fx-col-md-2">
             <a onClick={() => { this.changeTab(tab); }}
                className={'Navbar__link ' + (tab === this.state.currentTab ? ' Navbar__link--active' : '')}>
               {tab}
