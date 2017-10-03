@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
-import Root from 'containers/Root';
+import Root from 'components/Root';
 
 window.BaseRouter = {
   init: function init(mountpoint) {
@@ -11,8 +11,8 @@ window.BaseRouter = {
     );
 
     if (module.hot) {
-      module.hot.accept('containers/Root', () => {
-        const NewRoot = require('containers/Root').default;
+      module.hot.accept('components/Root', () => {
+        const NewRoot = require('components/Root').default;
         render(
           <NewRoot />,
           document.getElementById(mountpoint)

@@ -1,0 +1,28 @@
+.ContentBlock
+    width: 100%
+    height: 100vh
+
+    background-size: cover
+    background-position: center center
+
+    &__titleWrapper
+        height: 5rem
+
+        @media (min-width: $sm-threshold)
+            font-size: 3rem
+            height: 10rem
+
+        @media (min-width: $md-threshold)
+            font-size: 3rem
+            height: 10rem
+
+    &__title
+        specialfont()
+
+    &__stat
+        margin-bottom: 5rem
+        background-color: rgba(24, 28, 31, 0.8)
+        outline: 3px solid rgba(24, 28, 31, 0.2)
+
+    &__text
+        margin-bottom: 2rem

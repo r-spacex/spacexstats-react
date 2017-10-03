@@ -1,10 +1,39 @@
 <html>
-<head><title>SXS</title></head>
-<body>
-    <div id="root"></div>
+    <head>
+    	<meta charset="utf-8">
+        <title>SpaceX Stats</title>
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="SpaceXStats is the ultimate place to keep track of SpaceX's achievements into providing cheaper access to space and making human life multiplanetary">
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet" type="text/css">
 
-    <script src="http://spacexstats.dev:3000/main.js"></script>
-    <!--<script src="react-app.min.js"></script>-->
-    <script>window.BaseRouter.init('root');</script>
-</body>
+        <!-- Load API ressources first -->
+        <link rel="prefetch" as="fetch" href="https://api.spacexdata.com/v1/launches">
+        <link rel="prefetch" as="fetch" href="https://api.spacexdata.com/v1/launches/upcoming">
+
+        <!-- Iconography and smartphone support -->
+        <link rel="icon" type="image/png" href="img/favicon.png" sizes="194x194">
+        <meta name="apple-mobile-web-app-title" content="SpaceX Stats">
+        <link rel="apple-touch-icon" type="image/png" href="img/favicons/apple-touch-icon.png" sizes="180x180">
+        <meta name="application-name" content="SpaceX Stats">
+        <link rel="icon" type="image/png" href="img/android-icon.png" sizes="192x192">
+        <meta name="theme-color" content="#ccac55">
+        <meta name="msapplication-TileImage" content="img/mstile-icon.png">
+        <meta name="msapplication-TileColor" content="#ccac55">
+
+        <!-- Opengraph tags -->
+        <meta property="og:site_name" content="{{ ogtitle }}">
+        <meta property="og:title" content="SpaceXStats">
+        <meta property="og:locale" content="en_EN">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="https://spacexstats.xyz/oglogo.png">
+        <meta property="og:url" content="https://spacexstats.xyz">
+        <meta property="og:description" content="">
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="http://spacexstats.dev:3000/main.js"></script>
+        <!--<script src="react-app.min.js"></script>-->
+        <script>window.BaseRouter.init('root');</script>
+    </body>
 </html>
