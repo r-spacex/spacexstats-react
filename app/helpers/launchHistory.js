@@ -11,7 +11,8 @@ const launchHistory = (pastLaunches) => {
   const falcon1Flights = new Array(years.length).fill(0);
   const falcon9UnprovenFlights = new Array(years.length).fill(0);
   const falcon9ProvenFlights = new Array(years.length).fill(0);
-  const falconHeavyFlights = new Array(years.length).fill(0);
+  const falconHeavyUnprovenFlights = new Array(years.length).fill(0);
+  const falconHeavyProvenFlights = new Array(years.length).fill(0);
   const failureFlights = new Array(years.length).fill(0);
 
   for (let i = 0; i < pastLaunches.length; i++) {
@@ -30,14 +31,17 @@ const launchHistory = (pastLaunches) => {
       case 'falcon9':
         if (launch.reused) {
           falcon9ProvenFlights[launch.launch_year - yearsStart]++;
-          break;
         } else {
           falcon9UnprovenFlights[launch.launch_year - yearsStart]++;
-          break;
         }
+        break;
 
       case 'falconheavy':
-        falconHeavyFlights[launch.launch_year - yearsStart]++;
+        if (launch.reused) {
+          falconHeavyProvenFlights[launch.launch_year - yearsStart]++;
+        } else {
+          falconHeavyUnprovenFlights[launch.launch_year - yearsStart]++;
+        }
         break;
 
       default:
@@ -88,9 +92,13 @@ const launchHistory = (pastLaunches) => {
         backgroundColor: constants.COLORS.white,
         data: falcon9ProvenFlights,
       }, {
-        label: 'Falcon Heavy',
+        label: 'New Falcon Heavy',
         backgroundColor: constants.COLORS.green,
-        data: falconHeavyFlights
+        data: falconHeavyUnprovenFlights
+      }, {
+        label: 'Used Falcon Heavy',
+        backgroundColor: constants.COLORS.brown,
+        data: falconHeavyProvenFlights
       }, {
         label: 'Failure',
         backgroundColor: constants.COLORS.red,

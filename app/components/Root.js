@@ -43,6 +43,19 @@ export default class Root extends Component {
       return <div />;
     }
 
+    // Preload all images from non-open tabs
+    const imagesToPreload = [];
+    for (const key in this.state.stats) {
+      if (!this.state.stats.hasOwnProperty(key)) continue;
+
+      const statBlock = this.state.stats[key];
+      for (let i = 0; i < statBlock.length; i++) {
+        if (statBlock[i].background) {
+          imagesToPreload.push(`img/backgrounds/${statBlock[i].background}`);
+        }
+      }
+    }
+
     return (
       <div>
         <ContentBlock
@@ -65,7 +78,69 @@ export default class Root extends Component {
           backgroundImage="orbcommliftoff.jpg"
           anchor="launchhistory"
           onMoveUp={() => { this.moveTo('launchcount'); }}
+          onMoveDown={() => { this.moveTo('reuse'); }}
           stats={this.state.stats.launchHistory} />
+
+        <ContentBlock
+          titlePrefix="Reuse History"
+          backgroundImage="crs6barge.jpg"
+          anchor="reuse"
+          onMoveUp={() => { this.moveTo('launchhistory'); }}
+          onMoveDown={() => { this.moveTo('launchpads'); }}
+          stats={this.state.stats.reuseHistory} />
+
+        <ContentBlock
+          titlePrefix="Launch Pads"
+          backgroundImage="capeflorida.jpg"
+          anchor="launchpads"
+          onMoveUp={() => { this.moveTo('reuse'); }}
+          onMoveDown={() => { this.moveTo('turnarounds'); }}
+          stats={this.state.stats.launchpadCount} />
+
+        <ContentBlock
+          titlePrefix="Turnarounds"
+          backgroundImage="thaicomlaunch.jpg"
+          anchor="turnarounds"
+          onMoveUp={() => { this.moveTo('launchpads'); }}
+          onMoveDown={() => { this.moveTo('dragon'); }}
+          stats={this.state.stats.launchHistory} />
+
+        <ContentBlock
+          titlePrefix="Dragon"
+          backgroundImage="dragoncrs5.jpg"
+          anchor="dragon"
+          onMoveUp={() => { this.moveTo('turnarounds'); }}
+          onMoveDown={() => { this.moveTo('payloads'); }}
+          stats={this.state.stats.launchHistory} />
+
+        <ContentBlock
+          titlePrefix="Payloads"
+          backgroundImage="payloadfairing.jpg"
+          anchor="payloads"
+          onMoveUp={() => { this.moveTo('dragon'); }}
+          onMoveDown={() => { this.moveTo('people'); }}
+          stats={this.state.stats.launchHistory} />
+
+        <ContentBlock
+          titlePrefix="People"
+          backgroundImage="dragonriders.jpg"
+          anchor="people"
+          onMoveUp={() => { this.moveTo('payloads'); }}
+          onMoveDown={() => { this.moveTo('timelines'); }}
+          stats={this.state.stats.people} />
+
+        <ContentBlock
+          titlePrefix="Timelines"
+          backgroundImage="elonmusk.jpg"
+          anchor="timelines"
+          onMoveUp={() => { this.moveTo('people'); }}
+          stats={this.state.stats.timelines} />
+
+        <div className="hidden">
+          {imagesToPreload.map((img, index) => (
+            <img key={index} src={img} />
+          ))}
+        </div>
       </div>
     );
   }

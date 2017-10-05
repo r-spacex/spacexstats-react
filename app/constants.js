@@ -3,8 +3,9 @@ export default {
   COLORS: {
     white: '#FAFAFA',
     yellow: '#ccac55',
-    blue: 'steelblue',
+    brown: '#69551f',
     red: 'crimson',
+    blue: 'steelblue',
     green: 'mediumseagreen',
   },
   DEFAULTCHARTOPTIONS: {

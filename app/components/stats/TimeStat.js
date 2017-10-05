@@ -15,28 +15,43 @@ class TimeStat extends Component {
   }
 
   componentWillMount() {
-    const eventTime = this.props.data.unix();
+    this.initTimer(this.props);
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (this.props !== newProps) {
+      clearInterval(this.interval);
+      this.initTimer(newProps);
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  initTimer = (props) => {
+    const eventTime = props.data.unix();
     const currentTime = moment().unix();
     const diffTime = eventTime - currentTime;
-    this.duration = moment.duration(diffTime * 1000, 'milliseconds');
+    this.duration = diffTime * 1000;
 
     if (this.duration < 0) {
       this.duration = - this.duration;
     }
 
     this.updateTimer();
-    setInterval(this.updateTimer, 1000);
+    this.interval = setInterval(this.updateTimer, 1000);
   }
 
   updateTimer = () => {
     const factor = this.props.type === 'countdown' ? -1 : 1;
 
-    this.duration = moment.duration(this.duration.asMilliseconds() + 1000 * factor, 'milliseconds');
+    this.duration = this.duration + 1000 * factor;
     const momentDuration = moment.duration(this.duration);
 
     // show how many hours, minutes and seconds are left
     this.setState({
-      days: momentDuration.days(),
+      days: Math.round(this.duration / (1000 * 60 * 60 * 24)), // Accounting for years
       hours: momentDuration.hours(),
       minutes: momentDuration.minutes(),
       seconds: momentDuration.seconds(),
@@ -45,18 +60,24 @@ class TimeStat extends Component {
 
   render() {
     return (
-      <div className="TimeStat text-center full-width">
-        <div className="TimeStat__value fx-row fx-center-xs">
-          <div className="fx-col-xs-2">{this.state.days}</div>
-          <div className="fx-col-xs-2">{this.state.hours}</div>
-          <div className="fx-col-xs-2">{this.state.minutes}</div>
-          <div className="fx-col-xs-2">{this.state.seconds}</div>
-        </div>
-        <div className="TimeStat__subtitle fx-row fx-center-xs text-uppercase">
-          <div className="fx-col-xs-2">Days</div>
-          <div className="fx-col-xs-2">Hours</div>
-          <div className="fx-col-xs-2">Minutes</div>
-          <div className="fx-col-xs-2">Seconds</div>
+      <div className="TimeStat text-center text-uppercase full-width padded">
+        <div className="fx-row fx-around-xs">
+          <div className={`fx-col-xs${this.state.days < 10 ? '-2' : ''} fx-col`}>
+            <div className="TimeStat__value">{this.state.days}</div>
+            <div className="TimeStat__subtitle">Days</div>
+          </div>
+          <div className="fx-col-xs-2 fx-col">
+            <div className="TimeStat__value">{this.state.hours}</div>
+            <div className="TimeStat__subtitle">Hours</div>
+          </div>
+          <div className="fx-col-xs-2 fx-col">
+            <div className="TimeStat__value">{this.state.minutes}</div>
+            <div className="TimeStat__subtitle">Minutes</div>
+          </div>
+          <div className="fx-col-xs-2 fx-col">
+            <div className="TimeStat__value">{this.state.seconds}</div>
+            <div className="TimeStat__subtitle">Seconds</div>
+          </div>
         </div>
       </div>
     );

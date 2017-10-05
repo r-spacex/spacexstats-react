@@ -5,8 +5,9 @@ import ScrollableAnchor from 'react-scrollable-anchor';
 
 import Navbar from 'components/Navbar';
 import Ribbon from 'components/Ribbon';
-import TimeStat from 'components/stats/TimeStat';
 import IntegerStat from 'components/stats/IntegerStat';
+import TextStat from 'components/stats/TextStat';
+import TimeStat from 'components/stats/TimeStat';
 
 class ContentBlock extends Component {
   constructor(props) {
@@ -41,6 +42,10 @@ class ContentBlock extends Component {
         statcomponent = <IntegerStat data={this.state.currentStat.data} />;
         break;
 
+      case 'text':
+        statcomponent = <TextStat data={this.state.currentStat.data} />;
+        break;
+
       case 'barchart':
         statcomponent = <Bar data={this.state.currentStat.data} options={this.state.currentStat.options} />;
         break;
@@ -55,44 +60,45 @@ class ContentBlock extends Component {
       ribbonText = this.state.currentStat.data.format('MMMM Do, h:mm:ssa');
     }
 
+    const background = this.state.currentStat.background ? this.state.currentStat.background : this.props.backgroundImage;
+
     return (
-      <ScrollableAnchor id={this.props.anchor}>
-        <article className="ContentBlock" style={{backgroundImage: 'url(img/backgrounds/' + this.props.backgroundImage + ')'}}>
-          <div className="fx-container">
-            <div className="fx-col full-height">
-              <header className="ContentBlock__titleWrapper fx-col fx-center-xs padded">
-                <h2 className="ContentBlock__title">
-                  {this.props.titlePrefix} - {this.state.currentStat.title}
-                </h2>
-              </header>
+      <article className="ContentBlock" style={{backgroundImage: `url(img/backgrounds/${background})`}}>
+        <ScrollableAnchor id={this.props.anchor}><span /></ScrollableAnchor>
+        <div className="fx-container">
+          <div className="fx-col full-height">
+            <header className="ContentBlock__titleWrapper fx-col fx-center-xs padded">
+              <h2 className="ContentBlock__title">
+                {this.props.titlePrefix} - {this.state.currentStat.title}
+              </h2>
+            </header>
 
-              <section className="ContentBlock__stat fx-grow fx-col">
-                {this.props.onMoveUp &&
-                  <span className="ContentBlock__control ContentBlock__control--up fa fa-angle-up large"
-                        onClick={this.props.onMoveUp}></span>
-                }
+            <section className="ContentBlock__stat fx-grow fx-col">
+              {this.props.onMoveUp &&
+                <span className="ContentBlock__control ContentBlock__control--up fa fa-angle-up large"
+                      onClick={this.props.onMoveUp}></span>
+              }
 
-                {ribbonText &&
-                  <Ribbon text={ribbonText} />
-                }
+              {ribbonText &&
+                <Ribbon text={ribbonText} />
+              }
 
-                <Navbar tabs={this.navbarTabs} onChangeCallback={this.onNavbarChange} />
-                <div className="fx-grow fx-row fx-center-xs fx-middle-xs mtop-big">
-                  {statcomponent}
-                </div>
-                <div className="ContentBlock__text padded mtop-big">
-                  {this.state.currentStat.text}
-                </div>
+              <Navbar tabs={this.navbarTabs} onChangeCallback={this.onNavbarChange} />
+              <div className="fx-grow fx-row fx-center-xs fx-middle-xs mtop-big">
+                {statcomponent}
+              </div>
+              <div className="ContentBlock__text padded mtop-big">
+                {this.state.currentStat.text}
+              </div>
 
-                {this.props.onMoveDown &&
-                  <span className="ContentBlock__control ContentBlock__control--down fa fa-angle-down large"
-                        onClick={this.props.onMoveDown}></span>
-                }
-              </section>
-            </div>
+              {this.props.onMoveDown &&
+                <span className="ContentBlock__control ContentBlock__control--down fa fa-angle-down large"
+                      onClick={this.props.onMoveDown}></span>
+              }
+            </section>
           </div>
-        </article>
-      </ScrollableAnchor>
+        </div>
+      </article>
     );
   }
 }
