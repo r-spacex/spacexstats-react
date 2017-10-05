@@ -48,7 +48,7 @@ const launchHistory = (pastLaunches) => {
     }
   }
 
-  let options = constants.DEFAULTCHARTOPTIONS;
+  let options = JSON.parse(JSON.stringify(constants.DEFAULTCHARTOPTIONS)); // Clone object
   options = Object.assign(options, {
     scales: {
       xAxes: [{

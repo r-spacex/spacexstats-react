@@ -41,3 +41,21 @@
             top: -3rem
         &--down
             bottom: -3rem
+
+    &--footer
+        display: block;
+        height: calc(100% - 10rem)
+
+        main
+            background-color: rgba(250, 250, 250, 0.75)
+            color: $footer-color
+            font-size: 12px
+
+            a:link, a:visited, a:hover, a:active
+                transition: color ease-in-out 0.3s 0s
+
+            a:link, a:visited
+                color: $link-color
+
+            a:hover, a:active
+                color: $link-color-hover

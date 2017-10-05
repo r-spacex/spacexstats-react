@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Bar } from 'react-chartjs-2';
 import ScrollableAnchor from 'react-scrollable-anchor';
+import moment from 'moment';
 
 import Navbar from 'components/Navbar';
 import Ribbon from 'components/Ribbon';
@@ -35,6 +36,7 @@ class ContentBlock extends Component {
     switch (this.state.currentStat.type) {
       case 'countdown':
       case 'timer':
+      case 'duration':
         statcomponent = <TimeStat data={this.state.currentStat.data} type={this.state.currentStat.type} />;
         break;
 
@@ -57,7 +59,7 @@ class ContentBlock extends Component {
     // Exception: add ribbon for the next launch section (launch datetime)
     let ribbonText = null;
     if (this.props.anchor === 'nextlaunch') {
-      ribbonText = this.state.currentStat.data.format('MMMM Do, h:mm:ssa');
+      ribbonText = moment.unix(this.state.currentStat.data).format('MMMM Do, h:mm:ssa');
     }
 
     const background = this.state.currentStat.background ? this.state.currentStat.background : this.props.backgroundImage;

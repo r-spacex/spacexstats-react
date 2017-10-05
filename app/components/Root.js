@@ -103,7 +103,7 @@ export default class Root extends Component {
           anchor="turnarounds"
           onMoveUp={() => { this.moveTo('launchpads'); }}
           onMoveDown={() => { this.moveTo('dragon'); }}
-          stats={this.state.stats.launchHistory} />
+          stats={this.state.stats.turnarounds} />
 
         <ContentBlock
           titlePrefix="Dragon"
@@ -135,6 +135,17 @@ export default class Root extends Component {
           anchor="timelines"
           onMoveUp={() => { this.moveTo('people'); }}
           stats={this.state.stats.timelines} />
+
+        <footer className="ContentBlock ContentBlock--footer" style={{backgroundImage: 'url(/img/backgrounds/orbcommdark.jpg)'}}>
+          <main className="fx-col fx-middle-xs fx-center-xs text-center full-height">
+            <p className="fx-col-xs">
+                Photos on this page courtesy SpaceX, &amp; NASA. All rights maintained by the respective owners.<br />
+                This site is fan-run and not affiliated with SpaceX in any way. For official information and news, please visit <a href="http://spacex.com" title="Official SpaceX website">spacex.com</a><br />
+                Original site concept and design by <a href="https://www.reddit.com/user/EchoLogic" title="Echologic's Reddit profile">/u/EchoLogic</a>, now rehosted by <a href="https://www.reddit.com/user/brandtamos" title="Brandtamos' Reddit profile">/u/brandtamos</a> and recoded with React and <a href="https://github.com/r-spacex/SpaceX-API" title="r/spacex's API">r/spacex's API</a>.<br /><br />
+                <a href="https://github.com/r-spacex/spacexstats-react" title="Contribute!">GitHub repository</a>
+            </p>
+          </main>
+        </footer>
 
         <div className="hidden">
           {imagesToPreload.map((img, index) => (

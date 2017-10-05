@@ -3,6 +3,7 @@ import launchCount from 'helpers/launchCount';
 import launchHistory from 'helpers/launchHistory';
 import reuseHistory from 'helpers/reuseHistory';
 import launchpadCount from 'helpers/launchpadCount';
+import turnarounds from 'helpers/turnarounds';
 import people from 'helpers/people';
 import timelines from 'helpers/timelines';
 import moment from 'moment';
@@ -13,6 +14,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
   const launchHistoryData = launchHistory(pastLaunches);
   const reuseHistoryData = reuseHistory(pastLaunches);
   const launchpadCountData = launchpadCount(pastLaunches);
+  const turnaroundsData = turnarounds(pastLaunches);
   const peopleData = people();
   const timelinesData = timelines();
 
@@ -21,7 +23,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: nextLaunchesData.nextLaunch.payloadName,
       tabTitle: 'Next Launch',
       type: 'countdown',
-      data: moment(nextLaunchesData.nextLaunch.date),
+      data: moment(nextLaunchesData.nextLaunch.date).unix(),
       text: nextLaunchesData.nextLaunch.payloadDesc,
     }],
     launchCount: [{
@@ -135,7 +137,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'Boca Chica',
       background: 'bocachica.jpg',
       type: 'integer',
-      data: {'value': launchpadCountData.totalBobaChica, 'subtitle': 'Launches'},
+      data: {'value': launchpadCountData.totalBocaChica, 'subtitle': 'Launches'},
       text: `Boca Chica Beach, Texas is the location of SpaceX's new commercial-only
             private launch site designed to handle LEO & GEO launches on a tight
             schedule, freeing up other launch sites for other uses. It is expected
@@ -152,6 +154,55 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             demonstration rockets. Ironically, this climate also led to the
             failure of the first Falcon 1 launch, during which the engine failed
             25 seconds into flight due to a corroded bolt.`,
+    }],
+    turnarounds: [{
+      title: 'Quickest (same pad)',
+      tabTitle: 'Quickest',
+      type: 'duration',
+      data: turnaroundsData.quickestTurnaround.turnaround,
+      text: `The quickest turnaround ever on the same pad was between the
+            ${turnaroundsData.quickestTurnaround.mission1} and
+            ${turnaroundsData.quickestTurnaround.mission2} missions at
+            ${turnaroundsData.quickestTurnaroundPadName}.`,
+    }, {
+      title: 'Since Last Launch',
+      tabTitle: 'Since Last Launch',
+      type: 'timer',
+      data: turnaroundsData.lastLaunchDate,
+      text: '',
+    }, {
+      title: 'LC-39A',
+      tabTitle: 'LC-39A',
+      type: 'duration',
+      data: turnaroundsData.quickestTurnaroundHLC39A.turnaround,
+      text: `The quickest turnaround for this pad was between the
+            ${turnaroundsData.quickestTurnaroundHLC39A.mission1} and
+            ${turnaroundsData.quickestTurnaroundHLC39A.mission2} missions.`,
+    }, {
+      title: 'SLC-40',
+      tabTitle: 'SLC-40',
+      type: 'duration',
+      data: turnaroundsData.quickestTurnaroundSLC40.turnaround,
+      text: `The quickest turnaround for this pad was between the
+            ${turnaroundsData.quickestTurnaroundSLC40.mission1} and
+            ${turnaroundsData.quickestTurnaroundSLC40.mission2} missions.`,
+    }, {
+      title: 'SLC-4E',
+      tabTitle: 'SLC-4E',
+      type: 'duration',
+      data: turnaroundsData.quickestTurnaroundSLC4E.turnaround,
+      text: `The quickest turnaround for this pad was between the
+            ${turnaroundsData.quickestTurnaroundSLC4E.mission1} and
+            ${turnaroundsData.quickestTurnaroundSLC4E.mission2} missions.`,
+    }, {
+      title: 'Day intervals',
+      tabTitle: 'Day intervals',
+      type: 'barchart',
+      data: turnaroundsData.daysBetweenLaunches.data,
+      options: turnaroundsData.daysBetweenLaunches.options,
+      text: `With an ever-increasing launch cadence, SpaceX is on track to equal
+            or surpass other launch providers by annual vehicles launched
+            and continues, nearly year-on-year, to set vehicle flight records.`,
     }],
     people: [{
       title: 'DragonRiders In Space',

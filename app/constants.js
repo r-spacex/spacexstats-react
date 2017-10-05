@@ -15,7 +15,7 @@ export default {
     layout: {
       padding: {
         left: 14,
-        right: 0,
+        right: 14,
         top: 0,
         bottom: 0,
       },

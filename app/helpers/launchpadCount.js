@@ -2,7 +2,7 @@ const launchpadCount = (pastLaunches) => {
   let totalSLC40 = 0;
   let totalHLC39A = 0;
   let totalVAFB = 0;
-  const totalBobaChica = 0;
+  const totalBocaChica = 0;
   let totalKwajalein = 0;
 
   for (let i = 0; i < pastLaunches.length; i++) {
@@ -20,7 +20,7 @@ const launchpadCount = (pastLaunches) => {
     totalSLC40,
     totalHLC39A,
     totalVAFB,
-    totalBobaChica,
+    totalBocaChica,
     totalKwajalein,
   };
 };

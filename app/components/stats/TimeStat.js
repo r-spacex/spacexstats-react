@@ -20,17 +20,27 @@ class TimeStat extends Component {
 
   componentWillReceiveProps(newProps) {
     if (this.props !== newProps) {
-      clearInterval(this.interval);
+      if (this.props.type === 'timer' || this.props.type === 'countdown') {
+        clearInterval(this.interval);
+      }
       this.initTimer(newProps);
     }
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    if (this.props.type === 'timer' || this.props.type === 'countdown') {
+      clearInterval(this.interval);
+    }
   }
 
   initTimer = (props) => {
-    const eventTime = props.data.unix();
+    if (props.type === 'duration') {
+      this.duration = props.data * 1000;
+      this.updateTimer();
+      return;
+    }
+
+    const eventTime = props.data;
     const currentTime = moment().unix();
     const diffTime = eventTime - currentTime;
     this.duration = diffTime * 1000;
@@ -85,7 +95,7 @@ class TimeStat extends Component {
 }
 
 TimeStat.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.number.isRequired, // Unix timestamp
   type: PropTypes.string.isRequired,
 };
 
