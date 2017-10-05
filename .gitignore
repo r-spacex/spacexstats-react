@@ -1,7 +1,7 @@
 .vagrant/
 node_modules/
-public/react-app.min.js
-public/webpack.stats.json
+public/fonts/
+public/bundle.js
 
 *.log
 *.retry

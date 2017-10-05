@@ -1,4 +1,4 @@
-import constants from 'constants';
+import settings from 'settings';
 
 const launchHistory = (pastLaunches) => {
   const yearsStart = 2006; // First Falcon 1 flight
@@ -48,29 +48,29 @@ const launchHistory = (pastLaunches) => {
     }
   }
 
-  let options = JSON.parse(JSON.stringify(constants.DEFAULTCHARTOPTIONS)); // Clone object
+  let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
   options = Object.assign(options, {
     scales: {
       xAxes: [{
         stacked: true,
         gridLines: {
           display: false,
-          color: constants.COLORS.white,
+          color: settings.COLORS.white,
         },
         ticks: {
           fontFamily: 'Brandon',
-          fontColor: constants.COLORS.white,
+          fontColor: settings.COLORS.white,
         },
       }],
       yAxes: [{
         stacked: true,
         gridLines: {
           display: false,
-          color: constants.COLORS.white,
+          color: settings.COLORS.white,
         },
         ticks: {
           fontFamily: 'Brandon',
-          fontColor: constants.COLORS.white,
+          fontColor: settings.COLORS.white,
         },
       }]
     }
@@ -81,27 +81,27 @@ const launchHistory = (pastLaunches) => {
       labels: years,
       datasets: [{
         label: 'Falcon 1',
-        backgroundColor: constants.COLORS.yellow,
+        backgroundColor: settings.COLORS.yellow,
         data: falcon1Flights,
       }, {
         label: 'New Falcon 9',
-        backgroundColor: constants.COLORS.blue,
+        backgroundColor: settings.COLORS.blue,
         data: falcon9UnprovenFlights,
       }, {
         label: 'Used Falcon 9',
-        backgroundColor: constants.COLORS.white,
+        backgroundColor: settings.COLORS.white,
         data: falcon9ProvenFlights,
       }, {
         label: 'New Falcon Heavy',
-        backgroundColor: constants.COLORS.green,
+        backgroundColor: settings.COLORS.green,
         data: falconHeavyUnprovenFlights
       }, {
         label: 'Used Falcon Heavy',
-        backgroundColor: constants.COLORS.brown,
+        backgroundColor: settings.COLORS.brown,
         data: falconHeavyProvenFlights
       }, {
         label: 'Failure',
-        backgroundColor: constants.COLORS.red,
+        backgroundColor: settings.COLORS.red,
         data: failureFlights,
       }]
     },

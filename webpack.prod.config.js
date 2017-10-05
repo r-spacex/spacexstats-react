@@ -5,10 +5,9 @@ const webpack = require('webpack');
 
 const context = __dirname + '/app';
 module.exports = {
-  devtool: 'eval',
+  devtool: 'source-map',
   context: context,
   entry: [
-    'webpack-hot-middleware/client',
     path.join(__dirname, './app/index.js')
   ],
   resolve: {
@@ -26,9 +25,16 @@ module.exports = {
     publicPath: '/public/',
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    // Handles uglifying js
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false,
+        screw_ie8: true
+      }
+    }),
+    // plugin for passing in data to the js, like what NODE_ENV we are in.
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify('production')
     }),
   ],
   module: {
@@ -59,12 +65,5 @@ module.exports = {
       test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
       loader: 'file-loader?name=fonts/[name].[ext]',
     }],
-  },
-  devServer: {
-    contentBase: context,
-    port: 8080,
-    hot: true,
-    inline: false,
-    historyApiFallback: true,
   },
 };

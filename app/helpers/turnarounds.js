@@ -1,4 +1,4 @@
-import constants from 'constants';
+import settings from 'settings';
 import moment from 'moment';
 
 const timelines = (pastLaunches) => {
@@ -54,7 +54,6 @@ const timelines = (pastLaunches) => {
 
     // This is the first mission accounted for this pad
     if (quickestPadTurnaround.previousMission === null) {
-      quickestTurnarounds[launchpad].previousMission = launchDate;
       quickestTurnarounds[launchpad].mission1 = launch.payloads[0].payload_id;
     } else {
       // Do we need to update the quickest pad turnaround?
@@ -62,21 +61,20 @@ const timelines = (pastLaunches) => {
       if (quickestPadTurnaround.turnaround === null) {
         quickestTurnarounds[launchpad] = {
           turnaround: padTurnaround,
-          mission1: quickestTurnarounds[launchpad].mission1,
+          mission1: quickestPadTurnaround.mission1,
           mission2: launch.payloads[0].payload_id,
-          previousMission: launchDate,
         };
       } else {
         if (padTurnaround < quickestPadTurnaround.turnaround) {
           quickestTurnarounds[launchpad] = {
             turnaround: padTurnaround,
-            mission1: quickestTurnarounds[launchpad].mission2,
+            mission1: quickestPadTurnaround.mission2,
             mission2: launch.payloads[0].payload_id,
-            previousMission: launchDate,
           };
         }
       }
     }
+    quickestTurnarounds[launchpad].previousMission = launchDate;
 
     // Check if quickest turnaround ever
     if (quickestTurnaroundPad === null || padTurnaround < quickestTurnarounds[quickestTurnaroundPad].turnaround) {
@@ -85,13 +83,13 @@ const timelines = (pastLaunches) => {
     }
   }
 
-  let options = JSON.parse(JSON.stringify(constants.DEFAULTCHARTOPTIONS)); // Clone object
+  let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
   options = Object.assign(options, {
     scales: {
       xAxes: [{
         gridLines: {
           display: false,
-          color: constants.COLORS.white,
+          color: settings.COLORS.white,
         },
         ticks: {
           display: false,
@@ -100,11 +98,11 @@ const timelines = (pastLaunches) => {
       yAxes: [{
         gridLines: {
           display: false,
-          color: constants.COLORS.white,
+          color: settings.COLORS.white,
         },
         ticks: {
           fontFamily: 'Brandon',
-          fontColor: constants.COLORS.white,
+          fontColor: settings.COLORS.white,
         },
       }]
     }
@@ -118,26 +116,26 @@ const timelines = (pastLaunches) => {
         type: 'line',
         data: runningAverage10FlightsData,
         fill: false,
-        borderColor: constants.COLORS.yellow,
-        backgroundColor: constants.COLORS.yellow,
-        pointBorderColor: constants.COLORS.yellow,
-        pointBackgroundColor: constants.COLORS.yellow,
-        pointHoverBackgroundColor: constants.COLORS.yellow,
-        pointHoverBorderColor: constants.COLORS.yellow,
+        borderColor: settings.COLORS.yellow,
+        backgroundColor: settings.COLORS.yellow,
+        pointBorderColor: settings.COLORS.yellow,
+        pointBackgroundColor: settings.COLORS.yellow,
+        pointHoverBackgroundColor: settings.COLORS.yellow,
+        pointHoverBorderColor: settings.COLORS.yellow,
       }, {
         label: 'Running average',
         type: 'line',
         data: runningAverageData,
         fill: false,
-        borderColor: constants.COLORS.white,
-        backgroundColor: constants.COLORS.white,
-        pointBorderColor: constants.COLORS.white,
-        pointBackgroundColor: constants.COLORS.white,
-        pointHoverBackgroundColor: constants.COLORS.white,
-        pointHoverBorderColor: constants.COLORS.white,
+        borderColor: settings.COLORS.white,
+        backgroundColor: settings.COLORS.white,
+        pointBorderColor: settings.COLORS.white,
+        pointBackgroundColor: settings.COLORS.white,
+        pointHoverBackgroundColor: settings.COLORS.white,
+        pointHoverBorderColor: settings.COLORS.white,
       }, {
         label: 'Days between launches',
-        backgroundColor: constants.COLORS.blue,
+        backgroundColor: settings.COLORS.blue,
         data: daysIntervals,
       }]
     },

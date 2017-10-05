@@ -21,3 +21,4 @@ window.BaseRouter = {
     }
   },
 };
+window.BaseRouter.init('root');

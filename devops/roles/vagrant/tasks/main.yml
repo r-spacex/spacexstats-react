@@ -1,21 +1,5 @@
 ---
 
-- name: Remove the web folder
-  file: path=/var/www/{{ web_dirname }} state=absent
-
-- name: Disable cache for nginx on dev
-  replace:
-    dest: /etc/nginx/nginx.conf
-    regexp: 'sendfile on;'
-    replace: 'sendfile off;'
-
-- name: Setup sync folder symlink
-  file: path=/var/www/{{ web_dirname }}
-          src=/vagrant
-          state=link
-          force=yes
-  notify: restart nginx
-
 - name: Change initial working directory
   lineinfile:
     path: /home/ubuntu/.profile
@@ -25,4 +9,4 @@
   shell: "yarn install --silent"
   ignore_errors: yes # Somewhat running Yarn fails Ansible randomly
   args:
-      chdir: "/var/www/{{ web_dirname }}/"
+      chdir: "/vagrant"

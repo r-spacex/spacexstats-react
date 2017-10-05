@@ -11,7 +11,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.hostname = "spacexstats"
   config.vm.network "private_network", ip: "33.33.33.33"
-  config.vm.network "forwarded_port", guest: 3000, host: 3000
 
   # Ansible provisioner.
   config.vm.provision "ansible_local" do |ansible|

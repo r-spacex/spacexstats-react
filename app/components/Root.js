@@ -4,6 +4,7 @@ import { goToAnchor } from 'react-scrollable-anchor';
 import ContentBlock from 'components/ContentBlock';
 import apiGet from 'api/api';
 import computeStats from 'helpers/main';
+import 'fonts.styl';
 import 'style.styl';
 
 export default class Root extends Component {
