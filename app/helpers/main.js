@@ -4,6 +4,7 @@ import launchHistory from 'helpers/launchHistory';
 import reuseHistory from 'helpers/reuseHistory';
 import launchpadCount from 'helpers/launchpadCount';
 import turnarounds from 'helpers/turnarounds';
+import payloads from 'helpers/payloads';
 import people from 'helpers/people';
 import timelines from 'helpers/timelines';
 import moment from 'moment';
@@ -15,6 +16,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
   const reuseHistoryData = reuseHistory(pastLaunches);
   const launchpadCountData = launchpadCount(pastLaunches);
   const turnaroundsData = turnarounds(pastLaunches);
+  const payloadsData = payloads(pastLaunches);
   const peopleData = people();
   const timelinesData = timelines();
 
@@ -26,6 +28,8 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       data: moment(nextLaunchesData.nextLaunch.date).unix(),
       text: nextLaunchesData.nextLaunch.payloadDesc,
     }],
+
+
     launchCount: [{
       title: 'Total',
       tabTitle: 'Total',
@@ -72,6 +76,8 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             to carry up to 150 tonnes (reusable) to Low Earth Orbit.
             This will be the single largest rocket ever designed, developed and then built.`,
     }],
+
+
     launchHistory: [{
       title: 'Launches Per Year',
       tabTitle: 'Launches Per Year',
@@ -82,6 +88,8 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             or surpass other launch providers by annual vehicles launched
             and continues, nearly year-on-year, to set vehicle flight records.`,
     }],
+
+
     reuseHistory: [{
       title: 'Landed',
       tabTitle: 'Landed',
@@ -101,6 +109,8 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             reflown in minimal time and with minimal cost. Only then can they be
             reflown, reducing launch costs significantly.`,
     }],
+
+
     launchpadCount: [{
       title: 'Cape Canaveral',
       tabTitle: 'Cape Canaveral',
@@ -155,6 +165,8 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             failure of the first Falcon 1 launch, during which the engine failed
             25 seconds into flight due to a corroded bolt.`,
     }],
+
+
     turnarounds: [{
       title: 'Quickest (same pad)',
       tabTitle: 'Quickest',
@@ -204,6 +216,61 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             or surpass other launch providers by annual vehicles launched
             and continues, nearly year-on-year, to set vehicle flight records.`,
     }],
+
+
+    payloads: [{
+      title: 'Total',
+      tabTitle: 'Total',
+      type: 'integer',
+      data: {'value': payloadsData.totalPayloads, 'subtitle': 'Payloads'},
+      text: `SpaceX has launched ${payloadsData.totalPayloads} payloads in total
+            for many different customers.`,
+    }, {
+      title: 'Total Mass',
+      tabTitle: 'Total Mass',
+      type: 'integer',
+      data: {'value': payloadsData.totalMass, 'subtitle': 'Kilograms'},
+      text: `These satellites can have a variety of masses, from the smallest
+            cubesats which can weigh less than 1 kilogram, to huge comsats
+            over 5 tonnes.`,
+    }, {
+      title: 'Heaviest',
+      tabTitle: 'Heaviest',
+      type: 'integer',
+      data: {'value': payloadsData.heaviestPayload.mass, 'subtitle': 'Kilograms'},
+      text: `${payloadsData.heaviestPayload.mission}, launched for
+            ${payloadsData.heaviestPayload.customers} represents the heaviest
+            payload SpaceX has lofted into orbit.`,
+    }, {
+      title: 'Heaviest to GTO',
+      tabTitle: 'Heaviest to GTO',
+      type: 'integer',
+      data: {'value': payloadsData.heaviestPayloadGTO.mass, 'subtitle': 'Kilograms'},
+      text: `Geostationary Orbit serves as the nest for heavy communications
+            satellites, where they can orbit the Earth at the same speed as the
+            Earth rotates.${payloadsData.heaviestPayloadGTO.mission}, launched for
+            ${payloadsData.heaviestPayloadGTO.customers} represents the heaviest
+            payload SpaceX has lofted into GTO.`,
+    }, {
+      title: 'Starlink',
+      tabTitle: 'Starlink',
+      type: 'integer',
+      data: {'value': payloadsData.internetConstellation, 'subtitle': 'Satellites'},
+      text: `SpaceX's constellation of satellites will provide high speed internet
+            anywhere on the globe. Built in Seattle, they will be launched from
+            a variety of locations, potentially allowing Falcon to become the
+            most launched rocket in history.`,
+    }, {
+      title: 'Customers',
+      tabTitle: 'Customers',
+      type: 'piechart',
+      data: payloadsData.customersChart.data,
+      options: payloadsData.customersChart.options,
+      text: `SpaceX has many commercial customers as well as public agencies
+            such as NASA and USAF.`,
+    }],
+
+
     people: [{
       title: 'DragonRiders In Space',
       tabTitle: 'In space',
@@ -237,6 +304,8 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       data: {'value': peopleData.employees, 'subtitle': 'People'},
       text: '',
     }],
+
+
     timelines: [{
       title: 'Elon Musk\'s Bet',
       tabTitle: 'Elon Musk\'s Bet',
