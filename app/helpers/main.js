@@ -8,7 +8,6 @@ import dragon from 'helpers/dragon';
 import payloads from 'helpers/payloads';
 import people from 'helpers/people';
 import timelines from 'helpers/timelines';
-import moment from 'moment';
 
 const computeStats = (pastLaunches, upcomingLaunches) => {
   const nextLaunchesData = nextLaunches(upcomingLaunches);
@@ -27,7 +26,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: nextLaunchesData.nextLaunch.payloadName,
       tabTitle: 'Next Launch',
       type: 'countdown',
-      data: moment(nextLaunchesData.nextLaunch.date).unix(),
+      data: nextLaunchesData.nextLaunch.date,
       text: nextLaunchesData.nextLaunch.payloadDesc,
     }],
 

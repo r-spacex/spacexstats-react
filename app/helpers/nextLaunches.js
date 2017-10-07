@@ -22,7 +22,7 @@ const nextLaunches = (upcomingLaunches) => {
   payloadDesc += ' ';
 
   const nextLaunch = {
-    date: launch.launch_date_utc,
+    date: (new Date(launch.launch_date_utc).getTime() / 1000),
     payloadName,
     payloadDesc
   };

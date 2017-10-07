@@ -1,5 +1,4 @@
 import settings from 'settings';
-import moment from 'moment';
 
 const timelines = (pastLaunches) => {
   const quickestTurnarounds = {
@@ -20,8 +19,8 @@ const timelines = (pastLaunches) => {
   for (let i = 1; i < pastLaunches.length; i++) {
     const launch = pastLaunches[i];
 
-    const launchDate = moment(launch.launch_date_utc).unix();
-    const previousLaunchDate = moment(pastLaunches[i - 1].launch_date_utc).unix();
+    const launchDate = new Date(launch.launch_date_utc).getTime() / 1000;
+    const previousLaunchDate = new Date(pastLaunches[i - 1].launch_date_utc).getTime() / 1000;
     const turnaround = launchDate - previousLaunchDate;
 
     // Fill bar chart
@@ -126,7 +125,7 @@ const timelines = (pastLaunches) => {
     quickestTurnaroundSLC40: quickestTurnarounds.ccafs_slc_40,
     quickestTurnaroundHLC39A: quickestTurnarounds.ksc_lc_39a,
     quickestTurnaroundSLC4E: quickestTurnarounds.vafb_slc_4e,
-    lastLaunchDate: moment(pastLaunches[pastLaunches.length - 1].launch_date_utc).unix(),
+    lastLaunchDate: new Date(pastLaunches[pastLaunches.length - 1].launch_date_utc).getTime() / 1000,
     daysBetweenLaunches,
   };
 };

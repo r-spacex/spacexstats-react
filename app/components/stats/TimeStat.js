@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
 class TimeStat extends Component {
   constructor(props) {
@@ -35,15 +34,14 @@ class TimeStat extends Component {
 
   initTimer = (props) => {
     if (props.type === 'duration') {
-      this.duration = props.data * 1000;
+      this.duration = props.data;
       this.updateTimer();
       return;
     }
 
     const eventTime = props.data;
-    const currentTime = moment().unix();
-    const diffTime = eventTime - currentTime;
-    this.duration = diffTime * 1000;
+    const currentTime = Math.floor(new Date().getTime() / 1000);
+    this.duration = eventTime - currentTime;
 
     if (this.duration < 0) {
       this.duration = - this.duration;
@@ -55,16 +53,22 @@ class TimeStat extends Component {
 
   updateTimer = () => {
     const factor = this.props.type === 'countdown' ? -1 : 1;
+    this.duration = this.duration + factor;
 
-    this.duration = this.duration + 1000 * factor;
-    const momentDuration = moment.duration(this.duration);
+    let secondsLeft = this.duration;
+    const days = Math.floor(secondsLeft / (60 * 60 * 24));
+    secondsLeft -= 60 * 60 * 24 * days;
+    const hours = Math.floor(secondsLeft / (60 * 60));
+    secondsLeft -= 60 * 60 * hours;
+    const minutes = Math.floor(secondsLeft / 60);
+    secondsLeft -= 60 * minutes;
+    const seconds = Math.floor(secondsLeft);
 
-    // show how many hours, minutes and seconds are left
     this.setState({
-      days: Math.round(this.duration / (1000 * 60 * 60 * 24)), // Accounting for years
-      hours: momentDuration.hours(),
-      minutes: momentDuration.minutes(),
-      seconds: momentDuration.seconds(),
+      days: days,
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds,
     });
   }
 
