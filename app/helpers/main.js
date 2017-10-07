@@ -109,6 +109,31 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       text: `Once on the ground, the booster must be able to be refurbished and
             reflown in minimal time and with minimal cost. Only then can they be
             reflown, reducing launch costs significantly.`,
+    }, {
+      title: 'Fairings',
+      tabTitle: 'Fairings',
+      type: 'integer',
+      data: {'value': reuseHistoryData.totalFairingsReflown, 'subtitle': 'Reflown'},
+      text: `Made of carbon fibers, the industrial process required to make
+            the fairings is time and factory space consuming. Reusing them is the
+            next step towards reduced launch costs.`,
+    }, {
+      title: 'Most launches',
+      tabTitle: 'Most launches',
+      type: 'integer',
+      data: {'value': reuseHistoryData.mostReflownCore.launches, 'subtitle': 'Launches'},
+      text: `The ${reuseHistoryData.mostReflownCore.core} booster is the one who
+            flew the most, it was used for these missions:
+            ${reuseHistoryData.mostReflownCore.missions}.`,
+    }, {
+      title: 'Quickest reuse',
+      tabTitle: 'Quickest reuse',
+      type: 'duration',
+      data: reuseHistoryData.quickestReuseTurnaround.turnaround,
+      text: `The quickest turnaround for the same booster was set by the
+            ${reuseHistoryData.quickestReuseTurnaround.core} booster, between the
+            ${reuseHistoryData.quickestReuseTurnaround.mission1} and
+            ${reuseHistoryData.quickestReuseTurnaround.mission2} missions.`,
     }],
 
 
