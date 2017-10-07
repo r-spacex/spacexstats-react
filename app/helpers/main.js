@@ -275,13 +275,6 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
 
 
     payloads: [{
-      title: 'Total',
-      tabTitle: 'Total',
-      type: 'integer',
-      data: {'value': payloadsData.totalPayloads, 'subtitle': 'Payloads'},
-      text: `SpaceX has launched ${payloadsData.totalPayloads} payloads in total
-            for many different customers.`,
-    }, {
       title: 'Total Mass',
       tabTitle: 'Total Mass',
       type: 'integer',
@@ -304,7 +297,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       data: {'value': payloadsData.heaviestPayloadGTO.mass, 'subtitle': 'Kilograms'},
       text: `Geostationary Orbit serves as the nest for heavy communications
             satellites, where they can orbit the Earth at the same speed as the
-            Earth rotates.${payloadsData.heaviestPayloadGTO.mission}, launched for
+            Earth rotates. ${payloadsData.heaviestPayloadGTO.mission}, launched for
             ${payloadsData.heaviestPayloadGTO.customers} represents the heaviest
             payload SpaceX has lofted into GTO.`,
     }, {
