@@ -73,19 +73,19 @@ class TimeStat extends Component {
       <div className="TimeStat text-center text-uppercase full-width padded">
         <div className="fx-row fx-around-xs">
           <div className={`fx-col-xs${this.state.days < 10 ? '-2' : ''} fx-col`}>
-            <div className="TimeStat__value">{this.state.days}</div>
+            <div className="TimeStat__value">{this.state.days.toLocaleString()}</div>
             <div className="TimeStat__subtitle">Days</div>
           </div>
           <div className="fx-col-xs-2 fx-col">
-            <div className="TimeStat__value">{this.state.hours}</div>
+            <div className="TimeStat__value">{this.state.hours.toLocaleString()}</div>
             <div className="TimeStat__subtitle">Hours</div>
           </div>
           <div className="fx-col-xs-2 fx-col">
-            <div className="TimeStat__value">{this.state.minutes}</div>
+            <div className="TimeStat__value">{this.state.minutes.toLocaleString()}</div>
             <div className="TimeStat__subtitle">Minutes</div>
           </div>
           <div className="fx-col-xs-2 fx-col">
-            <div className="TimeStat__value">{this.state.seconds}</div>
+            <div className="TimeStat__value">{this.state.seconds.toLocaleString()}</div>
             <div className="TimeStat__subtitle">Seconds</div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import launchHistory from 'helpers/launchHistory';
 import reuseHistory from 'helpers/reuseHistory';
 import launchpadCount from 'helpers/launchpadCount';
 import turnarounds from 'helpers/turnarounds';
+import dragon from 'helpers/dragon';
 import payloads from 'helpers/payloads';
 import people from 'helpers/people';
 import timelines from 'helpers/timelines';
@@ -16,6 +17,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
   const reuseHistoryData = reuseHistory(pastLaunches);
   const launchpadCountData = launchpadCount(pastLaunches);
   const turnaroundsData = turnarounds(pastLaunches);
+  const dragonData = dragon(pastLaunches);
   const payloadsData = payloads(pastLaunches);
   const peopleData = people();
   const timelinesData = timelines();
@@ -215,6 +217,61 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       text: `With an ever-increasing launch cadence, SpaceX is on track to equal
             or surpass other launch providers by annual vehicles launched
             and continues, nearly year-on-year, to set vehicle flight records.`,
+    }],
+
+
+    dragon: [{
+      title: 'Missions',
+      tabTitle: 'Missions',
+      type: 'integer',
+      data: {'value': dragonData.totalFlights, 'subtitle': 'Flights'},
+      text: `Dragon is SpaceX's orbital spacecraft, and has flown
+            ${dragonData.totalFlights} times atop of a Falcon 9 rocket.
+            In December 2010, Dragon became the first privately developed
+            spacecraft to be successfully recovered from orbit. Dragon 2 extends
+            Dragon's ability to carry not only cargo, but crew too.`,
+    }, {
+      title: 'ISS Resupplies',
+      tabTitle: 'ISS Resupplies',
+      type: 'integer',
+      data: {'value': dragonData.totalISSResupplies, 'subtitle': 'Flights'},
+      text: `Dragon has flown ${dragonData.totalISSResupplies} times to the ISS
+            under NASA's Commercial Resupply Services Program, as part of a now
+            20-long mission contract to ferry cargo and supplies to and from the ISS.`,
+    }, {
+      title: 'Total Flight Time',
+      tabTitle: 'Total Flight Time',
+      type: 'duration',
+      data: dragonData.totalFlightTime,
+      text: `Dragon has launched on increasing lengths of time into Low Earth
+            orbit, and in future years, will exceed the time spent in orbit of
+            the Space Shuttle - becoming America's longest serving spacecraft
+            measured by time in orbit.`,
+    }, {
+      title: 'Flight Times',
+      tabTitle: 'Flight Times',
+      type: 'barchart',
+      data: dragonData.crsFlightTimesChart.data,
+      options: dragonData.crsFlightTimesChart.options,
+      text: `Shown above is a graph plotting individual mission flight time per
+            each Dragon mission. Each vehicle stays berthed to the ISS for
+            approximately 30 days, with crewed vehicles staying for up to 6 months.`,
+    }, {
+      title: 'Cargo',
+      tabTitle: 'Cargo',
+      type: 'integer',
+      data: {'value': dragonData.totalCargoUp, 'subtitle': 'Kilograms up'},
+      text: `Dragon remains the only spacecraft in service capable of returning
+            significant quantities of cargo from the Station to Earth - up to 6
+            tonnes up and 3 tonnes down.`,
+    }, {
+      title: 'Reflights',
+      tabTitle: 'Reflights',
+      type: 'integer',
+      data: {'value': dragonData.totalReflights, 'subtitle': 'Reflights'},
+      text: `Starting with CRS-11, SpaceX will move to reflying previously flown
+            Dragons as a measure to reduce costs even further. This will see
+            Dragon 1 pressure vessel production wind down.`,
     }],
 
 

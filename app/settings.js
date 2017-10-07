@@ -1,13 +1,15 @@
+const colors = {
+  white: '#FAFAFA',
+  yellow: '#ccac55',
+  brown: '#69551f',
+  red: 'crimson',
+  blue: 'steelblue',
+  green: 'mediumseagreen',
+};
+
 export default {
   // Colors used by charts
-  COLORS: {
-    white: '#FAFAFA',
-    yellow: '#ccac55',
-    brown: '#69551f',
-    red: 'crimson',
-    blue: 'steelblue',
-    green: 'mediumseagreen',
-  },
+  COLORS: colors,
   DEFAULTCHARTOPTIONS: {
     title: {
       display: false,
@@ -24,7 +26,7 @@ export default {
       position: 'bottom',
       labels: {
         fontFamily: 'Brandon',
-        fontColor: '#FAFAFA',
+        fontColor: colors.white,
       },
     },
     tooltips: {
@@ -33,5 +35,31 @@ export default {
     },
     responsive: true,
     maintainAspectRatio: false,
-  }
+  },
+  DEFAULTBARCHARTOPTIONS: {
+    scales: {
+      xAxes: [{
+        stacked: true,
+        gridLines: {
+          display: false,
+          color: colors.white,
+        },
+        ticks: {
+          fontFamily: 'Brandon',
+          fontColor: colors.white,
+        },
+      }],
+      yAxes: [{
+        stacked: true,
+        gridLines: {
+          display: false,
+          color: colors.white,
+        },
+        ticks: {
+          fontFamily: 'Brandon',
+          fontColor: colors.white,
+        },
+      }]
+    }
+  },
 };

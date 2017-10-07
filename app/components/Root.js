@@ -112,7 +112,7 @@ export default class Root extends Component {
           anchor="dragon"
           onMoveUp={() => { this.moveTo('turnarounds'); }}
           onMoveDown={() => { this.moveTo('payloads'); }}
-          stats={this.state.stats.launchHistory} />
+          stats={this.state.stats.dragon} />
 
         <ContentBlock
           titlePrefix="Payloads"

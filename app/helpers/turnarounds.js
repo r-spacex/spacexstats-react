@@ -84,29 +84,7 @@ const timelines = (pastLaunches) => {
   }
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
-  options = Object.assign(options, {
-    scales: {
-      xAxes: [{
-        gridLines: {
-          display: false,
-          color: settings.COLORS.white,
-        },
-        ticks: {
-          display: false,
-        },
-      }],
-      yAxes: [{
-        gridLines: {
-          display: false,
-          color: settings.COLORS.white,
-        },
-        ticks: {
-          fontFamily: 'Brandon',
-          fontColor: settings.COLORS.white,
-        },
-      }]
-    }
-  });
+  options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
 
   const daysBetweenLaunches = {
     data: {
