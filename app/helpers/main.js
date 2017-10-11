@@ -88,6 +88,14 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       text: `With an ever-increasing launch cadence, SpaceX is on track to equal
             or surpass other launch providers by annual vehicles launched
             and continues, nearly year-on-year, to set vehicle flight records.`,
+    }, {
+      title: 'Success Rate',
+      tabTitle: 'Success Rate',
+      type: 'line',
+      data: launchHistoryData.successRates.data,
+      options: launchHistoryData.successRates.options,
+      text: `In order to provide a reliable access to space, SpaceX will have to
+            beat every other provider with its success rate.`,
     }],
 
 

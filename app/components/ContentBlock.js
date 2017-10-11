@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Bar, Doughnut } from 'react-chartjs-2';
+import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import ScrollableAnchor from 'react-scrollable-anchor';
 import moment from 'moment';
 
@@ -50,6 +50,10 @@ class ContentBlock extends Component {
 
       case 'barchart':
         statcomponent = <Bar data={this.state.currentStat.data} options={this.state.currentStat.options} />;
+        break;
+
+      case 'line':
+        statcomponent = <Line data={this.state.currentStat.data} options={this.state.currentStat.options} />;
         break;
 
       case 'piechart':
