@@ -116,10 +116,16 @@ const reuseHistory = (pastLaunches) => {
         const dataset = data.datasets[tooltipItem.datasetIndex];
         const count = parseFloat(dataset.data[tooltipItem.index]);
         window.landingTotal += count;
+        window.landingFailures = 0;
+        if (dataset.label === 'Failures') {
+          window.landingFailures = count;
+        }
         return dataset.label + ': ' + count.toString();
       },
       footer: () => {
-        return 'TOTAL: ' + window.landingTotal.toString();
+        const total = window.landingTotal.toString();
+        const rate = 100 * (total - window.landingFailures) / total;
+        return `TOTAL: ${total} (${rate.toFixed(0)}% success rate)`;
       },
     },
   };

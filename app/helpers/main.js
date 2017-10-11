@@ -278,7 +278,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       text: `Dragon has flown ${dragonData.totalISSResupplies} times to the ISS
             under NASA's Commercial Resupply Services Program, as part of a now
             20-long mission contract to ferry cargo and supplies to and from the ISS.`,
-    }, {
+    /* }, {
       title: 'Total Flight Time',
       tabTitle: 'Total Flight Time',
       type: 'duration',
@@ -295,7 +295,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       options: dragonData.crsFlightTimesChart.options,
       text: `Shown above is a graph plotting individual mission flight time per
             each Dragon mission. Each vehicle stays berthed to the ISS for
-            approximately 30 days, with crewed vehicles staying for up to 6 months.`,
+            approximately 30 days, with crewed vehicles staying for up to 6 months.`, */
     }, {
       title: 'Cargo',
       tabTitle: 'Cargo',
