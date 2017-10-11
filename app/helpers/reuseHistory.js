@@ -1,3 +1,5 @@
+import settings from 'settings';
+
 const reuseHistory = (pastLaunches) => {
   let totalLanded = 0;
   let totalReflown = 0;
@@ -8,6 +10,19 @@ const reuseHistory = (pastLaunches) => {
   let mostReflownCore = null;
   let quickestTurnaroundMission1 = null;
   let quickestTurnaroundMission2 = null;
+
+  // For landing history graph
+  const yearsStart = 2013; // First landing attempt
+  const yearsEnd = new Date().getFullYear();
+  const years = [];
+  for (let i = yearsStart; i <= yearsEnd; i++) {
+    years.push(i);
+  }
+  const oceanLandings = new Array(years.length).fill(0);
+  const rtlsLandings = new Array(years.length).fill(0);
+  const ocislyLandings = new Array(years.length).fill(0);
+  const jrtiLandings = new Array(years.length).fill(0);
+  const failureLandings = new Array(years.length).fill(0);
 
   // List cores
   for (let i = 0; i < pastLaunches.length; i++) {
@@ -57,6 +72,30 @@ const reuseHistory = (pastLaunches) => {
     if (launch.land_success && launch.landing_type !== 'Ocean') {
       totalLanded++;
     }
+
+    // Landing history chart
+    const yearIndex = launch.launch_year - yearsStart;
+    if (launch.landing_type !== null && launch.land_success === false) {
+      failureLandings[yearIndex]++;
+      continue;
+    }
+    switch (launch.landing_type) {
+      case 'Ocean':
+        oceanLandings[yearIndex]++;
+        break;
+      case 'RTLS':
+        rtlsLandings[yearIndex]++;
+        break;
+      case 'ASDS':
+        if (launch.landing_vehicle === 'JRTI') {
+          jrtiLandings[yearIndex]++;
+        } else if (launch.landing_vehicle === 'OCISLY') {
+          ocislyLandings[yearIndex]++;
+        }
+        break;
+
+      default:
+    }
   }
 
   // Get mission names of most reflown core
@@ -65,8 +104,57 @@ const reuseHistory = (pastLaunches) => {
     mostReflownCoreMissions.push(cores[mostReflownCore].launches[i].name);
   }
 
+  let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
+  options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
+  options.tooltips = {
+    mode: 'label',
+    callbacks: {
+      afterTitle: () => {
+        window.landingTotal = 0;
+      },
+      label: (tooltipItem, data) => {
+        const dataset = data.datasets[tooltipItem.datasetIndex];
+        const count = parseFloat(dataset.data[tooltipItem.index]);
+        window.landingTotal += count;
+        return dataset.label + ': ' + count.toString();
+      },
+      footer: () => {
+        return 'TOTAL: ' + window.landingTotal.toString();
+      },
+    },
+  };
+
+  const landingHistory = {
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'Ocean',
+        backgroundColor: settings.COLORS.blue,
+        data: oceanLandings,
+      }, {
+        label: 'RTLS',
+        backgroundColor: settings.COLORS.green,
+        data: rtlsLandings,
+      }, {
+        label: 'ASDS : OCISLY',
+        backgroundColor: settings.COLORS.white,
+        data: ocislyLandings,
+      }, {
+        label: 'ASDS : JRTI',
+        backgroundColor: settings.COLORS.yellow,
+        data: jrtiLandings,
+      }, {
+        label: 'Failures',
+        backgroundColor: settings.COLORS.red,
+        data: failureLandings,
+      }]
+    },
+    options: options,
+  };
+
   return {
     totalLanded,
+    landingHistory,
     totalReflown,
     totalFairingsReflown,
     quickestReuseTurnaround: {

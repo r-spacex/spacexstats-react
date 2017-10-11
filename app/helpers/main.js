@@ -110,6 +110,14 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             Earth intact - an incredibly difficult task involving a combination
             of three burns that must be executed perfectly.`,
     }, {
+      title: 'Landing History',
+      tabTitle: 'Landing History',
+      type: 'barchart',
+      data: reuseHistoryData.landingHistory.data,
+      options: reuseHistoryData.landingHistory.options,
+      text: `SpaceX begun its testing of booster landings in 2013. Now landings
+            are almost routine for the public.`,
+    }, {
       title: 'Reflown',
       tabTitle: 'Reflown',
       type: 'integer',

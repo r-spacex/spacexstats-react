@@ -42,29 +42,30 @@ const launchHistory = (pastLaunches) => {
     successRateAll.push(100 * (i + 1 - failuresAll) / (i + 1));
 
     // If failure, put in failures then ignore
+    const yearIndex = launch.launch_year - yearsStart;
     if (launch.launch_success === false) {
-      failureFlights[launch.launch_year - yearsStart]++;
+      failureFlights[yearIndex]++;
       continue;
     }
 
     switch (launch.rocket.rocket_id) {
       case 'falcon1':
-        falcon1Flights[launch.launch_year - yearsStart]++;
+        falcon1Flights[yearIndex]++;
         break;
 
       case 'falcon9':
         if (launch.reused) {
-          falcon9ProvenFlights[launch.launch_year - yearsStart]++;
+          falcon9ProvenFlights[yearIndex]++;
         } else {
-          falcon9UnprovenFlights[launch.launch_year - yearsStart]++;
+          falcon9UnprovenFlights[yearIndex]++;
         }
         break;
 
       case 'falconheavy':
         if (launch.reused) {
-          falconHeavyProvenFlights[launch.launch_year - yearsStart]++;
+          falconHeavyProvenFlights[yearIndex]++;
         } else {
-          falconHeavyUnprovenFlights[launch.launch_year - yearsStart]++;
+          falconHeavyUnprovenFlights[yearIndex]++;
         }
         break;
 
@@ -80,16 +81,16 @@ const launchHistory = (pastLaunches) => {
     mode: 'label',
     callbacks: {
       afterTitle: () => {
-        window.total = 0;
+        window.launchTotal = 0;
       },
       label: (tooltipItem, data) => {
         const dataset = data.datasets[tooltipItem.datasetIndex];
         const count = parseFloat(dataset.data[tooltipItem.index]);
-        window.total += count;
+        window.launchTotal += count;
         return dataset.label + ': ' + count.toString();
       },
       footer: () => {
-        return 'TOTAL: ' + window.total.toString();
+        return 'TOTAL: ' + window.launchTotal.toString();
       },
     },
   };
