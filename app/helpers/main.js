@@ -364,6 +364,14 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             program, performed a pad abort test in May 2015. The first orbital
             test is still TBD.`,
     }, {
+      title: 'Moon Population Count',
+      tabTitle: 'Moon Population',
+      background: 'moon.jpg',
+      type: 'integer',
+      data: {'value': peopleData.moonPopulation, 'subtitle': 'People'},
+      text: `While the Moon has never been SpaceX's main focus, BFR will enable
+            the construction of a Moon Base Alpha if customers want to build it.`,
+    }, {
       title: 'Mars Population Count',
       tabTitle: 'Mars Population',
       background: 'mars.jpg',

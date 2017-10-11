@@ -9,12 +9,26 @@ const payloads = (pastLaunches) => {
 
   for (let i = 0; i < pastLaunches.length; i++) {
     const launch = pastLaunches[i];
+
+    // Exclude Dragon flights for the following stats
     if (!launch.launch_success) {
       continue;
     }
 
     for (let j = 0; j < launch.payloads.length; j++) {
+      // Only consider first customer
       const payload = launch.payloads[j];
+      const customer = payload.customers[0];
+      if (!customers[customer]) {
+        customers[customer] = 0;
+      }
+      customers[customer]++;
+
+      // Exclude Dragon flights for the following stats
+      if (launch.payloads[0].payload_type.indexOf('Dragon') !== -1) {
+        continue;
+      }
+
       totalMass += payload.payload_mass_kg;
 
       if (heaviestPayload.mass === null || payload.payload_mass_kg > heaviestPayload.mass) {
@@ -32,13 +46,6 @@ const payloads = (pastLaunches) => {
           customers: payload.customers.join('/'),
         };
       }
-
-      // Only consider first customer
-      const customer = payload.customers[0];
-      if (!customers[customer]) {
-        customers[customer] = 0;
-      }
-      customers[customer]++;
     }
   }
 
@@ -62,12 +69,13 @@ const payloads = (pastLaunches) => {
       labels: Object.keys(customers),
       datasets: [{
         data: Object.values(customers),
-        // Default colors from highcharts, chartjs doesn't have ones
         backgroundColor: [
+          settings.COLORS.white, settings.COLORS.yellow, settings.COLORS.green,
+          settings.COLORS.blue, settings.COLORS.orange, settings.COLORS.red,
+          settings.COLORS.lightblue, settings.COLORS.brown, settings.COLORS.black,
+          // Default colors from highcharts, less colourblind-friendly but we need lots of colors
           '#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce',
           '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a',
-          '#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE',
-          '#DB843D', '#92A8CD', '#A47D7C', '#B5CA92',
         ],
       }],
     },

@@ -22,7 +22,7 @@
     &__title
         specialfont()
 
-    &__stat
+    &__statWrapper
         min-height: 20rem
         margin-bottom: 5rem
         background-color: rgba(24, 28, 31, 0.8)
@@ -36,6 +36,10 @@
             right: -3px
             bottom: -3px
             border: 3px solid rgba(24, 28, 31, 0.2)
+
+    &__stat
+        position: relative
+        z-index: 1
 
     &__text
         margin-bottom: 2rem

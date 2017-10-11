@@ -79,7 +79,7 @@ class ContentBlock extends Component {
               </h2>
             </header>
 
-            <section className="ContentBlock__stat fx-grow fx-col">
+            <section className="ContentBlock__statWrapper fx-grow fx-col">
               {this.props.onMoveUp &&
                 <span className="ContentBlock__control ContentBlock__control--up fa fa-angle-up large"
                       onClick={this.props.onMoveUp}></span>
@@ -90,7 +90,7 @@ class ContentBlock extends Component {
               }
 
               <Navbar tabs={this.navbarTabs} onChangeCallback={this.onNavbarChange} />
-              <div className="fx-grow fx-row fx-center-xs fx-middle-xs mtop-big">
+              <div className="ContentBlock__stat fx-grow fx-row fx-center-xs fx-middle-xs mtop-big">
                 {statcomponent}
               </div>
               <div className="ContentBlock__text padded mtop-big">

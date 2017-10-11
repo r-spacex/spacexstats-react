@@ -50,13 +50,30 @@ const launchHistory = (pastLaunches) => {
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
   options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
+  options.tooltips = {
+    mode: 'label',
+    callbacks: {
+      afterTitle: () => {
+        window.total = 0;
+      },
+      label: (tooltipItem, data) => {
+        const dataset = data.datasets[tooltipItem.datasetIndex];
+        const count = parseFloat(dataset.data[tooltipItem.index]);
+        window.total += count;
+        return dataset.label + ': ' + count.toString();
+      },
+      footer: () => {
+        return 'TOTAL: ' + window.total.toString();
+      },
+    },
+  };
 
   const flightsPerYear = {
     data: {
       labels: years,
       datasets: [{
         label: 'Falcon 1',
-        backgroundColor: settings.COLORS.yellow,
+        backgroundColor: settings.COLORS.green,
         data: falcon1Flights,
       }, {
         label: 'New Falcon 9',
@@ -64,16 +81,16 @@ const launchHistory = (pastLaunches) => {
         data: falcon9UnprovenFlights,
       }, {
         label: 'Used Falcon 9',
-        backgroundColor: settings.COLORS.white,
+        backgroundColor: settings.COLORS.lightblue,
         data: falcon9ProvenFlights,
       }, {
         label: 'New Falcon Heavy',
-        backgroundColor: settings.COLORS.green,
-        data: falconHeavyUnprovenFlights
+        backgroundColor: settings.COLORS.orange,
+        data: falconHeavyUnprovenFlights,
       }, {
         label: 'Used Falcon Heavy',
-        backgroundColor: settings.COLORS.brown,
-        data: falconHeavyProvenFlights
+        backgroundColor: settings.COLORS.yellow,
+        data: falconHeavyProvenFlights,
       }, {
         label: 'Failure',
         backgroundColor: settings.COLORS.red,
