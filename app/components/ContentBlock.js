@@ -72,7 +72,7 @@ class ContentBlock extends Component {
       <article className="ContentBlock" style={{backgroundImage: `url(img/backgrounds/${background})`}}>
         <ScrollableAnchor id={this.props.anchor}><span /></ScrollableAnchor>
         <div className="fx-container">
-          <div className="fx-col full-height">
+          <div className="fx-col" style={{minHeight: '100%'}}>
             <header className="ContentBlock__titleWrapper fx-col fx-center-xs padded">
               <h2 className="ContentBlock__title">
                 {this.props.titlePrefix} - {this.state.currentStat.title}

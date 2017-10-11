@@ -1,7 +1,8 @@
 .ContentBlock
     position: relative
     width: 100%
-    height: 100vh
+    min-height: 100vh
+    overflow-x: hidden
 
     background-size: cover
     background-position: center center
@@ -22,6 +23,7 @@
         specialfont()
 
     &__stat
+        min-height: 20rem
         margin-bottom: 5rem
         background-color: rgba(24, 28, 31, 0.8)
         outline: 3px solid rgba(24, 28, 31, 0.2)

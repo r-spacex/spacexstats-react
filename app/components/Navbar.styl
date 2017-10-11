@@ -1,10 +1,16 @@
 .Navbar
     &__link
         display: block
-        padding-left: 1rem
-        padding-right: 1rem
-        height: 3rem
-        line-height: 3rem
+        padding-left: 0.5rem
+        padding-right: 0.5rem
+        height: 2.5rem
+        line-height: 2.5rem
+
+        @media(min-width: $sm-threshold)
+            padding-left: 1rem
+            padding-right: 1rem
+            height: 3rem
+            line-height: 3rem
 
         text-align: center
         cursor: pointer

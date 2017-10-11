@@ -2,8 +2,15 @@
     specialfont()
 
     &__value
-        font-size: 10rem
-        line-height: 10rem
+        font-size: 5rem
+        line-height: 5rem
+
+        @media(min-width: $sm-threshold)
+            font-size: 10rem
+            line-height: 10rem
 
     &__subtitle
-        font-size: 2rem
+        font-size: 1.5rem
+
+        @media(min-width: $sm-threshold)
+            font-size: 2rem
