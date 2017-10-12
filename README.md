@@ -14,12 +14,12 @@ The project will be installed on a Vagrant virtual machine. All the dev tools wi
 1. In the project directory, run the `vagrant up` command.
 2. Add this line to your hostfile (`/etc/hosts` on Linux/Mac, `C:\Windows\system32\drivers\etc\hosts` on Windows): `33.33.33.33 spacexstats.dev`.
 3. Log into the Vagrant machine using `vagrant ssh` then do `yarn start`. The project is now accessible by going to `http://spacexstats.dev:8080`!
-3. ...
-4. Profit!
+4. ...
+5. Profit!
 
 Remember, when you stop working on the project you can stop the Vagrant box with `vagrant halt`. You can delete it with `vagrant destroy`.
 
 
 ## Deployement
 
-TODO
+Push on the `master` branch.

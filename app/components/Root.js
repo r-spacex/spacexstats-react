@@ -142,7 +142,7 @@ export default class Root extends Component {
             <p className="fx-col-xs">
                 Photos on this page courtesy SpaceX, &amp; NASA. All rights maintained by the respective owners.<br />
                 This site is fan-run and not affiliated with SpaceX in any way. For official information and news, please visit <a href="http://spacex.com" title="Official SpaceX website">spacex.com</a><br />
-                Original site concept and design by <a href="https://www.reddit.com/user/EchoLogic" title="Echologic's Reddit profile">/u/EchoLogic</a>, now rehosted by <a href="https://www.reddit.com/user/brandtamos" title="Brandtamos' Reddit profile">/u/brandtamos</a> and recoded with React and <a href="https://github.com/r-spacex/SpaceX-API" title="r/spacex's API">r/spacex's API</a>.<br /><br />
+                Original site concept and design by <a href="https://www.reddit.com/user/EchoLogic" title="Echologic's Reddit profile">/u/EchoLogic</a>, now rehosted by <a href="https://www.reddit.com/user/brandtamos" title="Brandtamos' Reddit profile">/u/brandtamos</a> and recoded by <a href="https://www.reddit.com/user/kornelord" title="kornelord's Reddit profile">/u/kornelord</a> with React and <a href="https://github.com/r-spacex/SpaceX-API" title="r/spacex's API">r/spacex's API</a>.<br /><br />
                 <a href="https://github.com/r-spacex/spacexstats-react" title="Contribute!">GitHub repository</a>
             </p>
           </main>

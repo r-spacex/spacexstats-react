@@ -126,14 +126,6 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             reflown in minimal time and with minimal cost. Only then can they be
             reflown, reducing launch costs significantly.`,
     }, {
-      title: 'Fairings',
-      tabTitle: 'Fairings',
-      type: 'integer',
-      data: {'value': reuseHistoryData.totalFairingsReflown, 'subtitle': 'Reflown'},
-      text: `Made of carbon fibers, the industrial process required to make
-            the fairings is time and factory space consuming. Reusing them is the
-            next step towards reduced launch costs.`,
-    }, {
       title: 'Most launches',
       tabTitle: 'Most launches',
       type: 'integer',
@@ -150,6 +142,14 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             ${reuseHistoryData.quickestReuseTurnaround.core} booster, between the
             ${reuseHistoryData.quickestReuseTurnaround.mission1} and
             ${reuseHistoryData.quickestReuseTurnaround.mission2} missions.`,
+    }, {
+      title: 'Fairings',
+      tabTitle: 'Fairings',
+      type: 'integer',
+      data: {'value': reuseHistoryData.totalFairingsReflown, 'subtitle': 'Reflown'},
+      text: `Made of carbon fibers, the industrial process required to make
+            the fairings is time and factory space consuming. Reusing them is the
+            next step towards reduced launch costs.`,
     }],
 
 
@@ -278,7 +278,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       text: `Dragon has flown ${dragonData.totalISSResupplies} times to the ISS
             under NASA's Commercial Resupply Services Program, as part of a now
             20-long mission contract to ferry cargo and supplies to and from the ISS.`,
-    /* }, {
+    }, {
       title: 'Total Flight Time',
       tabTitle: 'Total Flight Time',
       type: 'duration',
@@ -295,12 +295,20 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       options: dragonData.crsFlightTimesChart.options,
       text: `Shown above is a graph plotting individual mission flight time per
             each Dragon mission. Each vehicle stays berthed to the ISS for
-            approximately 30 days, with crewed vehicles staying for up to 6 months.`, */
+            approximately 30 days, with crewed vehicles staying for up to 6 months.`,
     }, {
-      title: 'Cargo',
-      tabTitle: 'Cargo',
+      title: 'Up',
+      tabTitle: 'Up',
       type: 'integer',
       data: {'value': dragonData.totalCargoUp, 'subtitle': 'Kilograms up'},
+      text: `Dragon remains the only spacecraft in service capable of returning
+            significant quantities of cargo from the Station to Earth - up to 6
+            tonnes up and 3 tonnes down.`,
+    }, {
+      title: 'Down',
+      tabTitle: 'Down',
+      type: 'integer',
+      data: {'value': dragonData.totalCargoDown, 'subtitle': 'Kilograms down'},
       text: `Dragon remains the only spacecraft in service capable of returning
             significant quantities of cargo from the Station to Earth - up to 6
             tonnes up and 3 tonnes down.`,

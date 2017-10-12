@@ -24,9 +24,7 @@ const timelines = (pastLaunches) => {
     const turnaround = launchDate - previousLaunchDate;
 
     // Fill bar chart
-    // FIXME it's wrong in the API
-    const rocketName = launch.rocket.rocket ? launch.rocket.rocket : launch.rocket.rocket_name;
-    labels.push(`#${launch.flight_number} ${rocketName} ${launch.payloads[0].payload_id}`);
+    labels.push(`#${launch.flight_number} ${launch.rocket.rocket_name} ${launch.payloads[0].payload_id}`);
     const interval = Math.round(turnaround / (24 * 3600));
     daysIntervals[i - 1] = interval;
     runningAverage = Math.round(((runningAverage * (i - 1)) + interval) / i);

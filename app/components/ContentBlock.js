@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
-import ScrollableAnchor from 'react-scrollable-anchor';
+import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 import moment from 'moment';
 
 import Navbar from 'components/Navbar';
@@ -21,6 +21,10 @@ class ContentBlock extends Component {
     for (const stat of props.stats) {
       this.navbarTabs.push(stat.tabTitle);
     }
+  }
+
+  componentWillMount() {
+    configureAnchors({ keepLastAnchorHash: true });
   }
 
   onNavbarChange = (tab) => {
@@ -75,8 +79,8 @@ class ContentBlock extends Component {
     return (
       <article className="ContentBlock" style={{backgroundImage: `url(img/backgrounds/${background})`}}>
         <ScrollableAnchor id={this.props.anchor}><span /></ScrollableAnchor>
-        <div className="fx-container full-height">
-          <div className="fx-col" style={{minHeight: '100%'}}>
+        <div className="fx-container" style={{minHeight: '100vh'}}>
+          <div className="fx-col" style={{minHeight: '100vh'}}>
             <header className="ContentBlock__titleWrapper fx-col fx-center-xs padded">
               <h2 className="ContentBlock__title">
                 {this.props.titlePrefix} - {this.state.currentStat.title}

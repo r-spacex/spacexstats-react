@@ -13,7 +13,7 @@ const payloads = (pastLaunches) => {
 
   for (let i = 0; i < pastLaunches.length; i++) {
     const launch = pastLaunches[i];
-    const flightTime = 3600 * (Math.floor(Math.random() * 40) + 10); // FIXME
+    const flightTime = launch.payloads[0].flight_time_sec;
 
     if (launch.payloads[0].payload_type.indexOf('Dragon') === -1
       || launch.payloads[0].payload_id.indexOf('Dragon Qualification Unit') !== -1) {
@@ -22,7 +22,10 @@ const payloads = (pastLaunches) => {
 
     if (launch.launch_success) {
       totalFlights++;
-      totalFlightTime += flightTime;
+
+      if (Number.isInteger(flightTime)) {
+        totalFlightTime += flightTime;
+      }
 
       // Check if reused
       if (allCapsules.indexOf(launch.cap_serial) !== -1) {
@@ -36,21 +39,31 @@ const payloads = (pastLaunches) => {
       if (launch.launch_success) {
         totalISSResupplies++;
         totalCargoUp += launch.payloads[0].payload_mass_kg;
-        totalCargoDown += 0;  // FIXME
+        totalCargoDown += launch.payloads[0].mass_returned_kg;
       }
       crsLabels.push(launch.payloads[0].payload_id.replace('SpaceX ', ''));
-      crsFlightTimes.push(flightTime);
+      crsFlightTimes.push((flightTime / 3600).toFixed(1));
     }
   }
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS));
   options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
+  options.tooltips = {
+    mode: 'label',
+    callbacks: {
+      label: (tooltipItem, data) => {
+        const dataset = data.datasets[tooltipItem.datasetIndex];
+        const flightTime = dataset.data[tooltipItem.index];
+        return `${dataset.label} : ${flightTime} hours`;
+      },
+    },
+  };
 
   const crsFlightTimesChart = {
     data: {
       labels: crsLabels,
       datasets: [{
-        label: 'Flight times',
+        label: 'Flight times (hours)',
         backgroundColor: settings.COLORS.blue,
         data: crsFlightTimes,
       }],

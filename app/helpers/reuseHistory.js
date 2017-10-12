@@ -142,11 +142,11 @@ const reuseHistory = (pastLaunches) => {
         backgroundColor: settings.COLORS.green,
         data: rtlsLandings,
       }, {
-        label: 'ASDS : OCISLY',
+        label: 'ASDS - OCISLY',
         backgroundColor: settings.COLORS.white,
         data: ocislyLandings,
       }, {
-        label: 'ASDS : JRTI',
+        label: 'ASDS - JRTI',
         backgroundColor: settings.COLORS.yellow,
         data: jrtiLandings,
       }, {
