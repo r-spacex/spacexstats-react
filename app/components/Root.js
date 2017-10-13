@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import { goToAnchor } from 'react-scrollable-anchor';
 
 import ContentBlock from 'components/ContentBlock';
@@ -33,10 +34,16 @@ export default class Root extends Component {
         this.setState({stats: computeStats(this.pastLaunches, this.upcomingLaunches)});
       }
     });
+    ReactGA.pageview('/');
   }
 
-  moveTo = (targetAnchor) => {
+  moveTo = (targetAnchor, down = false) => {
     goToAnchor(targetAnchor);
+    ReactGA.event({
+      category: 'Scroll Arrow',
+      action: down ? 'Scroll down' : 'Scroll up',
+      label: targetAnchor,
+    });
   };
 
   render() {
@@ -71,7 +78,7 @@ export default class Root extends Component {
           backgroundImage="seslaunch.jpg"
           anchor="launchcount"
           onMoveUp={() => { this.moveTo('nextlaunch'); }}
-          onMoveDown={() => { this.moveTo('launchhistory'); }}
+          onMoveDown={() => { this.moveTo('launchhistory', true); }}
           stats={this.state.stats.launchCount} />
 
         <ContentBlock
@@ -79,7 +86,7 @@ export default class Root extends Component {
           backgroundImage="orbcommliftoff.jpg"
           anchor="launchhistory"
           onMoveUp={() => { this.moveTo('launchcount'); }}
-          onMoveDown={() => { this.moveTo('reuse'); }}
+          onMoveDown={() => { this.moveTo('reuse', true); }}
           stats={this.state.stats.launchHistory} />
 
         <ContentBlock
@@ -87,7 +94,7 @@ export default class Root extends Component {
           backgroundImage="crs6barge.jpg"
           anchor="reuse"
           onMoveUp={() => { this.moveTo('launchhistory'); }}
-          onMoveDown={() => { this.moveTo('launchpads'); }}
+          onMoveDown={() => { this.moveTo('launchpads', true); }}
           stats={this.state.stats.reuseHistory} />
 
         <ContentBlock
@@ -95,7 +102,7 @@ export default class Root extends Component {
           backgroundImage="capeflorida.jpg"
           anchor="launchpads"
           onMoveUp={() => { this.moveTo('reuse'); }}
-          onMoveDown={() => { this.moveTo('turnarounds'); }}
+          onMoveDown={() => { this.moveTo('turnarounds', true); }}
           stats={this.state.stats.launchpadCount} />
 
         <ContentBlock
@@ -103,7 +110,7 @@ export default class Root extends Component {
           backgroundImage="thaicomlaunch.jpg"
           anchor="turnarounds"
           onMoveUp={() => { this.moveTo('launchpads'); }}
-          onMoveDown={() => { this.moveTo('dragon'); }}
+          onMoveDown={() => { this.moveTo('dragon', true); }}
           stats={this.state.stats.turnarounds} />
 
         <ContentBlock
@@ -111,7 +118,7 @@ export default class Root extends Component {
           backgroundImage="dragoncrs5.jpg"
           anchor="dragon"
           onMoveUp={() => { this.moveTo('turnarounds'); }}
-          onMoveDown={() => { this.moveTo('payloads'); }}
+          onMoveDown={() => { this.moveTo('payloads', true); }}
           stats={this.state.stats.dragon} />
 
         <ContentBlock
@@ -119,7 +126,7 @@ export default class Root extends Component {
           backgroundImage="payloadfairing.jpg"
           anchor="payloads"
           onMoveUp={() => { this.moveTo('dragon'); }}
-          onMoveDown={() => { this.moveTo('people'); }}
+          onMoveDown={() => { this.moveTo('people', true); }}
           stats={this.state.stats.payloads} />
 
         <ContentBlock
@@ -127,7 +134,7 @@ export default class Root extends Component {
           backgroundImage="dragonriders.jpg"
           anchor="people"
           onMoveUp={() => { this.moveTo('payloads'); }}
-          onMoveDown={() => { this.moveTo('timelines'); }}
+          onMoveDown={() => { this.moveTo('timelines', true); }}
           stats={this.state.stats.people} />
 
         <ContentBlock
@@ -140,10 +147,48 @@ export default class Root extends Component {
         <footer className="ContentBlock ContentBlock--footer" style={{backgroundImage: 'url(/img/backgrounds/orbcommdark.jpg)'}}>
           <main className="fx-col fx-middle-xs fx-center-xs text-center full-height">
             <p className="fx-col-xs">
-                Photos on this page courtesy SpaceX, &amp; NASA. All rights maintained by the respective owners.<br />
-                This site is fan-run and not affiliated with SpaceX in any way. For official information and news, please visit <a href="http://spacex.com" title="Official SpaceX website">spacex.com</a><br />
-                Original site concept and design by <a href="https://www.reddit.com/user/EchoLogic" title="Echologic's Reddit profile">/u/EchoLogic</a>, now rehosted by <a href="https://www.reddit.com/user/brandtamos" title="Brandtamos' Reddit profile">/u/brandtamos</a> and recoded by <a href="https://www.reddit.com/user/kornelord" title="kornelord's Reddit profile">/u/kornelord</a> with React and <a href="https://github.com/r-spacex/SpaceX-API" title="r/spacex's API">r/spacex's API</a>.<br /><br />
-                <a href="https://github.com/r-spacex/spacexstats-react" title="Contribute!">GitHub repository</a>
+                Photos on this page courtesy SpaceX, &amp; NASA. All rights maintained by the respective owners.<br/>
+
+                This site is fan-run and not affiliated with SpaceX in any way. For official information and news, please visit
+                <ReactGA.OutboundLink
+                  eventLabel="Exit to SpaceX official website"
+                  to="http://www.spacex.com" title="Official SpaceX website">
+                  www.spacex.com
+                </ReactGA.OutboundLink>
+                <br/>
+
+                Original site concept and design by
+                <ReactGA.OutboundLink
+                  eventLabel="Exit to EchoLogic's profile"
+                  to="https://www.reddit.com/user/EchoLogic" title="Echologic's Reddit profile">
+                  /u/EchoLogic
+                </ReactGA.OutboundLink>,
+                now rehosted by
+                <ReactGA.OutboundLink
+                  eventLabel="Exit to Brandtamos' profile"
+                  to="https://www.reddit.com/user/brandtamos" title="Brandtamos' Reddit profile">
+                  /u/brandtamos
+                </ReactGA.OutboundLink>
+                and recoded by
+                <ReactGA.OutboundLink
+                  eventLabel="Exit to kornelord's profile"
+                  to="https://www.reddit.com/user/kornelord" title="kornelord's Reddit profile">
+                  /u/kornelord
+                </ReactGA.OutboundLink>
+                with React and
+                <ReactGA.OutboundLink
+                  eventLabel="Exit to r/spacex's API"
+                  to="https://github.com/r-spacex/SpaceX-API" title="r/spacex's API">
+                  r/spacex's API
+                </ReactGA.OutboundLink>.
+
+                <br/><br/>
+
+                <ReactGA.OutboundLink
+                  eventLabel="Exit to Github Repo"
+                  to="https://github.com/r-spacex/spacexstats-react" title="Contribute!">
+                  GitHub repository
+                </ReactGA.OutboundLink>
             </p>
           </main>
         </footer>

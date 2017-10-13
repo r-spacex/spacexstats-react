@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import PropTypes from 'prop-types';
 
 class Navbar extends Component {
@@ -19,6 +20,12 @@ class Navbar extends Component {
     if (this.props.onChangeCallback) {
       this.props.onChangeCallback(tab);
     }
+
+    ReactGA.event({
+      category: 'Tab',
+      action: 'Change',
+      label: tab,
+    });
   }
 
   render() {

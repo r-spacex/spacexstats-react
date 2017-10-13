@@ -32,8 +32,17 @@
         <meta property="og:url" content="https://spacexstats.xyz">
         <meta property="og:description" content="SpaceX Stats is the ultimate place to keep track of SpaceX's achievements into providing cheaper access to space and making human life multiplanetary">
     </head>
+    <!-- Background color to wait for loading -->
     <body>
         <div id="root"></div>
         <script src="public/bundle.js"></script>
+        <script type="text/javascript">
+            window.smartlook||(function(d) {
+            var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+            var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+            c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
+            })(document);
+            smartlook('init', 'c2e76ca98dc1951a267069e2052e0b4d1cb13e48');
+        </script>
     </body>
 </html>
