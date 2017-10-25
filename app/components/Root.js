@@ -149,33 +149,33 @@ export default class Root extends Component {
             <p className="fx-col-xs">
                 Photos on this page courtesy SpaceX, &amp; NASA. All rights maintained by the respective owners.<br/>
 
-                This site is fan-run and not affiliated with SpaceX in any way. For official information and news, please visit
+                This site is fan-run and not affiliated with SpaceX in any way. For official information and news, please visit&nbsp;
                 <ReactGA.OutboundLink
                   eventLabel="Exit to SpaceX official website"
                   to="http://www.spacex.com" title="Official SpaceX website">
                   www.spacex.com
-                </ReactGA.OutboundLink>
+                </ReactGA.OutboundLink>.
                 <br/>
 
-                Original site concept and design by
+                Original site concept and design by&nbsp;
                 <ReactGA.OutboundLink
                   eventLabel="Exit to EchoLogic's profile"
                   to="https://www.reddit.com/user/EchoLogic" title="Echologic's Reddit profile">
                   /u/EchoLogic
                 </ReactGA.OutboundLink>,
-                now rehosted by
+                &nbsp;now rehosted by&nbsp;
                 <ReactGA.OutboundLink
                   eventLabel="Exit to Brandtamos' profile"
                   to="https://www.reddit.com/user/brandtamos" title="Brandtamos' Reddit profile">
                   /u/brandtamos
                 </ReactGA.OutboundLink>
-                and recoded by
+                &nbsp;and recoded by&nbsp;
                 <ReactGA.OutboundLink
                   eventLabel="Exit to kornelord's profile"
                   to="https://www.reddit.com/user/kornelord" title="kornelord's Reddit profile">
                   /u/kornelord
                 </ReactGA.OutboundLink>
-                with React and
+                &nbsp;with React and&nbsp;
                 <ReactGA.OutboundLink
                   eventLabel="Exit to r/spacex's API"
                   to="https://github.com/r-spacex/SpaceX-API" title="r/spacex's API">
