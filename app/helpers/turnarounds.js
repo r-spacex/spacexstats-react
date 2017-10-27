@@ -83,6 +83,9 @@ const timelines = (pastLaunches) => {
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
   options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
   options.scales.xAxes[0].ticks.display = false;
+  options.scales.xAxes[0].stacked = false;
+  options.scales.yAxes[0].stacked = false;
+  options.tooltips = {mode: 'label'};
 
   const daysBetweenLaunches = {
     data: {
