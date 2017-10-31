@@ -1,6 +1,7 @@
 // Colourblind friendly palette
 const colors = {
   white: '#FAFAFA',
+  grey: '#BBBBBB',
   yellow: '#F0E442',
   orange: '#e79f00',
   brown: '#69551f',
@@ -68,8 +69,7 @@ export default {
       yAxes: [{
         stacked: true,
         gridLines: {
-          display: false,
-          color: colors.white,
+          color: colors.grey,
         },
         ticks: {
           fontFamily: 'Brandon',

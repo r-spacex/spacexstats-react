@@ -11,9 +11,9 @@ const launchHistory = (pastLaunches) => {
   const falcon1Flights = new Array(years.length).fill(0);
   const falcon9UnprovenFlights = new Array(years.length).fill(0);
   const falcon9ProvenFlights = new Array(years.length).fill(0);
-  const falconHeavyUnprovenFlights = new Array(years.length).fill(0);
-  const falconHeavyProvenFlights = new Array(years.length).fill(0);
+  const falconHeavyFlights = new Array(years.length).fill(0);
   const failureFlights = new Array(years.length).fill(0);
+  const plannedFlights = new Array(years.length).fill(0);
 
   const flights = [];
   const successRateFalcon9 = [];
@@ -62,11 +62,7 @@ const launchHistory = (pastLaunches) => {
         break;
 
       case 'falconheavy':
-        if (launch.reused) {
-          falconHeavyProvenFlights[yearIndex]++;
-        } else {
-          falconHeavyUnprovenFlights[yearIndex]++;
-        }
+        falconHeavyFlights[yearIndex]++;
         break;
 
       default:
@@ -75,6 +71,12 @@ const launchHistory = (pastLaunches) => {
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
   options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
+
+  // Manually add planned launches for 2017 and 2018
+  years.push('2017 planned');
+  plannedFlights.push(20);
+  years.push('2018 planned');
+  plannedFlights.push(30);
 
   const optionsLaunchHistory = JSON.parse(JSON.stringify(options));
   optionsLaunchHistory.tooltips = {
@@ -87,25 +89,12 @@ const launchHistory = (pastLaunches) => {
         const dataset = data.datasets[tooltipItem.datasetIndex];
         const count = parseFloat(dataset.data[tooltipItem.index]);
         window.launchTotal += count;
+
+        if (count === 0) { return ''; }
         return dataset.label + ': ' + count.toString();
       },
       footer: () => {
         return 'TOTAL: ' + window.launchTotal.toString();
-      },
-    },
-  };
-
-  const optionsSuccessRate = JSON.parse(JSON.stringify(options));
-  optionsSuccessRate.scales.xAxes[0].stacked = false;
-  optionsSuccessRate.scales.yAxes[0].stacked = false;
-  optionsSuccessRate.tooltips = {
-    mode: 'label',
-    callbacks: {
-      label: (tooltipItem, data) => {
-        const dataset = data.datasets[tooltipItem.datasetIndex];
-        const rate = parseFloat(dataset.data[tooltipItem.index]);
-        window.total += rate;
-        return dataset.label + ': ' + rate.toFixed(2) + '%';
       },
     },
   };
@@ -126,20 +115,35 @@ const launchHistory = (pastLaunches) => {
         backgroundColor: settings.COLORS.lightblue,
         data: falcon9ProvenFlights,
       }, {
-        label: 'New Falcon Heavy',
-        backgroundColor: settings.COLORS.orange,
-        data: falconHeavyUnprovenFlights,
-      }, {
-        label: 'Used Falcon Heavy',
+        label: 'Falcon Heavy',
         backgroundColor: settings.COLORS.yellow,
-        data: falconHeavyProvenFlights,
+        data: falconHeavyFlights,
       }, {
         label: 'Failure',
         backgroundColor: settings.COLORS.red,
         data: failureFlights,
+      }, {
+        label: 'Planned',
+        backgroundColor: settings.COLORS.white,
+        data: plannedFlights,
       }]
     },
     options: optionsLaunchHistory,
+  };
+
+  const optionsSuccessRate = JSON.parse(JSON.stringify(options));
+  optionsSuccessRate.scales.xAxes[0].stacked = false;
+  optionsSuccessRate.scales.yAxes[0].stacked = false;
+  optionsSuccessRate.tooltips = {
+    mode: 'label',
+    callbacks: {
+      label: (tooltipItem, data) => {
+        const dataset = data.datasets[tooltipItem.datasetIndex];
+        const rate = parseFloat(dataset.data[tooltipItem.index]);
+        window.total += rate;
+        return dataset.label + ': ' + rate.toFixed(2) + '%';
+      },
+    },
   };
 
   const successRates = {
