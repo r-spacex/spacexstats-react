@@ -10,6 +10,12 @@ class Navbar extends Component {
     };
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.selectedTab !== null) {
+      this.setState({currentTab: newProps.selectedTab});
+    }
+  }
+
   changeTab = (tab) => {
     if (tab === this.state.currentTab) {
       return;
@@ -45,8 +51,9 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  onChangeCallback: PropTypes.func,
   tabs: PropTypes.array.isRequired,
+  selectedTab: PropTypes.string,
+  onChangeCallback: PropTypes.func,
 };
 
 export default Navbar;

@@ -147,7 +147,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'Fairings',
       type: 'integer',
       data: {'value': reuseHistoryData.totalFairingsReflown, 'subtitle': 'Reflown'},
-      text: `Made of carbon fibers, the industrial process required to make
+      text: `Made of carbon fiber, the industrial process required to make
             the fairings is time and factory space consuming. Reusing them is the
             next step towards reduced launch costs.`,
     }],
