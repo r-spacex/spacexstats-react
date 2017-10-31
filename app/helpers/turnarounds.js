@@ -48,6 +48,7 @@ const timelines = (pastLaunches) => {
     const launchpad = launch.launch_site.site_id;
     const quickestPadTurnaround = quickestTurnarounds[launchpad];
     const padTurnaround = launchDate - quickestPadTurnaround.previousMission;
+    const currentMissionName = launch.payloads[0].payload_id;
 
     // This is the first mission accounted for this pad
     if (quickestPadTurnaround.previousMission === null) {
@@ -58,20 +59,21 @@ const timelines = (pastLaunches) => {
       if (quickestPadTurnaround.turnaround === null) {
         quickestTurnarounds[launchpad] = {
           turnaround: padTurnaround,
-          mission1: quickestPadTurnaround.mission1,
-          mission2: launch.payloads[0].payload_id,
+          mission1: quickestPadTurnaround.previousMissionName,
+          mission2: currentMissionName,
         };
       } else {
         if (padTurnaround < quickestPadTurnaround.turnaround) {
           quickestTurnarounds[launchpad] = {
             turnaround: padTurnaround,
-            mission1: quickestPadTurnaround.mission2,
-            mission2: launch.payloads[0].payload_id,
+            mission1: quickestPadTurnaround.previousMissionName,
+            mission2: currentMissionName,
           };
         }
       }
     }
     quickestTurnarounds[launchpad].previousMission = launchDate;
+    quickestTurnarounds[launchpad].previousMissionName = currentMissionName;
 
     // Check if quickest turnaround ever
     if (quickestTurnaroundPad === null || padTurnaround < quickestTurnarounds[quickestTurnaroundPad].turnaround) {

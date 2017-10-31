@@ -2888,6 +2888,10 @@ jump.js@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/jump.js/-/jump.js-1.0.1.tgz#0de2b1631ba9a1c2c6b8572ad277d877e8503600"
 
+just-reduce-object@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/just-reduce-object/-/just-reduce-object-1.0.3.tgz#08b69499dba3504f7a46b73937b4cdf7a5a05a2e"
+
 kind-of@^3.0.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
