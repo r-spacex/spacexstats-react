@@ -38,6 +38,21 @@ export default {
     maintainAspectRatio: false,
   },
   DEFAULTBARCHARTOPTIONS: {
+    pan: {
+      enabled: true,
+      mode: 'x',
+      rangeMin: {
+        x: 0,
+      },
+    },
+    zoom: {
+      enabled: true,
+      drag: false,
+      mode: 'x',
+      rangeMin: {
+        x: 0,
+      },
+    },
     scales: {
       xAxes: [{
         stacked: true,

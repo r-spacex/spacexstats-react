@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Bar, Doughnut, Line } from 'react-chartjs-2';
+import { Bar, Chart, Doughnut, Line } from 'react-chartjs-2';
 import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 import moment from 'moment';
+import zoom from 'chartjs-plugin-zoom';
+import * as hammer from 'hammerjs'; // eslint-disable-line
 
 import Navbar from 'components/Navbar';
 import Ribbon from 'components/Ribbon';
@@ -24,6 +26,7 @@ class ContentBlock extends Component {
   }
 
   componentWillMount() {
+    Chart.plugins.register(zoom);
     configureAnchors({ keepLastAnchorHash: true });
   }
 
