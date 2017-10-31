@@ -165,7 +165,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
     }, {
       title: 'KSC',
       tabTitle: 'KSC',
-      background: 'fh.jpg',
+      background: 'ses10.jpg',
       type: 'integer',
       data: {'value': launchpadCountData.totalHLC39A, 'subtitle': 'Launches'},
       text: `In April 2014, SpaceX signed an agreement with NASA for a 20 year
@@ -177,7 +177,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
     }, {
       title: 'Vandenberg',
       tabTitle: 'Vandenberg',
-      background: 'cassiopelaunch.jpg',
+      background: 'iridium1.jpg',
       type: 'integer',
       data: {'value': launchpadCountData.totalVAFB, 'subtitle': 'Launches'},
       text: `Vandenberg AFB Space Launch Complex 4E (SLC-4E) in California is
