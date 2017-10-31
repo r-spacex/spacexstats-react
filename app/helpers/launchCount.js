@@ -29,6 +29,12 @@ const launchCount = (pastLaunches) => {
     }
   }
 
+  // Manually remove Amos-6 mission from launch count.
+  // This *mission* was a failure but it never technically *launched*
+  // Handling this exception in the API with a distinct parameter would be almost useless
+  totalFalcon9--;
+  totalLaunches--;
+
   return {
     totalLaunches,
     totalFalcon9,
