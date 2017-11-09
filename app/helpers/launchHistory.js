@@ -73,10 +73,19 @@ const launchHistory = (pastLaunches) => {
   options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
 
   // Manually add planned launches for 2017 and 2018
-  years.push('2017 planned');
-  plannedFlights.push(20);
-  years.push('2018 planned');
-  plannedFlights.push(30);
+  const plannedTarget2017 = 20;
+  const plannedTarget2018 = 30;
+  const totalFlightsThisYear =
+    falcon9UnprovenFlights[falcon9UnprovenFlights.length - 1] +
+    falcon9ProvenFlights[falcon9ProvenFlights.length - 1] +
+    falconHeavyFlights[falconHeavyFlights.length - 1];
+  if (yearsEnd === 2017) {
+    plannedFlights[plannedFlights.length - 1] = plannedTarget2017 - totalFlightsThisYear;
+    years.push('2018');
+    plannedFlights.push(plannedTarget2018);
+  } else if (yearsEnd === 2018) { // We are in 2018
+    plannedFlights[plannedFlights.length - 1] = plannedTarget2018 - totalFlightsThisYear;
+  }
 
   const optionsLaunchHistory = JSON.parse(JSON.stringify(options));
   optionsLaunchHistory.tooltips = {
