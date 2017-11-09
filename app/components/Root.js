@@ -10,7 +10,6 @@ import computeStats from 'helpers/main';
 import utils from 'utils';
 import keymap from 'keymap';
 
-import 'fonts.styl';
 import 'style.styl';
 
 const shortcutManager = new ShortcutManager(keymap);

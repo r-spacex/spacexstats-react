@@ -51,17 +51,8 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel-loader',
     }, {
-      test: /\.json?$/,
-      loader: 'json-loader',
-    }, {
       test: /\.styl$/,
       loader: 'style-loader!css-loader!stylus-loader',
-    }, {
-      test: /\.(jpg|png|ico)$/,
-      loader: 'file-loader',
-    }, {
-      test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-      loader: 'file-loader?name=fonts/[name].[ext]',
     }],
   },
 };

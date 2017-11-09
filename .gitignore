@@ -1,6 +1,5 @@
 .vagrant/
 node_modules/
-public/fonts/
 public/bundle.js
 
 *.log

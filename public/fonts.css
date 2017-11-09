@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Brandon';
+    src: url('/public/fonts/brandon-reg-webfont.ttf'),
+         url('/public/fonts/brandon-reg-webfont.eot');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BrandonThin';
+    src: url('/public/fonts/brandon-thin-webfont.ttf'),
+         url('/public/fonts/brandon-thin-webfont.eot');
+    font-weight: normal;
+    font-style: italic;
+}
