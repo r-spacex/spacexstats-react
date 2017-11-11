@@ -1,6 +1,7 @@
 import nextLaunches from 'helpers/nextLaunches';
 import launchCount from 'helpers/launchCount';
 import launchHistory from 'helpers/launchHistory';
+import landingHistory from 'helpers/landingHistory';
 import reuseHistory from 'helpers/reuseHistory';
 import launchpadCount from 'helpers/launchpadCount';
 import turnarounds from 'helpers/turnarounds';
@@ -13,6 +14,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
   const nextLaunchesData = nextLaunches(upcomingLaunches);
   const launchCountData = launchCount(pastLaunches);
   const launchHistoryData = launchHistory(pastLaunches);
+  const landingHistoryData = landingHistory(pastLaunches);
   const reuseHistoryData = reuseHistory(pastLaunches);
   const launchpadCountData = launchpadCount(pastLaunches);
   const turnaroundsData = turnarounds(pastLaunches);
@@ -99,11 +101,11 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
     }],
 
 
-    reuseHistory: [{
+    landingHistory: [{
       title: 'Landed',
       tabTitle: 'Landed',
       type: 'integer',
-      data: {'value': reuseHistoryData.totalLanded, 'subtitle': 'Landed'},
+      data: {'value': landingHistoryData.totalLanded, 'subtitle': 'Landed'},
       text: `For SpaceX to succeed at reducing the cost of getting payload to orbit,
             reusability of launch vehicles is imperative. The first phase of this
             involves returning the first stage of the rocket back safely to
@@ -113,11 +115,14 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Landing History',
       tabTitle: 'Landing History',
       type: 'barchart',
-      data: reuseHistoryData.landingHistory.data,
-      options: reuseHistoryData.landingHistory.options,
+      data: landingHistoryData.landingHistoryChart.data,
+      options: landingHistoryData.landingHistoryChart.options,
       text: `SpaceX begun its testing of booster landings in 2013. Now landings
             are almost routine for the public.`,
-    }, {
+    }],
+
+
+    reuseHistory: [{
       title: 'Reflown',
       tabTitle: 'Reflown',
       type: 'integer',

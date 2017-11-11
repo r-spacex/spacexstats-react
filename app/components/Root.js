@@ -27,6 +27,7 @@ class Root extends Component {
       'nextlaunch',
       'launchcount',
       'launchhistory',
+      'landing',
       'reuse',
       'launchpads',
       'turnarounds',
@@ -153,9 +154,17 @@ class Root extends Component {
             stats={this.state.stats.launchHistory} />
 
           <ContentBlock
-            titlePrefix="Reuse History"
+            titlePrefix="Landing History"
             backgroundImage="crs6barge.jpg"
             anchor={this.anchors[3]}
+            onMoveDown={this.moveDown}
+            onMoveUp={this.moveUp}
+            stats={this.state.stats.landingHistory} />
+
+          <ContentBlock
+            titlePrefix="Reuse History"
+            backgroundImage="reuse.jpg"
+            anchor={this.anchors[4]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
             stats={this.state.stats.reuseHistory} />
@@ -163,7 +172,7 @@ class Root extends Component {
           <ContentBlock
             titlePrefix="Launch Pads"
             backgroundImage="capeflorida.jpg"
-            anchor={this.anchors[4]}
+            anchor={this.anchors[5]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
             stats={this.state.stats.launchpadCount} />
@@ -171,7 +180,7 @@ class Root extends Component {
           <ContentBlock
             titlePrefix="Turnarounds"
             backgroundImage="thaicomlaunch.jpg"
-            anchor={this.anchors[5]}
+            anchor={this.anchors[6]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
             stats={this.state.stats.turnarounds} />
@@ -179,7 +188,7 @@ class Root extends Component {
           <ContentBlock
             titlePrefix="Dragon"
             backgroundImage="dragoncrs5.jpg"
-            anchor={this.anchors[6]}
+            anchor={this.anchors[7]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
             stats={this.state.stats.dragon} />
@@ -187,7 +196,7 @@ class Root extends Component {
           <ContentBlock
             titlePrefix="Payloads"
             backgroundImage="payloadfairing.jpg"
-            anchor={this.anchors[7]}
+            anchor={this.anchors[8]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
             stats={this.state.stats.payloads} />
@@ -195,7 +204,7 @@ class Root extends Component {
           <ContentBlock
             titlePrefix="People"
             backgroundImage="dragonriders.jpg"
-            anchor={this.anchors[8]}
+            anchor={this.anchors[9]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
             stats={this.state.stats.people} />
@@ -203,7 +212,7 @@ class Root extends Component {
           <ContentBlock
             titlePrefix="Timelines"
             backgroundImage="elonmusk.jpg"
-            anchor={this.anchors[9]}
+            anchor={this.anchors[10]}
             onMoveUp={this.moveUp}
             stats={this.state.stats.timelines} />
 
