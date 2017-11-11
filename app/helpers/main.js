@@ -119,6 +119,23 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       options: landingHistoryData.landingHistoryChart.options,
       text: `SpaceX begun its testing of booster landings in 2013. Now landings
             are almost routine for the public.`,
+    }, {
+      title: 'Heaviest',
+      tabTitle: 'Heaviest',
+      type: 'integer',
+      data: {'value': landingHistoryData.heaviestLanding.mass, 'subtitle': 'Kilograms'},
+      text: `The heaviest mission launched to date that enabled a successful
+            landing was the ${landingHistoryData.heaviestLanding.mission} mission,
+            which performed ${landingHistoryData.heaviestLanding.landingType}.`,
+    }, {
+      title: 'Heaviest to GTO',
+      tabTitle: 'Heaviest to GTO',
+      type: 'integer',
+      data: {'value': landingHistoryData.heaviestLandingGTO.mass, 'subtitle': 'Kilograms'},
+      text: `Geostationary Orbit is much more energetic than other orbits and
+            landing after a GTO launch is much more challenging. The heaviest GTO
+            mission landed was the ${landingHistoryData.heaviestLandingGTO.mission}
+            mission, which performed ${landingHistoryData.heaviestLandingGTO.landingType}.`,
     }],
 
 

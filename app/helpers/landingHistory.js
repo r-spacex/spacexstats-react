@@ -2,6 +2,8 @@ import settings from 'settings';
 
 const landingHistory = (pastLaunches) => {
   let totalLanded = 0;
+  let heaviestLanding = {mass: 0, mission: '', landingType: ''};
+  let heaviestLandingGTO = {mass: 0, mission: '', landingType: ''};
 
   // For landing history graph
   const yearsStart = 2013; // First landing attempt
@@ -34,22 +36,51 @@ const landingHistory = (pastLaunches) => {
       failureLandings[yearIndex]++;
       continue;
     }
+
+    let formattedLandingType;
     switch (launch.landing_type) {
       case 'Ocean':
         oceanLandings[yearIndex]++;
+        formattedLandingType = 'an ocean landing';
         break;
       case 'RTLS':
         rtlsLandings[yearIndex]++;
+        formattedLandingType = 'a RTLS landing';
         break;
       case 'ASDS':
         if (launch.landing_vehicle === 'JRTI') {
           jrtiLandings[yearIndex]++;
+          formattedLandingType = 'an ASDS landing on JRTI';
         } else if (launch.landing_vehicle === 'OCISLY') {
           ocislyLandings[yearIndex]++;
+          formattedLandingType = 'an ASDS landing on OCISLY';
         }
         break;
 
       default:
+        // Ignore non landed cores
+        continue;
+    }
+
+    // Heaviest payload landings
+    for (let j = 0; j < launch.payloads.length; j++) {
+      const payload = launch.payloads[j];
+
+      if (payload.payload_mass_kg > heaviestLanding.mass) {
+        heaviestLanding = {
+          mass: payload.payload_mass_kg,
+          mission: payload.payload_id,
+          landingType: formattedLandingType,
+        };
+      }
+
+      if (payload.orbit === 'GTO' && payload.payload_mass_kg > heaviestLandingGTO.mass) {
+        heaviestLandingGTO = {
+          mass: payload.payload_mass_kg,
+          mission: payload.payload_id,
+          landingType: formattedLandingType,
+        };
+      }
     }
   }
 
@@ -110,6 +141,8 @@ const landingHistory = (pastLaunches) => {
   return {
     totalLanded,
     landingHistoryChart,
+    heaviestLanding,
+    heaviestLandingGTO,
   };
 };
 

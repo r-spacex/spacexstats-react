@@ -1,8 +1,8 @@
 import settings from 'settings';
 
 const payloads = (pastLaunches) => {
-  let heaviestPayload = {mass: null, mission: '', customers: ''};
-  let heaviestPayloadGTO = {mass: null, mission: '', customers: ''};
+  let heaviestPayload = {mass: 0, mission: '', customers: ''};
+  let heaviestPayloadGTO = {mass: 0, mission: '', customers: ''};
   let totalMass = 0;
   const internetConstellation = 0;
   const customers = {};
@@ -31,7 +31,7 @@ const payloads = (pastLaunches) => {
 
       totalMass += payload.payload_mass_kg;
 
-      if (heaviestPayload.mass === null || payload.payload_mass_kg > heaviestPayload.mass) {
+      if (payload.payload_mass_kg > heaviestPayload.mass) {
         heaviestPayload = {
           mass: payload.payload_mass_kg,
           mission: payload.payload_id,
@@ -39,7 +39,7 @@ const payloads = (pastLaunches) => {
         };
       }
 
-      if (payload.orbit === 'GTO' && (heaviestPayloadGTO.mass === null || payload.payload_mass_kg > heaviestPayloadGTO.mass)) {
+      if (payload.orbit === 'GTO' && payload.payload_mass_kg > heaviestPayloadGTO.mass) {
         heaviestPayloadGTO = {
           mass: payload.payload_mass_kg,
           mission: payload.payload_id,
