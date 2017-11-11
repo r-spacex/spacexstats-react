@@ -110,7 +110,7 @@ class ContentBlock extends Component {
     // Exception: add ribbon for the next launch section (launch datetime)
     let ribbonText = null;
     if (this.props.anchor === 'nextlaunch') {
-      ribbonText = moment.unix(this.state.currentStat.data).format('MMMM Do, h:mm:ssa');
+      ribbonText = moment.unix(this.state.currentStat.data).format('MMM Do, h:mm:ssa (UTCZ)');
     }
 
     const background = this.state.currentStat.background ? this.state.currentStat.background : this.props.backgroundImage;
@@ -134,7 +134,9 @@ class ContentBlock extends Component {
                 }
 
                 {ribbonText &&
-                  <Ribbon text={ribbonText} />
+                  <div title="The launch time converted in your time zone">
+                    <Ribbon text={ribbonText} />
+                  </div>
                 }
 
                 <Navbar tabs={this.navbarTabs} onChangeCallback={this.onNavbarChange} selectedTab={this.state.currentStat.tabTitle} />
