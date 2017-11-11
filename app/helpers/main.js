@@ -46,16 +46,17 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'Falcon 9',
       type: 'integer',
       data: {'value': launchCountData.totalFalcon9, 'subtitle': 'Flights'},
-      text: `Nearly 3/4's the height of the Saturn V, yet thinner than a Space Shuttle SRB,
-            Falcon 9 is the workhorse of SpaceX's rocket fleet. Able to carry
-            13,150kg to LEO and 5,300kg to GTO with first stage reusability.
-            It has launched ${launchCountData.totalFalcon9} times and is not far
-            from its last iteration (Falcon 9 v1.2) enabling rapid reusability.`,
+      text: `Nearly 3/4's the height of the Saturn V, yet thinner than a Space
+            Shuttle SRB, Falcon 9 is the workhorse of SpaceX's rocket fleet. To
+            date, it has launched ${launchCountData.totalFalcon9} times and has
+            lifted ${launchCountData.totalFalcon9Upmass.toLocaleString()}kg to
+            orbit. It is not far from its last iteration (Falcon 9 v1.2 Block 5)
+            enabling rapid reusability.`,
     }, {
       title: 'Falcon Heavy',
       tabTitle: 'Falcon Heavy',
       type: 'integer',
-      data: {'value': launchCountData.totalBFR, 'subtitle': 'Flights'},
+      data: {'value': launchCountData.totalFalconHeavy, 'subtitle': 'Flights'},
       text: `When Falcon Heavy launches at the end of 2017, it will become the world's
             most powerful rocket, able to carry up to 64 metric tonnes to LEO
             in full expendable mode, rising on its 27 first stage Merlin 1D engines.

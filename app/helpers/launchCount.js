@@ -5,24 +5,41 @@ const launchCount = (pastLaunches) => {
   let totalFalconHeavy = 0;
   let totalBFR = 0;
 
+  let totalFalcon9Upmass = 0;
+  let totalFalcon1Upmass = 0;
+  let totalFalconHeavyUpmass = 0;
+  let totalBFRUpmass = 0;
+
   for (let i = 0; i < pastLaunches.length; i++) {
+    const launch = pastLaunches[i];
     totalLaunches++;
 
-    switch (pastLaunches[i].rocket.rocket_id) {
+    let upmass = 0;
+    if (launch.launch_success) {
+      for (let j = 0; j < launch.payloads.length; j++) {
+        upmass += launch.payloads[j].payload_mass_kg;
+      }
+    }
+
+    switch (launch.rocket.rocket_id) {
       case 'falcon1':
         totalFalcon1++;
+        totalFalcon1Upmass += upmass;
         break;
 
       case 'falcon9':
         totalFalcon9++;
+        totalFalcon9Upmass += upmass;
         break;
 
       case 'falconheavy':
         totalFalconHeavy++;
+        totalFalconHeavyUpmass += upmass;
         break;
 
       case 'bfr':
         totalBFR++;
+        totalBFRUpmass += upmass;
         break;
 
       default:
@@ -41,6 +58,10 @@ const launchCount = (pastLaunches) => {
     totalFalcon1,
     totalFalconHeavy,
     totalBFR,
+    totalFalcon9Upmass,
+    totalFalcon1Upmass,
+    totalFalconHeavyUpmass,
+    totalBFRUpmass,
   };
 };
 
