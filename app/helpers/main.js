@@ -70,7 +70,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             equipped with a single Merlin 1A engine, and later, the venerable Merlin 1C.
             Launched exclusively from Kwajalein, it was able to lift 670kg to LEO
             and became the first privately-developed rocket to reach Earth orbit.
-            It launched ${launchCountData.totalFalcon1} times over approximately 2 years.`,
+            It launched ${launchCountData.totalFalcon1} times over approximately 2 years, lifting ${launchCountData.totalFalcon1Upmass.toLocaleString()}kg to orbit.`,
     }, {
       title: 'BFR',
       tabTitle: 'BFR',
@@ -99,6 +99,15 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       options: launchHistoryData.successRates.options,
       text: `In order to provide a reliable access to space, SpaceX will have to
             beat every other provider with its success rate.`,
+    }, {
+      title: 'Upmass Per Year',
+      tabTitle: 'Upmass Per Year',
+      type: 'barchart',
+      data: launchHistoryData.upmassPerYear.data,
+      options: launchHistoryData.upmassPerYear.options,
+      text: `SpaceX has launched payloads into a variety of orbits, including
+            interplanetary missions. With Falcon Heavy, SpaceX will be able to
+            cover most orbit and mission types.`,
     }],
 
 

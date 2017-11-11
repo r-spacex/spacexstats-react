@@ -8,12 +8,28 @@ const launchHistory = (pastLaunches) => {
     years.push(i);
   }
 
+  // Custom years for upmass
+  const yearsUpmassStart = 2008; // Going beyond suborbital a decade before BO
+  const yearsUpmass = [];
+  for (let i = yearsUpmassStart; i <= yearsEnd; i++) {
+    yearsUpmass.push(i);
+  }
+
   const falcon1Flights = new Array(years.length).fill(0);
   const falcon9UnprovenFlights = new Array(years.length).fill(0);
   const falcon9ProvenFlights = new Array(years.length).fill(0);
   const falconHeavyFlights = new Array(years.length).fill(0);
   const failureFlights = new Array(years.length).fill(0);
   const plannedFlights = new Array(years.length).fill(0);
+
+  const upmassPerOrbit = {
+    LEO: new Array(yearsUpmass.length).fill(0),
+    ISS: new Array(yearsUpmass.length).fill(0),
+    Polar: new Array(yearsUpmass.length).fill(0),
+    GTO: new Array(yearsUpmass.length).fill(0),
+    Interplanetary: new Array(yearsUpmass.length).fill(0),
+    Other: new Array(yearsUpmass.length).fill(0),
+  };
 
   const flights = [];
   const successRateFalcon9 = [];
@@ -67,6 +83,30 @@ const launchHistory = (pastLaunches) => {
 
       default:
     }
+
+    // If success, add upmass to orbit
+    // LEO, ISS, Polar, GTO, ES-L1, SSO
+    if (!launch.launch_success) {
+      continue;
+    }
+
+    let upmass = 0;
+    for (let j = 0; j < launch.payloads.length; j++) {
+      upmass += launch.payloads[j].payload_mass_kg;
+    }
+
+    const yearUpmassIndex = launch.launch_year - yearsUpmassStart;
+    switch (launch.payloads[0].orbit) {
+      case 'LEO': upmassPerOrbit.LEO[yearUpmassIndex] += upmass; break;
+      case 'ISS': upmassPerOrbit.ISS[yearUpmassIndex] += upmass; break;
+      case 'Polar': upmassPerOrbit.Polar[yearUpmassIndex] += upmass; break;
+      case 'GTO': upmassPerOrbit.GTO[yearUpmassIndex] += upmass; break;
+      case 'ES-L1':
+        upmassPerOrbit.Interplanetary[yearUpmassIndex] += upmass;
+        break;
+
+      default: upmassPerOrbit.Other[yearUpmassIndex] += upmass;
+    }
   }
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
@@ -81,7 +121,7 @@ const launchHistory = (pastLaunches) => {
     falconHeavyFlights[falconHeavyFlights.length - 1];
   if (yearsEnd === 2017) {
     plannedFlights[plannedFlights.length - 1] = plannedTarget2017 - totalFlightsThisYear;
-    years.push('2018');
+    years.push(2018);
     plannedFlights.push(plannedTarget2018);
   } else if (yearsEnd === 2018) { // We are in 2018
     plannedFlights[plannedFlights.length - 1] = plannedTarget2018 - totalFlightsThisYear;
@@ -100,10 +140,10 @@ const launchHistory = (pastLaunches) => {
         window.launchTotal += count;
 
         if (count === 0) { return ''; }
-        return dataset.label + ': ' + count.toString();
+        return dataset.label + ': ' + count.toLocaleString();
       },
       footer: () => {
-        return 'TOTAL: ' + window.launchTotal.toString();
+        return 'TOTAL: ' + window.launchTotal.toLocaleString();
       },
     },
   };
@@ -185,9 +225,63 @@ const launchHistory = (pastLaunches) => {
     options: optionsSuccessRate,
   };
 
+  const optionsUpmassPerYear = JSON.parse(JSON.stringify(options));
+  optionsUpmassPerYear.tooltips = {
+    mode: 'label',
+    callbacks: {
+      afterTitle: () => {
+        window.launchTotal = 0;
+      },
+      label: (tooltipItem, data) => {
+        const dataset = data.datasets[tooltipItem.datasetIndex];
+        const count = parseFloat(dataset.data[tooltipItem.index]);
+        window.launchTotal += count;
+
+        if (count === 0) { return ''; }
+        return dataset.label + ': ' + count.toLocaleString() + 'kg';
+      },
+      footer: () => {
+        return 'TOTAL: ' + window.launchTotal.toLocaleString() + 'kg';
+      },
+    },
+  };
+
+  const upmassPerYear = {
+    data: {
+      labels: yearsUpmass,
+      datasets: [{
+        label: 'LEO',
+        backgroundColor: settings.COLORS.blue,
+        data: upmassPerOrbit.LEO,
+      }, {
+        label: 'ISS',
+        backgroundColor: settings.COLORS.lightblue,
+        data: upmassPerOrbit.ISS,
+      }, {
+        label: 'Polar',
+        backgroundColor: settings.COLORS.yellow,
+        data: upmassPerOrbit.Polar,
+      }, {
+        label: 'GTO',
+        backgroundColor: settings.COLORS.orange,
+        data: upmassPerOrbit.GTO,
+      }, {
+        label: 'Interplanetary',
+        backgroundColor: settings.COLORS.red,
+        data: upmassPerOrbit.Interplanetary,
+      }, {
+        label: 'Other',
+        backgroundColor: settings.COLORS.white,
+        data: upmassPerOrbit.Other,
+      }]
+    },
+    options: optionsUpmassPerYear,
+  };
+
   return {
     flightsPerYear,
     successRates,
+    upmassPerYear,
   };
 };
 

@@ -73,31 +73,34 @@ class ContentBlock extends Component {
 
   render() {
     let statcomponent;
+
+    // We need to clone the dataset because ChartJS will do some work on them
+    const dataset = JSON.parse(JSON.stringify(this.state.currentStat.data));
     switch (this.state.currentStat.type) {
       case 'countdown':
       case 'timer':
       case 'duration':
-        statcomponent = <TimeStat data={this.state.currentStat.data} type={this.state.currentStat.type} />;
+        statcomponent = <TimeStat data={dataset} type={this.state.currentStat.type} />;
         break;
 
       case 'integer':
-        statcomponent = <IntegerStat data={this.state.currentStat.data} />;
+        statcomponent = <IntegerStat data={dataset} />;
         break;
 
       case 'text':
-        statcomponent = <TextStat data={this.state.currentStat.data} />;
+        statcomponent = <TextStat data={dataset} />;
         break;
 
       case 'barchart':
-        statcomponent = <Bar data={this.state.currentStat.data} options={this.state.currentStat.options} />;
+        statcomponent = <Bar data={dataset} options={this.state.currentStat.options} />;
         break;
 
       case 'line':
-        statcomponent = <Line data={this.state.currentStat.data} options={this.state.currentStat.options} />;
+        statcomponent = <Line data={dataset} options={this.state.currentStat.options} />;
         break;
 
       case 'piechart':
-        statcomponent = <Doughnut data={this.state.currentStat.data} options={this.state.currentStat.options} />;
+        statcomponent = <Doughnut data={dataset} options={this.state.currentStat.options} />;
         break;
 
       default:
