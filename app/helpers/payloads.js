@@ -20,9 +20,9 @@ const payloads = (pastLaunches) => {
       const payload = launch.payloads[j];
       const customer = payload.customers[0];
       if (!customers[customer]) {
-        customers[customer] = 0;
+        customers[customer] = [];
       }
-      customers[customer]++;
+      customers[customer].push(launch.payloads[j].payload_id);
 
       // Exclude Dragon flights for the following stats
       if (launch.payloads[0].payload_type.indexOf('Dragon') !== -1) {
@@ -50,25 +50,41 @@ const payloads = (pastLaunches) => {
   }
 
   // Clean customers list
-  customers.Others = 0;
+  customers.Others = [];
   for (const customer in customers) {
-    if (customers[customer] < 2) {
-      customers.Others += customers[customer];
-      customers[customer] = customers[customer] - 1;
+    if (customers[customer].length < 2) {
+      customers.Others = customers.Others.concat(customers[customer]);
       delete customers[customer];
     }
     if (customer.indexOf('NASA') !== -1 && customer !== 'NASA') {
-      customers.NASA += customers[customer];
+      customers.NASA = customers.NASA.concat(customers[customer]);
       delete customers[customer];
     }
   }
 
   const options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
+  options.tooltips = {
+    mode: 'label',
+    callbacks: {
+      label: (tooltipItem, data) => {
+        const index = tooltipItem.index;
+        const customer = data.labels[index];
+        const missions = customers[customer];
+
+        if (missions.length > 3) {
+          // Get last 3 missions
+          const displayedMissions = missions.slice(missions.length - 3).reverse();
+          return `${customer}: ${missions.length} (${displayedMissions.join(', ')} and ${missions.length - 3} more)`;
+        }
+        return customer + ': ' + missions.length + ' (' + missions.join(', ') + ')';
+      },
+    },
+  };
   const customersChart = {
     data: {
       labels: Object.keys(customers),
       datasets: [{
-        data: Object.values(customers),
+        data: Object.values(customers).map((customersList) => (customersList.length)),
         backgroundColor: [
           settings.COLORS.white, settings.COLORS.yellow, settings.COLORS.green,
           settings.COLORS.blue, settings.COLORS.orange, settings.COLORS.red,

@@ -14,7 +14,8 @@ const nextLaunches = (upcomingLaunches) => {
     payloadDesc = `SpaceX will launch a Dragon capsule to LEO, bringing
                   ${payloadMass}kg of supplies and scientific cargo to the ISS.`;
   } else {
-    payloadDesc = `SpaceX will launch the${payloadMass > 0 ? payloadMass + 'kg' : ''} communication
+    payloadDesc = `SpaceX will launch
+                  the${payloadMass > 0 ? payloadMass + 'kg' : ''} communication
                   satellite${launch.payloads.length > 1 ? 's ' : ' '}
                   ${payloadName} into a ${launch.payloads[0].orbit} trajectory.`;
   }
