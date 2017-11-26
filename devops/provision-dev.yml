@@ -7,7 +7,6 @@
     - vars/vagrant.yml
    roles:
     - base
-    - nginx
     - node
     - yarn
     - vagrant
