@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+
+import './TimeStat.styl';
 
 class TimeStat extends Component {
   constructor(props) {
@@ -44,7 +46,7 @@ class TimeStat extends Component {
     this.duration = eventTime - currentTime;
 
     if (this.duration < 0) {
-      this.duration = - this.duration;
+      this.duration = -this.duration;
     }
 
     this.updateTimer();
@@ -65,10 +67,10 @@ class TimeStat extends Component {
     const seconds = Math.floor(secondsLeft);
 
     this.setState({
-      days: days,
-      hours: hours,
-      minutes: minutes,
-      seconds: seconds,
+      days,
+      hours,
+      minutes,
+      seconds,
     });
   }
 
@@ -99,8 +101,9 @@ class TimeStat extends Component {
 }
 
 TimeStat.propTypes = {
-  data: PropTypes.number.isRequired, // Unix timestamp
   type: PropTypes.string.isRequired,
+  // Unix timestamp
+  data: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
 };
 
 export default TimeStat;

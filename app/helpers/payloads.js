@@ -1,19 +1,15 @@
-import settings from 'settings';
+import settings from '~/settings';
 
 const payloads = (pastLaunches) => {
-  let heaviestPayload = {mass: 0, mission: '', customers: ''};
-  let heaviestPayloadGTO = {mass: 0, mission: '', customers: ''};
+  let heaviestPayload = { mass: 0, mission: '', customers: '' };
+  let heaviestPayloadGTO = { mass: 0, mission: '', customers: '' };
   let totalMass = 0;
   const internetConstellation = 0;
   const customers = {};
+  const successfulLaunches = pastLaunches.filter(launch => launch.launch_success);
 
-  for (let i = 0; i < pastLaunches.length; i++) {
-    const launch = pastLaunches[i];
-
-    // Exclude Dragon flights for the following stats
-    if (!launch.launch_success) {
-      continue;
-    }
+  for (let i = 0; i < successfulLaunches.length; i++) {
+    const launch = successfulLaunches[i];
 
     for (let j = 0; j < launch.payloads.length; j++) {
       // Only consider first customer
@@ -25,33 +21,33 @@ const payloads = (pastLaunches) => {
       customers[customer].push(launch.payloads[j].payload_id);
 
       // Exclude Dragon flights for the following stats
-      if (launch.payloads[0].payload_type.indexOf('Dragon') !== -1) {
-        continue;
-      }
+      if (launch.payloads[0].payload_type.indexOf('Dragon') === -1) {
+        totalMass += payload.payload_mass_kg;
 
-      totalMass += payload.payload_mass_kg;
+        if (payload.payload_mass_kg > heaviestPayload.mass) {
+          heaviestPayload = {
+            mass: payload.payload_mass_kg,
+            mission: payload.payload_id,
+            customers: payload.customers.join('/'),
+          };
+        }
 
-      if (payload.payload_mass_kg > heaviestPayload.mass) {
-        heaviestPayload = {
-          mass: payload.payload_mass_kg,
-          mission: payload.payload_id,
-          customers: payload.customers.join('/'),
-        };
-      }
-
-      if (payload.orbit === 'GTO' && payload.payload_mass_kg > heaviestPayloadGTO.mass) {
-        heaviestPayloadGTO = {
-          mass: payload.payload_mass_kg,
-          mission: payload.payload_id,
-          customers: payload.customers.join('/'),
-        };
+        if (payload.orbit === 'GTO' && payload.payload_mass_kg > heaviestPayloadGTO.mass) {
+          heaviestPayloadGTO = {
+            mass: payload.payload_mass_kg,
+            mission: payload.payload_id,
+            customers: payload.customers.join('/'),
+          };
+        }
       }
     }
   }
 
   // Clean customers list
   customers.Others = [];
-  for (const customer in customers) {
+  const customerKeys = Object.keys(customers);
+  for (let i = 0; i < customerKeys.length; i++) {
+    const customer = customerKeys[i];
     if (customers[customer].length < 2) {
       customers.Others = customers.Others.concat(customers[customer]);
       delete customers[customer];
@@ -67,7 +63,7 @@ const payloads = (pastLaunches) => {
     mode: 'label',
     callbacks: {
       label: (tooltipItem, data) => {
-        const index = tooltipItem.index;
+        const { index } = tooltipItem;
         const customer = data.labels[index];
         const missions = customers[customer];
 
@@ -76,7 +72,7 @@ const payloads = (pastLaunches) => {
           const displayedMissions = missions.slice(missions.length - 3).reverse();
           return `${customer}: ${missions.length} (${displayedMissions.join(', ')} and ${missions.length - 3} more)`;
         }
-        return customer + ': ' + missions.length + ' (' + missions.join(', ') + ')';
+        return `${customer}: ${missions.length} (${missions.join(', ')})`;
       },
     },
   };
@@ -84,7 +80,7 @@ const payloads = (pastLaunches) => {
     data: {
       labels: Object.keys(customers),
       datasets: [{
-        data: Object.values(customers).map((customersList) => (customersList.length)),
+        data: Object.values(customers).map(customersList => (customersList.length)),
         backgroundColor: [
           settings.COLORS.white, settings.COLORS.yellow, settings.COLORS.green,
           settings.COLORS.blue, settings.COLORS.orange, settings.COLORS.red,
@@ -95,7 +91,7 @@ const payloads = (pastLaunches) => {
         ],
       }],
     },
-    options: options,
+    options,
   };
 
   return {

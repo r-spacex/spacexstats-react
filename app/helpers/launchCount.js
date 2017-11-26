@@ -12,7 +12,7 @@ const launchCount = (pastLaunches) => {
 
   for (let i = 0; i < pastLaunches.length; i++) {
     const launch = pastLaunches[i];
-    totalLaunches++;
+    totalLaunches += 1;
 
     let upmass = 0;
     if (launch.launch_success) {
@@ -23,22 +23,22 @@ const launchCount = (pastLaunches) => {
 
     switch (launch.rocket.rocket_id) {
       case 'falcon1':
-        totalFalcon1++;
+        totalFalcon1 += 1;
         totalFalcon1Upmass += upmass;
         break;
 
       case 'falcon9':
-        totalFalcon9++;
+        totalFalcon9 += 1;
         totalFalcon9Upmass += upmass;
         break;
 
       case 'falconheavy':
-        totalFalconHeavy++;
+        totalFalconHeavy += 1;
         totalFalconHeavyUpmass += upmass;
         break;
 
       case 'bfr':
-        totalBFR++;
+        totalBFR += 1;
         totalBFRUpmass += upmass;
         break;
 
@@ -49,8 +49,8 @@ const launchCount = (pastLaunches) => {
   // Manually remove Amos-6 mission from launch count.
   // This *mission* was a failure but it never technically *launched*
   // Handling this exception in the API with a distinct parameter would be almost useless
-  totalFalcon9--;
-  totalLaunches--;
+  totalFalcon9 -= 1;
+  totalLaunches -= 1;
 
   return {
     totalLaunches,

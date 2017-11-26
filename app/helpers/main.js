@@ -1,14 +1,14 @@
-import nextLaunches from 'helpers/nextLaunches';
-import launchCount from 'helpers/launchCount';
-import launchHistory from 'helpers/launchHistory';
-import landingHistory from 'helpers/landingHistory';
-import reuseHistory from 'helpers/reuseHistory';
-import launchpadCount from 'helpers/launchpadCount';
-import turnarounds from 'helpers/turnarounds';
-import dragon from 'helpers/dragon';
-import payloads from 'helpers/payloads';
-import people from 'helpers/people';
-import timelines from 'helpers/timelines';
+import nextLaunches from '~/helpers/nextLaunches';
+import launchCount from '~/helpers/launchCount';
+import launchHistory from '~/helpers/launchHistory';
+import landingHistory from '~/helpers/landingHistory';
+import reuseHistory from '~/helpers/reuseHistory';
+import launchpadCount from '~/helpers/launchpadCount';
+import turnarounds from '~/helpers/turnarounds';
+import dragon from '~/helpers/dragon';
+import payloads from '~/helpers/payloads';
+import people from '~/helpers/people';
+import timelines from '~/helpers/timelines';
 
 const computeStats = (pastLaunches, upcomingLaunches) => {
   const nextLaunchesData = nextLaunches(upcomingLaunches);
@@ -37,7 +37,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Total',
       tabTitle: 'Total',
       type: 'integer',
-      data: {'value': launchCountData.totalLaunches, 'subtitle': 'Flights'},
+      data: { value: launchCountData.totalLaunches, subtitle: 'Flights' },
       text: `As of October 2017, SpaceX has launched ${launchCountData.totalLaunches} rockets,
             carrying a variety of payloads to multiple destinations;including LEO, GTO, L1, and the ISS.
             SpaceX currently has a manifest of over 70 flights that will fly over the coming years.`,
@@ -45,7 +45,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Falcon 9',
       tabTitle: 'Falcon 9',
       type: 'integer',
-      data: {'value': launchCountData.totalFalcon9, 'subtitle': 'Flights'},
+      data: { value: launchCountData.totalFalcon9, subtitle: 'Flights' },
       text: `Nearly 3/4's the height of the Saturn V, yet thinner than a Space
             Shuttle SRB, Falcon 9 is the workhorse of SpaceX's rocket fleet. To
             date, it has launched ${launchCountData.totalFalcon9} times and has
@@ -56,7 +56,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Falcon Heavy',
       tabTitle: 'Falcon Heavy',
       type: 'integer',
-      data: {'value': launchCountData.totalFalconHeavy, 'subtitle': 'Flights'},
+      data: { value: launchCountData.totalFalconHeavy, subtitle: 'Flights' },
       text: `When Falcon Heavy launches at the end of 2017, it will become the world's
             most powerful rocket, able to carry up to 64 metric tonnes to LEO
             in full expendable mode, rising on its 27 first stage Merlin 1D engines.
@@ -65,7 +65,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Falcon 1',
       tabTitle: 'Falcon 1',
       type: 'integer',
-      data: {'value': launchCountData.totalFalcon1, 'subtitle': 'Flights'},
+      data: { value: launchCountData.totalFalcon1, subtitle: 'Flights' },
       text: `Falcon 1 was SpaceX's original two stage rocket - the first stage
             equipped with a single Merlin 1A engine, and later, the venerable Merlin 1C.
             Launched exclusively from Kwajalein, it was able to lift 670kg to LEO
@@ -75,7 +75,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'BFR',
       tabTitle: 'BFR',
       type: 'integer',
-      data: {'value': launchCountData.totalBFR, 'subtitle': 'Flights'},
+      data: { value: launchCountData.totalBFR, subtitle: 'Flights' },
       text: `BFR will stand 106 meters tall, 9 meters wide, and will be able
             to carry up to 150 tonnes (reusable) to Low Earth Orbit.
             This will be the single largest rocket ever designed, developed and then built.`,
@@ -115,7 +115,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Landed',
       tabTitle: 'Landed',
       type: 'integer',
-      data: {'value': landingHistoryData.totalLanded, 'subtitle': 'Landed'},
+      data: { value: landingHistoryData.totalLanded, subtitle: 'Landed' },
       text: `For SpaceX to succeed at reducing the cost of getting payload to orbit,
             reusability of launch vehicles is imperative. The first phase of this
             involves returning the first stage of the rocket back safely to
@@ -133,7 +133,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Heaviest',
       tabTitle: 'Heaviest',
       type: 'integer',
-      data: {'value': landingHistoryData.heaviestLanding.mass, 'subtitle': 'Kilograms'},
+      data: { value: landingHistoryData.heaviestLanding.mass, subtitle: 'Kilograms' },
       text: `The heaviest mission launched to date that enabled a successful
             landing was the ${landingHistoryData.heaviestLanding.mission} mission,
             which performed ${landingHistoryData.heaviestLanding.landingType}.`,
@@ -141,7 +141,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Heaviest to GTO',
       tabTitle: 'Heaviest to GTO',
       type: 'integer',
-      data: {'value': landingHistoryData.heaviestLandingGTO.mass, 'subtitle': 'Kilograms'},
+      data: { value: landingHistoryData.heaviestLandingGTO.mass, subtitle: 'Kilograms' },
       text: `Geostationary Orbit is much more energetic than other orbits and
             landing after a GTO launch is much more challenging. The heaviest GTO
             mission landed was the ${landingHistoryData.heaviestLandingGTO.mission}
@@ -153,7 +153,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Reflown',
       tabTitle: 'Reflown',
       type: 'integer',
-      data: {'value': reuseHistoryData.totalReflown, 'subtitle': 'Reflown'},
+      data: { value: reuseHistoryData.totalReflown, subtitle: 'Reflown' },
       text: `Once on the ground, the booster must be able to be refurbished and
             reflown in minimal time and with minimal cost. Only then can they be
             reflown, reducing launch costs significantly.`,
@@ -161,7 +161,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Most launches',
       tabTitle: 'Most launches',
       type: 'integer',
-      data: {'value': reuseHistoryData.mostReflownCore.launches, 'subtitle': 'Launches'},
+      data: { value: reuseHistoryData.mostReflownCore.launches, subtitle: 'Launches' },
       text: `The ${reuseHistoryData.mostReflownCore.core} booster is the one who
             flew the most, it was used for these missions:
             ${reuseHistoryData.mostReflownCore.missions}.`,
@@ -178,7 +178,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Fairings',
       tabTitle: 'Fairings',
       type: 'integer',
-      data: {'value': reuseHistoryData.totalFairingsReflown, 'subtitle': 'Reflown'},
+      data: { value: reuseHistoryData.totalFairingsReflown, subtitle: 'Reflown' },
       text: `Made of carbon fiber, the industrial process required to make
             the fairings is time and factory space consuming. Reusing them is the
             next step towards reduced launch costs.`,
@@ -189,7 +189,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Cape Canaveral',
       tabTitle: 'Cape Canaveral',
       type: 'integer',
-      data: {'value': launchpadCountData.totalSLC40, 'subtitle': 'Launches'},
+      data: { value: launchpadCountData.totalSLC40, subtitle: 'Launches' },
       text: `Cape Canaveral Air Force Station Space Launch Complex 40 (SLC-40),
             is the launch site of Falcon 9 carrying Dragon towards the
             International Space Station, and the starting point for many
@@ -199,7 +199,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'KSC',
       background: 'ses10.jpg',
       type: 'integer',
-      data: {'value': launchpadCountData.totalHLC39A, 'subtitle': 'Launches'},
+      data: { value: launchpadCountData.totalHLC39A, subtitle: 'Launches' },
       text: `In April 2014, SpaceX signed an agreement with NASA for a 20 year
             lease on the historic Pad 39A at Kennedy Space Center. Since then,
             SpaceX has constructed a horizontal integration hangar capable of
@@ -211,7 +211,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'Vandenberg',
       background: 'iridium1.jpg',
       type: 'integer',
-      data: {'value': launchpadCountData.totalVAFB, 'subtitle': 'Launches'},
+      data: { value: launchpadCountData.totalVAFB, subtitle: 'Launches' },
       text: `Vandenberg AFB Space Launch Complex 4E (SLC-4E) in California is
             SpaceX's departure point for satellites (mostly scientific and Earth
             observation) seeking a polar orbit around the Earth. SLC-4E was last
@@ -221,7 +221,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'Boca Chica',
       background: 'bocachica.jpg',
       type: 'integer',
-      data: {'value': launchpadCountData.totalBocaChica, 'subtitle': 'Launches'},
+      data: { value: launchpadCountData.totalBocaChica, subtitle: 'Launches' },
       text: `Boca Chica Beach, Texas is the location of SpaceX's new commercial-only
             private launch site designed to handle LEO & GEO launches on a tight
             schedule, freeing up other launch sites for other uses. It is expected
@@ -231,7 +231,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'Kwajalein',
       background: 'kwaj.jpg',
       type: 'integer',
-      data: {'value': launchpadCountData.totalKwajalein, 'subtitle': 'Launches'},
+      data: { value: launchpadCountData.totalKwajalein, subtitle: 'Launches' },
       text: `Omelek Island in Kwajalein Atoll was SpaceX's first launch site,
             used exclusively to launch the Falcon 1. Surrounded by vast amounts
             of sea and open ocean, making it the perfect site to launch untested
@@ -296,7 +296,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Missions',
       tabTitle: 'Missions',
       type: 'integer',
-      data: {'value': dragonData.totalFlights, 'subtitle': 'Flights'},
+      data: { value: dragonData.totalFlights, subtitle: 'Flights' },
       text: `Dragon is SpaceX's orbital spacecraft, and has flown
             ${dragonData.totalFlights} times atop of a Falcon 9 rocket.
             In December 2010, Dragon became the first privately developed
@@ -306,7 +306,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'ISS Resupplies',
       tabTitle: 'ISS Resupplies',
       type: 'integer',
-      data: {'value': dragonData.totalISSResupplies, 'subtitle': 'Flights'},
+      data: { value: dragonData.totalISSResupplies, subtitle: 'Flights' },
       text: `Dragon has flown ${dragonData.totalISSResupplies} times to the ISS
             under NASA's Commercial Resupply Services Program, as part of a now
             20-long mission contract to ferry cargo and supplies to and from the ISS.`,
@@ -332,7 +332,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Up',
       tabTitle: 'Up',
       type: 'integer',
-      data: {'value': dragonData.totalCargoUp, 'subtitle': 'Kilograms up'},
+      data: { value: dragonData.totalCargoUp, subtitle: 'Kilograms up' },
       text: `Dragon remains the only spacecraft in service capable of returning
             significant quantities of cargo from the Station to Earth - up to 6
             tonnes up and 3 tonnes down.`,
@@ -340,7 +340,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Down',
       tabTitle: 'Down',
       type: 'integer',
-      data: {'value': dragonData.totalCargoDown, 'subtitle': 'Kilograms down'},
+      data: { value: dragonData.totalCargoDown, subtitle: 'Kilograms down' },
       text: `Dragon remains the only spacecraft in service capable of returning
             significant quantities of cargo from the Station to Earth - up to 6
             tonnes up and 3 tonnes down.`,
@@ -348,7 +348,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Reflights',
       tabTitle: 'Reflights',
       type: 'integer',
-      data: {'value': dragonData.totalReflights, 'subtitle': 'Reflights'},
+      data: { value: dragonData.totalReflights, subtitle: 'Reflights' },
       text: `Starting with CRS-11, SpaceX will move to reflying previously flown
             Dragons as a measure to reduce costs even further. This will see
             Dragon 1 pressure vessel production wind down.`,
@@ -359,7 +359,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Total Mass',
       tabTitle: 'Total Mass',
       type: 'integer',
-      data: {'value': payloadsData.totalMass, 'subtitle': 'Kilograms'},
+      data: { value: payloadsData.totalMass, subtitle: 'Kilograms' },
       text: `These satellites can have a variety of masses, from the smallest
             cubesats which can weigh less than 1 kilogram, to huge comsats
             over 5 tonnes.`,
@@ -367,7 +367,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Heaviest',
       tabTitle: 'Heaviest',
       type: 'integer',
-      data: {'value': payloadsData.heaviestPayload.mass, 'subtitle': 'Kilograms'},
+      data: { value: payloadsData.heaviestPayload.mass, subtitle: 'Kilograms' },
       text: `${payloadsData.heaviestPayload.mission}, launched for
             ${payloadsData.heaviestPayload.customers} represents the heaviest
             payload SpaceX has lofted into orbit.`,
@@ -375,7 +375,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Heaviest to GTO',
       tabTitle: 'Heaviest to GTO',
       type: 'integer',
-      data: {'value': payloadsData.heaviestPayloadGTO.mass, 'subtitle': 'Kilograms'},
+      data: { value: payloadsData.heaviestPayloadGTO.mass, subtitle: 'Kilograms' },
       text: `Geostationary Orbit serves as the nest for heavy communications
             satellites, where they can orbit the Earth at the same speed as the
             Earth rotates. ${payloadsData.heaviestPayloadGTO.mission}, launched for
@@ -385,7 +385,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'Starlink',
       tabTitle: 'Starlink',
       type: 'integer',
-      data: {'value': payloadsData.internetConstellation, 'subtitle': 'Satellites'},
+      data: { value: payloadsData.internetConstellation, subtitle: 'Satellites' },
       text: `SpaceX's constellation of satellites will provide high speed internet
             anywhere on the globe. Built in Seattle, they will be launched from
             a variety of locations, potentially allowing Falcon to become the
@@ -405,7 +405,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'DragonRiders In Space',
       tabTitle: 'In space',
       type: 'integer',
-      data: {'value': peopleData.dragonridersInSpace, 'subtitle': 'DragonRiders'},
+      data: { value: peopleData.dragonridersInSpace, subtitle: 'DragonRiders' },
       text: `No SpaceX astronauts have flown yet. Dragon 2, being developed as
             part of NASA's Commercial Crew Transportation Capability (CCtCap)
             program, performed a pad abort test in May 2015. The first orbital
@@ -414,7 +414,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       title: 'DragonRiders Cumulative',
       tabTitle: 'Cumulative',
       type: 'integer',
-      data: {'value': peopleData.dragonridersCumulative, 'subtitle': 'DragonRiders'},
+      data: { value: peopleData.dragonridersCumulative, subtitle: 'DragonRiders' },
       text: `No SpaceX astronauts have flown yet. Dragon 2, being developed as
             part of NASA's Commercial Crew Transportation Capability (CCtCap)
             program, performed a pad abort test in May 2015. The first orbital
@@ -424,7 +424,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'Moon Population',
       background: 'moon.jpg',
       type: 'integer',
-      data: {'value': peopleData.moonPopulation, 'subtitle': 'People'},
+      data: { value: peopleData.moonPopulation, subtitle: 'People' },
       text: `While the Moon has never been SpaceX's main focus, BFR will enable
             the construction of a Moon Base Alpha if customers want to build it.`,
     }, {
@@ -432,14 +432,14 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'Mars Population',
       background: 'mars.jpg',
       type: 'integer',
-      data: {'value': peopleData.marsPopulation, 'subtitle': 'People'},
+      data: { value: peopleData.marsPopulation, subtitle: 'People' },
       text: 'No one\'s there yet ;-)',
     }, {
       title: 'Employees Count',
       tabTitle: 'Employees',
       background: 'tankland.jpg',
       type: 'integer',
-      data: {'value': peopleData.employees, 'subtitle': 'People'},
+      data: { value: peopleData.employees, subtitle: 'People' },
       text: '',
     }],
 

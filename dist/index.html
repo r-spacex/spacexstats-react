@@ -1,0 +1,29 @@
+<html>
+    <head>
+    	<meta charset="utf-8">
+        <title>SpaceX Stats</title>
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="SpaceX Stats is the ultimate place to keep track of SpaceX's achievements into providing cheaper access to space and making human life multiplanetary">
+
+        <!-- Load API ressources first -->
+        <link rel="prefetch" as="fetch" href="https://api.spacexdata.com/v1/launches">
+        <link rel="prefetch" as="fetch" href="https://api.spacexdata.com/v1/launches/upcoming">
+
+        <!-- Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet" type="text/css">
+        <link href="fonts.css" rel="stylesheet" type="text/css">
+
+        <!-- Opengraph tags -->
+        <meta property="og:site_name" content="SpaceX Stats">
+        <meta property="og:title" content="SpaceX Stats">
+        <meta property="og:locale" content="en_EN">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="https://spacexstats.xyz/img/oglogo.png">
+        <meta property="og:url" content="https://spacexstats.xyz">
+        <meta property="og:description" content="SpaceX Stats is the ultimate place to keep track of SpaceX's achievements into providing cheaper access to space and making human life multiplanetary">
+    <link rel="apple-touch-icon" sizes="57x57" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-icon-180x180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="spacexstats"><meta name="mobile-web-app-capable" content="yes"><meta name="theme-color" content="#fff"><meta name="application-name" content="spacexstats"><link rel="icon" type="image/png" sizes="32x32" href="/icons-ab28b953ba8973add11b2d3a76845e6a/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/icons-ab28b953ba8973add11b2d3a76845e6a/favicon-16x16.png"><link rel="shortcut icon" href="/icons-ab28b953ba8973add11b2d3a76845e6a/favicon.ico"><link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-startup-image-320x460.png"><link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-startup-image-640x920.png"><link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-startup-image-640x1096.png"><link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-startup-image-750x1294.png"><link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 3)" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-startup-image-1182x2208.png"><link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-startup-image-1242x2148.png"><link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-startup-image-748x1024.png"><link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-startup-image-768x1004.png"><link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-startup-image-1496x2048.png"><link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" href="/icons-ab28b953ba8973add11b2d3a76845e6a/apple-touch-startup-image-1536x2008.png"><link href="/main-74eecdbe701034101eaa.min.css" rel="stylesheet"></head>
+    <body>
+        <div id="root"></div>
+    <script type="text/javascript" src="/main-74eecdbe701034101eaa.js"></script></body>
+</html>

@@ -15,43 +15,41 @@ const reuseHistory = (pastLaunches) => {
     let turnaround = null;
 
     // Ignore Falcon 1
-    if (launch.rocket.rocket_id === 'falcon1') {
-      continue;
-    }
+    if (launch.rocket.rocket_id !== 'falcon1') {
+      if (!(launch.core_serial in cores)) {
+        cores[launch.core_serial] = {
+          reflown: false,
+          launches: [],
+        };
+      } else {
+        totalReflown += 1;
+        cores[launch.core_serial].reflown = true;
+        const previousLaunches = cores[launch.core_serial].launches;
+        const previousLaunch = previousLaunches[previousLaunches.length - 1];
+        turnaround = launchDate - previousLaunch.date;
 
-    if (!(launch.core_serial in cores)) {
-      cores[launch.core_serial] = {
-        'reflown': false,
-        'launches': new Array(),
-      };
-    } else {
-      totalReflown++;
-      cores[launch.core_serial].reflown = true;
-      const previousLaunches = cores[launch.core_serial].launches;
-      const previousLaunch = previousLaunches[previousLaunches.length - 1];
-      turnaround = launchDate - previousLaunch.date;
+        // Check for most reflown core
+        if (mostReflownCore === null
+          || previousLaunches.length + 1 > cores[mostReflownCore].launches.length) {
+          mostReflownCore = launch.core_serial;
+        }
 
-      // Check for most reflown core
-      if (mostReflownCore === null
-        || previousLaunches.length + 1 > cores[mostReflownCore].launches.length) {
-        mostReflownCore = launch.core_serial;
+        // Check for quickest turnaround
+        if (quickestTurnaround === null
+          || turnaround < quickestTurnaround) {
+          quickestTurnaround = turnaround;
+          quickestTurnaroundCore = launch.core_serial;
+          quickestTurnaroundMission1 = previousLaunch.name;
+          quickestTurnaroundMission2 = launch.payloads[0].payload_id;
+        }
       }
 
-      // Check for quickest turnaround
-      if (quickestTurnaround === null
-        || turnaround < quickestTurnaround) {
-        quickestTurnaround = turnaround;
-        quickestTurnaroundCore = launch.core_serial;
-        quickestTurnaroundMission1 = previousLaunch.name;
-        quickestTurnaroundMission2 = launch.payloads[0].payload_id;
-      }
+      cores[launch.core_serial].launches.push({
+        name: launch.payloads[0].payload_id,
+        date: launchDate,
+        turnaround,
+      });
     }
-
-    cores[launch.core_serial].launches.push({
-      name: launch.payloads[0].payload_id,
-      date: launchDate,
-      turnaround,
-    });
   }
 
   // Get mission names of most reflown core

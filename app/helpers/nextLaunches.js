@@ -15,7 +15,7 @@ const nextLaunches = (upcomingLaunches) => {
                   ${payloadMass}kg of supplies and scientific cargo to the ISS.`;
   } else {
     payloadDesc = `SpaceX will launch
-                  the${payloadMass > 0 ? payloadMass + 'kg' : ''} communication
+                  the${payloadMass > 0 ? `${payloadMass}kg` : ''} communication
                   satellite${launch.payloads.length > 1 ? 's ' : ' '}
                   ${payloadName} into a ${launch.payloads[0].orbit} trajectory.`;
   }
@@ -25,7 +25,7 @@ const nextLaunches = (upcomingLaunches) => {
   const nextLaunch = {
     date: launch.launch_date_unix,
     payloadName,
-    payloadDesc
+    payloadDesc,
   };
 
   return {

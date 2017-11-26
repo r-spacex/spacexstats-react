@@ -3,7 +3,7 @@ const people = () => {
   const dragonridersCumulative = 0;
   const moonPopulation = 0;
   const marsPopulation = 0;
-  const employees = 6000;
+  const employees = 7000;
 
   return {
     dragonridersInSpace,

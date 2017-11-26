@@ -1,10 +1,16 @@
-import settings from 'settings';
+import settings from '~/settings';
 
 const timelines = (pastLaunches) => {
   const quickestTurnarounds = {
-    ccafs_slc_40: {turnaround: null, mission1: null, mission2: null, previousMission: null},
-    ksc_lc_39a: {turnaround: null, mission1: null, mission2: null, previousMission: null},
-    vafb_slc_4e: {turnaround: null, mission1: null, mission2: null, previousMission: null},
+    ccafs_slc_40: {
+      turnaround: null, mission1: null, mission2: null, previousMission: null,
+    },
+    ksc_lc_39a: {
+      turnaround: null, mission1: null, mission2: null, previousMission: null,
+    },
+    vafb_slc_4e: {
+      turnaround: null, mission1: null, mission2: null, previousMission: null,
+    },
   };
   let quickestTurnaroundPad = null;
   let quickestTurnaroundPadName = '';
@@ -40,45 +46,40 @@ const timelines = (pastLaunches) => {
     runningAverage10FlightsData[i - 1] = runningAverage10Flights;
 
     // Ignore Kwajalein for pad stats
-    if (launch.launch_site.site_id === 'kwajalein_atoll') {
-      continue;
-    }
+    if (launch.launch_site.site_id !== 'kwajalein_atoll') {
+      // Check if quicker than current turnaround for the pad
+      const launchpad = launch.launch_site.site_id;
+      const quickestPadTurnaround = quickestTurnarounds[launchpad];
+      const padTurnaround = launchDate - quickestPadTurnaround.previousMission;
+      const currentMissionName = launch.payloads[0].payload_id;
 
-    // Check if quicker than current turnaround for the pad
-    const launchpad = launch.launch_site.site_id;
-    const quickestPadTurnaround = quickestTurnarounds[launchpad];
-    const padTurnaround = launchDate - quickestPadTurnaround.previousMission;
-    const currentMissionName = launch.payloads[0].payload_id;
-
-    // This is the first mission accounted for this pad
-    if (quickestPadTurnaround.previousMission === null) {
-      quickestTurnarounds[launchpad].mission1 = launch.payloads[0].payload_id;
-    } else {
-      // Do we need to update the quickest pad turnaround?
-      // First time we get a turnaround (2nd mission from this pad)
-      if (quickestPadTurnaround.turnaround === null) {
+      // This is the first mission accounted for this pad
+      if (quickestPadTurnaround.previousMission === null) {
+        quickestTurnarounds[launchpad].mission1 = launch.payloads[0].payload_id;
+      } else if (quickestPadTurnaround.previousMission !== null &&
+                quickestPadTurnaround.turnaround === null) {
         quickestTurnarounds[launchpad] = {
           turnaround: padTurnaround,
           mission1: quickestPadTurnaround.previousMissionName,
           mission2: currentMissionName,
         };
-      } else {
-        if (padTurnaround < quickestPadTurnaround.turnaround) {
-          quickestTurnarounds[launchpad] = {
-            turnaround: padTurnaround,
-            mission1: quickestPadTurnaround.previousMissionName,
-            mission2: currentMissionName,
-          };
-        }
+      } else if (quickestPadTurnaround.previousMission !== null &&
+                padTurnaround < quickestPadTurnaround.turnaround) {
+        quickestTurnarounds[launchpad] = {
+          turnaround: padTurnaround,
+          mission1: quickestPadTurnaround.previousMissionName,
+          mission2: currentMissionName,
+        };
       }
-    }
-    quickestTurnarounds[launchpad].previousMission = launchDate;
-    quickestTurnarounds[launchpad].previousMissionName = currentMissionName;
+      quickestTurnarounds[launchpad].previousMission = launchDate;
+      quickestTurnarounds[launchpad].previousMissionName = currentMissionName;
 
-    // Check if quickest turnaround ever
-    if (quickestTurnaroundPad === null || padTurnaround < quickestTurnarounds[quickestTurnaroundPad].turnaround) {
-      quickestTurnaroundPad = launchpad;
-      quickestTurnaroundPadName = launch.launch_site.site_name;
+      // Check if quickest turnaround ever
+      if (quickestTurnaroundPad === null ||
+          padTurnaround < quickestTurnarounds[quickestTurnaroundPad].turnaround) {
+        quickestTurnaroundPad = launchpad;
+        quickestTurnaroundPadName = launch.launch_site.site_name;
+      }
     }
   }
 
@@ -87,11 +88,11 @@ const timelines = (pastLaunches) => {
   options.scales.xAxes[0].ticks.display = false;
   options.scales.xAxes[0].stacked = false;
   options.scales.yAxes[0].stacked = false;
-  options.tooltips = {mode: 'label'};
+  options.tooltips = { mode: 'label' };
 
   const daysBetweenLaunches = {
     data: {
-      labels: labels,
+      labels,
       datasets: [{
         label: 'Running average (10 flights)',
         type: 'line',
@@ -118,18 +119,19 @@ const timelines = (pastLaunches) => {
         label: 'Days between launches',
         backgroundColor: settings.COLORS.blue,
         data: daysIntervals,
-      }]
+      }],
     },
-    options: options,
+    options,
   };
 
+  const lastLaunchDate = pastLaunches[pastLaunches.length - 1].launch_date_utc;
   return {
     quickestTurnaround: quickestTurnarounds[quickestTurnaroundPad],
-    quickestTurnaroundPadName: quickestTurnaroundPadName,
+    quickestTurnaroundPadName,
     quickestTurnaroundSLC40: quickestTurnarounds.ccafs_slc_40,
     quickestTurnaroundHLC39A: quickestTurnarounds.ksc_lc_39a,
     quickestTurnaroundSLC4E: quickestTurnarounds.vafb_slc_4e,
-    lastLaunchDate: new Date(pastLaunches[pastLaunches.length - 1].launch_date_utc).getTime() / 1000,
+    lastLaunchDate: new Date(lastLaunchDate).getTime() / 1000,
     daysBetweenLaunches,
   };
 };

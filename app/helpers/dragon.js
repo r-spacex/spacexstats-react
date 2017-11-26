@@ -1,4 +1,4 @@
-import settings from 'settings';
+import settings from '~/settings';
 
 const payloads = (pastLaunches) => {
   let totalFlights = 0;
@@ -11,17 +11,14 @@ const payloads = (pastLaunches) => {
   const crsFlightTimes = [];
   const allCapsules = [];
 
-  for (let i = 0; i < pastLaunches.length; i++) {
-    const launch = pastLaunches[i];
+  const dragonLaunches = pastLaunches.filter(launch => launch.payloads[0].payload_type.indexOf('Dragon') !== -1 && !launch.payloads[0].payload_id.indexOf('Dragon Qualification Unit') !== -1);
+
+  for (let i = 0; i < dragonLaunches.length; i++) {
+    const launch = dragonLaunches[i];
     const flightTime = launch.payloads[0].flight_time_sec;
 
-    if (launch.payloads[0].payload_type.indexOf('Dragon') === -1
-      || launch.payloads[0].payload_id.indexOf('Dragon Qualification Unit') !== -1) {
-      continue;
-    }
-
     if (launch.launch_success) {
-      totalFlights++;
+      totalFlights += 1;
 
       if (Number.isInteger(flightTime)) {
         totalFlightTime += flightTime;
@@ -29,7 +26,7 @@ const payloads = (pastLaunches) => {
 
       // Check if reused
       if (allCapsules.indexOf(launch.cap_serial) !== -1) {
-        totalReflights++;
+        totalReflights += 1;
       } else {
         allCapsules.push(launch.cap_serial);
       }
@@ -37,7 +34,7 @@ const payloads = (pastLaunches) => {
 
     if (launch.payloads[0].payload_id.indexOf('CRS') !== -1) {
       if (launch.launch_success) {
-        totalISSResupplies++;
+        totalISSResupplies += 1;
         totalCargoUp += launch.payloads[0].payload_mass_kg;
         totalCargoDown += launch.payloads[0].mass_returned_kg;
       }
@@ -68,7 +65,7 @@ const payloads = (pastLaunches) => {
         data: crsFlightTimes,
       }],
     },
-    options: options,
+    options,
   };
 
   return {

@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
-import PropTypes from 'prop-types';
+
+import './Navbar.styl';
 
 class Navbar extends Component {
   constructor(props) {
@@ -12,7 +14,7 @@ class Navbar extends Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.selectedTab !== null) {
-      this.setState({currentTab: newProps.selectedTab});
+      this.setState({ currentTab: newProps.selectedTab });
     }
   }
 
@@ -21,7 +23,7 @@ class Navbar extends Component {
       return;
     }
 
-    this.setState({currentTab: tab});
+    this.setState({ currentTab: tab });
 
     if (this.props.onChangeCallback) {
       this.props.onChangeCallback(tab);
@@ -39,10 +41,12 @@ class Navbar extends Component {
       <nav className="Navbar fx-col-xs fx-row fx-wrap">
         {this.props.tabs.map((tab, index) => (
           <div key={index} className="fx-col-xs">
-            <a onClick={() => { this.changeTab(tab); }}
-               className={`Navbar__link ${tab === this.state.currentTab ? ' Navbar__link--active' : ''}`}>
+            <button
+              onClick={() => { this.changeTab(tab); }}
+              className={`Navbar__link ${tab === this.state.currentTab ? ' Navbar__link--active' : ''}`}
+            >
               {tab}
-            </a>
+            </button>
           </div>
        ))}
       </nav>
@@ -50,9 +54,14 @@ class Navbar extends Component {
   }
 }
 
+Navbar.defaultProps = {
+  selectedTab: null,
+  onChangeCallback: () => {},
+};
+
 Navbar.propTypes = {
-  tabs: PropTypes.array.isRequired,
-  selectedTab: PropTypes.string,
+  tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedTab: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
   onChangeCallback: PropTypes.func,
 };
 

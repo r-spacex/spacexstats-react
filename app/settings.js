@@ -75,7 +75,7 @@ export default {
           fontFamily: 'Brandon',
           fontColor: colors.white,
         },
-      }]
+      }],
     },
   },
 };

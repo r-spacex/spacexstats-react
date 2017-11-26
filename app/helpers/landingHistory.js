@@ -1,9 +1,9 @@
-import settings from 'settings';
+import settings from '~/settings';
 
 const landingHistory = (pastLaunches) => {
   let totalLanded = 0;
-  let heaviestLanding = {mass: 0, mission: '', landingType: ''};
-  let heaviestLandingGTO = {mass: 0, mission: '', landingType: ''};
+  let heaviestLanding = { mass: 0, mission: '', landingType: '' };
+  let heaviestLandingGTO = { mass: 0, mission: '', landingType: '' };
 
   // For landing history graph
   const yearsStart = 2013; // First landing attempt
@@ -18,68 +18,63 @@ const landingHistory = (pastLaunches) => {
   const jrtiLandings = new Array(years.length).fill(0);
   const failureLandings = new Array(years.length).fill(0);
 
+  const notFalcon1Launches = pastLaunches.filter(launch => launch.rocket.rocket_id !== 'falcon1');
+
   // List cores
-  for (let i = 0; i < pastLaunches.length; i++) {
-    const launch = pastLaunches[i];
-    // Ignore Falcon 1
-    if (launch.rocket.rocket_id === 'falcon1') {
-      continue;
-    }
+  for (let i = 0; i < notFalcon1Launches.length; i++) {
+    const launch = notFalcon1Launches[i];
 
     if (launch.land_success && launch.landing_type !== 'Ocean') {
-      totalLanded++;
+      totalLanded += 1;
     }
 
     // Landing history chart
     const yearIndex = launch.launch_year - yearsStart;
     if (launch.landing_type !== null && launch.land_success === false) {
-      failureLandings[yearIndex]++;
-      continue;
-    }
+      failureLandings[yearIndex] += 1;
+    } else {
+      let formattedLandingType;
+      switch (launch.landing_type) {
+        case 'Ocean':
+          oceanLandings[yearIndex] += 1;
+          formattedLandingType = 'an ocean landing';
+          break;
+        case 'RTLS':
+          rtlsLandings[yearIndex] += 1;
+          formattedLandingType = 'a RTLS landing';
+          break;
+        case 'ASDS':
+          if (launch.landing_vehicle === 'JRTI') {
+            jrtiLandings[yearIndex] += 1;
+            formattedLandingType = 'an ASDS landing on JRTI';
+          } else if (launch.landing_vehicle === 'OCISLY') {
+            ocislyLandings[yearIndex] += 1;
+            formattedLandingType = 'an ASDS landing on OCISLY';
+          }
+          break;
 
-    let formattedLandingType;
-    switch (launch.landing_type) {
-      case 'Ocean':
-        oceanLandings[yearIndex]++;
-        formattedLandingType = 'an ocean landing';
-        break;
-      case 'RTLS':
-        rtlsLandings[yearIndex]++;
-        formattedLandingType = 'a RTLS landing';
-        break;
-      case 'ASDS':
-        if (launch.landing_vehicle === 'JRTI') {
-          jrtiLandings[yearIndex]++;
-          formattedLandingType = 'an ASDS landing on JRTI';
-        } else if (launch.landing_vehicle === 'OCISLY') {
-          ocislyLandings[yearIndex]++;
-          formattedLandingType = 'an ASDS landing on OCISLY';
-        }
-        break;
-
-      default:
-        // Ignore non landed cores
-        continue;
-    }
-
-    // Heaviest payload landings
-    for (let j = 0; j < launch.payloads.length; j++) {
-      const payload = launch.payloads[j];
-
-      if (payload.payload_mass_kg > heaviestLanding.mass) {
-        heaviestLanding = {
-          mass: payload.payload_mass_kg,
-          mission: payload.payload_id,
-          landingType: formattedLandingType,
-        };
+        default:
       }
 
-      if (payload.orbit === 'GTO' && payload.payload_mass_kg > heaviestLandingGTO.mass) {
-        heaviestLandingGTO = {
-          mass: payload.payload_mass_kg,
-          mission: payload.payload_id,
-          landingType: formattedLandingType,
-        };
+      // Heaviest payload landings
+      for (let j = 0; j < launch.payloads.length; j++) {
+        const payload = launch.payloads[j];
+
+        if (payload.payload_mass_kg > heaviestLanding.mass) {
+          heaviestLanding = {
+            mass: payload.payload_mass_kg,
+            mission: payload.payload_id,
+            landingType: formattedLandingType,
+          };
+        }
+
+        if (payload.orbit === 'GTO' && payload.payload_mass_kg > heaviestLandingGTO.mass) {
+          heaviestLandingGTO = {
+            mass: payload.payload_mass_kg,
+            mission: payload.payload_id,
+            landingType: formattedLandingType,
+          };
+        }
       }
     }
   }
@@ -100,7 +95,7 @@ const landingHistory = (pastLaunches) => {
         if (dataset.label === 'Failures') {
           window.landingFailures = count;
         }
-        return dataset.label + ': ' + count.toString();
+        return `${dataset.label}: ${count.toString()}`;
       },
       footer: () => {
         const total = window.landingTotal.toString();
@@ -133,9 +128,9 @@ const landingHistory = (pastLaunches) => {
         label: 'Failures',
         backgroundColor: settings.COLORS.red,
         data: failureLandings,
-      }]
+      }],
     },
-    options: options,
+    options,
   };
 
   return {
