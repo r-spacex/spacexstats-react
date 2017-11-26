@@ -84,12 +84,12 @@ const launchHistory = (pastLaunches) => {
 
       // Add upmass to orbit
       let upmass = 0;
-      for (let j = 0; j < launch.payloads.length; j++) {
-        upmass += launch.payloads[j].payload_mass_kg;
+      for (let j = 0; j < launch.rocket.second_stage.payloads.length; j++) {
+        upmass += launch.rocket.second_stage.payloads[j].payload_mass_kg;
       }
 
       const yearUpmassIndex = launch.launch_year - yearsUpmassStart;
-      switch (launch.payloads[0].orbit) {
+      switch (launch.rocket.second_stage.payloads[0].orbit) {
         case 'LEO': upmassPerOrbit.LEO[yearUpmassIndex] += upmass; break;
         case 'ISS': upmassPerOrbit.ISS[yearUpmassIndex] += upmass; break;
         case 'Polar': upmassPerOrbit.Polar[yearUpmassIndex] += upmass; break;

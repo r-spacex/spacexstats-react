@@ -18,23 +18,25 @@ const landingHistory = (pastLaunches) => {
   const jrtiLandings = new Array(years.length).fill(0);
   const failureLandings = new Array(years.length).fill(0);
 
-  const notFalcon1Launches = pastLaunches.filter(launch => launch.rocket.rocket_id !== 'falcon1');
+  const landingAttemptsLaunches = pastLaunches.filter(launch =>
+    launch.rocket.first_stage.cores[0].landing_type !== null);
 
   // List cores
-  for (let i = 0; i < notFalcon1Launches.length; i++) {
-    const launch = notFalcon1Launches[i];
+  for (let i = 0; i < landingAttemptsLaunches.length; i++) {
+    const launch = landingAttemptsLaunches[i];
+    const core = launch.rocket.first_stage.cores[0];
 
-    if (launch.land_success && launch.landing_type !== 'Ocean') {
+    if (core.land_success && core.landing_type !== 'Ocean') {
       totalLanded += 1;
     }
 
     // Landing history chart
     const yearIndex = launch.launch_year - yearsStart;
-    if (launch.landing_type !== null && launch.land_success === false) {
+    if (core.land_success === false) {
       failureLandings[yearIndex] += 1;
     } else {
       let formattedLandingType;
-      switch (launch.landing_type) {
+      switch (core.landing_type) {
         case 'Ocean':
           oceanLandings[yearIndex] += 1;
           formattedLandingType = 'an ocean landing';
@@ -44,10 +46,10 @@ const landingHistory = (pastLaunches) => {
           formattedLandingType = 'a RTLS landing';
           break;
         case 'ASDS':
-          if (launch.landing_vehicle === 'JRTI') {
+          if (core.landing_vehicle === 'JRTI') {
             jrtiLandings[yearIndex] += 1;
             formattedLandingType = 'an ASDS landing on JRTI';
-          } else if (launch.landing_vehicle === 'OCISLY') {
+          } else if (core.landing_vehicle === 'OCISLY') {
             ocislyLandings[yearIndex] += 1;
             formattedLandingType = 'an ASDS landing on OCISLY';
           }
@@ -57,8 +59,8 @@ const landingHistory = (pastLaunches) => {
       }
 
       // Heaviest payload landings
-      for (let j = 0; j < launch.payloads.length; j++) {
-        const payload = launch.payloads[j];
+      for (let j = 0; j < launch.rocket.second_stage.payloads.length; j++) {
+        const payload = launch.rocket.second_stage.payloads[j];
 
         if (payload.payload_mass_kg > heaviestLanding.mass) {
           heaviestLanding = {

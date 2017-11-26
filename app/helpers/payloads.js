@@ -11,17 +11,17 @@ const payloads = (pastLaunches) => {
   for (let i = 0; i < successfulLaunches.length; i++) {
     const launch = successfulLaunches[i];
 
-    for (let j = 0; j < launch.payloads.length; j++) {
+    for (let j = 0; j < launch.rocket.second_stage.payloads.length; j++) {
       // Only consider first customer
-      const payload = launch.payloads[j];
+      const payload = launch.rocket.second_stage.payloads[j];
       const customer = payload.customers[0];
       if (!customers[customer]) {
         customers[customer] = [];
       }
-      customers[customer].push(launch.payloads[j].payload_id);
+      customers[customer].push(launch.rocket.second_stage.payloads[j].payload_id);
 
       // Exclude Dragon flights for the following stats
-      if (launch.payloads[0].payload_type.indexOf('Dragon') === -1) {
+      if (launch.rocket.second_stage.payloads[0].payload_type.indexOf('Dragon') === -1) {
         totalMass += payload.payload_mass_kg;
 
         if (payload.payload_mass_kg > heaviestPayload.mass) {

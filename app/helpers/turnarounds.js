@@ -30,7 +30,7 @@ const timelines = (pastLaunches) => {
     const turnaround = launchDate - previousLaunchDate;
 
     // Fill bar chart
-    labels.push(`#${launch.flight_number} ${launch.rocket.rocket_name} ${launch.payloads[0].payload_id}`);
+    labels.push(`#${launch.flight_number} ${launch.rocket.rocket_name} ${launch.rocket.second_stage.payloads[0].payload_id}`);
     const interval = Math.round(turnaround / (24 * 3600));
     daysIntervals[i - 1] = interval;
     runningAverage = Math.round(((runningAverage * (i - 1)) + interval) / i);
@@ -51,11 +51,11 @@ const timelines = (pastLaunches) => {
       const launchpad = launch.launch_site.site_id;
       const quickestPadTurnaround = quickestTurnarounds[launchpad];
       const padTurnaround = launchDate - quickestPadTurnaround.previousMission;
-      const currentMissionName = launch.payloads[0].payload_id;
+      const currentMissionName = launch.rocket.second_stage.payloads[0].payload_id;
 
       // This is the first mission accounted for this pad
       if (quickestPadTurnaround.previousMission === null) {
-        quickestTurnarounds[launchpad].mission1 = launch.payloads[0].payload_id;
+        quickestTurnarounds[launchpad].mission1 = launch.rocket.second_stage.payloads[0].payload_id;
       } else if (quickestPadTurnaround.previousMission !== null &&
                 quickestPadTurnaround.turnaround === null) {
         quickestTurnarounds[launchpad] = {

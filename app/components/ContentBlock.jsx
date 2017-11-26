@@ -81,6 +81,13 @@ class ContentBlock extends Component {
     const dataset = JSON.parse(JSON.stringify(stat.data));
     switch (stat.type) {
       case 'countdown':
+        if (dataset === null) {
+          statcomponent = <TextStat data="TBD" />;
+          break;
+        }
+        statcomponent = <TimeStat data={dataset} type={stat.type} />;
+        break;
+
       case 'timer':
       case 'duration':
         statcomponent = <TimeStat data={dataset} type={stat.type} />;
@@ -112,7 +119,7 @@ class ContentBlock extends Component {
 
     // Exception: add ribbon for the next launch section (launch datetime)
     let ribbonText = null;
-    if (this.props.anchor === 'nextlaunch') {
+    if (this.props.anchor === 'nextlaunch' && dataset !== null) {
       ribbonText = moment.unix(stat.data).format('MMM Do, h:mm:ssa (UTCZ)');
     }
 

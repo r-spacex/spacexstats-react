@@ -16,8 +16,8 @@ const launchCount = (pastLaunches) => {
 
     let upmass = 0;
     if (launch.launch_success) {
-      for (let j = 0; j < launch.payloads.length; j++) {
-        upmass += launch.payloads[j].payload_mass_kg;
+      for (let j = 0; j < launch.rocket.second_stage.payloads.length; j++) {
+        upmass += launch.rocket.second_stage.payloads[j].payload_mass_kg;
       }
     }
 
