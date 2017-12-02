@@ -68,7 +68,7 @@ const launchHistory = (pastLaunches) => {
           break;
 
         case 'falcon9':
-          if (launch.reused) {
+          if (launch.rocket.first_stage.cores[0].reused) {
             falcon9ProvenFlights[yearIndex] += 1;
           } else {
             falcon9UnprovenFlights[yearIndex] += 1;

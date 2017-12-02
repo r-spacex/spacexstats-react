@@ -20,8 +20,6 @@ class Root extends Component {
     this.state = {
       stats: null,
     };
-    this.pastLaunches = null;
-    this.upcomingLaunches = null;
     this.anchors = [
       'nextlaunch',
       'launchcount',
@@ -45,19 +43,15 @@ class Root extends Component {
 
   componentWillMount() {
     // Wait for the two datasets to be loaded then compute the stats
-    apiGet('/launches').then((response) => {
-      this.pastLaunches = JSON.parse(response.text);
-      if (this.upcomingLaunches !== null) {
-        this.setState({ stats: computeStats(this.pastLaunches, this.upcomingLaunches) });
-      }
+    Promise.all([apiGet('/launches'), apiGet('/launches/upcoming')]).then((values) => {
+      this.setState({
+        stats: computeStats(
+          JSON.parse(values[0].text),
+          JSON.parse(values[1].text),
+        ),
+      });
     });
 
-    apiGet('/launches/upcoming').then((response) => {
-      this.upcomingLaunches = JSON.parse(response.text);
-      if (this.pastLaunches !== null) {
-        this.setState({ stats: computeStats(this.pastLaunches, this.upcomingLaunches) });
-      }
-    });
     ReactGA.pageview('/');
   }
 
