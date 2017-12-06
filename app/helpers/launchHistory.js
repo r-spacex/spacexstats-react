@@ -33,9 +33,12 @@ const launchHistory = (pastLaunches) => {
 
   const flights = [];
   const successRateFalcon9 = [];
+  const successRateFalconHeavy = [];
   const successRateAll = [];
   let falcon9LaunchesCount = 0;
   let failuresFalcon9 = 0;
+  let falconHeavyLaunchesCount = 0;
+  let failuresFalconHeavy = 0;
   let failuresAll = 0;
 
   for (let i = 1; i < pastLaunches.length + 1; i++) {
@@ -48,13 +51,23 @@ const launchHistory = (pastLaunches) => {
       if (launch.rocket.rocket_id === 'falcon9') {
         failuresFalcon9 += 1;
       }
+      if (launch.rocket.rocket_id === 'falconheavy') {
+        failuresFalconHeavy += 1;
+      }
     }
     if (launch.rocket.rocket_id === 'falcon9') {
       falcon9LaunchesCount += 1;
-      const successRatio = (falcon9LaunchesCount - failuresFalcon9) / falcon9LaunchesCount;
-      successRateFalcon9.push(100 * successRatio);
+      const ratio = (falcon9LaunchesCount - failuresFalcon9) / falcon9LaunchesCount;
+      successRateFalcon9.push(100 * ratio);
     } else {
       successRateFalcon9.push(null);
+    }
+    if (launch.rocket.rocket_id === 'falconheavy') {
+      falconHeavyLaunchesCount += 1;
+      const ratio = (falconHeavyLaunchesCount - failuresFalconHeavy) / falconHeavyLaunchesCount;
+      successRateFalconHeavy.push(100 * ratio);
+    } else {
+      successRateFalconHeavy.push(null);
     }
     successRateAll.push(100 * (i - failuresAll) / i);
 
@@ -84,9 +97,9 @@ const launchHistory = (pastLaunches) => {
 
       // Add upmass to orbit
       let upmass = 0;
-      for (let j = 0; j < launch.rocket.second_stage.payloads.length; j++) {
-        upmass += launch.rocket.second_stage.payloads[j].payload_mass_kg;
-      }
+      launch.rocket.second_stage.payloads.forEach((payload) => {
+        upmass += payload.payload_mass_kg;
+      });
 
       const yearUpmassIndex = launch.launch_year - yearsUpmassStart;
       switch (launch.rocket.second_stage.payloads[0].orbit) {
@@ -203,6 +216,17 @@ const launchHistory = (pastLaunches) => {
         pointBackgroundColor: settings.COLORS.yellow,
         pointHoverBackgroundColor: settings.COLORS.yellow,
         pointHoverBorderColor: settings.COLORS.yellow,
+      }, {
+        label: 'Falcon Heavy',
+        type: 'line',
+        data: successRateFalconHeavy,
+        fill: false,
+        borderColor: settings.COLORS.green,
+        backgroundColor: settings.COLORS.green,
+        pointBorderColor: settings.COLORS.green,
+        pointBackgroundColor: settings.COLORS.green,
+        pointHoverBackgroundColor: settings.COLORS.green,
+        pointHoverBorderColor: settings.COLORS.green,
       }, {
         label: 'All rockets',
         type: 'line',

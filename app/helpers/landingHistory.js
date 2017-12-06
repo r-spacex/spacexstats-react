@@ -22,46 +22,46 @@ const landingHistory = (pastLaunches) => {
     launch.rocket.first_stage.cores[0].landing_type !== null);
 
   // List cores
-  for (let i = 0; i < landingAttemptsLaunches.length; i++) {
-    const launch = landingAttemptsLaunches[i];
-    const core = launch.rocket.first_stage.cores[0];
-
-    if (core.land_success && core.landing_type !== 'Ocean') {
-      totalLanded += 1;
-    }
-
-    // Landing history chart
-    const yearIndex = launch.launch_year - yearsStart;
-    if (core.land_success === false) {
-      failureLandings[yearIndex] += 1;
-    } else {
-      let formattedLandingType;
-      switch (core.landing_type) {
-        case 'Ocean':
-          oceanLandings[yearIndex] += 1;
-          formattedLandingType = 'an ocean landing';
-          break;
-        case 'RTLS':
-          rtlsLandings[yearIndex] += 1;
-          formattedLandingType = 'a RTLS landing';
-          break;
-        case 'ASDS':
-          if (core.landing_vehicle === 'JRTI') {
-            jrtiLandings[yearIndex] += 1;
-            formattedLandingType = 'an ASDS landing on JRTI';
-          } else if (core.landing_vehicle === 'OCISLY') {
-            ocislyLandings[yearIndex] += 1;
-            formattedLandingType = 'an ASDS landing on OCISLY';
-          }
-          break;
-
-        default:
+  landingAttemptsLaunches.forEach((launch) => {
+    let formattedLandingType;
+    launch.rocket.first_stage.cores.forEach((core) => {
+      if (core.land_success && core.landing_type !== 'Ocean') {
+        totalLanded += 1;
       }
 
-      // Heaviest payload landings
-      for (let j = 0; j < launch.rocket.second_stage.payloads.length; j++) {
-        const payload = launch.rocket.second_stage.payloads[j];
+      // Landing history chart
+      const yearIndex = launch.launch_year - yearsStart;
+      if (core.land_success === false) {
+        failureLandings[yearIndex] += 1;
+      } else {
+        switch (core.landing_type) {
+          case 'Ocean':
+            oceanLandings[yearIndex] += 1;
+            formattedLandingType = 'an ocean landing';
+            break;
+          case 'RTLS':
+            rtlsLandings[yearIndex] += 1;
+            formattedLandingType = 'a RTLS landing';
+            break;
+          case 'ASDS':
+            if (core.landing_vehicle === 'JRTI') {
+              jrtiLandings[yearIndex] += 1;
+              formattedLandingType = 'an ASDS landing on JRTI';
+            } else if (core.landing_vehicle === 'OCISLY') {
+              ocislyLandings[yearIndex] += 1;
+              formattedLandingType = 'an ASDS landing on OCISLY';
+            }
+            break;
 
+          default:
+        }
+      }
+    });
+
+    // Heaviest payload landings
+    // Exclude Falcon Heavy because it is irrelevant.
+    if (launch.rocket.rocket_id === 'falcon9') {
+      launch.rocket.second_stage.payloads.forEach((payload) => {
         if (payload.payload_mass_kg > heaviestLanding.mass) {
           heaviestLanding = {
             mass: payload.payload_mass_kg,
@@ -77,9 +77,9 @@ const landingHistory = (pastLaunches) => {
             landingType: formattedLandingType,
           };
         }
-      }
+      });
     }
-  }
+  });
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
   options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));

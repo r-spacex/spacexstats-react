@@ -5,8 +5,8 @@ const launchpadCount = (pastLaunches) => {
   const totalBocaChica = 0;
   let totalKwajalein = 0;
 
-  for (let i = 0; i < pastLaunches.length; i++) {
-    switch (pastLaunches[i].launch_site.site_id) {
+  pastLaunches.forEach((launch) => {
+    switch (launch.launch_site.site_id) {
       case 'ccafs_slc_40': totalSLC40 += 1; break;
       case 'ksc_lc_39a': totalHLC39A += 1; break;
       case 'vafb_slc_4e': totalVAFB += 1; break;
@@ -14,7 +14,7 @@ const launchpadCount = (pastLaunches) => {
 
       default:
     }
-  }
+  });
 
   return {
     totalSLC40,

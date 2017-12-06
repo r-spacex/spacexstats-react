@@ -12,8 +12,7 @@ const payloads = (pastLaunches) => {
 
   const dragonLaunches = pastLaunches.filter(launch => launch.rocket.second_stage.payloads[0].payload_type.indexOf('Dragon') !== -1 && launch.rocket.second_stage.payloads[0].payload_id.indexOf('Dragon Qualification Unit') === -1);
 
-  for (let i = 0; i < dragonLaunches.length; i++) {
-    const launch = dragonLaunches[i];
+  dragonLaunches.forEach((launch) => {
     const flightTime = launch.rocket.second_stage.payloads[0].flight_time_sec;
 
     if (launch.launch_success) {
@@ -38,7 +37,7 @@ const payloads = (pastLaunches) => {
       crsLabels.push(launch.rocket.second_stage.payloads[0].payload_id.replace('SpaceX ', ''));
       crsFlightTimes.push((flightTime / 3600).toFixed(1));
     }
-  }
+  });
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS));
   options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));

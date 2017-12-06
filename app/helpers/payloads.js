@@ -8,20 +8,17 @@ const payloads = (pastLaunches) => {
   const customers = {};
   const successfulLaunches = pastLaunches.filter(launch => launch.launch_success);
 
-  for (let i = 0; i < successfulLaunches.length; i++) {
-    const launch = successfulLaunches[i];
-
-    for (let j = 0; j < launch.rocket.second_stage.payloads.length; j++) {
+  successfulLaunches.forEach((launch) => {
+    launch.rocket.second_stage.payloads.forEach((payload) => {
       // Only consider first customer
-      const payload = launch.rocket.second_stage.payloads[j];
       const customer = payload.customers[0];
       if (!customers[customer]) {
         customers[customer] = [];
       }
-      customers[customer].push(launch.rocket.second_stage.payloads[j].payload_id);
+      customers[customer].push(payload.payload_id);
 
       // Exclude Dragon flights for the following stats
-      if (launch.rocket.second_stage.payloads[0].payload_type.indexOf('Dragon') === -1) {
+      if (payload.payload_type.indexOf('Dragon') === -1) {
         totalMass += payload.payload_mass_kg;
 
         if (payload.payload_mass_kg > heaviestPayload.mass) {
@@ -40,14 +37,13 @@ const payloads = (pastLaunches) => {
           };
         }
       }
-    }
-  }
+    });
+  });
 
   // Clean customers list
   customers.Others = [];
   const customerKeys = Object.keys(customers);
-  for (let i = 0; i < customerKeys.length; i++) {
-    const customer = customerKeys[i];
+  customerKeys.forEach((customer) => {
     if (customers[customer].length < 2) {
       customers.Others = customers.Others.concat(customers[customer]);
       delete customers[customer];
@@ -56,7 +52,7 @@ const payloads = (pastLaunches) => {
       customers.NASA = customers.NASA.concat(customers[customer]);
       delete customers[customer];
     }
-  }
+  });
 
   const options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
   options.tooltips = {

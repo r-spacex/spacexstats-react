@@ -10,15 +10,14 @@ const launchCount = (pastLaunches) => {
   let totalFalconHeavyUpmass = 0;
   let totalBFRUpmass = 0;
 
-  for (let i = 0; i < pastLaunches.length; i++) {
-    const launch = pastLaunches[i];
+  pastLaunches.forEach((launch) => {
     totalLaunches += 1;
 
     let upmass = 0;
     if (launch.launch_success) {
-      for (let j = 0; j < launch.rocket.second_stage.payloads.length; j++) {
-        upmass += launch.rocket.second_stage.payloads[j].payload_mass_kg;
-      }
+      launch.rocket.second_stage.payloads.forEach((payload) => {
+        upmass += payload.payload_mass_kg;
+      });
     }
 
     switch (launch.rocket.rocket_id) {
@@ -44,7 +43,7 @@ const launchCount = (pastLaunches) => {
 
       default:
     }
-  }
+  });
 
   // Manually remove Amos-6 mission from launch count.
   // This *mission* was a failure but it never technically *launched*

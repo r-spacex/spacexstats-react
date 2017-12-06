@@ -112,8 +112,8 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
 
 
     landingHistory: [{
-      title: 'Landed',
-      tabTitle: 'Landed',
+      title: 'Cores Landed',
+      tabTitle: 'Cores Landed',
       type: 'integer',
       data: { value: landingHistoryData.totalLanded, subtitle: 'Landed' },
       text: `For SpaceX to succeed at reducing the cost of getting payload to orbit,
@@ -130,21 +130,21 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       text: `SpaceX begun its testing of booster landings in 2013. Now landings
             are almost routine for the public.`,
     }, {
-      title: 'Heaviest',
-      tabTitle: 'Heaviest',
+      title: 'Heaviest F9 landing',
+      tabTitle: 'Heaviest F9',
       type: 'integer',
       data: { value: landingHistoryData.heaviestLanding.mass, subtitle: 'Kilograms' },
-      text: `The heaviest mission launched to date that enabled a successful
+      text: `The heaviest Falcon 9 mission launched to date that enabled a successful
             landing was the ${landingHistoryData.heaviestLanding.mission} mission,
             which performed ${landingHistoryData.heaviestLanding.landingType}.`,
     }, {
-      title: 'Heaviest to GTO',
-      tabTitle: 'Heaviest to GTO',
+      title: 'Heaviest F9 landing to GTO',
+      tabTitle: 'Heaviest F9 to GTO',
       type: 'integer',
       data: { value: landingHistoryData.heaviestLandingGTO.mass, subtitle: 'Kilograms' },
       text: `Geostationary Orbit is much more energetic than other orbits and
             landing after a GTO launch is much more challenging. The heaviest GTO
-            mission landed was the ${landingHistoryData.heaviestLandingGTO.mission}
+            Falcon 9 mission landed was the ${landingHistoryData.heaviestLandingGTO.mission}
             mission, which performed ${landingHistoryData.heaviestLandingGTO.landingType}.`,
     }],
 
