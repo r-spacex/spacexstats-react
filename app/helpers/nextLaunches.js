@@ -1,13 +1,19 @@
 const nextLaunches = (upcomingLaunches) => {
-  const launch = upcomingLaunches[0];
+  // Find first launch with non-null launch date
+  let i = 0;
+  let launch = upcomingLaunches[i];
+  while (launch.launch_date_unix === null && i < upcomingLaunches.length - 1) {
+    launch = upcomingLaunches[i];
+    i += 1;
+  }
 
   const payloadNames = [];
   let payloadMass = 0;
 
-  for (let i = 0; i < launch.rocket.second_stage.payloads.length; i++) {
-    payloadNames.push(launch.rocket.second_stage.payloads[i].payload_id);
-    payloadMass += launch.rocket.second_stage.payloads[i].payload_mass_kg;
-  }
+  launch.rocket.second_stage.payloads.forEach((payload) => {
+    payloadNames.push(payload.payload_id);
+    payloadMass += payload.payload_mass_kg;
+  });
   const payloadName = payloadNames.join('/');
 
   let payloadDesc = '';
