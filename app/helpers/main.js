@@ -175,6 +175,15 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             ${reuseHistoryData.quickestReuseTurnaround.mission1} and
             ${reuseHistoryData.quickestReuseTurnaround.mission2} missions.`,
     }, {
+      title: 'Day intervals',
+      tabTitle: 'Day intervals',
+      type: 'barchart',
+      data: reuseHistoryData.daysBetweenReuses.data,
+      options: reuseHistoryData.daysBetweenReuses.options,
+      text: `This chart shows the turnaround in days for a reflown booster. It
+            includes the refurbishment time but also the time to find a customer
+            willing to use it. SpaceX's ultimate goal is to achieve a 24h turnaround.`,
+    }, {
       title: 'Fairings',
       tabTitle: 'Fairings',
       type: 'integer',
