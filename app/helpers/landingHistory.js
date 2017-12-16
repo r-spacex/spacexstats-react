@@ -19,7 +19,7 @@ const landingHistory = (pastLaunches) => {
   const failureLandings = new Array(years.length).fill(0);
 
   const landingAttemptsLaunches = pastLaunches.filter(launch =>
-    launch.rocket.first_stage.cores[0].landing_type !== null);
+    launch.launch_success && launch.rocket.first_stage.cores[0].landing_type !== null);
 
   // List cores
   landingAttemptsLaunches.forEach((launch) => {
