@@ -19,12 +19,12 @@ const nextLaunches = (upcomingLaunches) => {
   let payloadDesc = '';
   if (launch.rocket.second_stage.payloads[0].payload_type.indexOf('Dragon') !== -1) {
     payloadDesc = `A SpaceX Dragon capsule will launch into LEO atop a
-                    ${launch.rocket.rocket_name} rocket from
-                    ${launch.launch_site.site_name_long}, carrying
-                    ${payloadMass} kg of supplies and scientific cargo to the
-                    International Space Station.`;
+                  ${launch.rocket.rocket_name} rocket from
+                  ${launch.launch_site.site_name_long}, carrying
+                  ${payloadMass} kg of supplies and scientific cargo to the
+                  International Space Station.`;
   } else {
-  payloadDesc = `A SpaceX ${launch.rocket.rocket_name} rocket will launch from
+    payloadDesc = `A SpaceX ${launch.rocket.rocket_name} rocket will launch from
                   ${launch.launch_site.site_name_long},
                   lofting the ${payloadMass > 0 ? `${payloadMass} kg ` : ''}
                   satellite${launch.rocket.second_stage.payloads.length > 1 ? 's ' : ' '}
