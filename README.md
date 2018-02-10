@@ -12,8 +12,8 @@ The project will be installed on a Vagrant virtual machine. All the dev tools wi
 ### Setup instructions
 
 1. In the project directory, run the `vagrant up` command.
-2. Add this line to your hostfile (`/etc/hosts` on Linux/Mac, `C:\Windows\system32\drivers\etc\hosts` on Windows): `33.33.33.33 spacexstats.dev`.
-3. Log into the Vagrant machine using `vagrant ssh` then do `yarn start`. The project is now accessible by going to `http://spacexstats.dev:8080`!
+2. Add this line to your hostfile (`/etc/hosts` on Linux/Mac, `C:\Windows\system32\drivers\etc\hosts` on Windows): `33.33.33.33 spacexstats.test`.
+3. Log into the Vagrant machine using `vagrant ssh` then do `yarn start`. The project is now accessible by going to `http://spacexstats.test:8080`!
 4. ...
 5. Profit!
 
