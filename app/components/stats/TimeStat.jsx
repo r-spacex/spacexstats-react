@@ -1,109 +1,91 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 
 import './TimeStat.styl';
 
-class TimeStat extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    };
-    this.duration = null;
-  }
+const ONE_SECOND_IN_MS = 1000;
+const ONE_MINUTE_IN_S = 60;
+const ONE_HOUR_IN_S = ONE_MINUTE_IN_S * 60;
+const ONE_DAY_IN_S = ONE_HOUR_IN_S * 24;
 
-  componentWillMount() {
-    this.initTimer(this.props);
-  }
+const TimeStat = (props) => {
+  let secondsLeft = Math.floor(Math.abs(props.data));
+  const days = Math.floor(secondsLeft / ONE_DAY_IN_S);
+  secondsLeft -= ONE_DAY_IN_S * days;
+  const hours = Math.floor(secondsLeft / ONE_HOUR_IN_S);
+  secondsLeft -= ONE_HOUR_IN_S * hours;
+  const minutes = Math.floor(secondsLeft / ONE_MINUTE_IN_S);
+  secondsLeft -= ONE_MINUTE_IN_S * minutes;
+  const seconds = Math.floor(secondsLeft);
 
-  componentWillReceiveProps(newProps) {
-    if (this.props !== newProps) {
-      if (this.props.type === 'timer' || this.props.type === 'countdown') {
-        clearInterval(this.interval);
-      }
-      this.initTimer(newProps);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.props.type === 'timer' || this.props.type === 'countdown') {
-      clearInterval(this.interval);
-    }
-  }
-
-  initTimer = (props) => {
-    if (props.type === 'duration') {
-      this.duration = props.data;
-      this.updateTimer();
-      return;
-    }
-
-    const eventTime = props.data;
-    const currentTime = Math.floor(new Date().getTime() / 1000);
-    this.duration = eventTime - currentTime;
-
-    if (this.duration < 0) {
-      this.duration = -this.duration;
-    }
-
-    this.updateTimer();
-    this.interval = setInterval(this.updateTimer, 1000);
-  }
-
-  updateTimer = () => {
-    const factor = this.props.type === 'countdown' ? -1 : 1;
-    this.duration = this.duration + factor;
-
-    let secondsLeft = this.duration;
-    const days = Math.floor(secondsLeft / (60 * 60 * 24));
-    secondsLeft -= 60 * 60 * 24 * days;
-    const hours = Math.floor(secondsLeft / (60 * 60));
-    secondsLeft -= 60 * 60 * hours;
-    const minutes = Math.floor(secondsLeft / 60);
-    secondsLeft -= 60 * minutes;
-    const seconds = Math.floor(secondsLeft);
-
-    this.setState({
-      days,
-      hours,
-      minutes,
-      seconds,
-    });
-  }
-
-  render() {
-    return (
-      <div className="TimeStat text-center text-uppercase full-width padded">
-        <div className="fx-row fx-around-xs">
-          <div className={`fx-col-xs${this.state.days < 10 ? '-2' : ''} fx-col`}>
-            <div className="TimeStat__value">{this.state.days.toLocaleString()}</div>
-            <div className="TimeStat__subtitle">Days</div>
-          </div>
-          <div className="fx-col-xs-2 fx-col">
-            <div className="TimeStat__value">{this.state.hours.toLocaleString()}</div>
-            <div className="TimeStat__subtitle">Hours</div>
-          </div>
-          <div className="fx-col-xs-2 fx-col">
-            <div className="TimeStat__value">{this.state.minutes.toLocaleString()}</div>
-            <div className="TimeStat__subtitle">Minutes</div>
-          </div>
-          <div className="fx-col-xs-2 fx-col">
-            <div className="TimeStat__value">{this.state.seconds.toLocaleString()}</div>
-            <div className="TimeStat__subtitle">Seconds</div>
-          </div>
+  return (
+    <div className="TimeStat text-center text-uppercase full-width padded">
+      <div className="fx-row fx-around-xs">
+        <div className={`fx-col-xs${days < 10 ? '-2' : ''} fx-col`}>
+          <div className="TimeStat__value">{days.toLocaleString()}</div>
+          <div className="TimeStat__subtitle">Days</div>
+        </div>
+        <div className="fx-col-xs-2 fx-col">
+          <div className="TimeStat__value">{hours.toLocaleString()}</div>
+          <div className="TimeStat__subtitle">Hours</div>
+        </div>
+        <div className="fx-col-xs-2 fx-col">
+          <div className="TimeStat__value">{minutes.toLocaleString()}</div>
+          <div className="TimeStat__subtitle">Minutes</div>
+        </div>
+        <div className="fx-col-xs-2 fx-col">
+          <div className="TimeStat__value">{seconds.toLocaleString()}</div>
+          <div className="TimeStat__subtitle">Seconds</div>
         </div>
       </div>
-    );
-  }
-}
-
-TimeStat.propTypes = {
-  type: PropTypes.string.isRequired,
-  // Unix timestamp
-  data: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
+    </div>
+  );
 };
 
-export default TimeStat;
+TimeStat.propTypes = {
+  data: PropTypes.number.isRequired, // Unix timestamp
+};
+
+const onInterval = (propFunc, interval) => Component =>
+  class OnInterval extends React.Component {
+    constructor(...args) {
+      super(...args);
+      this.state = propFunc(this.props);
+    }
+    componentWillMount() {
+      this.update = newProps => this.setState(propFunc(newProps || this.props));
+      this.interval = setInterval(this.update, interval);
+    }
+
+    componentWillReceiveProps(newProps) {
+      this.update(newProps);
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.interval);
+    }
+
+    render() {
+      return (
+        <Component {...this.props} {...this.state}>
+          {this.children}
+        </Component>
+      );
+    }
+  };
+
+const calculateDuration = props => ({
+  data: props.data - Math.floor(Date.now() / ONE_SECOND_IN_MS),
+});
+
+const isDuration = props => props.type === 'duration';
+
+const either = (predicate, A, B) => props => (
+  predicate(props) ? <A {...props} /> : <B {...props} />
+);
+
+export default either(
+  isDuration,
+  TimeStat,
+  onInterval(calculateDuration, ONE_SECOND_IN_MS)(TimeStat),
+);
