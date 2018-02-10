@@ -144,7 +144,7 @@ class Root extends Component {
 
           <ContentBlock
             titlePrefix="Launch History"
-            backgroundImage="orbcommliftoff.jpg"
+            backgroundImage="falconheavy.jpg"
             anchor={this.anchors[2]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
@@ -153,7 +153,7 @@ class Root extends Component {
 
           <ContentBlock
             titlePrefix="Landing History"
-            backgroundImage="crs6barge.jpg"
+            backgroundImage="doublelanding.jpg"
             anchor={this.anchors[3]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}

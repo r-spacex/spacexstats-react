@@ -57,10 +57,10 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'Falcon Heavy',
       type: 'integer',
       data: { value: launchCountData.totalFalconHeavy, subtitle: 'Flights' },
-      text: `When Falcon Heavy launches at the end of 2017, it will become the world's
-            most powerful rocket, able to carry up to 64 metric tonnes to LEO
-            in full expendable mode, rising on its 27 first stage Merlin 1D engines.
-            Only the mighty Saturn V has delivered more payload to orbit.`,
+      text: `Falcon Heavy is the world's most powerful rocket, able to carry up
+            to 64 metric tonnes to LEO in full expendable mode, rising on its 27
+            first stage Merlin 1D engines. Only the mighty Saturn V has delivered
+            more payload to orbit.`,
     }, {
       title: 'Falcon 1',
       tabTitle: 'Falcon 1',
@@ -106,8 +106,8 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       data: launchHistoryData.upmassPerYear.data,
       options: launchHistoryData.upmassPerYear.options,
       text: `SpaceX has launched payloads into a variety of orbits, including
-            interplanetary missions. With Falcon Heavy, SpaceX will be able to
-            cover most orbit and mission types.`,
+            interplanetary missions. With Falcon 9 and Falcon Heavy, SpaceX is
+            able to cover most orbit and mission types.`,
     }],
 
 
@@ -474,13 +474,6 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             were 14 employees strong. Their second facility was an enormous
             warehouse in El Segundo, where they built the Falcon 1. When they
             outgrew that, they moved to their current facility in Hawthorne.`,
-    }, {
-      title: 'Falcon Heavy',
-      tabTitle: 'Falcon Heavy',
-      background: 'fh-launch.jpg',
-      type: 'countdown',
-      data: timelinesData.falconHeavyLaunchDate,
-      text: 'When will Falcon Heavy launch?',
     }, {
       title: 'Hours Worked',
       tabTitle: 'Hours Worked',
