@@ -3,7 +3,7 @@
     src: url('fonts/brandon-reg-webfont.ttf'),
          url('fonts/brandon-reg-webfont.eot');
     font-weight: normal;
-    font-style: italic;
+    font-style: normal;
 }
 
 @font-face {
@@ -11,5 +11,5 @@
     src: url('fonts/brandon-thin-webfont.ttf'),
          url('fonts/brandon-thin-webfont.eot');
     font-weight: normal;
-    font-style: italic;
+    font-style: normal;
 }
