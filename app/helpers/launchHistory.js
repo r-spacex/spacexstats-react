@@ -105,13 +105,18 @@ const launchHistory = (pastLaunches) => {
       switch (launch.rocket.second_stage.payloads[0].orbit) {
         case 'LEO': upmassPerOrbit.LEO[yearUpmassIndex] += upmass; break;
         case 'ISS': upmassPerOrbit.ISS[yearUpmassIndex] += upmass; break;
-        case 'Polar': upmassPerOrbit.Polar[yearUpmassIndex] += upmass; break;
-        case 'GTO': upmassPerOrbit.GTO[yearUpmassIndex] += upmass; break;
+        case 'PO': upmassPerOrbit.Polar[yearUpmassIndex] += upmass; break;
+        case 'GTO':
+        case 'HEO':
+        case 'SSO':
+          upmassPerOrbit.GTO[yearUpmassIndex] += upmass; break;
         case 'ES-L1':
+        case 'HCO':
           upmassPerOrbit.Interplanetary[yearUpmassIndex] += upmass;
           break;
 
-        default: upmassPerOrbit.Other[yearUpmassIndex] += upmass;
+        default:
+          upmassPerOrbit.Other[yearUpmassIndex] += upmass;
       }
     } else {
       failureFlights[yearIndex] += 1;
