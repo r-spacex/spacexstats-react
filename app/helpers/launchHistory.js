@@ -60,14 +60,14 @@ const launchHistory = (pastLaunches) => {
       const ratio = (falcon9LaunchesCount - failuresFalcon9) / falcon9LaunchesCount;
       successRateFalcon9.push(100 * ratio);
     } else {
-      successRateFalcon9.push(null);
+      successRateFalcon9.push(successRateFalcon9[successRateFalcon9.length - 1]);
     }
     if (launch.rocket.rocket_id === 'falconheavy') {
       falconHeavyLaunchesCount += 1;
       const ratio = (falconHeavyLaunchesCount - failuresFalconHeavy) / falconHeavyLaunchesCount;
       successRateFalconHeavy.push(100 * ratio);
     } else {
-      successRateFalconHeavy.push(null);
+      successRateFalconHeavy.push(successRateFalconHeavy[successRateFalconHeavy.length - 1]);
     }
     successRateAll.push(100 * (i - failuresAll) / i);
 
