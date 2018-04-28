@@ -60,14 +60,14 @@ const launchHistory = (pastLaunches) => {
       const ratio = (falcon9LaunchesCount - failuresFalcon9) / falcon9LaunchesCount;
       successRateFalcon9.push(100 * ratio);
     } else {
-      successRateFalcon9.push(null);
+      successRateFalcon9.push(successRateFalcon9[successRateFalcon9.length - 1]);
     }
     if (launch.rocket.rocket_id === 'falconheavy') {
       falconHeavyLaunchesCount += 1;
       const ratio = (falconHeavyLaunchesCount - failuresFalconHeavy) / falconHeavyLaunchesCount;
       successRateFalconHeavy.push(100 * ratio);
     } else {
-      successRateFalconHeavy.push(null);
+      successRateFalconHeavy.push(successRateFalconHeavy[successRateFalconHeavy.length - 1]);
     }
     successRateAll.push(100 * (i - failuresAll) / i);
 
@@ -105,13 +105,18 @@ const launchHistory = (pastLaunches) => {
       switch (launch.rocket.second_stage.payloads[0].orbit) {
         case 'LEO': upmassPerOrbit.LEO[yearUpmassIndex] += upmass; break;
         case 'ISS': upmassPerOrbit.ISS[yearUpmassIndex] += upmass; break;
-        case 'Polar': upmassPerOrbit.Polar[yearUpmassIndex] += upmass; break;
-        case 'GTO': upmassPerOrbit.GTO[yearUpmassIndex] += upmass; break;
+        case 'PO': upmassPerOrbit.Polar[yearUpmassIndex] += upmass; break;
+        case 'GTO':
+        case 'HEO':
+        case 'SSO':
+          upmassPerOrbit.GTO[yearUpmassIndex] += upmass; break;
         case 'ES-L1':
+        case 'HCO':
           upmassPerOrbit.Interplanetary[yearUpmassIndex] += upmass;
           break;
 
-        default: upmassPerOrbit.Other[yearUpmassIndex] += upmass;
+        default:
+          upmassPerOrbit.Other[yearUpmassIndex] += upmass;
       }
     } else {
       failureFlights[yearIndex] += 1;
