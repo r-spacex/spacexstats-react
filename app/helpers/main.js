@@ -464,6 +464,17 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             since. This countdown clock expires on 1 January 2026, at 00:00 UTC.
             No pressure, Elon.`,
     }, {
+      title: 'Gwynne Shotwell\'s Bet',
+      tabTitle: 'Gwynne Shotwell\'s Bet',
+      background: 'gwynneshotwell.jpg',
+      type: 'countdown',
+      data: timelinesData.gwynneShotwellBet,
+      text: `In April 2018, SpaceX's COO Gwynne Shotwell declared during a TED
+            interview that SpaceX would provide a BFR Earth-to-Earth transportation
+            system within ten years. The price would be a couple thousand dollars
+            per person to fly New York to Shanghai. This countdown clock expires
+            on 1 January 2029, at 00:00 UTC. No pressure, Gwynne.`,
+    }, {
       title: 'Time Since Founding',
       tabTitle: 'Time Since Founding',
       background: 'spacexhq.jpg',
