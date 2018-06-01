@@ -4,7 +4,7 @@ const payloads = (pastLaunches) => {
   let heaviestPayload = { mass: 0, mission: '', customers: '' };
   let heaviestPayloadGTO = { mass: 0, mission: '', customers: '' };
   let totalMass = 0;
-  const internetConstellation = 0;
+  const internetConstellation = 2;
   const customers = {};
   const successfulLaunches = pastLaunches.filter(launch => launch.launch_success);
 
