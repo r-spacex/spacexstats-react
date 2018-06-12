@@ -16,6 +16,9 @@ const launchpadCount = (pastLaunches) => {
     }
   });
 
+  // Subtract 1 for Amos-6
+  totalSLC40 -= 1;
+
   return {
     totalSLC40,
     totalHLC39A,
