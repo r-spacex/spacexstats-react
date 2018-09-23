@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - "6"
+
+before_script:
+    - npm run build
+
+script: echo "no tests"
+
+deploy:
+  provider: pages
+  local-dir: dist
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  fqdn: www.spacexstats.xyz
+  on:
+    branch: master
