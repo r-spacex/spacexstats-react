@@ -49,8 +49,8 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             Shuttle SRB, Falcon 9 is the workhorse of SpaceX's rocket fleet. To
             date, it has launched ${launchCountData.totalFalcon9} times and has
             lifted ${launchCountData.totalFalcon9Upmass.toLocaleString()}kg to
-            orbit. It is not far from its last iteration (Falcon 9 v1.2 Block 5)
-            enabling rapid reusability.`,
+            orbit. It is currently flying in its final iteration (Falcon 9 v1.2
+            Block 5) enabling rapid reusability.`,
     }, {
       title: 'Falcon Heavy',
       tabTitle: 'Falcon Heavy',
