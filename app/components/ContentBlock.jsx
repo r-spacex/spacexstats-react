@@ -114,13 +114,17 @@ class ContentBlock extends Component {
         break;
 
       default:
-        statcomponent = 'Nothing to display';
+        if (typeof stat.type === 'function') {
+          statcomponent = <stat.type data={stat.data} />;
+        } else {
+          statcomponent = 'Nothing to display';
+        }
     }
 
     // Exception: add ribbon for the next launch section (launch datetime)
     let ribbonText = null;
     if (this.props.anchor === 'nextlaunch' && dataset !== null) {
-      ribbonText = moment.unix(stat.data).format('MMM Do, h:mm:ssa (UTCZ)');
+      ribbonText = moment.unix(stat.data).format('MMM Do, h:mm:ssa (UTC)');
     }
 
     const background = stat.background ? stat.background : this.props.backgroundImage;
@@ -157,9 +161,12 @@ class ContentBlock extends Component {
                 <div className="ContentBlock__stat fx-grow fx-row fx-center-xs fx-middle-xs mtop-big">
                   {statcomponent}
                 </div>
-                <div className="ContentBlock__text padded mtop-big">
-                  {stat.text}
-                </div>
+
+                {stat.text && (
+                  <div className="ContentBlock__text padded mtop-big">
+                    {stat.text}
+                  </div>
+                )}
 
                 {this.props.onMoveDown &&
                   <i className="ContentBlock__control ContentBlock__control--down fa fa-angle-down large" onClick={this.props.onMoveDown} onKeyUp={this.props.onMoveDown} role="button" tabIndex="0" />

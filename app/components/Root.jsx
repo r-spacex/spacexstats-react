@@ -21,7 +21,7 @@ class Root extends Component {
       stats: null,
     };
     this.anchors = [
-      'nextlaunch',
+      'next',
       'launchcount',
       'launchhistory',
       'landing',
@@ -126,7 +126,7 @@ class Root extends Component {
       <div>
         <Shortcuts name="NAVIGATION" handler={this.handleShortcuts} global>
           <ContentBlock
-            titlePrefix="Next Launch"
+            titlePrefix="Next Launches"
             backgroundImage="dscovrlaunch.jpg"
             anchor={this.anchors[0]}
             onMoveDown={this.moveDown}

@@ -1,3 +1,5 @@
+import LaunchesTable from '~/components/stats/LaunchesTable.jsx';
+
 import nextLaunches from '~/helpers/nextLaunches';
 import launchCount from '~/helpers/launchCount';
 import launchHistory from '~/helpers/launchHistory';
@@ -31,6 +33,11 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       type: 'countdown',
       data: nextLaunchesData.nextLaunch.date,
       text: nextLaunchesData.nextLaunch.payloadDesc,
+    }, {
+      title: 'Upcoming',
+      tabTitle: 'Upcoming',
+      type: LaunchesTable,
+      data: upcomingLaunches,
     }],
     launchCount: [{
       title: 'Total',
