@@ -6,7 +6,7 @@
   "author": "r/spacex",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "rimraf dist && NODE_ENV=production webpack --config webpack.prod.config.js --progress --colors",
+    "build": "rimraf dist && mkdir dist && cp -r public/* dist && NODE_ENV=production webpack --config webpack.prod.config.js --progress --colors",
     "start": "node main.js",
     "eslint": "eslint . --fix",
     "heroku-postbuild": "yarn build"
