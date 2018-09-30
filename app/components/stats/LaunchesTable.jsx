@@ -4,6 +4,27 @@ import moment from 'moment';
 
 import TableStat from './TableStat.jsx';
 
+const getQuarter = date => Math.floor((date.get('month') + 3) / 3);
+
+const displayLaunchTime = (date, precision) => {
+  switch (precision) {
+    case 'second':
+    case 'minute':
+    case 'hour':
+      return date.format('MMM Do YYYY, hh:mm');
+
+    case 'day':
+      return date.format('MMM Do YYYY');
+
+    case 'quarter':
+      return `Q${getQuarter(date)} ${date.format('YYYY')}`;
+
+    case 'month':
+    default:
+      return date.format('MMM YYYY');
+  }
+};
+
 const LaunchesTable = ({ data }) => {
   const config = [{
     width: '40%',
@@ -12,25 +33,8 @@ const LaunchesTable = ({ data }) => {
   }, {
     width: '26%',
     header: 'Date (UTC)',
-    renderCell: ({ launch_date_unix: date, tentative_max_precision: precision }) => {
-      let format;
-
-      switch (precision) {
-        case 'second':
-        case 'minute':
-        case 'hour':
-          format = 'MMM Do YYYY, hh:mm';
-          break;
-
-        case 'day':
-          format = 'MMM Do YYYY';
-          break;
-
-        default:
-          format = 'MMM YYYY';
-      }
-      return moment.unix(date).format(format);
-    },
+    renderCell: ({ launch_date_unix: date, tentative_max_precision: precision }) =>
+      displayLaunchTime(moment.unix(date), precision),
   }, {
     width: '17%',
     header: 'Vehicle',
@@ -40,6 +44,7 @@ const LaunchesTable = ({ data }) => {
     header: 'Launchpad',
     renderCell: ({ launch_site: { site_name: launchpad } }) => launchpad,
   }];
+
   return (
     <TableStat config={config} data={data} />
   );
