@@ -31,6 +31,7 @@ class Root extends Component {
       'dragon',
       'payloads',
       'people',
+      'bfr',
       'timelines',
       'infos',
     ];
@@ -215,9 +216,18 @@ class Root extends Component {
           />
 
           <ContentBlock
+            titlePrefix="BFR"
+            backgroundImage="bfrcargo.jpg"
+            anchor={this.anchors[10]}
+            onMoveDown={this.moveDown}
+            onMoveUp={this.moveUp}
+            stats={this.state.stats.bfr}
+          />
+
+          <ContentBlock
             titlePrefix="Timelines"
             backgroundImage="elonmusk.jpg"
-            anchor={this.anchors[10]}
+            anchor={this.anchors[11]}
             onMoveUp={this.moveUp}
             stats={this.state.stats.timelines}
           />
@@ -226,7 +236,8 @@ class Root extends Component {
             <ScrollableAnchor id="infos"><span /></ScrollableAnchor>
             <main className="fx-col fx-middle-xs fx-center-xs text-center full-height">
               <p className="fx-col-xs">
-                Photos on this page courtesy SpaceX, &amp; NASA. All rights maintained
+                Photos on this page courtesy SpaceX, &amp; NASA. BFS Hop Test image
+                by /u/IanAtkinson_NSF on Reddit. All rights maintained
                 by the respective owners.<br />
 
                 This site is fan-run and not affiliated with SpaceX in any way.

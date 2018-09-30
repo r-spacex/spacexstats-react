@@ -459,6 +459,39 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
     }],
 
 
+    bfr: [{
+      title: 'Hop Tests',
+      tabTitle: 'Hop Tests',
+      background: 'bfshop.jpg',
+      type: 'text',
+      data: 'H1 2019',
+    }, {
+      title: 'Orbital Tests',
+      tabTitle: 'Orbital Tests',
+      background: 'bfrorbital.jpg',
+      type: 'text',
+      data: '2021',
+    }, {
+      title: 'Cargo to Mars',
+      tabTitle: 'Cargo to Mars',
+      background: 'bfrcargo.jpg',
+      type: 'text',
+      data: '2022',
+    }, {
+      title: '#dearMoon',
+      tabTitle: '#dearMoon',
+      background: 'bfrdearmoon.jpg',
+      type: 'text',
+      data: '2023',
+    }, {
+      title: 'Crew to Mars',
+      tabTitle: 'Crew to Mars',
+      background: 'mars.jpg',
+      type: 'text',
+      data: '2024',
+    }],
+
+
     timelines: [{
       title: 'Elon Musk\'s Bet',
       tabTitle: 'Elon Musk\'s Bet',
