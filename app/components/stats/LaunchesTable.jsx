@@ -33,8 +33,8 @@ const LaunchesTable = ({ data }) => {
     },
   }, {
     width: '17%',
-    header: 'Vehicule',
-    renderCell: ({ rocket: { rocket_name: vehicule } }) => vehicule,
+    header: 'Vehicle',
+    renderCell: ({ rocket: { rocket_name: vehicle } }) => vehicle,
   }, {
     width: '17%',
     header: 'Launchpad',
