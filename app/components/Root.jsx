@@ -237,7 +237,14 @@ class Root extends Component {
             <main className="fx-col fx-middle-xs fx-center-xs text-center full-height">
               <p className="fx-col-xs">
                 Photos on this page courtesy SpaceX, &amp; NASA. BFS Hop Test image
-                by /u/IanAtkinson_NSF on Reddit. All rights maintained
+                by{' '}
+                <ReactGA.OutboundLink
+                  eventLabel="Exit to IanAtkinson_NSF's profile"
+                  to="https://www.reddit.com/user/IanAtkinson_NSF"
+                  title="IanAtkinson_NSF's Reddit profile"
+                >
+                  /u/IanAtkinson_NSF
+                </ReactGA.OutboundLink> on Reddit. All rights maintained
                 by the respective owners.<br />
 
                 This site is fan-run and not affiliated with SpaceX in any way.

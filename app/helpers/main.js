@@ -44,9 +44,11 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'Total',
       type: 'integer',
       data: { value: launchCountData.totalLaunches, subtitle: 'Flights' },
-      text: `As of ${moment(turnarounds.lastLaunchDate).format('MMMM YYYY')}, SpaceX has launched ${launchCountData.totalLaunches} rockets,
-            carrying a variety of payloads to multiple destinations;including LEO, GTO, L1, and the ISS.
-            SpaceX currently has a manifest of over 70 flights that will fly over the coming years.`,
+      text: `As of ${moment(turnarounds.lastLaunchDate).format('MMMM YYYY')},
+            SpaceX has launched ${launchCountData.totalLaunches} rockets, carrying
+            a variety of payloads to multiple destinations;including LEO, GTO, L1,
+            and the ISS. SpaceX currently has a manifest of over 70 flights that
+            will fly over the coming years.`,
     }, {
       title: 'Falcon 9',
       tabTitle: 'Falcon 9',
@@ -55,8 +57,8 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       text: `Nearly 3/4's the height of the Saturn V, yet thinner than a Space
             Shuttle SRB, Falcon 9 is the workhorse of SpaceX's rocket fleet. To
             date, it has launched ${launchCountData.totalFalcon9} times and has
-            lifted ${launchCountData.totalFalcon9Upmass.toLocaleString()}kg to
-            orbit. It is currently flying in its final iteration (Falcon 9 v1.2
+            lifted ${Math.floor(launchCountData.totalFalcon9Upmass).toLocaleString()}kg
+            to orbit. It is currently flying in its final iteration (Falcon 9 v1.2
             Block 5) enabling rapid reusability.`,
     }, {
       title: 'Falcon Heavy',
@@ -76,7 +78,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             equipped with a single Merlin 1A engine, and later, the venerable Merlin 1C.
             Launched exclusively from Kwajalein, it was able to lift 670kg to LEO
             and became the first privately-developed rocket to reach Earth orbit.
-            It launched ${launchCountData.totalFalcon1} times over approximately 2 years, lifting ${launchCountData.totalFalcon1Upmass.toLocaleString()}kg to orbit.`,
+            It launched ${launchCountData.totalFalcon1} times over approximately 2 years, lifting ${Math.floor(launchCountData.totalFalcon1Upmass).toLocaleString()}kg to orbit.`,
     }, {
       title: 'BFR',
       tabTitle: 'BFR',
@@ -237,10 +239,8 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       background: 'bocachica.jpg',
       type: 'integer',
       data: { value: launchpadCountData.totalBocaChica, subtitle: 'Launches' },
-      text: `Boca Chica Beach, Texas is the location of SpaceX's new commercial-only
-            private launch site designed to handle LEO & GEO launches on a tight
-            schedule, freeing up other launch sites for other uses. It is expected
-            to become operational not earlier than 2018.`,
+      text: `Boca Chica Beach, Texas is the location of SpaceX's new private launch
+            site. It is expected to become operational not earlier than 2019.`,
     }, {
       title: 'Kwajalein',
       tabTitle: 'Kwajalein',
@@ -424,7 +424,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       text: `No SpaceX astronauts have flown yet. Dragon 2, being developed as
             part of NASA's Commercial Crew Transportation Capability (CCtCap)
             program, performed a pad abort test in May 2015. The first orbital
-            test is still TBD.`,
+            test is planned for Q1 2019.`,
     }, {
       title: 'DragonRiders Cumulative',
       tabTitle: 'Cumulative',
@@ -464,7 +464,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       tabTitle: 'Hop Tests',
       background: 'bfshop.jpg',
       type: 'text',
-      data: 'H1 2019',
+      data: 'H2 2019',
     }, {
       title: 'Orbital Tests',
       tabTitle: 'Orbital Tests',
