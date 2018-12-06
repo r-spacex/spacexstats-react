@@ -20,6 +20,6 @@ The project will be installed on a Vagrant virtual machine. All the dev tools wi
 Remember, when you stop working on the project you can stop the Vagrant box with `vagrant halt`. You can delete it with `vagrant destroy`.
 
 
-## Deployement
+## Deployment
 
 Push on the `master` branch.
