@@ -11,7 +11,7 @@ const displayLaunchTime = (date, precision) => {
     case 'second':
     case 'minute':
     case 'hour':
-      return date.format('MMM Do YYYY, hh:mm');
+      return date.format('MMM Do YYYY, HH:mm');
 
     case 'day':
       return date.format('MMM Do YYYY');
