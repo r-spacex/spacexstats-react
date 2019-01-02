@@ -16,7 +16,7 @@ import moment from 'moment';
 const computeStats = (pastLaunches, upcomingLaunches) => {
   const nextLaunchesData = nextLaunches(upcomingLaunches);
   const launchCountData = launchCount(pastLaunches);
-  const launchHistoryData = launchHistory(pastLaunches);
+  const launchHistoryData = launchHistory(pastLaunches, upcomingLaunches);
   const landingHistoryData = landingHistory(pastLaunches);
   const reuseHistoryData = reuseHistory(pastLaunches);
   const launchpadCountData = launchpadCount(pastLaunches);

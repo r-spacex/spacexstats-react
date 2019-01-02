@@ -1,8 +1,8 @@
 import settings from '~/settings';
 
-const launchHistory = (pastLaunches) => {
+const launchHistory = (pastLaunches, upcomingLaunches) => {
   const yearsStart = 2006; // First Falcon 1 flight
-  const yearsEnd = new Date().getFullYear();
+  const yearsEnd = upcomingLaunches.map(launch => launch.launch_year).sort().slice(-1).pop();
   const years = [];
   for (let i = yearsStart; i <= yearsEnd; i++) {
     years.push(i);
@@ -123,23 +123,13 @@ const launchHistory = (pastLaunches) => {
     }
   }
 
+  for (let j = 0; j < upcomingLaunches.length; j++) {
+    const yearIndex = upcomingLaunches[j].launch_year - yearsStart;
+    plannedFlights[yearIndex] += 1;
+  }
+
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
   options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
-
-  // Manually add planned launches for 2017 and 2018
-  const plannedTarget2017 = 20;
-  const plannedTarget2018 = 30;
-  const totalFlightsThisYear =
-    falcon9UnprovenFlights[falcon9UnprovenFlights.length - 1] +
-    falcon9ProvenFlights[falcon9ProvenFlights.length - 1] +
-    falconHeavyFlights[falconHeavyFlights.length - 1];
-  if (yearsEnd === 2017) {
-    plannedFlights[plannedFlights.length - 1] = plannedTarget2017 - totalFlightsThisYear;
-    years.push(2018);
-    plannedFlights.push(plannedTarget2018);
-  } else if (yearsEnd === 2018) { // We are in 2018
-    plannedFlights[plannedFlights.length - 1] = plannedTarget2018 - totalFlightsThisYear;
-  }
 
   const optionsLaunchHistory = JSON.parse(JSON.stringify(options));
   optionsLaunchHistory.tooltips = {
