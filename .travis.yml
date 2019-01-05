@@ -3,7 +3,7 @@ node_js:
   - "10"
 
 before_script:
-    - npm run build
+    - yarn build
 
 script: echo "no tests"
 
