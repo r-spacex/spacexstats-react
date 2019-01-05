@@ -1,7 +1,13 @@
 {
-    "presets": ["react", "env", "stage-0"],
-    "plugins": ["react-hot-loader/babel", ["babel-plugin-root-import", {
-      "rootPathPrefix": "~",
-      "rootPathSuffix": "app"
-    }]]
+  "presets": ["react", "env", "stage-0"],
+  "plugins": [
+    "react-hot-loader/babel",
+    [
+      "babel-plugin-root-import",
+      {
+        "rootPathPrefix": "~",
+        "rootPathSuffix": "app"
+      }
+    ]
+  ]
 }

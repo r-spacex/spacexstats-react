@@ -10,10 +10,10 @@ module.exports = merge(common, {
     public: 'spacexstats.test:8080',
     port: 8080,
     headers: {
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     },
     watchOptions: {
-      poll: true,
-    },
-  },
+      poll: true
+    }
+  }
 });

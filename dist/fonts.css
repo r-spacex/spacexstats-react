@@ -1,15 +1,13 @@
 @font-face {
-    font-family: 'Brandon';
-    src: url('fonts/brandon-reg-webfont.ttf'),
-         url('fonts/brandon-reg-webfont.eot');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Brandon';
+  src: url('fonts/brandon-reg-webfont.ttf'), url('fonts/brandon-reg-webfont.eot');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'BrandonThin';
-    src: url('fonts/brandon-thin-webfont.ttf'),
-         url('fonts/brandon-thin-webfont.eot');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'BrandonThin';
+  src: url('fonts/brandon-thin-webfont.ttf'), url('fonts/brandon-thin-webfont.eot');
+  font-weight: normal;
+  font-style: normal;
 }
