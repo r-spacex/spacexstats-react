@@ -8,7 +8,7 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentTab: props.tabs[0],
+      currentTab: props.tabs[0]
     };
   }
 
@@ -18,7 +18,7 @@ class Navbar extends Component {
     }
   }
 
-  changeTab = (tab) => {
+  changeTab = tab => {
     if (tab === this.state.currentTab) {
       return;
     }
@@ -32,9 +32,9 @@ class Navbar extends Component {
     ReactGA.event({
       category: 'Tab',
       action: 'Change',
-      label: tab,
+      label: tab
     });
-  }
+  };
 
   render() {
     return (
@@ -42,13 +42,15 @@ class Navbar extends Component {
         {this.props.tabs.map((tab, index) => (
           <div key={index} className="fx-col-xs">
             <button
-              onClick={() => { this.changeTab(tab); }}
+              onClick={() => {
+                this.changeTab(tab);
+              }}
               className={`Navbar__link ${tab === this.state.currentTab ? ' Navbar__link--active' : ''}`}
             >
               {tab}
             </button>
           </div>
-       ))}
+        ))}
       </nav>
     );
   }
@@ -56,13 +58,13 @@ class Navbar extends Component {
 
 Navbar.defaultProps = {
   selectedTab: null,
-  onChangeCallback: () => {},
+  onChangeCallback: () => {}
 };
 
 Navbar.propTypes = {
   tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedTab: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
-  onChangeCallback: PropTypes.func,
+  onChangeCallback: PropTypes.func
 };
 
 export default Navbar;

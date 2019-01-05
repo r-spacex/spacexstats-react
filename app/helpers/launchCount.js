@@ -1,4 +1,4 @@
-const launchCount = (pastLaunches) => {
+const launchCount = pastLaunches => {
   let totalLaunches = 0;
   let totalFalcon9 = 0;
   let totalFalcon1 = 0;
@@ -10,12 +10,12 @@ const launchCount = (pastLaunches) => {
   let totalFalconHeavyUpmass = 0;
   let totalBFRUpmass = 0;
 
-  pastLaunches.forEach((launch) => {
+  pastLaunches.forEach(launch => {
     totalLaunches += 1;
 
     let upmass = 0;
     if (launch.launch_success) {
-      launch.rocket.second_stage.payloads.forEach((payload) => {
+      launch.rocket.second_stage.payloads.forEach(payload => {
         upmass += payload.payload_mass_kg;
       });
     }
@@ -60,7 +60,7 @@ const launchCount = (pastLaunches) => {
     totalFalcon9Upmass,
     totalFalcon1Upmass,
     totalFalconHeavyUpmass,
-    totalBFRUpmass,
+    totalBFRUpmass
   };
 };
 

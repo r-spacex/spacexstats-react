@@ -1,6 +1,6 @@
 import settings from '~/settings';
 
-const reuseHistory = (pastLaunches) => {
+const reuseHistory = pastLaunches => {
   let totalReflown = 0;
   const totalFairingsReflown = 0;
   const cores = {};
@@ -26,13 +26,14 @@ const reuseHistory = (pastLaunches) => {
     const launchDate = new Date(launch.launch_date_utc).getTime() / 1000;
     let turnaround = null;
 
-    launch.rocket.first_stage.cores.forEach((core) => { // eslint-disable-line no-loop-func
+    launch.rocket.first_stage.cores.forEach(core => {
+      // eslint-disable-line no-loop-func
       const coreSerial = core.core_serial;
 
       if (!(coreSerial in cores)) {
         cores[coreSerial] = {
           reflown: false,
-          launches: [],
+          launches: []
         };
       } else {
         totalReflown += 1;
@@ -42,14 +43,12 @@ const reuseHistory = (pastLaunches) => {
         turnaround = launchDate - previousLaunch.date;
 
         // Check for most reflown core
-        if (mostReflownCore === null
-          || previousLaunches.length + 1 > cores[mostReflownCore].launches.length) {
+        if (mostReflownCore === null || previousLaunches.length + 1 > cores[mostReflownCore].launches.length) {
           mostReflownCore = coreSerial;
         }
 
         // Check for quickest turnaround
-        if (quickestTurnaround === null
-          || turnaround < quickestTurnaround) {
+        if (quickestTurnaround === null || turnaround < quickestTurnaround) {
           quickestTurnaround = turnaround;
           quickestTurnaroundCore = coreSerial;
           quickestTurnaroundMission1 = previousLaunch.name;
@@ -60,24 +59,28 @@ const reuseHistory = (pastLaunches) => {
       cores[coreSerial].launches.push({
         name: launch.rocket.second_stage.payloads[0].payload_id,
         date: launchDate,
-        turnaround,
+        turnaround
       });
 
       // Reuse intervals
       if (cores[coreSerial].launches.length > 1) {
         reflownMissions += 1;
-        labels.push(`${coreSerial}'s flight #${cores[coreSerial].launches.length} ${launch.rocket.second_stage.payloads[0].payload_id}`);
+        labels.push(
+          `${coreSerial}'s flight #${cores[coreSerial].launches.length} ${
+            launch.rocket.second_stage.payloads[0].payload_id
+          }`
+        );
         const interval = Math.round(turnaround / (24 * 3600));
         daysIntervals.push(interval);
-        runningAverage = Math.round(((runningAverage * (reflownMissions - 1)) + interval) / reflownMissions); // eslint-disable-line max-len
+        runningAverage = Math.round((runningAverage * (reflownMissions - 1) + interval) / reflownMissions); // eslint-disable-line max-len
         runningAverageData.push(runningAverage);
 
         if (reflownMissions < 10) {
           runningAverage10Flights = runningAverage;
         } else {
           // If we compute for 10 flights there are 9 intervals
-          runningAverage10Flights = ((runningAverage10Flights * 9) - daysIntervals[reflownMissions - 10]) / 8; // eslint-disable-line max-len
-          runningAverage10Flights = Math.round(((runningAverage10Flights * 8) + interval) / 9);
+          runningAverage10Flights = (runningAverage10Flights * 9 - daysIntervals[reflownMissions - 10]) / 8; // eslint-disable-line max-len
+          runningAverage10Flights = Math.round((runningAverage10Flights * 8 + interval) / 9);
         }
         runningAverage10FlightsData.push(runningAverage10Flights);
       }
@@ -86,7 +89,7 @@ const reuseHistory = (pastLaunches) => {
 
   // Get mission names of most reflown core
   const mostReflownCoreMissions = [];
-  cores[mostReflownCore].launches.forEach((launch) => {
+  cores[mostReflownCore].launches.forEach(launch => {
     mostReflownCoreMissions.push(launch.name);
   });
 
@@ -101,35 +104,39 @@ const reuseHistory = (pastLaunches) => {
   const daysBetweenReuses = {
     data: {
       labels,
-      datasets: [{
-        label: 'Running average (10 flights)',
-        type: 'line',
-        data: runningAverage10FlightsData,
-        fill: false,
-        borderColor: settings.COLORS.yellow,
-        backgroundColor: settings.COLORS.yellow,
-        pointBorderColor: settings.COLORS.yellow,
-        pointBackgroundColor: settings.COLORS.yellow,
-        pointHoverBackgroundColor: settings.COLORS.yellow,
-        pointHoverBorderColor: settings.COLORS.yellow,
-      }, {
-        label: 'Running average',
-        type: 'line',
-        data: runningAverageData,
-        fill: false,
-        borderColor: settings.COLORS.white,
-        backgroundColor: settings.COLORS.white,
-        pointBorderColor: settings.COLORS.white,
-        pointBackgroundColor: settings.COLORS.white,
-        pointHoverBackgroundColor: settings.COLORS.white,
-        pointHoverBorderColor: settings.COLORS.white,
-      }, {
-        label: 'Days between launches',
-        backgroundColor: settings.COLORS.blue,
-        data: daysIntervals,
-      }],
+      datasets: [
+        {
+          label: 'Running average (10 flights)',
+          type: 'line',
+          data: runningAverage10FlightsData,
+          fill: false,
+          borderColor: settings.COLORS.yellow,
+          backgroundColor: settings.COLORS.yellow,
+          pointBorderColor: settings.COLORS.yellow,
+          pointBackgroundColor: settings.COLORS.yellow,
+          pointHoverBackgroundColor: settings.COLORS.yellow,
+          pointHoverBorderColor: settings.COLORS.yellow
+        },
+        {
+          label: 'Running average',
+          type: 'line',
+          data: runningAverageData,
+          fill: false,
+          borderColor: settings.COLORS.white,
+          backgroundColor: settings.COLORS.white,
+          pointBorderColor: settings.COLORS.white,
+          pointBackgroundColor: settings.COLORS.white,
+          pointHoverBackgroundColor: settings.COLORS.white,
+          pointHoverBorderColor: settings.COLORS.white
+        },
+        {
+          label: 'Days between launches',
+          backgroundColor: settings.COLORS.blue,
+          data: daysIntervals
+        }
+      ]
     },
-    options,
+    options
   };
 
   return {
@@ -139,14 +146,14 @@ const reuseHistory = (pastLaunches) => {
       core: quickestTurnaroundCore,
       mission1: quickestTurnaroundMission1,
       mission2: quickestTurnaroundMission2,
-      turnaround: quickestTurnaround,
+      turnaround: quickestTurnaround
     },
     mostReflownCore: {
       launches: cores[mostReflownCore].launches.length,
       missions: mostReflownCoreMissions.join(', '),
-      core: mostReflownCore,
+      core: mostReflownCore
     },
-    daysBetweenReuses,
+    daysBetweenReuses
   };
 };
 

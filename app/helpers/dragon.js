@@ -1,6 +1,6 @@
 import settings from '~/settings';
 
-const payloads = (pastLaunches) => {
+const payloads = pastLaunches => {
   let totalFlights = 0;
   let totalFlightTime = 0;
   let totalISSResupplies = 0;
@@ -10,9 +10,13 @@ const payloads = (pastLaunches) => {
   const crsLabels = [];
   const crsFlightTimes = [];
 
-  const dragonLaunches = pastLaunches.filter(launch => launch.rocket.second_stage.payloads[0].payload_type.indexOf('Dragon') !== -1 && launch.rocket.second_stage.payloads[0].payload_id.indexOf('Dragon Qualification Unit') === -1);
+  const dragonLaunches = pastLaunches.filter(
+    launch =>
+      launch.rocket.second_stage.payloads[0].payload_type.indexOf('Dragon') !== -1 &&
+      launch.rocket.second_stage.payloads[0].payload_id.indexOf('Dragon Qualification Unit') === -1
+  );
 
-  dragonLaunches.forEach((launch) => {
+  dragonLaunches.forEach(launch => {
     const flightTime = launch.rocket.second_stage.payloads[0].flight_time_sec;
 
     if (launch.launch_success) {
@@ -48,20 +52,22 @@ const payloads = (pastLaunches) => {
         const dataset = data.datasets[tooltipItem.datasetIndex];
         const flightTime = dataset.data[tooltipItem.index];
         return `${dataset.label} : ${flightTime} hours`;
-      },
-    },
+      }
+    }
   };
 
   const crsFlightTimesChart = {
     data: {
       labels: crsLabels,
-      datasets: [{
-        label: 'Flight times (hours)',
-        backgroundColor: settings.COLORS.blue,
-        data: crsFlightTimes,
-      }],
+      datasets: [
+        {
+          label: 'Flight times (hours)',
+          backgroundColor: settings.COLORS.blue,
+          data: crsFlightTimes
+        }
+      ]
     },
-    options,
+    options
   };
 
   return {
@@ -71,7 +77,7 @@ const payloads = (pastLaunches) => {
     crsFlightTimesChart,
     totalCargoUp,
     totalCargoDown,
-    totalReflights,
+    totalReflights
   };
 };
 

@@ -1,6 +1,6 @@
 import settings from '~/settings';
 
-const payloads = (pastLaunches) => {
+const payloads = pastLaunches => {
   let heaviestPayload = { mass: 0, mission: '', customers: '' };
   let heaviestPayloadGTO = { mass: 0, mission: '', customers: '' };
   let totalMass = 0;
@@ -8,8 +8,8 @@ const payloads = (pastLaunches) => {
   const customers = {};
   const successfulLaunches = pastLaunches.filter(launch => launch.launch_success);
 
-  successfulLaunches.forEach((launch) => {
-    launch.rocket.second_stage.payloads.forEach((payload) => {
+  successfulLaunches.forEach(launch => {
+    launch.rocket.second_stage.payloads.forEach(payload => {
       // Only consider first customer
       const customer = payload.customers[0];
       if (!customers[customer]) {
@@ -25,7 +25,7 @@ const payloads = (pastLaunches) => {
           heaviestPayload = {
             mass: payload.payload_mass_kg,
             mission: payload.payload_id,
-            customers: payload.customers.join('/'),
+            customers: payload.customers.join('/')
           };
         }
 
@@ -33,7 +33,7 @@ const payloads = (pastLaunches) => {
           heaviestPayloadGTO = {
             mass: payload.payload_mass_kg,
             mission: payload.payload_id,
-            customers: payload.customers.join('/'),
+            customers: payload.customers.join('/')
           };
         }
       }
@@ -43,7 +43,7 @@ const payloads = (pastLaunches) => {
   // Clean customers list
   customers.Others = [];
   const customerKeys = Object.keys(customers);
-  customerKeys.forEach((customer) => {
+  customerKeys.forEach(customer => {
     if (customers[customer].length < 2) {
       customers.Others = customers.Others.concat(customers[customer]);
       delete customers[customer];
@@ -69,25 +69,41 @@ const payloads = (pastLaunches) => {
           return `${customer}: ${missions.length} (${displayedMissions.join(', ')} and ${missions.length - 3} more)`;
         }
         return `${customer}: ${missions.length} (${missions.join(', ')})`;
-      },
-    },
+      }
+    }
   };
   const customersChart = {
     data: {
       labels: Object.keys(customers),
-      datasets: [{
-        data: Object.values(customers).map(customersList => (customersList.length)),
-        backgroundColor: [
-          settings.COLORS.white, settings.COLORS.yellow, settings.COLORS.green,
-          settings.COLORS.blue, settings.COLORS.orange, settings.COLORS.red,
-          settings.COLORS.lightblue, settings.COLORS.brown, settings.COLORS.black,
-          // Default colors from highcharts, less colourblind-friendly but we need lots of colors
-          '#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce',
-          '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a',
-        ],
-      }],
+      datasets: [
+        {
+          data: Object.values(customers).map(customersList => customersList.length),
+          backgroundColor: [
+            settings.COLORS.white,
+            settings.COLORS.yellow,
+            settings.COLORS.green,
+            settings.COLORS.blue,
+            settings.COLORS.orange,
+            settings.COLORS.red,
+            settings.COLORS.lightblue,
+            settings.COLORS.brown,
+            settings.COLORS.black,
+            // Default colors from highcharts, less colourblind-friendly but we need lots of colors
+            '#2f7ed8',
+            '#0d233a',
+            '#8bbc21',
+            '#910000',
+            '#1aadce',
+            '#492970',
+            '#f28f43',
+            '#77a1e5',
+            '#c42525',
+            '#a6c96a'
+          ]
+        }
+      ]
     },
-    options,
+    options
   };
 
   return {
@@ -95,7 +111,7 @@ const payloads = (pastLaunches) => {
     heaviestPayload,
     heaviestPayloadGTO,
     internetConstellation,
-    customersChart,
+    customersChart
   };
 };
 

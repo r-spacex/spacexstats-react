@@ -1,16 +1,25 @@
 import settings from '~/settings';
 
-const timelines = (pastLaunches) => {
+const timelines = pastLaunches => {
   const quickestTurnarounds = {
     ccafs_slc_40: {
-      turnaround: null, mission1: null, mission2: null, previousMission: null,
+      turnaround: null,
+      mission1: null,
+      mission2: null,
+      previousMission: null
     },
     ksc_lc_39a: {
-      turnaround: null, mission1: null, mission2: null, previousMission: null,
+      turnaround: null,
+      mission1: null,
+      mission2: null,
+      previousMission: null
     },
     vafb_slc_4e: {
-      turnaround: null, mission1: null, mission2: null, previousMission: null,
-    },
+      turnaround: null,
+      mission1: null,
+      mission2: null,
+      previousMission: null
+    }
   };
   let quickestTurnaroundPad = null;
   let quickestTurnaroundPadName = '';
@@ -30,18 +39,20 @@ const timelines = (pastLaunches) => {
     const turnaround = launchDate - previousLaunchDate;
 
     // Fill bar chart
-    labels.push(`#${launch.flight_number} ${launch.rocket.rocket_name} ${launch.rocket.second_stage.payloads[0].payload_id}`);
+    labels.push(
+      `#${launch.flight_number} ${launch.rocket.rocket_name} ${launch.rocket.second_stage.payloads[0].payload_id}`
+    );
     const interval = Math.round(turnaround / (24 * 3600));
     daysIntervals[i - 1] = interval;
-    runningAverage = Math.round(((runningAverage * (i - 1)) + interval) / i);
+    runningAverage = Math.round((runningAverage * (i - 1) + interval) / i);
     runningAverageData[i - 1] = runningAverage;
 
     if (i < 10) {
       runningAverage10Flights = runningAverage;
     } else {
       // If we compute for 10 flights there are 9 intervals
-      runningAverage10Flights = ((runningAverage10Flights * 9) - daysIntervals[i - 10]) / 8;
-      runningAverage10Flights = Math.round(((runningAverage10Flights * 8) + interval) / 9);
+      runningAverage10Flights = (runningAverage10Flights * 9 - daysIntervals[i - 10]) / 8;
+      runningAverage10Flights = Math.round((runningAverage10Flights * 8 + interval) / 9);
     }
     runningAverage10FlightsData[i - 1] = runningAverage10Flights;
 
@@ -56,27 +67,24 @@ const timelines = (pastLaunches) => {
       // This is the first mission accounted for this pad
       if (quickestPadTurnaround.previousMission === null) {
         quickestTurnarounds[launchpad].mission1 = launch.rocket.second_stage.payloads[0].payload_id;
-      } else if (quickestPadTurnaround.previousMission !== null &&
-                quickestPadTurnaround.turnaround === null) {
+      } else if (quickestPadTurnaround.previousMission !== null && quickestPadTurnaround.turnaround === null) {
         quickestTurnarounds[launchpad] = {
           turnaround: padTurnaround,
           mission1: quickestPadTurnaround.previousMissionName,
-          mission2: currentMissionName,
+          mission2: currentMissionName
         };
-      } else if (quickestPadTurnaround.previousMission !== null &&
-                padTurnaround < quickestPadTurnaround.turnaround) {
+      } else if (quickestPadTurnaround.previousMission !== null && padTurnaround < quickestPadTurnaround.turnaround) {
         quickestTurnarounds[launchpad] = {
           turnaround: padTurnaround,
           mission1: quickestPadTurnaround.previousMissionName,
-          mission2: currentMissionName,
+          mission2: currentMissionName
         };
       }
       quickestTurnarounds[launchpad].previousMission = launchDate;
       quickestTurnarounds[launchpad].previousMissionName = currentMissionName;
 
       // Check if quickest turnaround ever
-      if (quickestTurnaroundPad === null ||
-          padTurnaround < quickestTurnarounds[quickestTurnaroundPad].turnaround) {
+      if (quickestTurnaroundPad === null || padTurnaround < quickestTurnarounds[quickestTurnaroundPad].turnaround) {
         quickestTurnaroundPad = launchpad;
         quickestTurnaroundPadName = launch.launch_site.site_name;
       }
@@ -93,35 +101,39 @@ const timelines = (pastLaunches) => {
   const daysBetweenLaunches = {
     data: {
       labels,
-      datasets: [{
-        label: 'Running average (10 flights)',
-        type: 'line',
-        data: runningAverage10FlightsData,
-        fill: false,
-        borderColor: settings.COLORS.yellow,
-        backgroundColor: settings.COLORS.yellow,
-        pointBorderColor: settings.COLORS.yellow,
-        pointBackgroundColor: settings.COLORS.yellow,
-        pointHoverBackgroundColor: settings.COLORS.yellow,
-        pointHoverBorderColor: settings.COLORS.yellow,
-      }, {
-        label: 'Running average',
-        type: 'line',
-        data: runningAverageData,
-        fill: false,
-        borderColor: settings.COLORS.white,
-        backgroundColor: settings.COLORS.white,
-        pointBorderColor: settings.COLORS.white,
-        pointBackgroundColor: settings.COLORS.white,
-        pointHoverBackgroundColor: settings.COLORS.white,
-        pointHoverBorderColor: settings.COLORS.white,
-      }, {
-        label: 'Days between launches',
-        backgroundColor: settings.COLORS.blue,
-        data: daysIntervals,
-      }],
+      datasets: [
+        {
+          label: 'Running average (10 flights)',
+          type: 'line',
+          data: runningAverage10FlightsData,
+          fill: false,
+          borderColor: settings.COLORS.yellow,
+          backgroundColor: settings.COLORS.yellow,
+          pointBorderColor: settings.COLORS.yellow,
+          pointBackgroundColor: settings.COLORS.yellow,
+          pointHoverBackgroundColor: settings.COLORS.yellow,
+          pointHoverBorderColor: settings.COLORS.yellow
+        },
+        {
+          label: 'Running average',
+          type: 'line',
+          data: runningAverageData,
+          fill: false,
+          borderColor: settings.COLORS.white,
+          backgroundColor: settings.COLORS.white,
+          pointBorderColor: settings.COLORS.white,
+          pointBackgroundColor: settings.COLORS.white,
+          pointHoverBackgroundColor: settings.COLORS.white,
+          pointHoverBorderColor: settings.COLORS.white
+        },
+        {
+          label: 'Days between launches',
+          backgroundColor: settings.COLORS.blue,
+          data: daysIntervals
+        }
+      ]
     },
-    options,
+    options
   };
 
   const lastLaunchDate = pastLaunches[pastLaunches.length - 1].launch_date_utc;
@@ -132,7 +144,7 @@ const timelines = (pastLaunches) => {
     quickestTurnaroundHLC39A: quickestTurnarounds.ksc_lc_39a,
     quickestTurnaroundSLC4E: quickestTurnarounds.vafb_slc_4e,
     lastLaunchDate: new Date(lastLaunchDate).getTime() / 1000,
-    daysBetweenLaunches,
+    daysBetweenLaunches
   };
 };
 

@@ -8,7 +8,7 @@ const ONE_MINUTE_IN_S = 60;
 const ONE_HOUR_IN_S = ONE_MINUTE_IN_S * 60;
 const ONE_DAY_IN_S = ONE_HOUR_IN_S * 24;
 
-const TimeStat = (props) => {
+const TimeStat = props => {
   let secondsLeft = Math.floor(Math.abs(props.data));
   const days = Math.floor(secondsLeft / ONE_DAY_IN_S);
   secondsLeft -= ONE_DAY_IN_S * days;
@@ -43,7 +43,7 @@ const TimeStat = (props) => {
 };
 
 TimeStat.propTypes = {
-  data: PropTypes.number.isRequired, // Unix timestamp
+  data: PropTypes.number.isRequired // Unix timestamp
 };
 
 const onInterval = (propFunc, interval) => Component =>
@@ -75,17 +75,11 @@ const onInterval = (propFunc, interval) => Component =>
   };
 
 const calculateDuration = props => ({
-  data: props.data - Math.floor(Date.now() / ONE_SECOND_IN_MS),
+  data: props.data - Math.floor(Date.now() / ONE_SECOND_IN_MS)
 });
 
 const isDuration = props => props.type === 'duration';
 
-const either = (predicate, A, B) => props => (
-  predicate(props) ? <A {...props} /> : <B {...props} />
-);
+const either = (predicate, A, B) => props => (predicate(props) ? <A {...props} /> : <B {...props} />);
 
-export default either(
-  isDuration,
-  TimeStat,
-  onInterval(calculateDuration, ONE_SECOND_IN_MS)(TimeStat),
-);
+export default either(isDuration, TimeStat, onInterval(calculateDuration, ONE_SECOND_IN_MS)(TimeStat));

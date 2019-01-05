@@ -13,8 +13,8 @@ const IntegerStat = props => (
 IntegerStat.propTypes = {
   data: PropTypes.shape({
     subtitle: '',
-    value: '',
-  }).isRequired,
+    value: ''
+  }).isRequired
 };
 
 export default IntegerStat;

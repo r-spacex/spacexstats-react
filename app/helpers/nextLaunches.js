@@ -1,4 +1,4 @@
-const nextLaunches = (upcomingLaunches) => {
+const nextLaunches = upcomingLaunches => {
   // Find first launch with non-null launch date
   let i = 0;
   let launch = upcomingLaunches[i];
@@ -10,7 +10,7 @@ const nextLaunches = (upcomingLaunches) => {
   const payloadNames = [];
   let payloadMass = 0;
 
-  launch.rocket.second_stage.payloads.forEach((payload) => {
+  launch.rocket.second_stage.payloads.forEach(payload => {
     payloadNames.push(payload.payload_id);
     payloadMass += payload.payload_mass_kg;
   });
@@ -37,11 +37,11 @@ const nextLaunches = (upcomingLaunches) => {
   const nextLaunch = {
     date: launchDate,
     payloadName,
-    payloadDesc,
+    payloadDesc
   };
 
   return {
-    nextLaunch,
+    nextLaunch
   };
 };
 

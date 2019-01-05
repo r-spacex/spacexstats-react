@@ -2,7 +2,11 @@ import settings from '~/settings';
 
 const launchHistory = (pastLaunches, upcomingLaunches) => {
   const yearsStart = 2006; // First Falcon 1 flight
-  const yearsEnd = upcomingLaunches.map(launch => launch.launch_year).sort().slice(-1).pop();
+  const yearsEnd = upcomingLaunches
+    .map(launch => launch.launch_year)
+    .sort()
+    .slice(-1)
+    .pop();
   const years = [];
   for (let i = yearsStart; i <= yearsEnd; i++) {
     years.push(i);
@@ -28,7 +32,7 @@ const launchHistory = (pastLaunches, upcomingLaunches) => {
     Polar: new Array(yearsUpmass.length).fill(0),
     GTO: new Array(yearsUpmass.length).fill(0),
     Interplanetary: new Array(yearsUpmass.length).fill(0),
-    Other: new Array(yearsUpmass.length).fill(0),
+    Other: new Array(yearsUpmass.length).fill(0)
   };
 
   const flights = [];
@@ -69,7 +73,7 @@ const launchHistory = (pastLaunches, upcomingLaunches) => {
     } else {
       successRateFalconHeavy.push(successRateFalconHeavy[successRateFalconHeavy.length - 1]);
     }
-    successRateAll.push(100 * (i - failuresAll) / i);
+    successRateAll.push((100 * (i - failuresAll)) / i);
 
     // If failure, put in failures then ignore
     const yearIndex = launch.launch_year - yearsStart;
@@ -97,19 +101,26 @@ const launchHistory = (pastLaunches, upcomingLaunches) => {
 
       // Add upmass to orbit
       let upmass = 0;
-      launch.rocket.second_stage.payloads.forEach((payload) => {
+      launch.rocket.second_stage.payloads.forEach(payload => {
         upmass += payload.payload_mass_kg;
       });
 
       const yearUpmassIndex = launch.launch_year - yearsUpmassStart;
       switch (launch.rocket.second_stage.payloads[0].orbit) {
-        case 'LEO': upmassPerOrbit.LEO[yearUpmassIndex] += upmass; break;
-        case 'ISS': upmassPerOrbit.ISS[yearUpmassIndex] += upmass; break;
-        case 'PO': upmassPerOrbit.Polar[yearUpmassIndex] += upmass; break;
+        case 'LEO':
+          upmassPerOrbit.LEO[yearUpmassIndex] += upmass;
+          break;
+        case 'ISS':
+          upmassPerOrbit.ISS[yearUpmassIndex] += upmass;
+          break;
+        case 'PO':
+          upmassPerOrbit.Polar[yearUpmassIndex] += upmass;
+          break;
         case 'GTO':
         case 'HEO':
         case 'SSO':
-          upmassPerOrbit.GTO[yearUpmassIndex] += upmass; break;
+          upmassPerOrbit.GTO[yearUpmassIndex] += upmass;
+          break;
         case 'ES-L1':
         case 'HCO':
           upmassPerOrbit.Interplanetary[yearUpmassIndex] += upmass;
@@ -143,43 +154,52 @@ const launchHistory = (pastLaunches, upcomingLaunches) => {
         const count = parseFloat(dataset.data[tooltipItem.index]);
         window.launchTotal += count;
 
-        if (count === 0) { return ''; }
+        if (count === 0) {
+          return '';
+        }
         return `${dataset.label}: ${count.toLocaleString()}`;
       },
-      footer: () => `TOTAL: ${window.launchTotal.toLocaleString()}`,
-    },
+      footer: () => `TOTAL: ${window.launchTotal.toLocaleString()}`
+    }
   };
 
   const flightsPerYear = {
     data: {
       labels: years,
-      datasets: [{
-        label: 'Falcon 1',
-        backgroundColor: settings.COLORS.green,
-        data: falcon1Flights,
-      }, {
-        label: 'New Falcon 9',
-        backgroundColor: settings.COLORS.blue,
-        data: falcon9UnprovenFlights,
-      }, {
-        label: 'Used Falcon 9',
-        backgroundColor: settings.COLORS.lightblue,
-        data: falcon9ProvenFlights,
-      }, {
-        label: 'Falcon Heavy',
-        backgroundColor: settings.COLORS.yellow,
-        data: falconHeavyFlights,
-      }, {
-        label: 'Failure',
-        backgroundColor: settings.COLORS.red,
-        data: failureFlights,
-      }, {
-        label: 'Planned',
-        backgroundColor: settings.COLORS.white,
-        data: plannedFlights,
-      }],
+      datasets: [
+        {
+          label: 'Falcon 1',
+          backgroundColor: settings.COLORS.green,
+          data: falcon1Flights
+        },
+        {
+          label: 'New Falcon 9',
+          backgroundColor: settings.COLORS.blue,
+          data: falcon9UnprovenFlights
+        },
+        {
+          label: 'Used Falcon 9',
+          backgroundColor: settings.COLORS.lightblue,
+          data: falcon9ProvenFlights
+        },
+        {
+          label: 'Falcon Heavy',
+          backgroundColor: settings.COLORS.yellow,
+          data: falconHeavyFlights
+        },
+        {
+          label: 'Failure',
+          backgroundColor: settings.COLORS.red,
+          data: failureFlights
+        },
+        {
+          label: 'Planned',
+          backgroundColor: settings.COLORS.white,
+          data: plannedFlights
+        }
+      ]
     },
-    options: optionsLaunchHistory,
+    options: optionsLaunchHistory
   };
 
   const optionsSuccessRate = JSON.parse(JSON.stringify(options));
@@ -193,49 +213,53 @@ const launchHistory = (pastLaunches, upcomingLaunches) => {
         const rate = parseFloat(dataset.data[tooltipItem.index]);
         window.total += rate;
         return `${dataset.label}: ${rate.toFixed(2)}%`;
-      },
-    },
+      }
+    }
   };
 
   const successRates = {
     data: {
       labels: flights,
-      datasets: [{
-        label: 'Falcon 9',
-        type: 'line',
-        data: successRateFalcon9,
-        fill: false,
-        borderColor: settings.COLORS.yellow,
-        backgroundColor: settings.COLORS.yellow,
-        pointBorderColor: settings.COLORS.yellow,
-        pointBackgroundColor: settings.COLORS.yellow,
-        pointHoverBackgroundColor: settings.COLORS.yellow,
-        pointHoverBorderColor: settings.COLORS.yellow,
-      }, {
-        label: 'Falcon Heavy',
-        type: 'line',
-        data: successRateFalconHeavy,
-        fill: false,
-        borderColor: settings.COLORS.green,
-        backgroundColor: settings.COLORS.green,
-        pointBorderColor: settings.COLORS.green,
-        pointBackgroundColor: settings.COLORS.green,
-        pointHoverBackgroundColor: settings.COLORS.green,
-        pointHoverBorderColor: settings.COLORS.green,
-      }, {
-        label: 'All rockets',
-        type: 'line',
-        data: successRateAll,
-        fill: false,
-        borderColor: settings.COLORS.blue,
-        backgroundColor: settings.COLORS.blue,
-        pointBorderColor: settings.COLORS.blue,
-        pointBackgroundColor: settings.COLORS.blue,
-        pointHoverBackgroundColor: settings.COLORS.blue,
-        pointHoverBorderColor: settings.COLORS.blue,
-      }],
+      datasets: [
+        {
+          label: 'Falcon 9',
+          type: 'line',
+          data: successRateFalcon9,
+          fill: false,
+          borderColor: settings.COLORS.yellow,
+          backgroundColor: settings.COLORS.yellow,
+          pointBorderColor: settings.COLORS.yellow,
+          pointBackgroundColor: settings.COLORS.yellow,
+          pointHoverBackgroundColor: settings.COLORS.yellow,
+          pointHoverBorderColor: settings.COLORS.yellow
+        },
+        {
+          label: 'Falcon Heavy',
+          type: 'line',
+          data: successRateFalconHeavy,
+          fill: false,
+          borderColor: settings.COLORS.green,
+          backgroundColor: settings.COLORS.green,
+          pointBorderColor: settings.COLORS.green,
+          pointBackgroundColor: settings.COLORS.green,
+          pointHoverBackgroundColor: settings.COLORS.green,
+          pointHoverBorderColor: settings.COLORS.green
+        },
+        {
+          label: 'All rockets',
+          type: 'line',
+          data: successRateAll,
+          fill: false,
+          borderColor: settings.COLORS.blue,
+          backgroundColor: settings.COLORS.blue,
+          pointBorderColor: settings.COLORS.blue,
+          pointBackgroundColor: settings.COLORS.blue,
+          pointHoverBackgroundColor: settings.COLORS.blue,
+          pointHoverBorderColor: settings.COLORS.blue
+        }
+      ]
     },
-    options: optionsSuccessRate,
+    options: optionsSuccessRate
   };
 
   const optionsUpmassPerYear = JSON.parse(JSON.stringify(options));
@@ -250,49 +274,58 @@ const launchHistory = (pastLaunches, upcomingLaunches) => {
         const count = parseFloat(dataset.data[tooltipItem.index]);
         window.launchTotal += count;
 
-        if (count === 0) { return ''; }
+        if (count === 0) {
+          return '';
+        }
         return `${dataset.label}: ${count.toLocaleString()}kg`;
       },
-      footer: () => `TOTAL: ${window.launchTotal.toLocaleString()}kg`,
-    },
+      footer: () => `TOTAL: ${window.launchTotal.toLocaleString()}kg`
+    }
   };
 
   const upmassPerYear = {
     data: {
       labels: yearsUpmass,
-      datasets: [{
-        label: 'LEO',
-        backgroundColor: settings.COLORS.blue,
-        data: upmassPerOrbit.LEO,
-      }, {
-        label: 'ISS',
-        backgroundColor: settings.COLORS.lightblue,
-        data: upmassPerOrbit.ISS,
-      }, {
-        label: 'Polar',
-        backgroundColor: settings.COLORS.yellow,
-        data: upmassPerOrbit.Polar,
-      }, {
-        label: 'GTO',
-        backgroundColor: settings.COLORS.orange,
-        data: upmassPerOrbit.GTO,
-      }, {
-        label: 'Interplanetary',
-        backgroundColor: settings.COLORS.red,
-        data: upmassPerOrbit.Interplanetary,
-      }, {
-        label: 'Other',
-        backgroundColor: settings.COLORS.white,
-        data: upmassPerOrbit.Other,
-      }],
+      datasets: [
+        {
+          label: 'LEO',
+          backgroundColor: settings.COLORS.blue,
+          data: upmassPerOrbit.LEO
+        },
+        {
+          label: 'ISS',
+          backgroundColor: settings.COLORS.lightblue,
+          data: upmassPerOrbit.ISS
+        },
+        {
+          label: 'Polar',
+          backgroundColor: settings.COLORS.yellow,
+          data: upmassPerOrbit.Polar
+        },
+        {
+          label: 'GTO',
+          backgroundColor: settings.COLORS.orange,
+          data: upmassPerOrbit.GTO
+        },
+        {
+          label: 'Interplanetary',
+          backgroundColor: settings.COLORS.red,
+          data: upmassPerOrbit.Interplanetary
+        },
+        {
+          label: 'Other',
+          backgroundColor: settings.COLORS.white,
+          data: upmassPerOrbit.Other
+        }
+      ]
     },
-    options: optionsUpmassPerYear,
+    options: optionsUpmassPerYear
   };
 
   return {
     flightsPerYear,
     successRates,
-    upmassPerYear,
+    upmassPerYear
   };
 };
 

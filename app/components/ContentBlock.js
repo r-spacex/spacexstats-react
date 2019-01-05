@@ -20,7 +20,7 @@ class ContentBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentStat: props.stats[0],
+      currentStat: props.stats[0]
     };
 
     this.navbarTabs = [];
@@ -34,14 +34,14 @@ class ContentBlock extends Component {
     configureAnchors({ keepLastAnchorHash: true });
   }
 
-  onNavbarChange = (tab) => {
+  onNavbarChange = tab => {
     for (let i = 0; i < this.props.stats.length; i++) {
       const stat = this.props.stats[i];
       if (tab === stat.tabTitle) {
         this.setState({ currentStat: stat });
       }
     }
-  }
+  };
 
   moveLeft = () => {
     if (isInViewport(this.props.anchor)) {
@@ -61,7 +61,7 @@ class ContentBlock extends Component {
     }
   };
 
-  handleShortcuts = (action) => {
+  handleShortcuts = action => {
     switch (action) {
       case 'MOVE_LEFT':
         this.moveLeft();
@@ -69,9 +69,10 @@ class ContentBlock extends Component {
       case 'MOVE_RIGHT':
         this.moveRight();
         break;
-      default: break;
+      default:
+        break;
     }
-  }
+  };
 
   render() {
     let statcomponent;
@@ -131,8 +132,14 @@ class ContentBlock extends Component {
 
     return (
       <Shortcuts name="TABS" handler={this.handleShortcuts} global targetNodeSelector="body">
-        <article id={`section-${this.props.anchor}`} className="ContentBlock" style={{ backgroundImage: `url(img/backgrounds/${background})` }}>
-          <ScrollableAnchor id={this.props.anchor}><span /></ScrollableAnchor>
+        <article
+          id={`section-${this.props.anchor}`}
+          className="ContentBlock"
+          style={{ backgroundImage: `url(img/backgrounds/${background})` }}
+        >
+          <ScrollableAnchor id={this.props.anchor}>
+            <span />
+          </ScrollableAnchor>
           <div className="fx-container" style={{ minHeight: '100vh' }}>
             <div className="fx-col" style={{ minHeight: '100vh' }}>
               <header className="ContentBlock__titleWrapper fx-col fx-center-xs padded">
@@ -142,35 +149,39 @@ class ContentBlock extends Component {
               </header>
 
               <section className="ContentBlock__statWrapper fx-grow fx-col">
-                {this.props.onMoveUp &&
-                  <i className="ContentBlock__control ContentBlock__control--up fa fa-angle-up large" onClick={this.props.onMoveUp} onKeyUp={this.props.onMoveUp} role="button" tabIndex="0" />
-                }
+                {this.props.onMoveUp && (
+                  <i
+                    className="ContentBlock__control ContentBlock__control--up fa fa-angle-up large"
+                    onClick={this.props.onMoveUp}
+                    onKeyUp={this.props.onMoveUp}
+                    role="button"
+                    tabIndex="0"
+                  />
+                )}
 
-                {ribbonText &&
+                {ribbonText && (
                   <div title="The launch time converted in your time zone">
                     <Ribbon text={ribbonText} />
                   </div>
-                }
+                )}
 
-                <Navbar
-                  tabs={this.navbarTabs}
-                  onChangeCallback={this.onNavbarChange}
-                  selectedTab={stat.tabTitle}
-                />
+                <Navbar tabs={this.navbarTabs} onChangeCallback={this.onNavbarChange} selectedTab={stat.tabTitle} />
 
                 <div className="ContentBlock__stat fx-grow fx-row fx-center-xs fx-middle-xs mtop-big">
                   {statcomponent}
                 </div>
 
-                {stat.text && (
-                  <div className="ContentBlock__text padded mtop-big">
-                    {stat.text}
-                  </div>
-                )}
+                {stat.text && <div className="ContentBlock__text padded mtop-big">{stat.text}</div>}
 
-                {this.props.onMoveDown &&
-                  <i className="ContentBlock__control ContentBlock__control--down fa fa-angle-down large" onClick={this.props.onMoveDown} onKeyUp={this.props.onMoveDown} role="button" tabIndex="0" />
-                }
+                {this.props.onMoveDown && (
+                  <i
+                    className="ContentBlock__control ContentBlock__control--down fa fa-angle-down large"
+                    onClick={this.props.onMoveDown}
+                    onKeyUp={this.props.onMoveDown}
+                    role="button"
+                    tabIndex="0"
+                  />
+                )}
               </section>
             </div>
           </div>
@@ -182,7 +193,7 @@ class ContentBlock extends Component {
 
 ContentBlock.defaultProps = {
   onMoveDown: null,
-  onMoveUp: null,
+  onMoveUp: null
 };
 
 ContentBlock.propTypes = {
@@ -191,7 +202,7 @@ ContentBlock.propTypes = {
   stats: PropTypes.arrayOf(PropTypes.object).isRequired,
   anchor: PropTypes.string.isRequired,
   onMoveUp: PropTypes.func,
-  onMoveDown: PropTypes.func,
+  onMoveDown: PropTypes.func
 };
 
 export default ContentBlock;

@@ -1,6 +1,6 @@
 import settings from '~/settings';
 
-const landingHistory = (pastLaunches) => {
+const landingHistory = pastLaunches => {
   let totalLanded = 0;
   let heaviestLanding = { mass: 0, mission: '', landingType: '' };
   let heaviestLandingGTO = { mass: 0, mission: '', landingType: '' };
@@ -18,13 +18,14 @@ const landingHistory = (pastLaunches) => {
   const jrtiLandings = new Array(years.length).fill(0);
   const failureLandings = new Array(years.length).fill(0);
 
-  const landingAttemptsLaunches = pastLaunches.filter(launch =>
-    launch.launch_success && launch.rocket.first_stage.cores[0].landing_type !== null);
+  const landingAttemptsLaunches = pastLaunches.filter(
+    launch => launch.launch_success && launch.rocket.first_stage.cores[0].landing_type !== null
+  );
 
   // List cores
-  landingAttemptsLaunches.forEach((launch) => {
+  landingAttemptsLaunches.forEach(launch => {
     let formattedLandingType;
-    launch.rocket.first_stage.cores.forEach((core) => {
+    launch.rocket.first_stage.cores.forEach(core => {
       if (core.land_success && core.landing_type !== 'Ocean') {
         totalLanded += 1;
       }
@@ -61,12 +62,12 @@ const landingHistory = (pastLaunches) => {
     // Heaviest payload landings
     // Exclude Falcon Heavy because it is irrelevant.
     if (launch.rocket.rocket_id === 'falcon9') {
-      launch.rocket.second_stage.payloads.forEach((payload) => {
+      launch.rocket.second_stage.payloads.forEach(payload => {
         if (payload.payload_mass_kg > heaviestLanding.mass) {
           heaviestLanding = {
             mass: payload.payload_mass_kg,
             mission: payload.payload_id,
-            landingType: formattedLandingType,
+            landingType: formattedLandingType
           };
         }
 
@@ -74,7 +75,7 @@ const landingHistory = (pastLaunches) => {
           heaviestLandingGTO = {
             mass: payload.payload_mass_kg,
             mission: payload.payload_id,
-            landingType: formattedLandingType,
+            landingType: formattedLandingType
           };
         }
       });
@@ -101,45 +102,51 @@ const landingHistory = (pastLaunches) => {
       },
       footer: () => {
         const total = window.landingTotal.toString();
-        const rate = 100 * (total - window.landingFailures) / total;
+        const rate = (100 * (total - window.landingFailures)) / total;
         return `TOTAL: ${total} (${rate.toFixed(0)}% success rate)`;
-      },
-    },
+      }
+    }
   };
 
   const landingHistoryChart = {
     data: {
       labels: years,
-      datasets: [{
-        label: 'Ocean',
-        backgroundColor: settings.COLORS.blue,
-        data: oceanLandings,
-      }, {
-        label: 'RTLS',
-        backgroundColor: settings.COLORS.green,
-        data: rtlsLandings,
-      }, {
-        label: 'ASDS - OCISLY',
-        backgroundColor: settings.COLORS.white,
-        data: ocislyLandings,
-      }, {
-        label: 'ASDS - JRTI',
-        backgroundColor: settings.COLORS.yellow,
-        data: jrtiLandings,
-      }, {
-        label: 'Failures',
-        backgroundColor: settings.COLORS.red,
-        data: failureLandings,
-      }],
+      datasets: [
+        {
+          label: 'Ocean',
+          backgroundColor: settings.COLORS.blue,
+          data: oceanLandings
+        },
+        {
+          label: 'RTLS',
+          backgroundColor: settings.COLORS.green,
+          data: rtlsLandings
+        },
+        {
+          label: 'ASDS - OCISLY',
+          backgroundColor: settings.COLORS.white,
+          data: ocislyLandings
+        },
+        {
+          label: 'ASDS - JRTI',
+          backgroundColor: settings.COLORS.yellow,
+          data: jrtiLandings
+        },
+        {
+          label: 'Failures',
+          backgroundColor: settings.COLORS.red,
+          data: failureLandings
+        }
+      ]
     },
-    options,
+    options
   };
 
   return {
     totalLanded,
     landingHistoryChart,
     heaviestLanding,
-    heaviestLandingGTO,
+    heaviestLandingGTO
   };
 };
 

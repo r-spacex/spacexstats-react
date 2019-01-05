@@ -10,7 +10,7 @@ const people = () => {
     dragonridersCumulative,
     moonPopulation,
     marsPopulation,
-    employees,
+    employees
   };
 };
 

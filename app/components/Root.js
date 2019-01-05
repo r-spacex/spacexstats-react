@@ -18,7 +18,7 @@ class Root extends Component {
   constructor() {
     super();
     this.state = {
-      stats: null,
+      stats: null
     };
     this.anchors = [
       'next',
@@ -33,7 +33,7 @@ class Root extends Component {
       'people',
       'bfr',
       'timelines',
-      'infos',
+      'infos'
     ];
     this.currentAnchor = this.anchors[0]; // eslint-disable-line prefer-destructuring
   }
@@ -44,12 +44,9 @@ class Root extends Component {
 
   componentWillMount() {
     // Wait for the two datasets to be loaded then compute the stats
-    Promise.all([apiGet('/launches'), apiGet('/launches/upcoming')]).then((values) => {
+    Promise.all([apiGet('/launches'), apiGet('/launches/upcoming')]).then(values => {
       this.setState({
-        stats: computeStats(
-          JSON.parse(values[0].text),
-          JSON.parse(values[1].text),
-        ),
+        stats: computeStats(JSON.parse(values[0].text), JSON.parse(values[1].text))
       });
     });
 
@@ -66,7 +63,7 @@ class Root extends Component {
     }
   };
 
-  handleShortcuts = (action) => {
+  handleShortcuts = action => {
     switch (action) {
       case 'MOVE_UP':
         this.moveUp();
@@ -74,16 +71,17 @@ class Root extends Component {
       case 'MOVE_DOWN':
         this.moveDown();
         break;
-      default: break;
+      default:
+        break;
     }
-  }
+  };
 
   moveTo = (targetAnchor, down = false) => {
     goToAnchor(targetAnchor);
     ReactGA.event({
       category: 'Scroll Arrow',
       action: down ? 'Scroll down' : 'Scroll up',
-      label: targetAnchor,
+      label: targetAnchor
     });
   };
 
@@ -232,32 +230,37 @@ class Root extends Component {
             stats={this.state.stats.timelines}
           />
 
-          <footer id="section-infos" className="ContentBlock ContentBlock--footer" style={{ backgroundImage: 'url(/img/backgrounds/orbcommdark.jpg)' }}>
-            <ScrollableAnchor id="infos"><span /></ScrollableAnchor>
+          <footer
+            id="section-infos"
+            className="ContentBlock ContentBlock--footer"
+            style={{ backgroundImage: 'url(/img/backgrounds/orbcommdark.jpg)' }}
+          >
+            <ScrollableAnchor id="infos">
+              <span />
+            </ScrollableAnchor>
             <main className="fx-col fx-middle-xs fx-center-xs text-center full-height">
               <p className="fx-col-xs">
-                Photos on this page courtesy SpaceX, &amp; NASA. BFS Hop Test image
-                by{' '}
+                Photos on this page courtesy SpaceX, &amp; NASA. BFS Hop Test image by{' '}
                 <ReactGA.OutboundLink
                   eventLabel="Exit to IanAtkinson_NSF's profile"
                   to="https://www.reddit.com/user/IanAtkinson_NSF"
                   title="IanAtkinson_NSF's Reddit profile"
                 >
                   /u/IanAtkinson_NSF
-                </ReactGA.OutboundLink> on Reddit. All rights maintained
-                by the respective owners.<br />
-
-                This site is fan-run and not affiliated with SpaceX in any way.
-                For official information and news, please visit{' '}
+                </ReactGA.OutboundLink>{' '}
+                on Reddit. All rights maintained by the respective owners.
+                <br />
+                This site is fan-run and not affiliated with SpaceX in any way. For official information and news,
+                please visit{' '}
                 <ReactGA.OutboundLink
                   eventLabel="Exit to SpaceX official website"
                   to="http://www.spacex.com"
                   title="Official SpaceX website"
                 >
                   www.spacex.com
-                </ReactGA.OutboundLink>.
+                </ReactGA.OutboundLink>
+                .
                 <br />
-
                 Original site concept and design by{' '}
                 <ReactGA.OutboundLink
                   eventLabel="Exit to EchoLogic's profile"
@@ -265,33 +268,33 @@ class Root extends Component {
                   title="Echologic's Reddit profile"
                 >
                   /u/EchoLogic
-                </ReactGA.OutboundLink>,
-                {' '}now rehosted by{' '}
+                </ReactGA.OutboundLink>
+                , now rehosted by{' '}
                 <ReactGA.OutboundLink
                   eventLabel="Exit to Brandtamos' profile"
                   to="https://www.reddit.com/user/brandtamos"
                   title="Brandtamos' Reddit profile"
                 >
                   /u/brandtamos
-                </ReactGA.OutboundLink>
-                {' '}and recoded by{' '}
+                </ReactGA.OutboundLink>{' '}
+                and recoded by{' '}
                 <ReactGA.OutboundLink
                   eventLabel="Exit to kornelord's profile"
                   to="https://www.reddit.com/user/kornelord"
                   title="kornelord's Reddit profile"
                 >
                   /u/kornelord
-                </ReactGA.OutboundLink>
-                {' '}with React and{' '}
+                </ReactGA.OutboundLink>{' '}
+                with React and{' '}
                 <ReactGA.OutboundLink
                   eventLabel="Exit to r/spacex's API"
                   to="https://github.com/r-spacex/SpaceX-API"
                   title="r/spacex's API"
                 >
                   r/spacex’s API
-                </ReactGA.OutboundLink>.<br />
+                </ReactGA.OutboundLink>
+                .<br />
                 <br />
-
                 <ReactGA.OutboundLink
                   eventLabel="Exit to Github Repo"
                   to="https://github.com/r-spacex/spacexstats-react"
@@ -315,7 +318,7 @@ class Root extends Component {
 }
 
 Root.childContextTypes = {
-  shortcuts: PropTypes.object.isRequired,
+  shortcuts: PropTypes.object.isRequired
 };
 
 export default Root;

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
 
-import TableStat from './TableStat.jsx';
+import TableStat from './TableStat.js';
 
 const getQuarter = date => Math.floor((date.get('month') + 3) / 3);
 
@@ -27,7 +27,7 @@ const displayLaunchTime = (date, precision) => {
 
 const sortLaunches = (
   { launch_date_unix: dateA, tentative_max_precision: precisionA },
-  { launch_date_unix: dateB, tentative_max_precision: precisionB },
+  { launch_date_unix: dateB, tentative_max_precision: precisionB }
 ) => {
   if (precisionA === 'quarter' && precisionB === 'quarter') {
     return dateA - dateB;
@@ -63,35 +63,38 @@ const sortLaunches = (
 };
 
 const LaunchesTable = ({ data }) => {
-  const config = [{
-    width: '40%',
-    header: 'Mission',
-    renderCell: ({ mission_name: mission }) => mission,
-  }, {
-    width: '26%',
-    header: 'Date (UTC)',
-    renderCell: ({ launch_date_unix: date, tentative_max_precision: precision }) =>
-      displayLaunchTime(moment.unix(date), precision),
-  }, {
-    width: '17%',
-    header: 'Vehicle',
-    renderCell: ({ rocket: { rocket_name: vehicle } }) => vehicle,
-  }, {
-    width: '17%',
-    header: 'Launchpad',
-    renderCell: ({ launch_site: { site_name: launchpad } }) => launchpad,
-  }];
+  const config = [
+    {
+      width: '40%',
+      header: 'Mission',
+      renderCell: ({ mission_name: mission }) => mission
+    },
+    {
+      width: '26%',
+      header: 'Date (UTC)',
+      renderCell: ({ launch_date_unix: date, tentative_max_precision: precision }) =>
+        displayLaunchTime(moment.unix(date), precision)
+    },
+    {
+      width: '17%',
+      header: 'Vehicle',
+      renderCell: ({ rocket: { rocket_name: vehicle } }) => vehicle
+    },
+    {
+      width: '17%',
+      header: 'Launchpad',
+      renderCell: ({ launch_site: { site_name: launchpad } }) => launchpad
+    }
+  ];
 
   // Sort data by date
   data.sort(sortLaunches);
 
-  return (
-    <TableStat config={config} data={data} />
-  );
+  return <TableStat config={config} data={data} />;
 };
 
 LaunchesTable.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default LaunchesTable;
