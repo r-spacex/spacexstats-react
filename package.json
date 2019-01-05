@@ -2,19 +2,17 @@
   "name": "spacexstats",
   "version": "1.0.0",
   "description": "Stats about SpaceX",
-  "main": "index.js",
   "author": "r/spacex",
   "license": "UNLICENSED",
+  "private": true,
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js -p",
     "start": "NODE_ENV=development webpack-dev-server --hot --inline --config webpack.config.dev.js",
-    "eslint": "eslint . --fix",
-    "heroku-postbuild": "yarn build"
+    "test:lint": "eslint .",
+    "test": "yarn test:lint"
   },
   "keywords": [
-    "es6",
-    "react",
-    "redux"
+    "react"
   ],
   "dependencies": {
     "babel-polyfill": "^6.8.0",
@@ -51,11 +49,13 @@
     "css-loader": "^0.28",
     "eslint": "^4",
     "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-import": "^2",
     "eslint-plugin-jsx-a11y": "^6",
     "eslint-plugin-react": "^7",
     "html-webpack-include-assets-plugin": "^1.0.6",
+    "prettier": "^1.15.3",
     "react-addons-test-utils": "^15.0.2",
     "style-loader": "^0.23.1",
     "stylus": "^0.54.5",

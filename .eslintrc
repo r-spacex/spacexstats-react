@@ -1,7 +1,8 @@
 {
-  "extends": "airbnb",
+  "extends": ["airbnb", "prettier"],
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true
   },
   "parser": "babel-eslint",
   "settings": {
@@ -11,14 +12,21 @@
     "global-require": 0,
     "import/no-extraneous-dependencies": 0,
     "no-mixed-operators": 0,
-    "no-plusplus": [ "error", {
-          "allowForLoopAfterthoughts": true
-      }],
-    "jsx-a11y/anchor-is-valid": [ "error", {
-        "components": [ "OutboundLink" ],
-        "specialLink": [ "to", "hrefLeft", "hrefRight" ],
-        "aspects": [ "noHref", "invalidHref", "preferButton" ]
-      }],
-     "react/no-array-index-key": 0
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["OutboundLink"],
+        "specialLink": ["to", "hrefLeft", "hrefRight"],
+        "aspects": ["noHref", "invalidHref", "preferButton"]
+      }
+    ],
+    "react/no-array-index-key": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }]
   }
 }

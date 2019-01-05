@@ -1,11 +1,12 @@
 language: node_js
 node_js:
-  - "10"
+  - '10'
 
 before_script:
-    - yarn build
+  - yarn build
 
-script: echo "no tests"
+script:
+  - yarn test
 
 deploy:
   provider: pages

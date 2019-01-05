@@ -1,4 +1,5 @@
 # SpaceX Stats
+
 A fan website for the company SpaceX originally created by Luke Davia ([Twitter](https://twitter.com/lukealization), [Reddit](https://reddit.com/u/EchoLogic)). The current React front-end uses the [SpaceX API](https://github.com/r-spacex/SpaceX-API).
 
 ## How to contribute
@@ -6,6 +7,7 @@ A fan website for the company SpaceX originally created by Luke Davia ([Twitter]
 The project will be installed on a Vagrant virtual machine. All the dev tools will be installed inside it.
 
 ### Prereqs
+
 - [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - [Vagrant](https://www.vagrantup.com/downloads.html)
 
@@ -19,6 +21,10 @@ The project will be installed on a Vagrant virtual machine. All the dev tools wi
 
 Remember, when you stop working on the project you can stop the Vagrant box with `vagrant halt`. You can delete it with `vagrant destroy`.
 
+Recommended plugins for your favorite editor:
+
+- Eslint integration
+- Prettier integration
 
 ## Deployment
 
