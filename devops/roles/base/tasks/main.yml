@@ -31,14 +31,6 @@
   command: sudo cp .ssh/authorized_keys ~{{ web_user }}/.ssh/
   when: vagrant|default(False)
 
-- name: Authorize the Core Team public keys for the user
-  authorized_key:
-    user={{ web_user }}
-    key="{{ item.key }}"
-    state={{ item.state }}
-  with_items: "{{public_keys}}"
-  tags: [ssh-keys]
-
 - name: Ensure GIT, libs and co. are installed
   apt:
     name={{ item }}

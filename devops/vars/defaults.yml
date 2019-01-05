@@ -3,7 +3,3 @@
 hostname: spacexstats
 web_dirname: spacexstats
 web_user: ubuntu
-public_keys:
-    - user: "Albéric Trancart"
-      state: present
-      key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDXw3qrYjD17GRqDVmZsDrRtRnxWxM6c1GAqLv5VrH7xQ8EmzjRoUqRNFqhKtjGQTAP2PLzlevDDlfpVhqCCmsStDT6vkT6N2Cxfv7WoFYLvQyTNEuXpUoLpFc7E9cjpUagqzxRubFl/MRqiOu4efR3PK9gkyILzZctedW3pvu4u83Lp/BqJIHMqLi+JQiCNCzKz5bPkyGGthMwkTqx+QsJo8WyMfwEpSX3qwfngpQnPxYdnmGg2whnLAduCwUutLuE6eZT1zw4YhqVhHg2HbHSTYFN9pQjva3BBnhYybVeMALz76MigP7Ts4Nwthp1uNy7L8h2GNli5u+l78RtJH/f alberic@trancart.net"

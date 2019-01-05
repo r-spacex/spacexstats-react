@@ -2,7 +2,7 @@
 
 - name: Change initial working directory
   lineinfile:
-    path: /home/ubuntu/.profile
+    path: /home/vagrant/.profile
     line: 'cd /vagrant'
 
 - name: Install the project - JS dependencies
