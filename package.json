@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
+    "analyze": "NODE_ENV=production webpack --config webpack.config.prod.js --json > stats.json && yarn webpack-bundle-analyzer stats.json dist",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js -p",
     "start": "NODE_ENV=development webpack-dev-server --hot --inline --config webpack.config.dev.js",
     "test:lint": "eslint .",
@@ -54,6 +55,7 @@
     "stylus-loader": "^3.0.2",
     "url-loader": "^1.1.2",
     "webpack": "^4.28.3",
+    "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.2.0",
     "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.2.1"
