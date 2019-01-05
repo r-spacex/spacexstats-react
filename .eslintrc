@@ -5,25 +5,16 @@
     "node": true
   },
   "parser": "babel-eslint",
+  "parserOptions": { "ecmaFeatures": { "jsx": true } },
   "settings": {
     "import/resolver": "babel-plugin-root-import"
   },
+  "plugins": ["react", "jsx-a11y", "import"],
   "rules": {
-    "global-require": 0,
-    "import/no-extraneous-dependencies": 0,
-    "no-mixed-operators": 0,
     "no-plusplus": [
       "error",
       {
         "allowForLoopAfterthoughts": true
-      }
-    ],
-    "jsx-a11y/anchor-is-valid": [
-      "error",
-      {
-        "components": ["OutboundLink"],
-        "specialLink": ["to", "hrefLeft", "hrefRight"],
-        "aspects": ["noHref", "invalidHref", "preferButton"]
       }
     ],
     "react/no-array-index-key": 0,
