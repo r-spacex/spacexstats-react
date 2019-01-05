@@ -1,11 +1,11 @@
 ---
- - hosts: all
-   become: yes
-   user: ubuntu
-   vars_files:
+- hosts: all
+  become: yes
+  user: ubuntu
+  vars_files:
     - vars/defaults.yml
     - vars/vagrant.yml
-   roles:
+  roles:
     - base
     - node
     - yarn

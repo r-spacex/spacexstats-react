@@ -1,12 +1,11 @@
 ---
-
 - name: Change initial working directory
   lineinfile:
     path: /home/vagrant/.profile
     line: 'cd /vagrant'
 
 - name: Install the project - JS dependencies
-  shell: "yarn install --silent"
+  shell: 'yarn install --silent'
   ignore_errors: yes # Somewhat running Yarn fails Ansible randomly
   args:
-      chdir: "/vagrant"
+    chdir: '/vagrant'

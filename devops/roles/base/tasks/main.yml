@@ -7,8 +7,7 @@
   become_method: sudo
 
 - name: Update the package repositories
-  apt:
-    update_cache=yes
+  apt: update_cache=yes
     upgrade=safe
     cache_valid_time=3600
 
@@ -17,8 +16,7 @@
   when: hostname|default(False) != False
 
 - name: Configure the locale
-  lineinfile:
-    dest=/etc/environment
+  lineinfile: dest=/etc/environment
     regexp='^LC_ALL='
     line='LC_ALL=en_US.UTF-8'
 
@@ -32,7 +30,6 @@
   when: vagrant|default(False)
 
 - name: Ensure GIT, libs and co. are installed
-  apt:
-    name={{ item }}
+  apt: name={{ item }}
     state=latest
-  with_items: "{{apt_packages}}"
+  with_items: '{{apt_packages}}'

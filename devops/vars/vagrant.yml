@@ -1,4 +1,3 @@
 ---
-
 sites:
-    - spacexstats.test
+  - spacexstats.test

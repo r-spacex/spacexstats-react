@@ -1,16 +1,15 @@
 ---
-
 apt_packages:
-    - curl
-    - expect
-    - fail2ban  # to avoid SSH bruteforce
-    - git
-    - htop
-    - iotop
-    - make
-    - nano
-    - netcat
-    - traceroute
-    - tree
-    - unzip
-    - zip
+  - curl
+  - expect
+  - fail2ban # to avoid SSH bruteforce
+  - git
+  - htop
+  - iotop
+  - make
+  - nano
+  - netcat
+  - traceroute
+  - tree
+  - unzip
+  - zip
