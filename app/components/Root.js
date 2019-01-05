@@ -4,7 +4,7 @@ import ReactGA from 'react-ga';
 import ScrollableAnchor, { goToAnchor } from 'react-scrollable-anchor';
 import { Shortcuts, ShortcutManager } from 'react-shortcuts';
 
-import ContentBlock from '~/components/ContentBlock.jsx';
+import ContentBlock from '~/components/ContentBlock';
 import computeStats from '~/helpers/main';
 import keymap from '~/keymap';
 import { apiGet, isInViewport } from '~/utils';

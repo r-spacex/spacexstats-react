@@ -1,4 +1,4 @@
-import LaunchesTable from '~/components/stats/LaunchesTable.jsx';
+import LaunchesTable from '~/components/stats/LaunchesTable';
 
 import nextLaunches from '~/helpers/nextLaunches';
 import launchCount from '~/helpers/launchCount';

@@ -7,11 +7,11 @@ import { Bar, Chart, Doughnut, Line } from 'react-chartjs-2';
 import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 import { Shortcuts } from 'react-shortcuts';
 
-import IntegerStat from '~/components/stats/IntegerStat.jsx';
-import TextStat from '~/components/stats/TextStat.jsx';
-import TimeStat from '~/components/stats/TimeStat.jsx';
-import Navbar from '~/components/Navbar.jsx';
-import Ribbon from '~/components/Ribbon.jsx';
+import IntegerStat from '~/components/stats/IntegerStat';
+import TextStat from '~/components/stats/TextStat';
+import TimeStat from '~/components/stats/TimeStat';
+import Navbar from '~/components/Navbar';
+import Ribbon from '~/components/Ribbon';
 import { isInViewport } from '~/utils';
 
 import './ContentBlock.styl';
