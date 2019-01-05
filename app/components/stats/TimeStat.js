@@ -8,8 +8,8 @@ const ONE_MINUTE_IN_S = 60;
 const ONE_HOUR_IN_S = ONE_MINUTE_IN_S * 60;
 const ONE_DAY_IN_S = ONE_HOUR_IN_S * 24;
 
-const TimeStat = props => {
-  let secondsLeft = Math.floor(Math.abs(props.data));
+const TimeStat = ({ data }) => {
+  let secondsLeft = Math.floor(Math.abs(data));
   const days = Math.floor(secondsLeft / ONE_DAY_IN_S);
   secondsLeft -= ONE_DAY_IN_S * days;
   const hours = Math.floor(secondsLeft / ONE_HOUR_IN_S);
@@ -52,6 +52,7 @@ const onInterval = (propFunc, interval) => Component =>
       super(...args);
       this.state = propFunc(this.props);
     }
+
     componentWillMount() {
       this.update = newProps => this.setState(propFunc(newProps || this.props));
       this.interval = setInterval(this.update, interval);

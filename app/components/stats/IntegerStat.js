@@ -3,10 +3,10 @@ import React from 'react';
 
 import './IntegerStat.styl';
 
-const IntegerStat = props => (
+const IntegerStat = ({ data: { value, subtitle } }) => (
   <div className="IntegerStat text-center">
-    <div className="IntegerStat__value">{props.data.value.toLocaleString()}</div>
-    <div className="IntegerStat__subtitle text-uppercase">{props.data.subtitle}</div>
+    <div className="IntegerStat__value">{value.toLocaleString()}</div>
+    <div className="IntegerStat__subtitle text-uppercase">{subtitle}</div>
   </div>
 );
 

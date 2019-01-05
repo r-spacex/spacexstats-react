@@ -102,17 +102,19 @@ class Root extends Component {
   };
 
   render() {
-    if (!this.state.stats) {
+    const { stats } = this.state;
+
+    if (!stats) {
       return <div />;
     }
 
     // Preload all images from non-open tabs
     const imagesToPreload = [];
-    const statsKeys = Object.keys(this.state.stats);
+    const statsKeys = Object.keys(stats);
     for (let i = 0; i < statsKeys.length; i++) {
       const key = statsKeys[i];
-      if (Object.prototype.hasOwnProperty.call(this.state.stats, key)) {
-        const statBlock = this.state.stats[key];
+      if (Object.prototype.hasOwnProperty.call(stats, key)) {
+        const statBlock = stats[key];
         for (let j = 0; j < statBlock.length; j++) {
           if (statBlock[j].background) {
             imagesToPreload.push(`img/backgrounds/${statBlock[j].background}`);
@@ -129,7 +131,7 @@ class Root extends Component {
             backgroundImage="dscovrlaunch.jpg"
             anchor={this.anchors[0]}
             onMoveDown={this.moveDown}
-            stats={this.state.stats.nextLaunch}
+            stats={stats.nextLaunch}
           />
 
           <ContentBlock
@@ -138,7 +140,7 @@ class Root extends Component {
             anchor={this.anchors[1]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
-            stats={this.state.stats.launchCount}
+            stats={stats.launchCount}
           />
 
           <ContentBlock
@@ -147,7 +149,7 @@ class Root extends Component {
             anchor={this.anchors[2]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
-            stats={this.state.stats.launchHistory}
+            stats={stats.launchHistory}
           />
 
           <ContentBlock
@@ -156,7 +158,7 @@ class Root extends Component {
             anchor={this.anchors[3]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
-            stats={this.state.stats.landingHistory}
+            stats={stats.landingHistory}
           />
 
           <ContentBlock
@@ -165,7 +167,7 @@ class Root extends Component {
             anchor={this.anchors[4]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
-            stats={this.state.stats.reuseHistory}
+            stats={stats.reuseHistory}
           />
 
           <ContentBlock
@@ -174,7 +176,7 @@ class Root extends Component {
             anchor={this.anchors[5]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
-            stats={this.state.stats.launchpadCount}
+            stats={stats.launchpadCount}
           />
 
           <ContentBlock
@@ -183,7 +185,7 @@ class Root extends Component {
             anchor={this.anchors[6]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
-            stats={this.state.stats.turnarounds}
+            stats={stats.turnarounds}
           />
 
           <ContentBlock
@@ -192,7 +194,7 @@ class Root extends Component {
             anchor={this.anchors[7]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
-            stats={this.state.stats.dragon}
+            stats={stats.dragon}
           />
 
           <ContentBlock
@@ -201,7 +203,7 @@ class Root extends Component {
             anchor={this.anchors[8]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
-            stats={this.state.stats.payloads}
+            stats={stats.payloads}
           />
 
           <ContentBlock
@@ -210,7 +212,7 @@ class Root extends Component {
             anchor={this.anchors[9]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
-            stats={this.state.stats.people}
+            stats={stats.people}
           />
 
           <ContentBlock
@@ -219,7 +221,7 @@ class Root extends Component {
             anchor={this.anchors[10]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
-            stats={this.state.stats.bfr}
+            stats={stats.bfr}
           />
 
           <ContentBlock
@@ -227,7 +229,7 @@ class Root extends Component {
             backgroundImage="elonmusk.jpg"
             anchor={this.anchors[11]}
             onMoveUp={this.moveUp}
-            stats={this.state.stats.timelines}
+            stats={stats.timelines}
           />
 
           <footer
@@ -318,6 +320,7 @@ class Root extends Component {
 }
 
 Root.childContextTypes = {
+  /* eslint-disable-next-line */
   shortcuts: PropTypes.object.isRequired
 };
 

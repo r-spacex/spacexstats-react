@@ -27,7 +27,6 @@ const reuseHistory = pastLaunches => {
     let turnaround = null;
 
     launch.rocket.first_stage.cores.forEach(core => {
-      // eslint-disable-line no-loop-func
       const coreSerial = core.core_serial;
 
       if (!(coreSerial in cores)) {

@@ -19,14 +19,17 @@ class Navbar extends Component {
   }
 
   changeTab = tab => {
-    if (tab === this.state.currentTab) {
+    const { onChangeCallback } = this.props;
+    const { currentTab } = this.state;
+
+    if (tab === currentTab) {
       return;
     }
 
     this.setState({ currentTab: tab });
 
-    if (this.props.onChangeCallback) {
-      this.props.onChangeCallback(tab);
+    if (onChangeCallback) {
+      onChangeCallback(tab);
     }
 
     ReactGA.event({
@@ -37,15 +40,19 @@ class Navbar extends Component {
   };
 
   render() {
+    const { tabs } = this.props;
+    const { currentTab } = this.state;
+
     return (
       <nav className="Navbar fx-col-xs fx-row fx-wrap">
-        {this.props.tabs.map((tab, index) => (
+        {tabs.map((tab, index) => (
           <div key={index} className="fx-col-xs">
             <button
+              type="button"
               onClick={() => {
                 this.changeTab(tab);
               }}
-              className={`Navbar__link ${tab === this.state.currentTab ? ' Navbar__link--active' : ''}`}
+              className={`Navbar__link ${tab === currentTab ? ' Navbar__link--active' : ''}`}
             >
               {tab}
             </button>

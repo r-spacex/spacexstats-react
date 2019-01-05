@@ -35,8 +35,9 @@ class ContentBlock extends Component {
   }
 
   onNavbarChange = tab => {
-    for (let i = 0; i < this.props.stats.length; i++) {
-      const stat = this.props.stats[i];
+    const { stats } = this.props;
+    for (let i = 0; i < stats.length; i++) {
+      const stat = stats[i];
       if (tab === stat.tabTitle) {
         this.setState({ currentStat: stat });
       }
@@ -44,19 +45,25 @@ class ContentBlock extends Component {
   };
 
   moveLeft = () => {
-    if (isInViewport(this.props.anchor)) {
-      const index = this.props.stats.indexOf(this.state.currentStat);
+    const { anchor, stats } = this.props;
+    const { currentStat } = this.state;
+
+    if (isInViewport(anchor)) {
+      const index = stats.indexOf(currentStat);
       if (index > 0) {
-        this.onNavbarChange(this.props.stats[index - 1].tabTitle);
+        this.onNavbarChange(stats[index - 1].tabTitle);
       }
     }
   };
 
   moveRight = () => {
-    if (isInViewport(this.props.anchor)) {
-      const index = this.props.stats.indexOf(this.state.currentStat);
-      if (index + 1 < this.props.stats.length) {
-        this.onNavbarChange(this.props.stats[index + 1].tabTitle);
+    const { anchor, stats } = this.props;
+    const { currentStat } = this.state;
+
+    if (isInViewport(anchor)) {
+      const index = stats.indexOf(currentStat);
+      if (index + 1 < stats.length) {
+        this.onNavbarChange(stats[index + 1].tabTitle);
       }
     }
   };
@@ -75,8 +82,9 @@ class ContentBlock extends Component {
   };
 
   render() {
+    const { anchor, backgroundImage, onMoveUp, onMoveDown, titlePrefix } = this.props;
+    const { currentStat: stat } = this.state;
     let statcomponent;
-    const stat = this.state.currentStat;
 
     // We need to clone the dataset because ChartJS will do some work on them
     const dataset = JSON.parse(JSON.stringify(stat.data));
@@ -124,36 +132,36 @@ class ContentBlock extends Component {
 
     // Exception: add ribbon for the next launch section (launch datetime)
     let ribbonText = null;
-    if (this.props.anchor === 'nextlaunch' && dataset !== null) {
+    if (anchor === 'nextlaunch' && dataset !== null) {
       ribbonText = moment.unix(stat.data).format('MMM Do, h:mm:ssa (UTC)');
     }
 
-    const background = stat.background ? stat.background : this.props.backgroundImage;
+    const background = stat.background ? stat.background : backgroundImage;
 
     return (
       <Shortcuts name="TABS" handler={this.handleShortcuts} global targetNodeSelector="body">
         <article
-          id={`section-${this.props.anchor}`}
+          id={`section-${anchor}`}
           className="ContentBlock"
           style={{ backgroundImage: `url(img/backgrounds/${background})` }}
         >
-          <ScrollableAnchor id={this.props.anchor}>
+          <ScrollableAnchor id={anchor}>
             <span />
           </ScrollableAnchor>
           <div className="fx-container" style={{ minHeight: '100vh' }}>
             <div className="fx-col" style={{ minHeight: '100vh' }}>
               <header className="ContentBlock__titleWrapper fx-col fx-center-xs padded">
                 <h2 className="ContentBlock__title">
-                  {this.props.titlePrefix} - {stat.title}
+                  {titlePrefix} - {stat.title}
                 </h2>
               </header>
 
               <section className="ContentBlock__statWrapper fx-grow fx-col">
-                {this.props.onMoveUp && (
+                {onMoveUp && (
                   <i
                     className="ContentBlock__control ContentBlock__control--up fa fa-angle-up large"
-                    onClick={this.props.onMoveUp}
-                    onKeyUp={this.props.onMoveUp}
+                    onClick={onMoveUp}
+                    onKeyUp={onMoveUp}
                     role="button"
                     tabIndex="0"
                   />
@@ -173,11 +181,11 @@ class ContentBlock extends Component {
 
                 {stat.text && <div className="ContentBlock__text padded mtop-big">{stat.text}</div>}
 
-                {this.props.onMoveDown && (
+                {onMoveDown && (
                   <i
                     className="ContentBlock__control ContentBlock__control--down fa fa-angle-down large"
-                    onClick={this.props.onMoveDown}
-                    onKeyUp={this.props.onMoveDown}
+                    onClick={onMoveDown}
+                    onKeyUp={onMoveDown}
                     role="button"
                     tabIndex="0"
                   />

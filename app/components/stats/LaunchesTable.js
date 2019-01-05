@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
 
-import TableStat from './TableStat.js';
+import TableStat from './TableStat';
 
 const getQuarter = date => Math.floor((date.get('month') + 3) / 3);
 
