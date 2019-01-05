@@ -21,7 +21,7 @@ class Root extends Component {
       stats: null
     };
     this.anchors = [
-      'next',
+      'upcoming',
       'launchcount',
       'launchhistory',
       'landing',

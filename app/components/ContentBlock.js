@@ -132,7 +132,7 @@ class ContentBlock extends Component {
 
     // Exception: add ribbon for the next launch section (launch datetime)
     let ribbonText = null;
-    if (anchor === 'nextlaunch' && dataset !== null) {
+    if (anchor === 'upcoming' && dataset !== null) {
       ribbonText = moment.unix(stat.data).format('MMM Do, h:mm:ssa (UTC)');
     }
 
