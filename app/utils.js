@@ -8,3 +8,5 @@ export const isInViewport = testAnchor => {
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
   return rect.top >= -(viewportHeight / 2) && rect.top < viewportHeight / 2;
 };
+
+export const fromUnix = unixDate => new Date(unixDate * 1000);

@@ -1,3 +1,5 @@
+import format from 'date-fns/format';
+
 import LaunchesTable from '~/components/stats/LaunchesTable';
 
 import nextLaunches from '~/helpers/nextLaunches';
@@ -11,7 +13,6 @@ import dragon from '~/helpers/dragon';
 import payloads from '~/helpers/payloads';
 import people from '~/helpers/people';
 import timelines from '~/helpers/timelines';
-import moment from 'moment';
 
 const computeStats = (pastLaunches, upcomingLaunches) => {
   const nextLaunchesData = nextLaunches(upcomingLaunches);
@@ -48,7 +49,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
         tabTitle: 'Total',
         type: 'integer',
         data: { value: launchCountData.totalLaunches, subtitle: 'Flights' },
-        text: `As of ${moment(turnarounds.lastLaunchDate).format('MMMM YYYY')},
+        text: `As of ${format(turnarounds.lastLaunchDate, 'MMMM YYYY')},
             SpaceX has launched ${launchCountData.totalLaunches} rockets, carrying
             a variety of payloads to multiple destinations;including LEO, GTO, L1,
             and the ISS. SpaceX currently has a manifest of over 70 flights that

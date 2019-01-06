@@ -1,44 +1,45 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import moment from 'moment';
+import format from 'date-fns/format';
+import { fromUnix } from '~/utils';
 
 import TableStat from './TableStat';
 
-const getQuarter = date => Math.floor((date.get('month') + 3) / 3);
+const getQuarter = date => Math.floor((date.getMonth() + 3) / 3);
 
 const displayLaunchTime = (date, precision) => {
   switch (precision) {
     case 'second':
     case 'minute':
     case 'hour':
-      return date.format('MMM Do YYYY, HH:mm');
+      return format(date, 'MMM Do YYYY, HH:mm');
 
     case 'day':
-      return date.format('MMM Do YYYY');
+      return format(date, 'MMM Do YYYY');
 
     case 'quarter':
-      return `Q${getQuarter(date)} ${date.format('YYYY')}`;
+      return `Q${getQuarter(date)} ${format(date, 'YYYY')}`;
 
     case 'month':
     default:
-      return date.format('MMM YYYY');
+      return format(date, 'MMM YYYY');
   }
 };
 
 const sortLaunches = (
-  { launch_date_unix: dateA, tentative_max_precision: precisionA },
-  { launch_date_unix: dateB, tentative_max_precision: precisionB }
+  { launch_date_unix: dateAUnix, tentative_max_precision: precisionA },
+  { launch_date_unix: dateBUnix, tentative_max_precision: precisionB }
 ) => {
   if (precisionA === 'quarter' && precisionB === 'quarter') {
-    return dateA - dateB;
+    return dateAUnix - dateBUnix;
   }
 
-  const momentA = moment.unix(dateA);
-  const momentB = moment.unix(dateB);
+  const dateA = fromUnix(dateAUnix);
+  const dateB = fromUnix(dateBUnix);
 
   // Priority to day-positioned dates, then months, then quarters
-  const quarterA = getQuarter(momentA);
-  const quarterB = getQuarter(momentB);
+  const quarterA = getQuarter(dateA);
+  const quarterB = getQuarter(dateB);
   if (quarterA === quarterB) {
     if (precisionA === 'quarter') {
       return 1;
@@ -48,8 +49,8 @@ const sortLaunches = (
     }
   }
 
-  const monthA = momentA.get('month');
-  const monthB = momentB.get('month');
+  const monthA = dateA.getMonth();
+  const monthB = dateB.getMonth();
   if (monthA === monthB) {
     if (precisionA === 'month') {
       return 1;
@@ -73,7 +74,7 @@ const LaunchesTable = ({ data }) => {
       width: '26%',
       header: 'Date (UTC)',
       renderCell: ({ launch_date_unix: date, tentative_max_precision: precision }) =>
-        displayLaunchTime(moment.unix(date), precision)
+        displayLaunchTime(fromUnix(date), precision)
     },
     {
       width: '17%',

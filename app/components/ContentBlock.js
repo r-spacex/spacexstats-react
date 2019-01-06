@@ -1,6 +1,6 @@
 import zoom from 'chartjs-plugin-zoom';
 import * as hammer from 'hammerjs'; // eslint-disable-line no-unused-vars
-import moment from 'moment';
+import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Bar, Chart, Doughnut, Line } from 'react-chartjs-2';
@@ -12,7 +12,7 @@ import TextStat from '~/components/stats/TextStat';
 import TimeStat from '~/components/stats/TimeStat';
 import Navbar from '~/components/Navbar';
 import Ribbon from '~/components/Ribbon';
-import { isInViewport } from '~/utils';
+import { fromUnix, isInViewport } from '~/utils';
 
 import './ContentBlock.styl';
 
@@ -132,8 +132,9 @@ class ContentBlock extends Component {
 
     // Exception: add ribbon for the next launch section (launch datetime)
     let ribbonText = null;
-    if (anchor === 'upcoming' && dataset !== null) {
-      ribbonText = moment.unix(stat.data).format('MMM Do, h:mm:ssa (UTC)');
+
+    if (stat.tabTitle === 'Next Launch' && dataset !== null) {
+      ribbonText = format(fromUnix(stat.data), 'MMM Do, h:mm:ssa (UTC)');
     }
 
     const background = stat.background ? stat.background : backgroundImage;

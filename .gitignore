@@ -4,3 +4,4 @@ dist/bundle.js
 
 *.log
 *.retry
+stats.json

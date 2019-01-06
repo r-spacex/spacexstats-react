@@ -2,7 +2,7 @@ const nextLaunches = upcomingLaunches => {
   // Find first launch with non-null launch date
   let i = 0;
   let launch = upcomingLaunches[i];
-  while (launch.launch_date_unix === null && i < upcomingLaunches.length - 1) {
+  while (launch.launch_date_utc === null && i < upcomingLaunches.length - 1) {
     launch = upcomingLaunches[i];
     i += 1;
   }
@@ -32,7 +32,7 @@ const nextLaunches = upcomingLaunches => {
   }
 
   payloadDesc += ' ';
-  const launchDate = launch.launch_date_unix !== 'TBD' ? launch.launch_date_unix : null;
+  const launchDate = launch.launch_date_utc !== 'TBD' ? new Date(launch.launch_date_utc).getTime() / 1000 : null;
 
   const nextLaunch = {
     date: launchDate,
