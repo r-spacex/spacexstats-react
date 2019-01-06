@@ -1,6 +1,8 @@
 .vagrant/
 node_modules/
-dist/bundle.js
+dist/assets/
+dist/index.html
+dist/*.js
 
 *.log
 *.retry
