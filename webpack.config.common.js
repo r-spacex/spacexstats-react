@@ -1,5 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebappWebpackPlugin = require('webapp-webpack-plugin');
 
 module.exports = {
   entry: path.join(__dirname, 'app/index.js'),
@@ -38,6 +40,10 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    })
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'app/index.html')
+    }),
+    new WebappWebpackPlugin({ logo: path.join(__dirname, 'dist/img/favicon.png'), inject: true })
   ]
 };
