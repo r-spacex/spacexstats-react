@@ -310,7 +310,7 @@ class Root extends Component {
 
           <div className="hidden">
             {imagesToPreload.map((img, index) => (
-              <img key={index} src={img} alt="prefetched images" />
+              <link key={index} itemProp="image" rel="preload" href={img} as="image" />
             ))}
           </div>
         </Shortcuts>
