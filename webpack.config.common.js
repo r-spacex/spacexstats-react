@@ -6,7 +6,7 @@ const WebappWebpackPlugin = require('webapp-webpack-plugin');
 module.exports = {
   entry: path.join(__dirname, 'app/index.js'),
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.join(__dirname, 'dist')
   },
   mode: process.env.NODE_ENV,
@@ -36,6 +36,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx']
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
   },
   plugins: [
     new webpack.DefinePlugin({
