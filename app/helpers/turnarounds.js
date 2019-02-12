@@ -136,14 +136,15 @@ const timelines = pastLaunches => {
     options
   };
 
-  const lastLaunchDate = pastLaunches[pastLaunches.length - 1].launch_date_utc;
+  const lastLaunchDate = pastLaunches[0].launch_date_utc;
+
   return {
     quickestTurnaround: quickestTurnarounds[quickestTurnaroundPad],
     quickestTurnaroundPadName,
     quickestTurnaroundSLC40: quickestTurnarounds.ccafs_slc_40,
     quickestTurnaroundHLC39A: quickestTurnarounds.ksc_lc_39a,
     quickestTurnaroundSLC4E: quickestTurnarounds.vafb_slc_4e,
-    lastLaunchDate: new Date(lastLaunchDate).getTime() / 1000,
+    lastLaunchDate: new Date(lastLaunchDate).getTime(),
     daysBetweenLaunches
   };
 };
