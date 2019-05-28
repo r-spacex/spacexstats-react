@@ -413,6 +413,18 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
 
     payloads: [
       {
+        title: 'Starlink',
+        tabTitle: 'Starlink',
+        background: 'starlink.jpg',
+        type: 'integer',
+        data: { value: payloadsData.internetConstellation, subtitle: 'Satellites' },
+        text: `SpaceX is developing a low latency, broadband internet system to meet
+            the needs of consumers across the globe. Enabled by a constellation of
+            low Earth orbit satellites, Starlink will provide fast, reliable internet
+            to populations with little or no connectivity, including those in rural
+            communities and places where existing services are too expensive or unreliable.`
+      },
+      {
         title: 'Total Mass',
         tabTitle: 'Total Mass',
         type: 'integer',
@@ -440,16 +452,6 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
             Earth rotates. ${payloadsData.heaviestPayloadGTO.mission}, launched for
             ${payloadsData.heaviestPayloadGTO.customers} represents the heaviest
             payload SpaceX has lofted into GTO.`
-      },
-      {
-        title: 'Starlink',
-        tabTitle: 'Starlink',
-        type: 'integer',
-        data: { value: payloadsData.internetConstellation, subtitle: 'Satellites' },
-        text: `SpaceX's constellation of satellites will provide high speed internet
-            anywhere on the globe. Built in Seattle, they will be launched from
-            a variety of locations, potentially allowing Falcon to become the
-            most launched rocket in history.`
       },
       {
         title: 'Customers',

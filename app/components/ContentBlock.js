@@ -3,6 +3,7 @@ import * as hammer from 'hammerjs'; // eslint-disable-line no-unused-vars
 import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import { Bar, Chart, Doughnut, Line } from 'react-chartjs-2';
 import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 import { Shortcuts } from 'react-shortcuts';
@@ -180,7 +181,24 @@ class ContentBlock extends Component {
                   {statcomponent}
                 </div>
 
-                {stat.text && <div className="ContentBlock__text padded mtop-big">{stat.text}</div>}
+                {stat.text && (
+                  <div className="ContentBlock__text padded mtop-big">
+                    {stat.text}{' '}
+                    {stat.title === 'Starlink' && (
+                      <span>
+                        More info at{' '}
+                        <ReactGA.OutboundLink
+                          eventLabel="Exit to Starlink website"
+                          to="https://www.starlink.com/"
+                          title="Starlink website"
+                        >
+                          www.starlink.com
+                        </ReactGA.OutboundLink>
+                        .
+                      </span>
+                    )}
+                  </div>
+                )}
 
                 {onMoveDown && (
                   <i
