@@ -91,13 +91,14 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
         ).toLocaleString()}kg to orbit.`
       },
       {
-        title: 'BFR',
-        tabTitle: 'BFR',
+        title: 'Super Heavy/Starship',
+        tabTitle: 'Super Heavy/Starship',
         type: 'integer',
         data: { value: launchCountData.totalBFR, subtitle: 'Flights' },
-        text: `BFR will stand 106 meters tall, 9 meters wide, and will be able
-            to carry up to 150 tonnes (reusable) to Low Earth Orbit.
-            This will be the single largest rocket ever designed, developed and then built.`
+        text: `The Super Heavy/Starship rocket stack will stand 106 meters tall,
+            9 meters wide, and will be able to carry up to 150 tonnes (reusable)
+            to Low Earth Orbit. This will be the single largest rocket ever
+            designed, developed and then built.`
       }
     ],
 
@@ -491,7 +492,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
         background: 'moon.jpg',
         type: 'integer',
         data: { value: peopleData.moonPopulation, subtitle: 'People' },
-        text: `While the Moon has never been SpaceX's main focus, BFR will enable
+        text: `While the Moon has never been SpaceX's main focus, Starship will enable
             the construction of a Moon Base Alpha if customers want to build it.`
       },
       {
@@ -512,20 +513,21 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
       }
     ],
 
-    bfr: [
+    starship: [
       {
         title: 'Hop Tests',
         tabTitle: 'Hop Tests',
         background: 'bfshop.jpg',
-        type: 'text',
-        data: 'H2 2019'
+        type: 'integer',
+        data: { value: 'RIGHT NOW' },
+        text: `SpaceX is conducting an experimental test program of its future launch vehicule, the Super Heavy/Starship. A Starship hopper prototype has been built at their Boca Chica, Texas launch site and is going through a number of incremental hop tests.`
       },
       {
         title: 'Orbital Tests',
         tabTitle: 'Orbital Tests',
         background: 'bfrorbital.jpg',
         type: 'text',
-        data: '2021'
+        data: '2020'
       },
       {
         title: 'Cargo to Mars',
@@ -569,7 +571,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
         type: 'countdown',
         data: timelinesData.gwynneShotwellBet,
         text: `In April 2018, SpaceX's COO Gwynne Shotwell declared during a TED
-            interview that SpaceX would provide a BFR Earth-to-Earth transportation
+            interview that SpaceX would provide an Earth-to-Earth transportation
             system within ten years. The price would be a couple thousand dollars
             per person to fly New York to Shanghai. This countdown clock expires
             on 1 January 2029, at 00:00 UTC. No pressure, Gwynne.`

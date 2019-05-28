@@ -31,7 +31,7 @@ class Root extends Component {
       'dragon',
       'payloads',
       'people',
-      'bfr',
+      'starship',
       'timelines',
       'infos'
     ];
@@ -216,12 +216,12 @@ class Root extends Component {
           />
 
           <ContentBlock
-            titlePrefix="BFR"
+            titlePrefix="Starship"
             backgroundImage="bfrcargo.jpg"
             anchor={this.anchors[10]}
             onMoveDown={this.moveDown}
             onMoveUp={this.moveUp}
-            stats={stats.bfr}
+            stats={stats.starship}
           />
 
           <ContentBlock
