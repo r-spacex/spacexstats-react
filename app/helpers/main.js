@@ -49,7 +49,7 @@ const computeStats = (pastLaunches, upcomingLaunches) => {
         tabTitle: 'Total',
         type: 'integer',
         data: { value: launchCountData.totalLaunches, subtitle: 'Flights' },
-        text: `As of ${format(turnarounds.lastLaunchDate, 'MMMM YYYY')},
+        text: `As of ${format(turnaroundsData.lastLaunchDate, 'MMMM YYYY')},
             SpaceX has launched ${launchCountData.totalLaunches} rockets, carrying
             a variety of payloads to multiple destinations;including LEO, GTO, L1,
             and the ISS. SpaceX currently has a manifest of over 70 flights that
