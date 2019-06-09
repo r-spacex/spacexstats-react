@@ -135,7 +135,7 @@ class ContentBlock extends Component {
     let ribbonText = null;
 
     if (stat.tabTitle === 'Next Launch' && dataset !== null) {
-      ribbonText = format(fromUnix(stat.data), 'MMM Do, h:mm:ssa (UTC)');
+      ribbonText = format(fromUnix(stat.data), 'MMM Do, h:mm:ssa (UTCZ)');
     }
 
     const background = stat.background ? stat.background : backgroundImage;
