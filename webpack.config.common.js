@@ -63,6 +63,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'app/index.html')
     }),
+    new webpack.IgnorePlugin(/moment/), // Force react-chart chart.js moment dependency out, because we don't need it
     new WebappWebpackPlugin({ logo: path.join(__dirname, 'dist/img/favicon.png'), inject: true })
   ]
 };
