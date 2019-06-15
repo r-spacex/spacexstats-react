@@ -1,12 +1,43 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import './TimeStat.styl';
+import { fonts, thresholds } from '~/stylesheet';
 
 const ONE_SECOND_IN_MS = 1000;
 const ONE_MINUTE_IN_S = 60;
 const ONE_HOUR_IN_S = ONE_MINUTE_IN_S * 60;
 const ONE_DAY_IN_S = ONE_HOUR_IN_S * 24;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  ${fonts.special}
+  text-transform: uppercase;
+`;
+
+const Value = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 2ch;
+  line-height: 1;
+
+  font-size: 2.5rem;
+  @media (min-width: ${thresholds.sm}) {
+    font-size: 7rem;
+  }
+  @media (min-width: ${thresholds.md}) {
+    font-size: 10rem;
+  }
+`;
+
+const Subtitle = styled.div`
+  font-size: 1rem;
+  @media (min-width: ${thresholds.sm}) {
+    font-size: 2rem;
+  }
+`;
 
 const TimeStat = ({ data }) => {
   let secondsLeft = Math.floor(Math.abs(data));
@@ -19,26 +50,24 @@ const TimeStat = ({ data }) => {
   const seconds = Math.floor(secondsLeft);
 
   return (
-    <div className="TimeStat text-center text-uppercase full-width padded">
-      <div className="fx-row fx-around-xs">
-        <div className={`fx-col-xs${days < 10 ? '-2' : ''} fx-col`}>
-          <div className="TimeStat__value">{days.toLocaleString()}</div>
-          <div className="TimeStat__subtitle">Days</div>
-        </div>
-        <div className="fx-col-xs-2 fx-col">
-          <div className="TimeStat__value">{hours.toLocaleString()}</div>
-          <div className="TimeStat__subtitle">Hours</div>
-        </div>
-        <div className="fx-col-xs-2 fx-col">
-          <div className="TimeStat__value">{minutes.toLocaleString()}</div>
-          <div className="TimeStat__subtitle">Minutes</div>
-        </div>
-        <div className="fx-col-xs-2 fx-col">
-          <div className="TimeStat__value">{seconds.toLocaleString()}</div>
-          <div className="TimeStat__subtitle">Seconds</div>
-        </div>
-      </div>
-    </div>
+    <Wrapper>
+      <Value>
+        {days.toLocaleString()}
+        <Subtitle>Days</Subtitle>
+      </Value>
+      <Value>
+        {hours.toLocaleString()}
+        <Subtitle>Hours</Subtitle>
+      </Value>
+      <Value>
+        {minutes.toLocaleString()}
+        <Subtitle>Minutes</Subtitle>
+      </Value>
+      <Value>
+        {seconds.toLocaleString()}
+        <Subtitle>Seconds</Subtitle>{' '}
+      </Value>
+    </Wrapper>
   );
 };
 

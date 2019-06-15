@@ -1,9 +1,21 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import './TextStat.styl';
+import { fonts, thresholds } from '~/stylesheet';
 
-const TextStat = ({ data }) => <div className="TextStat text-center text-uppercase">{data}</div>;
+const Wrapper = styled.div`
+  ${fonts.special}
+  text-align: center;
+  text-transform: uppercase;
+
+  font-size: 3rem;
+  @media (min-width: ${thresholds.sm}) {
+    font-size: 7rem;
+  }
+`;
+
+const TextStat = ({ data }) => <Wrapper>{data}</Wrapper>;
 
 TextStat.propTypes = {
   data: PropTypes.string.isRequired
