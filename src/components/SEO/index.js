@@ -70,10 +70,10 @@ function SEO({ description, lang, meta }) {
         }
       ].concat(meta)}
     >
-      <link rel="preload" href="https://api.spacexdata.com/v2/launches/upcoming" as="fetch" />
-      <link rel="preload" href="https://api.spacexdata.com/v2/launches" as="fetch" />
-      <link rel="preload" href="fonts/brandon-reg-webfont.ttf" as="font" />
-      <link rel="preload" href="fonts/brandon-thin-webfont.ttf" as="font" />
+      <link rel="preload" crossOrigin="anonymous" href="https://api.spacexdata.com/v2/launches/upcoming" as="fetch" />
+      <link rel="preload" crossOrigin="anonymous" href="https://api.spacexdata.com/v2/launches" as="fetch" />
+      <link rel="preload" crossOrigin="anonymous" href="fonts/brandon-reg-webfont.ttf" as="font" />
+      <link rel="preload" crossOrigin="anonymous" href="fonts/brandon-thin-webfont.ttf" as="font" />
     </Helmet>
   );
 }
