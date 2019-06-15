@@ -18,10 +18,6 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
-        test: /\.styl$/,
-        loader: ['style-loader', 'css-loader', 'stylus-loader']
-      },
-      {
         test: /\.(eot|otf|ttf|woff)$/,
         loader: 'file-loader'
       },
