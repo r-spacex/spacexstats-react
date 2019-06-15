@@ -6,14 +6,10 @@ module.exports = merge(common, {
   devtool: 'inline-source-map',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    host: '0.0.0.0',
-    public: 'spacexstats.test:8080',
+    open: true,
     port: 8080,
     headers: {
       'Access-Control-Allow-Origin': '*'
-    },
-    watchOptions: {
-      poll: true
     }
   }
 });
