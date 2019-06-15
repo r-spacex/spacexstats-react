@@ -1,7 +1,7 @@
-import request from 'superagent';
+import axios from 'axios';
 
 export const apiGet = uri =>
-  new Promise(resolve => request.get(`https://api.spacexdata.com/v2${uri}`).then(data => resolve(data)));
+  new Promise(resolve => axios.get(`https://api.spacexdata.com/v2${uri}`).then(({ data }) => resolve(data)));
 
 export const isInViewport = testAnchor => {
   const rect = document.getElementById(`section-${testAnchor}`).getBoundingClientRect();

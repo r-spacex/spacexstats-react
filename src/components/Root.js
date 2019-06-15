@@ -47,7 +47,7 @@ class Root extends Component {
     // Wait for the two datasets to be loaded then compute the stats
     Promise.all([apiGet('/launches'), apiGet('/launches/upcoming')]).then(values => {
       this.setState({
-        stats: computeStats(JSON.parse(values[0].text), JSON.parse(values[1].text))
+        stats: computeStats(values[0], values[1])
       });
     });
 

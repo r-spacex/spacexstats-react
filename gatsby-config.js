@@ -1,8 +1,11 @@
+const siteUrl = `https://www.spacexstats.xyz`;
+
 module.exports = {
   siteMetadata: {
     title: `SpaceX Stats`,
     description: `SpaceX Stats is the ultimate place to keep track of SpaceX's achievements into providing cheaper access to space and making human life multiplanetary.`,
-    author: `Albéric Trancart`
+    author: `Albéric Trancart`,
+    siteUrl
   },
   plugins: [
     // Codebase
@@ -27,7 +30,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-canonical-urls`,
       options: {
-        siteUrl: `https://www.spacexstats.xyz`
+        siteUrl
       }
     },
     {
