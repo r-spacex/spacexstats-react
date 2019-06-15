@@ -109,21 +109,6 @@ class Root extends Component {
       return <div />;
     }
 
-    // Preload all images from non-open tabs
-    const imagesToPreload = [];
-    const statsKeys = Object.keys(stats);
-    for (let i = 0; i < statsKeys.length; i++) {
-      const key = statsKeys[i];
-      if (Object.prototype.hasOwnProperty.call(stats, key)) {
-        const statBlock = stats[key];
-        for (let j = 0; j < statBlock.length; j++) {
-          if (statBlock[j].background) {
-            imagesToPreload.push(`img/backgrounds/${statBlock[j].background}`);
-          }
-        }
-      }
-    }
-
     return (
       <Shortcuts name="NAVIGATION" handler={this.handleShortcuts} global>
         <StyleReset />
@@ -222,11 +207,6 @@ class Root extends Component {
           stats={stats.timelines}
         />
         <Footer />
-        <div className="hidden">
-          {imagesToPreload.map((img, index) => (
-            <link key={index} itemProp="image" rel="preload" href={img} as="image" />
-          ))}
-        </div>
       </Shortcuts>
     );
   }

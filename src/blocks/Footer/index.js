@@ -24,7 +24,7 @@ const Content = styled.main`
 `;
 
 const Footer = () => (
-  <Wrapper id="section-infos" style={{ backgroundImage: 'url(/images/backgrounds/orbcommdark.jpg)' }}>
+  <Wrapper id="section-infos" filename="backgrounds/orbcommdark.jpg" tag="footer">
     <ScrollableAnchor id="infos">
       <span />
     </ScrollableAnchor>

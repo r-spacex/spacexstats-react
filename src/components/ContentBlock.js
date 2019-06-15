@@ -3,7 +3,7 @@ import format from 'date-fns/format';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import { Bar, Chart, Doughnut, Line } from 'react-chartjs-2';
+import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 import { Shortcuts } from 'react-shortcuts';
 
@@ -13,11 +13,12 @@ import TimeStat from 'components/stats/TimeStat';
 import Link from 'components/Link';
 import Navbar from 'components/Navbar';
 import Ribbon from 'components/Ribbon';
+import BackgroundImage from 'components/BackgroundImage';
 import { fromUnix, isInViewport } from 'utils';
 
 import { colorUsages, fonts, thresholds } from 'stylesheet';
 
-export const Background = styled.article`
+export const Background = styled(BackgroundImage)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -233,7 +234,7 @@ class ContentBlock extends Component {
 
     return (
       <Shortcuts name="TABS" handler={this.handleShortcuts} global targetNodeSelector="body">
-        <Background id={`section-${anchor}`} style={{ backgroundImage: `url(images/backgrounds/${background})` }}>
+        <Background tag="article" id={`section-${anchor}`} filename={`backgrounds/${background}`}>
           <Wrapper>
             <ScrollableAnchor id={anchor}>
               <span />
