@@ -74,6 +74,13 @@ function SEO({ description, lang, meta }) {
       <link rel="preload" crossOrigin="anonymous" href="https://api.spacexdata.com/v2/launches" as="fetch" />
       <link rel="preload" crossOrigin="anonymous" href="fonts/brandon-reg-webfont.ttf" as="font" />
       <link rel="preload" crossOrigin="anonymous" href="fonts/brandon-thin-webfont.ttf" as="font" />
+
+      <link
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        rel="stylesheet"
+        type="text/css"
+      />
+      <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet" type="text/css" />
     </Helmet>
   );
 }
