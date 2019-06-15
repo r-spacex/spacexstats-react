@@ -1,8 +1,47 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
+import styled from 'styled-components';
 
-import './Navbar.styl';
+import { colorUsages, thresholds } from '~/stylesheet';
+
+const NavbarLink = styled.button`
+  display: flex;
+  flex-wrap: wrap;
+
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+
+  @media (min-width: ${thresholds.sm}) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 3rem;
+    line-height: 3rem;
+  }
+
+  text-align: center;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.3s ease-in-out;
+
+  border-color: ${({ active }) => (active ? colorUsages.navbarActiveTab : 'transparent')};
+`;
+
+const NavbarWrapper = styled.nav`
+  display: flex;
+  flex-wrap: wrap;
+
+  @media (min-width: ${thresholds.sm}) {
+    ${NavbarLink} {
+      margin-left: 1rem;
+    }
+  }
+`;
 
 class Navbar extends Component {
   constructor(props) {
@@ -44,21 +83,20 @@ class Navbar extends Component {
     const { currentTab } = this.state;
 
     return (
-      <nav className="Navbar fx-col-xs fx-row fx-wrap">
+      <NavbarWrapper>
         {tabs.map((tab, index) => (
-          <div key={index} className="fx-col-xs">
-            <button
-              type="button"
-              onClick={() => {
-                this.changeTab(tab);
-              }}
-              className={`Navbar__link ${tab === currentTab ? ' Navbar__link--active' : ''}`}
-            >
-              {tab}
-            </button>
-          </div>
+          <NavbarLink
+            key={index}
+            type="button"
+            onClick={() => {
+              this.changeTab(tab);
+            }}
+            active={tab === currentTab}
+          >
+            {tab}
+          </NavbarLink>
         ))}
-      </nav>
+      </NavbarWrapper>
     );
   }
 }
