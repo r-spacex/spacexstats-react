@@ -29,6 +29,7 @@
     "react-ga": "^2.5.7",
     "react-scrollable-anchor": "^0.6.1",
     "react-shortcuts": "^2.0.1",
+    "styled-components": "^4.3.1",
     "superagent": "^5.0.5"
   },
   "devDependencies": {
