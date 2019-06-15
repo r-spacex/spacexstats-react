@@ -9,25 +9,24 @@ const ribbonWidth = '250px';
 const ribbonLeftCornerSize = '30px';
 const ribbonRightCornerSize = '10px';
 
-const RibbonWrapper = styled.div`
+const Wrapper = styled.div`
   position: absolute;
   right: 0;
   top: 4rem;
   width: ${ribbonWidth};
 `;
 
-const RibbonText = styled.div`
+const Text = styled.div`
   position: relative;
   z-index: 1;
   display: inline-block;
 
-  width: calc(100% - 20px);
+  width: calc(100% + ${ribbonRightCornerSize});
   height: ${ribbonHeight};
   line-height: ${ribbonHeight};
   text-align: center;
   text-transform: uppercase;
 
-  padding: 0 calc(10px + ${ribbonRightCornerSize}) 0 10px;
   background-color: ${colorUsages.ribbonBackground};
 
   &:before,
@@ -55,9 +54,9 @@ const RibbonText = styled.div`
 `;
 
 const Ribbon = ({ text }) => (
-  <RibbonWrapper>
-    <RibbonText>{text}</RibbonText>
-  </RibbonWrapper>
+  <Wrapper>
+    <Text>{text}</Text>
+  </Wrapper>
 );
 
 Ribbon.propTypes = {

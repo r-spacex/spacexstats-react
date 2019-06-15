@@ -177,12 +177,10 @@ class ContentBlock extends Component {
 
                 <Navbar tabs={this.navbarTabs} onChangeCallback={this.onNavbarChange} selectedTab={stat.tabTitle} />
 
-                <div className="ContentBlock__stat fx-grow fx-row fx-center-xs fx-middle-xs mtop-big">
-                  {statcomponent}
-                </div>
+                <div className="ContentBlock__stat fx-grow fx-col fx-center-xs">{statcomponent}</div>
 
                 {stat.text && (
-                  <div className="ContentBlock__text padded mtop-big">
+                  <div className="ContentBlock__text">
                     {stat.text}{' '}
                     {stat.title === 'Starlink' && (
                       <span>

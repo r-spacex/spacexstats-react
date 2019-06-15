@@ -1,38 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import './TableStat.styl';
+import { colorUsages } from '~/stylesheet';
+
+const Table = styled.table`
+  text-align: left;
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+const Wrapper = styled.div`
+  min-height: 15rem;
+  max-height: calc(100vh - 24rem);
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const BodyRow = styled.tr`
+  border-top: 1px solid ${colorUsages.tableBorder};
+`;
+
+const Cell = styled.td`
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+`;
 
 const TableStat = ({ config, data, noDataMessage }) => (
-  <div className="Table__container">
-    <table className="Table">
-      <thead className="Table__header">
+  <Wrapper>
+    <Table>
+      <thead>
         <tr>
           {config.map(({ width, header = '', align = 'left' }, index) => (
-            <th key={index} width={width} align={align} className="Table__cell">
+            <Cell as="th" key={index} width={width} align={align}>
               {header}
-            </th>
+            </Cell>
           ))}
         </tr>
       </thead>
       <tbody>
         {data.map((rowData, rowIndex) => (
-          <tr key={rowIndex} className="Table__body__row">
+          <BodyRow key={rowIndex}>
             {config.map(({ width, renderCell, align = 'left' }, colIndex) => (
-              <td key={colIndex} width={width} align={align} className="Table__cell">
+              <Cell key={colIndex} width={width} align={align}>
                 {renderCell(rowData)}
-              </td>
+              </Cell>
             ))}
-          </tr>
+          </BodyRow>
         ))}
         {data.length === 0 && (
-          <tr width="100%">
+          <BodyRow width="100%">
             <td colSpan={config.length}>{noDataMessage}</td>
-          </tr>
+          </BodyRow>
         )}
       </tbody>
-    </table>
-  </div>
+    </Table>
+  </Wrapper>
 );
 
 TableStat.propTypes = {

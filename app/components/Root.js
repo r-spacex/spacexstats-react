@@ -39,6 +39,10 @@ const GlobalStyle = createGlobalStyle`
     outline: 0;
     font: inherit;
   }
+
+  * {
+    box-sizing: border-box;
+  }
 `;
 
 class Root extends Component {

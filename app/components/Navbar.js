@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { colorUsages, thresholds } from '~/stylesheet';
 
-const NavbarLink = styled.button`
+const Tab = styled.button`
   display: flex;
   flex-wrap: wrap;
 
@@ -32,12 +32,12 @@ const NavbarLink = styled.button`
   border-color: ${({ active }) => (active ? colorUsages.navbarActiveTab : 'transparent')};
 `;
 
-const NavbarWrapper = styled.nav`
+const Wrapper = styled.nav`
   display: flex;
   flex-wrap: wrap;
 
   @media (min-width: ${thresholds.sm}) {
-    ${NavbarLink} {
+    ${Tab} {
       margin-left: 1rem;
     }
   }
@@ -83,9 +83,9 @@ class Navbar extends Component {
     const { currentTab } = this.state;
 
     return (
-      <NavbarWrapper>
+      <Wrapper>
         {tabs.map((tab, index) => (
-          <NavbarLink
+          <Tab
             key={index}
             type="button"
             onClick={() => {
@@ -94,9 +94,9 @@ class Navbar extends Component {
             active={tab === currentTab}
           >
             {tab}
-          </NavbarLink>
+          </Tab>
         ))}
-      </NavbarWrapper>
+      </Wrapper>
     );
   }
 }
