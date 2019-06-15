@@ -13,7 +13,7 @@ const Table = styled.table`
 const Wrapper = styled.div`
   min-height: 15rem;
   max-height: calc(100vh - 24rem);
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     display: none;

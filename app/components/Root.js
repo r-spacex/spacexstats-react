@@ -1,17 +1,51 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { colorUsages, fonts, fontSizes } from '~/stylesheet';
 import ReactGA from 'react-ga';
 import ScrollableAnchor, { goToAnchor } from 'react-scrollable-anchor';
 import { Shortcuts, ShortcutManager } from 'react-shortcuts';
 
-import ContentBlock from '~/components/ContentBlock';
 import computeStats from '~/helpers/main';
 import keymap from '~/keymap';
 import { apiGet, isInViewport } from '~/utils';
+import ContentBlock, { Background } from './ContentBlock';
 
-import '~/style.styl';
+const Footer = styled(Background)`
+  display: block;
+  height: 100vh;
+`;
+
+const FooterContent = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 1rem;
+  background-color: ${colorUsages.footerBackground};
+  color: ${colorUsages.footer};
+`;
+
+const Link = styled(ReactGA.OutboundLink)`
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    transition: color ease-in-out 0.3s 0s;
+  }
+
+  &:link,
+  &:visited {
+    color: ${colorUsages.link};
+  }
+
+  &:hover,
+  &:active {
+    color: ${colorUsages.linkHover};
+  }
+`;
 
 const shortcutManager = new ShortcutManager(keymap);
 
@@ -27,11 +61,6 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100%;
   }
 
-  html, body, h1, button {
-    padding: 0;
-    margin: 0;
-  }
-
   button {
     border: 0;
     background-color: transparent;
@@ -42,6 +71,8 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
   }
 `;
 
@@ -264,81 +295,77 @@ class Root extends Component {
           stats={stats.timelines}
         />
 
-        <footer
-          id="section-infos"
-          className="ContentBlock ContentBlock--footer"
-          style={{ backgroundImage: 'url(/img/backgrounds/orbcommdark.jpg)' }}
-        >
+        <Footer id="section-infos" style={{ backgroundImage: 'url(/img/backgrounds/orbcommdark.jpg)' }}>
           <ScrollableAnchor id="infos">
             <span />
           </ScrollableAnchor>
-          <main className="fx-col fx-middle-xs fx-center-xs text-center full-height">
-            <p className="fx-col-xs">
+          <FooterContent>
+            <p>
               Photos on this page courtesy SpaceX, &amp; NASA. BFS Hop Test image by{' '}
-              <ReactGA.OutboundLink
+              <Link
                 eventLabel="Exit to IanAtkinson_NSF's profile"
                 to="https://www.reddit.com/user/IanAtkinson_NSF"
                 title="IanAtkinson_NSF's Reddit profile"
               >
                 /u/IanAtkinson_NSF
-              </ReactGA.OutboundLink>{' '}
+              </Link>{' '}
               on Reddit. All rights maintained by the respective owners.
               <br />
               This site is fan-run and not affiliated with SpaceX in any way. For official information and news, please
               visit{' '}
-              <ReactGA.OutboundLink
+              <Link
                 eventLabel="Exit to SpaceX official website"
                 to="http://www.spacex.com"
                 title="Official SpaceX website"
               >
                 www.spacex.com
-              </ReactGA.OutboundLink>
+              </Link>
               .
               <br />
               Original site concept and design by{' '}
-              <ReactGA.OutboundLink
+              <Link
                 eventLabel="Exit to EchoLogic's profile"
                 to="https://www.reddit.com/user/EchoLogic"
                 title="Echologic's Reddit profile"
               >
                 /u/EchoLogic
-              </ReactGA.OutboundLink>
+              </Link>
               , now rehosted by{' '}
-              <ReactGA.OutboundLink
+              <Link
                 eventLabel="Exit to Brandtamos' profile"
                 to="https://www.reddit.com/user/brandtamos"
                 title="Brandtamos' Reddit profile"
               >
                 /u/brandtamos
-              </ReactGA.OutboundLink>{' '}
+              </Link>{' '}
               and recoded by{' '}
-              <ReactGA.OutboundLink
+              <Link
                 eventLabel="Exit to kornelord's profile"
                 to="https://www.reddit.com/user/kornelord"
                 title="kornelord's Reddit profile"
               >
                 /u/kornelord
-              </ReactGA.OutboundLink>{' '}
+              </Link>{' '}
               with React and{' '}
-              <ReactGA.OutboundLink
+              <Link
                 eventLabel="Exit to r/spacex's API"
                 to="https://github.com/r-spacex/SpaceX-API"
                 title="r/spacex's API"
               >
                 r/spacex’s API
-              </ReactGA.OutboundLink>
+              </Link>
               .<br />
               <br />
-              <ReactGA.OutboundLink
+              <Link
                 eventLabel="Exit to Github Repo"
                 to="https://github.com/r-spacex/spacexstats-react"
                 title="Contribute!"
               >
                 GitHub repository
-              </ReactGA.OutboundLink>
+              </Link>
             </p>
-          </main>
-        </footer>
+          </FooterContent>
+        </Footer>
 
         <div className="hidden">
           {imagesToPreload.map((img, index) => (

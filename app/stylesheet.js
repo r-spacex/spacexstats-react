@@ -7,15 +7,22 @@ const palette = {
   blue: 'steelblue',
   green: 'mediumseagreen',
   red: 'crimson',
-  brown: '#69551f'
+  brown: '#69551f',
+  transparentWhite: 'rgba(250, 250, 250, 0.75)'
 };
 
 export const colorUsages = {
+  contentBackground: 'rgba(24, 28, 31, 0.8)',
+  contentShadow: 'rgba(24, 28, 31, 0.2)',
   navbarActiveTab: palette.yellow,
   ribbonBackground: palette.yellow,
   ribbonBorder: palette.brown,
   text: palette.lightGrey,
-  tableBorder: palette.lightGrey
+  tableBorder: palette.lightGrey,
+  footer: palette.darkGrey,
+  footerBackground: palette.transparentWhite,
+  link: palette.blue,
+  linkHover: palette.yellow
 };
 
 export const thresholds = {
@@ -38,12 +45,3 @@ export const fonts = {
 export const fontSizes = {
   base: '14px'
 };
-
-/*
-Palette of colors - do not use directly. Create intermdiary variables instead
-$link-color = $blue
-$link-color-hover = $yellow
-$footer-color = $dark-grey
-
-$table-border-color = $light-grey
-*/

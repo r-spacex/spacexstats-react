@@ -2,6 +2,7 @@ import zoom from 'chartjs-plugin-zoom';
 import * as hammer from 'hammerjs'; // eslint-disable-line no-unused-vars
 import format from 'date-fns/format';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import { Bar, Chart, Doughnut, Line } from 'react-chartjs-2';
@@ -15,7 +16,97 @@ import Navbar from '~/components/Navbar';
 import Ribbon from '~/components/Ribbon';
 import { fromUnix, isInViewport } from '~/utils';
 
-import './ContentBlock.styl';
+import { colorUsages, fonts, thresholds } from '~/stylesheet';
+
+export const Background = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  background-size: cover;
+  background-position: center center;
+  transition: background-image 0.3s ease-in-out;
+`;
+
+export const Wrapper = styled.div`
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  @media only screen and (min-width: ${thresholds.sm}) {
+    width: ${thresholds.sm};
+  }
+  @media only screen and (min-width: ${thresholds.md}) {
+    width: ${thresholds.md};
+  }
+  @media only screen and (min-width: ${thresholds.lg}) {
+    width: ${thresholds.lg};
+  }
+`;
+
+const Title = styled.h2`
+  ${fonts.special}
+  display: flex;
+  align-items: center;
+
+  height: 5rem;
+  @media (min-width: ${thresholds.sm}) {
+    font-size: 3rem;
+    height: 10rem;
+  }
+`;
+
+const Content = styled.div`
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+
+  min-height: 20rem;
+  margin-bottom: 5rem;
+  background-color: ${colorUsages.contentBackground};
+
+  /* Custom "shadow" border */
+  &:after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 3px solid ${colorUsages.contentShadow};
+  }
+`;
+
+const Stat = styled.div`
+  position: relative;
+  z-index: 1;
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const Text = styled.div`
+  min-height: 8rem; /* It can host 3 lines on normal conditions */
+  padding: 2rem 1rem;
+`;
+
+const Control = styled.i`
+  position: absolute;
+  cursor: pointer;
+  font-size: 3rem;
+  right: 1rem;
+
+  ${({ up }) => up && `top: -3rem`}
+  ${({ down }) => down && `bottom: -3rem`}
+`;
 
 class ContentBlock extends Component {
   constructor(props) {
@@ -142,75 +233,69 @@ class ContentBlock extends Component {
 
     return (
       <Shortcuts name="TABS" handler={this.handleShortcuts} global targetNodeSelector="body">
-        <article
-          id={`section-${anchor}`}
-          className="ContentBlock"
-          style={{ backgroundImage: `url(img/backgrounds/${background})` }}
-        >
-          <ScrollableAnchor id={anchor}>
-            <span />
-          </ScrollableAnchor>
-          <div className="fx-container" style={{ minHeight: '100vh' }}>
-            <div className="fx-col" style={{ minHeight: '100vh' }}>
-              <header className="ContentBlock__titleWrapper fx-col fx-center-xs padded">
-                <h2 className="ContentBlock__title">
-                  {titlePrefix} - {stat.title}
-                </h2>
-              </header>
+        <Background id={`section-${anchor}`} style={{ backgroundImage: `url(img/backgrounds/${background})` }}>
+          <Wrapper>
+            <ScrollableAnchor id={anchor}>
+              <span />
+            </ScrollableAnchor>
+            <Title>
+              {titlePrefix} - {stat.title}
+            </Title>
 
-              <section className="ContentBlock__statWrapper fx-grow fx-col">
-                {onMoveUp && (
-                  <i
-                    className="ContentBlock__control ContentBlock__control--up fa fa-angle-up large"
-                    onClick={onMoveUp}
-                    onKeyUp={onMoveUp}
-                    role="button"
-                    tabIndex="0"
-                  />
-                )}
+            <Content>
+              {onMoveUp && (
+                <Control
+                  className="fa fa-angle-up"
+                  onClick={onMoveUp}
+                  onKeyUp={onMoveUp}
+                  role="button"
+                  tabIndex="0"
+                  up
+                />
+              )}
 
-                {ribbonText && (
-                  <div title="The launch time converted in your time zone">
-                    <Ribbon text={ribbonText} />
-                  </div>
-                )}
+              {ribbonText && (
+                <div title="The launch time converted in your time zone">
+                  <Ribbon text={ribbonText} />
+                </div>
+              )}
 
-                <Navbar tabs={this.navbarTabs} onChangeCallback={this.onNavbarChange} selectedTab={stat.tabTitle} />
+              <Navbar tabs={this.navbarTabs} onChangeCallback={this.onNavbarChange} selectedTab={stat.tabTitle} />
 
-                <div className="ContentBlock__stat fx-grow fx-col fx-center-xs">{statcomponent}</div>
+              <Stat>{statcomponent}</Stat>
 
-                {stat.text && (
-                  <div className="ContentBlock__text">
-                    {stat.text}{' '}
-                    {stat.title === 'Starlink' && (
-                      <span>
-                        More info at{' '}
-                        <ReactGA.OutboundLink
-                          eventLabel="Exit to Starlink website"
-                          to="https://www.starlink.com/"
-                          title="Starlink website"
-                        >
-                          www.starlink.com
-                        </ReactGA.OutboundLink>
-                        .
-                      </span>
-                    )}
-                  </div>
-                )}
+              {stat.text && (
+                <Text>
+                  {stat.text}{' '}
+                  {stat.title === 'Starlink' && (
+                    <span>
+                      More info at{' '}
+                      <ReactGA.OutboundLink
+                        eventLabel="Exit to Starlink website"
+                        to="https://www.starlink.com/"
+                        title="Starlink website"
+                      >
+                        www.starlink.com
+                      </ReactGA.OutboundLink>
+                      .
+                    </span>
+                  )}
+                </Text>
+              )}
 
-                {onMoveDown && (
-                  <i
-                    className="ContentBlock__control ContentBlock__control--down fa fa-angle-down large"
-                    onClick={onMoveDown}
-                    onKeyUp={onMoveDown}
-                    role="button"
-                    tabIndex="0"
-                  />
-                )}
-              </section>
-            </div>
-          </div>
-        </article>
+              {onMoveDown && (
+                <Control
+                  className="fa fa-angle-down"
+                  onClick={onMoveDown}
+                  onKeyUp={onMoveDown}
+                  role="button"
+                  tabIndex="0"
+                  down
+                />
+              )}
+            </Content>
+          </Wrapper>
+        </Background>
       </Shortcuts>
     );
   }
