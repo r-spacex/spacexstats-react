@@ -1,80 +1,18 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-import { colorUsages, fonts, fontSizes } from '~/stylesheet';
+
 import ReactGA from 'react-ga';
-import ScrollableAnchor, { goToAnchor } from 'react-scrollable-anchor';
+import { goToAnchor } from 'react-scrollable-anchor';
 import { Shortcuts, ShortcutManager } from 'react-shortcuts';
 
+import Footer from '~/blocks/Footer';
+import StyleReset from '~/components/StyleReset';
 import computeStats from '~/helpers/main';
 import keymap from '~/keymap';
 import { apiGet, isInViewport } from '~/utils';
-import ContentBlock, { Background } from './ContentBlock';
-
-const Footer = styled(Background)`
-  display: block;
-  height: 100vh;
-`;
-
-const FooterContent = styled.main`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: 100%;
-  padding: 1rem;
-  background-color: ${colorUsages.footerBackground};
-  color: ${colorUsages.footer};
-`;
-
-const Link = styled(ReactGA.OutboundLink)`
-  &:link,
-  &:visited,
-  &:hover,
-  &:active {
-    transition: color ease-in-out 0.3s 0s;
-  }
-
-  &:link,
-  &:visited {
-    color: ${colorUsages.link};
-  }
-
-  &:hover,
-  &:active {
-    color: ${colorUsages.linkHover};
-  }
-`;
+import ContentBlock from './ContentBlock';
 
 const shortcutManager = new ShortcutManager(keymap);
-
-const GlobalStyle = createGlobalStyle`
-  html {
-    height: 100%;
-    ${fonts.main}
-    font-size: ${fontSizes.base};
-    color: ${colorUsages.text};
-  }
-
-  body {
-    min-height: 100%;
-  }
-
-  button {
-    border: 0;
-    background-color: transparent;
-    color: inherit;
-    outline: 0;
-    font: inherit;
-  }
-
-  * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-  }
-`;
 
 class Root extends Component {
   // We wait for the data coming from the API
@@ -188,7 +126,7 @@ class Root extends Component {
 
     return (
       <Shortcuts name="NAVIGATION" handler={this.handleShortcuts} global>
-        <GlobalStyle />
+        <StyleReset />
         <ContentBlock
           titlePrefix="Next Launches"
           backgroundImage="dscovrlaunch.jpg"
@@ -196,7 +134,6 @@ class Root extends Component {
           onMoveDown={this.moveDown}
           stats={stats.nextLaunch}
         />
-
         <ContentBlock
           titlePrefix="Launch Count"
           backgroundImage="seslaunch.jpg"
@@ -205,7 +142,6 @@ class Root extends Component {
           onMoveUp={this.moveUp}
           stats={stats.launchCount}
         />
-
         <ContentBlock
           titlePrefix="Launch History"
           backgroundImage="falconheavy.jpg"
@@ -214,7 +150,6 @@ class Root extends Component {
           onMoveUp={this.moveUp}
           stats={stats.launchHistory}
         />
-
         <ContentBlock
           titlePrefix="Landing History"
           backgroundImage="doublelanding.jpg"
@@ -223,7 +158,6 @@ class Root extends Component {
           onMoveUp={this.moveUp}
           stats={stats.landingHistory}
         />
-
         <ContentBlock
           titlePrefix="Reuse History"
           backgroundImage="reuse.jpg"
@@ -232,7 +166,6 @@ class Root extends Component {
           onMoveUp={this.moveUp}
           stats={stats.reuseHistory}
         />
-
         <ContentBlock
           titlePrefix="Launch Pads"
           backgroundImage="capeflorida.jpg"
@@ -241,7 +174,6 @@ class Root extends Component {
           onMoveUp={this.moveUp}
           stats={stats.launchpadCount}
         />
-
         <ContentBlock
           titlePrefix="Turnarounds"
           backgroundImage="thaicomlaunch.jpg"
@@ -250,7 +182,6 @@ class Root extends Component {
           onMoveUp={this.moveUp}
           stats={stats.turnarounds}
         />
-
         <ContentBlock
           titlePrefix="Dragon"
           backgroundImage="dragoncrs5.jpg"
@@ -259,7 +190,6 @@ class Root extends Component {
           onMoveUp={this.moveUp}
           stats={stats.dragon}
         />
-
         <ContentBlock
           titlePrefix="Payloads"
           backgroundImage="payloadfairing.jpg"
@@ -268,7 +198,6 @@ class Root extends Component {
           onMoveUp={this.moveUp}
           stats={stats.payloads}
         />
-
         <ContentBlock
           titlePrefix="People"
           backgroundImage="dragonriders.jpg"
@@ -277,7 +206,6 @@ class Root extends Component {
           onMoveUp={this.moveUp}
           stats={stats.people}
         />
-
         <ContentBlock
           titlePrefix="Starship"
           backgroundImage="bfrcargo.jpg"
@@ -286,7 +214,6 @@ class Root extends Component {
           onMoveUp={this.moveUp}
           stats={stats.starship}
         />
-
         <ContentBlock
           titlePrefix="Timelines"
           backgroundImage="elonmusk.jpg"
@@ -294,79 +221,7 @@ class Root extends Component {
           onMoveUp={this.moveUp}
           stats={stats.timelines}
         />
-
-        <Footer id="section-infos" style={{ backgroundImage: 'url(/img/backgrounds/orbcommdark.jpg)' }}>
-          <ScrollableAnchor id="infos">
-            <span />
-          </ScrollableAnchor>
-          <FooterContent>
-            <p>
-              Photos on this page courtesy SpaceX, &amp; NASA. BFS Hop Test image by{' '}
-              <Link
-                eventLabel="Exit to IanAtkinson_NSF's profile"
-                to="https://www.reddit.com/user/IanAtkinson_NSF"
-                title="IanAtkinson_NSF's Reddit profile"
-              >
-                /u/IanAtkinson_NSF
-              </Link>{' '}
-              on Reddit. All rights maintained by the respective owners.
-              <br />
-              This site is fan-run and not affiliated with SpaceX in any way. For official information and news, please
-              visit{' '}
-              <Link
-                eventLabel="Exit to SpaceX official website"
-                to="http://www.spacex.com"
-                title="Official SpaceX website"
-              >
-                www.spacex.com
-              </Link>
-              .
-              <br />
-              Original site concept and design by{' '}
-              <Link
-                eventLabel="Exit to EchoLogic's profile"
-                to="https://www.reddit.com/user/EchoLogic"
-                title="Echologic's Reddit profile"
-              >
-                /u/EchoLogic
-              </Link>
-              , now rehosted by{' '}
-              <Link
-                eventLabel="Exit to Brandtamos' profile"
-                to="https://www.reddit.com/user/brandtamos"
-                title="Brandtamos' Reddit profile"
-              >
-                /u/brandtamos
-              </Link>{' '}
-              and recoded by{' '}
-              <Link
-                eventLabel="Exit to kornelord's profile"
-                to="https://www.reddit.com/user/kornelord"
-                title="kornelord's Reddit profile"
-              >
-                /u/kornelord
-              </Link>{' '}
-              with React and{' '}
-              <Link
-                eventLabel="Exit to r/spacex's API"
-                to="https://github.com/r-spacex/SpaceX-API"
-                title="r/spacex's API"
-              >
-                r/spacex’s API
-              </Link>
-              .<br />
-              <br />
-              <Link
-                eventLabel="Exit to Github Repo"
-                to="https://github.com/r-spacex/spacexstats-react"
-                title="Contribute!"
-              >
-                GitHub repository
-              </Link>
-            </p>
-          </FooterContent>
-        </Footer>
-
+        <Footer />
         <div className="hidden">
           {imagesToPreload.map((img, index) => (
             <link key={index} itemProp="image" rel="preload" href={img} as="image" />

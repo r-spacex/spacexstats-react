@@ -12,6 +12,7 @@ import { Shortcuts } from 'react-shortcuts';
 import IntegerStat from '~/components/stats/IntegerStat';
 import TextStat from '~/components/stats/TextStat';
 import TimeStat from '~/components/stats/TimeStat';
+import Link from '~/components/Link';
 import Navbar from '~/components/Navbar';
 import Ribbon from '~/components/Ribbon';
 import { fromUnix, isInViewport } from '~/utils';
@@ -70,9 +71,11 @@ const Content = styled.div`
   min-height: 20rem;
   margin-bottom: 5rem;
   background-color: ${colorUsages.contentBackground};
+  z-index: 0;
 
   /* Custom "shadow" border */
   &:after {
+    z-index: -1;
     content: '';
     position: absolute;
     top: -3px;
@@ -85,7 +88,6 @@ const Content = styled.div`
 
 const Stat = styled.div`
   position: relative;
-  z-index: 1;
   padding: 1rem;
   flex-grow: 1;
   display: flex;
@@ -270,13 +272,13 @@ class ContentBlock extends Component {
                   {stat.title === 'Starlink' && (
                     <span>
                       More info at{' '}
-                      <ReactGA.OutboundLink
+                      <Link
                         eventLabel="Exit to Starlink website"
                         to="https://www.starlink.com/"
                         title="Starlink website"
                       >
                         www.starlink.com
-                      </ReactGA.OutboundLink>
+                      </Link>
                       .
                     </span>
                   )}
