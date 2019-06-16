@@ -12,6 +12,8 @@ import keymap from 'keymap';
 import { apiGet, isInViewport } from 'utils';
 import ContentBlock from './ContentBlock';
 
+ReactGA.initialize('UA-108091199-1');
+
 const shortcutManager = new ShortcutManager(keymap);
 
 class Root extends Component {

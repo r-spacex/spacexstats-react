@@ -1,16 +1,8 @@
-/**
- * SEO component that queries for data with
- *  Gatsby's useStaticQuery React hook
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
 import React from 'react';
-import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { useStaticQuery, graphql } from 'gatsby';
 
-function SEO({ description, lang, meta }) {
+const SEO = () => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -19,62 +11,32 @@ function SEO({ description, lang, meta }) {
             title
             description
             author
+            siteUrl
           }
         }
       }
     `
   );
 
-  const metaDescription = description || site.siteMetadata.description;
-  const { title } = site.siteMetadata;
+  const { title, description, author, siteUrl } = site.siteMetadata;
 
   return (
-    <Helmet
-      htmlAttributes={{
-        lang
-      }}
-      title={title}
-      // titleTemplate={`%s | ${site.siteMetadata.title}`}
-      meta={[
-        {
-          name: `description`,
-          content: metaDescription
-        },
-        {
-          property: `og:title`,
-          content: title
-        },
-        {
-          property: `og:description`,
-          content: metaDescription
-        },
-        {
-          property: `og:type`,
-          content: `website`
-        },
-        {
-          name: `twitter:card`,
-          content: `summary`
-        },
-        {
-          name: `twitter:creator`,
-          content: site.siteMetadata.author
-        },
-        {
-          name: `twitter:title`,
-          content: title
-        },
-        {
-          name: `twitter:description`,
-          content: metaDescription
-        }
-      ].concat(meta)}
-    >
-      <link rel="preload" crossOrigin="anonymous" href="https://api.spacexdata.com/v2/launches/upcoming" as="fetch" />
-      <link rel="preload" crossOrigin="anonymous" href="https://api.spacexdata.com/v2/launches" as="fetch" />
+    <Helmet>
+      <html lang="en" />
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta property="og:site_name" content={title} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content={siteUrl} />
+      <meta property="og:image" content={`${siteUrl}/oglogo.jpg`} />
+      <meta property="og:locale" content="en" />
+      <meta name="author" content={author} />
+
+      <link rel="dns-prefetch" href="https://api.spacexdata.com/" />
       <link rel="preload" crossOrigin="anonymous" href="fonts/brandon-reg-webfont.ttf" as="font" />
       <link rel="preload" crossOrigin="anonymous" href="fonts/brandon-thin-webfont.ttf" as="font" />
-
       <link
         href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         rel="stylesheet"
@@ -83,18 +45,6 @@ function SEO({ description, lang, meta }) {
       <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet" type="text/css" />
     </Helmet>
   );
-}
-
-SEO.defaultProps = {
-  lang: `en`,
-  meta: [],
-  description: ``
-};
-
-SEO.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default SEO;
