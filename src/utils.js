@@ -7,7 +7,6 @@ export const isInViewport = testAnchor => {
   const element = document.getElementById(testAnchor);
 
   if (!element) {
-    console.error(`Anchor ${testAnchor} not found.`);
     return false;
   }
 
@@ -20,11 +19,16 @@ export const scrollTo = testAnchor => {
   const element = document.getElementById(testAnchor);
 
   if (!element) {
-    console.error(`Anchor ${testAnchor} not found.`);
     return;
   }
 
   element.scrollIntoView({ behavior: 'smooth' });
+};
+
+export const updateHash = hash => {
+  if (window.history.pushState) {
+    window.history.pushState(null, null, `#${hash}`);
+  }
 };
 
 export const fromUnix = unixDate => new Date(unixDate * 1000);
