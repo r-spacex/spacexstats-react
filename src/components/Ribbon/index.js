@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { colorUsages } from 'stylesheet';
@@ -53,14 +52,10 @@ const Text = styled.div`
   }
 `;
 
-const Ribbon = ({ text }) => (
+const Ribbon = ({ children }) => (
   <Wrapper>
-    <Text>{text}</Text>
+    <Text>{children}</Text>
   </Wrapper>
 );
-
-Ribbon.propTypes = {
-  text: PropTypes.string.isRequired
-};
 
 export default Ribbon;

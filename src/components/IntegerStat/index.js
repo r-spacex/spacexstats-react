@@ -17,6 +17,7 @@ const Wrapper = styled.div`
 `;
 
 const Subtitle = styled.div`
+  margin-top: 1rem;
   font-size: 1.5rem;
   @media (min-width: ${thresholds.sm}) {
     font-size: 2rem;

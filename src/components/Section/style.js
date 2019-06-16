@@ -36,6 +36,7 @@ export const Title = styled.h2`
   ${fonts.special}
   display: flex;
   align-items: center;
+  padding: 0.5rem;
 
   height: 5rem;
   @media (min-width: ${thresholds.sm}) {
