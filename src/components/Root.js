@@ -1,19 +1,15 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import ReactGA from 'react-ga';
-import { Shortcuts, ShortcutManager } from 'react-shortcuts';
 
 import Footer from 'blocks/Footer';
 import StyleReset from 'components/StyleReset';
 import computeStats from 'helpers/main';
-import keymap from 'keymap';
 import { apiGet, isInViewport, scrollTo } from 'utils';
 import ContentBlock from './ContentBlock';
 
 ReactGA.initialize('UA-108091199-1');
-
-const shortcutManager = new ShortcutManager(keymap);
 
 class Root extends Component {
   // We wait for the data coming from the API
@@ -40,10 +36,6 @@ class Root extends Component {
     this.currentAnchor = this.anchors[0]; // eslint-disable-line prefer-destructuring
   }
 
-  getChildContext() {
-    return { shortcuts: shortcutManager };
-  }
-
   componentWillMount() {
     // Wait for the two datasets to be loaded then compute the stats
     Promise.all([apiGet('/launches'), apiGet('/launches/upcoming')]).then(values => {
@@ -53,7 +45,9 @@ class Root extends Component {
         },
         () => {
           setTimeout(() => {
-            scrollTo(window.location.hash.replace('#', ''));
+            if (window.location.hash !== '') {
+              scrollTo(window.location.hash.replace('#', ''));
+            }
           }, 1000);
 
           window.addEventListener('scroll', () => {
@@ -80,19 +74,6 @@ class Root extends Component {
       if (isInViewport(testAnchor)) {
         this.currentAnchor = testAnchor;
       }
-    }
-  };
-
-  handleShortcuts = action => {
-    switch (action) {
-      case 'MOVE_UP':
-        this.moveUp();
-        break;
-      case 'MOVE_DOWN':
-        this.moveDown();
-        break;
-      default:
-        break;
     }
   };
 
@@ -131,7 +112,7 @@ class Root extends Component {
     }
 
     return (
-      <Shortcuts name="NAVIGATION" handler={this.handleShortcuts} global>
+      <Fragment>
         <StyleReset />
         <ContentBlock
           titlePrefix="Next Launches"
@@ -229,14 +210,9 @@ class Root extends Component {
           stats={stats.timelines}
         />
         <Footer />
-      </Shortcuts>
+      </Fragment>
     );
   }
 }
-
-Root.childContextTypes = {
-  /* eslint-disable-next-line */
-  shortcuts: PropTypes.object.isRequired
-};
 
 export default Root;

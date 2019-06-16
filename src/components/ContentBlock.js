@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
-import { Shortcuts } from 'react-shortcuts';
-
 import IntegerStat from 'components/stats/IntegerStat';
 import TextStat from 'components/stats/TextStat';
 import TimeStat from 'components/stats/TimeStat';
@@ -159,19 +157,6 @@ class ContentBlock extends Component {
     }
   };
 
-  handleShortcuts = action => {
-    switch (action) {
-      case 'MOVE_LEFT':
-        this.moveLeft();
-        break;
-      case 'MOVE_RIGHT':
-        this.moveRight();
-        break;
-      default:
-        break;
-    }
-  };
-
   render() {
     const { anchor, backgroundImage, onMoveUp, onMoveDown, titlePrefix } = this.props;
     const { currentStat: stat } = this.state;
@@ -231,68 +216,55 @@ class ContentBlock extends Component {
     const background = stat.background ? stat.background : backgroundImage;
 
     return (
-      <Shortcuts name="TABS" handler={this.handleShortcuts} global targetNodeSelector="body">
-        <Background tag="article" filename={`backgrounds/${background}`}>
-          <Wrapper id={anchor}>
-            <Title>
-              {titlePrefix} - {stat.title}
-            </Title>
+      <Background tag="article" filename={`backgrounds/${background}`}>
+        <Wrapper id={anchor}>
+          <Title>
+            {titlePrefix} - {stat.title}
+          </Title>
 
-            <Content>
-              {onMoveUp && (
-                <Control
-                  className="fa fa-angle-up"
-                  onClick={onMoveUp}
-                  onKeyUp={onMoveUp}
-                  role="button"
-                  tabIndex="0"
-                  up
-                />
-              )}
+          <Content>
+            {onMoveUp && (
+              <Control className="fa fa-angle-up" onClick={onMoveUp} onKeyUp={onMoveUp} role="button" tabIndex="0" up />
+            )}
 
-              {ribbonText && (
-                <div title="The launch time converted in your time zone">
-                  <Ribbon text={ribbonText} />
-                </div>
-              )}
+            {ribbonText && (
+              <div title="The launch time converted in your time zone">
+                <Ribbon text={ribbonText} />
+              </div>
+            )}
 
-              <Navbar tabs={this.navbarTabs} onChangeCallback={this.onNavbarChange} selectedTab={stat.tabTitle} />
+            <Navbar tabs={this.navbarTabs} onChangeCallback={this.onNavbarChange} selectedTab={stat.tabTitle} />
 
-              <Stat>{statcomponent}</Stat>
+            <Stat>{statcomponent}</Stat>
 
-              {stat.text && (
-                <Text>
-                  {stat.text}{' '}
-                  {stat.title === 'Starlink' && (
-                    <span>
-                      More info at{' '}
-                      <Link
-                        eventLabel="Exit to Starlink website"
-                        to="https://www.starlink.com/"
-                        title="Starlink website"
-                      >
-                        www.starlink.com
-                      </Link>
-                      .
-                    </span>
-                  )}
-                </Text>
-              )}
+            {stat.text && (
+              <Text>
+                {stat.text}{' '}
+                {stat.title === 'Starlink' && (
+                  <span>
+                    More info at{' '}
+                    <Link eventLabel="Exit to Starlink website" to="https://www.starlink.com/" title="Starlink website">
+                      www.starlink.com
+                    </Link>
+                    .
+                  </span>
+                )}
+              </Text>
+            )}
 
-              {onMoveDown && (
-                <Control
-                  className="fa fa-angle-down"
-                  onClick={onMoveDown}
-                  onKeyUp={onMoveDown}
-                  role="button"
-                  tabIndex="0"
-                  down
-                />
-              )}
-            </Content>
-          </Wrapper>
-        </Background>
-      </Shortcuts>
+            {onMoveDown && (
+              <Control
+                className="fa fa-angle-down"
+                onClick={onMoveDown}
+                onKeyUp={onMoveDown}
+                role="button"
+                tabIndex="0"
+                down
+              />
+            )}
+          </Content>
+        </Wrapper>
+      </Background>
     );
   }
 }
