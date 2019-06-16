@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import ScrollableAnchor from 'react-scrollable-anchor';
 import { colorUsages } from 'stylesheet';
 
 import { Background } from 'components/ContentBlock';
@@ -24,11 +23,8 @@ const Content = styled.main`
 `;
 
 const Footer = () => (
-  <Wrapper id="section-infos" filename="backgrounds/orbcommdark.jpg" tag="footer">
-    <ScrollableAnchor id="infos">
-      <span />
-    </ScrollableAnchor>
-    <Content>
+  <Wrapper filename="backgrounds/orbcommdark.jpg" tag="footer">
+    <Content id="infos">
       <p>
         Photos on this page courtesy SpaceX, &amp; NASA. BFS Hop Test image by{' '}
         <Link

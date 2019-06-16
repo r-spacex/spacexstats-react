@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
-import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 import { Shortcuts } from 'react-shortcuts';
 
 import IntegerStat from 'components/stats/IntegerStat';
@@ -124,7 +123,6 @@ class ContentBlock extends Component {
 
   componentWillMount() {
     // Chart.plugins.register(zoom);
-    configureAnchors({ keepLastAnchorHash: true });
   }
 
   onNavbarChange = tab => {
@@ -234,11 +232,8 @@ class ContentBlock extends Component {
 
     return (
       <Shortcuts name="TABS" handler={this.handleShortcuts} global targetNodeSelector="body">
-        <Background tag="article" id={`section-${anchor}`} filename={`backgrounds/${background}`}>
-          <Wrapper>
-            <ScrollableAnchor id={anchor}>
-              <span />
-            </ScrollableAnchor>
+        <Background tag="article" filename={`backgrounds/${background}`}>
+          <Wrapper id={anchor}>
             <Title>
               {titlePrefix} - {stat.title}
             </Title>

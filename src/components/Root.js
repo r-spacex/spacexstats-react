@@ -2,14 +2,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import ReactGA from 'react-ga';
-import { goToAnchor } from 'react-scrollable-anchor';
 import { Shortcuts, ShortcutManager } from 'react-shortcuts';
 
 import Footer from 'blocks/Footer';
 import StyleReset from 'components/StyleReset';
 import computeStats from 'helpers/main';
 import keymap from 'keymap';
-import { apiGet, isInViewport } from 'utils';
+import { apiGet, isInViewport, scrollTo } from 'utils';
 import ContentBlock from './ContentBlock';
 
 ReactGA.initialize('UA-108091199-1');
@@ -48,13 +47,31 @@ class Root extends Component {
   componentWillMount() {
     // Wait for the two datasets to be loaded then compute the stats
     Promise.all([apiGet('/launches'), apiGet('/launches/upcoming')]).then(values => {
-      this.setState({
-        stats: computeStats(values[0], values[1])
-      });
+      this.setState(
+        {
+          stats: computeStats(values[0], values[1])
+        },
+        () => {
+          setTimeout(() => {
+            scrollTo(window.location.hash.replace('#', ''));
+          }, 1000);
+
+          window.addEventListener('scroll', () => {
+            this.scrollSpy();
+            this.updateHash();
+          });
+        }
+      );
     });
 
     ReactGA.pageview('/');
   }
+
+  updateHash = () => {
+    if (window.history.pushState) {
+      window.history.pushState(null, null, `#${this.currentAnchor}`);
+    }
+  };
 
   // Update the current anchor
   scrollSpy = () => {
@@ -80,7 +97,9 @@ class Root extends Component {
   };
 
   moveTo = (targetAnchor, down = false) => {
-    goToAnchor(targetAnchor);
+    scrollTo(targetAnchor);
+    this.updateHash();
+
     ReactGA.event({
       category: 'Scroll Arrow',
       action: down ? 'Scroll down' : 'Scroll up',
@@ -205,6 +224,7 @@ class Root extends Component {
           titlePrefix="Timelines"
           backgroundImage="elonmusk.jpg"
           anchor={this.anchors[11]}
+          onMoveDown={this.moveDown}
           onMoveUp={this.moveUp}
           stats={stats.timelines}
         />
