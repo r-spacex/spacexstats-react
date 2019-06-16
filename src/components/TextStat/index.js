@@ -15,10 +15,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const TextStat = ({ data }) => <Wrapper>{data}</Wrapper>;
+const TextStat = ({ value }) => <Wrapper>{value}</Wrapper>;
 
 TextStat.propTypes = {
-  data: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired
 };
 
 export default TextStat;

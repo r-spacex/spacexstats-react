@@ -23,18 +23,20 @@ const Subtitle = styled.div`
   }
 `;
 
-const IntegerStat = ({ data: { value, subtitle } }) => (
+const IntegerStat = ({ value, subtitle }) => (
   <Wrapper>
     {value.toLocaleString()}
-    <Subtitle>{subtitle}</Subtitle>
+    {subtitle && <Subtitle>{subtitle}</Subtitle>}
   </Wrapper>
 );
 
+IntegerStat.defaultProps = {
+  subtitle: null
+};
+
 IntegerStat.propTypes = {
-  data: PropTypes.shape({
-    subtitle: '',
-    value: ''
-  }).isRequired
+  subtitle: PropTypes.string,
+  value: PropTypes.number.isRequired
 };
 
 export default IntegerStat;
