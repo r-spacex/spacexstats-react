@@ -1,23 +1,32 @@
-import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
 
 import ReactGA from 'react-ga';
+import { connect } from 'react-redux';
 
 import Footer from 'blocks/Footer';
 import StyleReset from 'components/StyleReset';
-import computeStats from 'helpers/main';
-import { apiGet, isInViewport, scrollTo } from 'utils';
-import ContentBlock from './ContentBlock';
+import { apiGet, isInViewport, updateHash } from 'utils';
+import { actions } from 'redux/duck';
 
 ReactGA.initialize('UA-108091199-1');
 
 class Root extends Component {
-  // We wait for the data coming from the API
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      stats: null
+      launchesData: { pastLaunches: null, upcomingLaunches: null },
+      currentTabs: {
+        landing: null,
+        launchCount: null,
+        launchHistory: null,
+        launchPads: null,
+        reuse: null,
+        turnarounds: null,
+        upcoming: null
+      }
     };
+
     this.anchors = [
       'upcoming',
       'launchcount',
@@ -33,7 +42,6 @@ class Root extends Component {
       'timelines',
       'infos'
     ];
-    this.currentAnchor = this.anchors[0]; // eslint-disable-line prefer-destructuring
   }
 
   componentWillMount() {
@@ -41,18 +49,20 @@ class Root extends Component {
     Promise.all([apiGet('/launches'), apiGet('/launches/upcoming')]).then(values => {
       this.setState(
         {
-          stats: computeStats(values[0], values[1])
+          launchesData: { pastLaunches: values[0], upcomingLaunches: values[1] }
         },
         () => {
+          const { navigateTo } = this.props;
+
           setTimeout(() => {
             if (window.location.hash !== '') {
-              scrollTo(window.location.hash.replace('#', ''));
+              const anchor = window.location.hash.replace('#', '');
+              navigateTo(anchor, true);
             }
           }, 1000);
 
           window.addEventListener('scroll', () => {
-            this.scrollSpy();
-            this.updateHash();
+            updateHash(this.scrollSpy());
           });
         }
       );
@@ -215,4 +225,13 @@ class Root extends Component {
   }
 }
 
-export default Root;
+const mapDispatchToProps = dispatch => ({
+  navigateTo: (anchor, down) => dispatch(actions.navigateTo(anchor, down))
+});
+
+const RootContainer = connect(
+  null,
+  mapDispatchToProps
+)(Root);
+
+export default RootContainer;
