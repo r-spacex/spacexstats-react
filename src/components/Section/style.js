@@ -70,7 +70,7 @@ export const Content = styled.div`
   }
 `;
 
-export const Stat = styled.div`
+export const SectionContent = styled.div`
   position: relative;
   padding: 1rem;
   flex-grow: 1;
@@ -79,17 +79,36 @@ export const Stat = styled.div`
   justify-content: center;
 `;
 
-export const Text = styled.div`
+export const SectionDescription = styled.div`
   min-height: 8rem; /* It can host 3 lines on normal conditions */
   padding: 2rem 1rem;
 `;
 
+const chevronThickness = '0.25rem';
+const chevronWidth = '1rem';
+
 export const Control = styled.button`
   position: absolute;
   cursor: pointer;
-  font-size: 3rem;
   right: 1rem;
 
-  ${({ up }) => up && `top: -3rem`}
-  ${({ down }) => down && `bottom: -3rem`}
+  &:before {
+    content: '';
+    display: inline-block;
+    height: ${chevronWidth};
+    width: ${chevronWidth};
+    vertical-align: top;
+    border-style: solid;
+    border-width: ${chevronThickness} ${chevronThickness} 0 0;
+    border-color: ${colorUsages.text};
+
+    position: relative;
+    left: 0.15em;
+
+    top: ${({ up }) => (up ? `0` : `0.15rem`)};
+    transform: rotate(${({ up }) => (up ? `-45deg` : `135deg`)});
+  }
+
+  ${({ up }) => up && `top: -2rem`}
+  ${({ down }) => down && `bottom: -2rem`}
 `;

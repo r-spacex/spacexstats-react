@@ -16,21 +16,13 @@ const Section = ({ children, title, tabs, currentTab, changeTab, navigateTo, upA
         </Title>
 
         <Content>
-          {upAnchor && (
-            <Control onClick={navigateUp} role="button" tabIndex="0" up>
-              <i className="fa fa-angle-up" />
-            </Control>
-          )}
+          {upAnchor && <Control onClick={navigateUp} role="button" tabIndex="0" up />}
 
           <Navbar tabs={tabs.map(tab => tab.label)} value={currentTab} onChange={changeTab} />
 
           {children}
 
-          {downAnchor && (
-            <Control onClick={navigateDown} type="button" down>
-              <i className="fa fa-angle-down" />
-            </Control>
-          )}
+          {downAnchor && <Control onClick={navigateDown} type="button" down />}
         </Content>
       </Wrapper>
     </Background>
