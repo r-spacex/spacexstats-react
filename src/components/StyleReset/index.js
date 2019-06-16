@@ -34,6 +34,7 @@ const StyleReset = createGlobalStyle`
     color: inherit;
     outline: 0;
     font: inherit;
+    line-height: 1;
   }
 
   * {
