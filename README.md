@@ -1,29 +1,20 @@
 # SpaceX Stats
 
-A fan website for the company SpaceX originally created by Luke Davia ([Twitter](https://twitter.com/lukealization), [Reddit](https://reddit.com/u/EchoLogic)). The current React front-end uses the [SpaceX API](https://github.com/r-spacex/SpaceX-API).
-
-## How to contribute
-
-The project will be installed on a Vagrant virtual machine. All the dev tools will be installed inside it.
+## Installation
 
 ### Prereqs
 
 - Node >= v8.0.0
 - Yarn >= v1.13.0
+- Gatsby CLI >= v2.6.7: run `npm install -g gatsby-cli`
 
 ### Setup instructions
 
-1. In the project directory, run the `yarn` command.
-2. Run `yarn start`.
-3. ...
-4. Profit!
-
-Remember, when you stop working on the project you can stop the Vagrant box with `vagrant halt`. You can delete it with `vagrant destroy`.
-
-Recommended plugins for your favorite editor:
-
-- Eslint integration
-- Prettier integration
+1. In the project directory, run `npm install` command.
+2. Run `gatsby develop`.
+3. Open `http://localhost:8000/`.
+4. ...
+5. Profit!
 
 ## Deployment
 
