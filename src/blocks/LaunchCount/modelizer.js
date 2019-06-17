@@ -1,4 +1,4 @@
-const launchCount = pastLaunches => {
+const modelizer = ({ pastLaunches }) => {
   let totalLaunches = 0;
   let totalFalcon9 = 0;
   let totalFalcon1 = 0;
@@ -64,4 +64,4 @@ const launchCount = pastLaunches => {
   };
 };
 
-export default launchCount;
+export default modelizer;

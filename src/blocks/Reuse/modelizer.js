@@ -1,6 +1,7 @@
 import settings from 'settings';
+import { formatDuration } from 'utils';
 
-const reuseHistory = pastLaunches => {
+const modelizer = ({ pastLaunches }) => {
   let totalReflown = 0;
   const totalFairingsReflown = 0;
   const cores = {};
@@ -65,9 +66,7 @@ const reuseHistory = pastLaunches => {
       if (cores[coreSerial].launches.length > 1) {
         reflownMissions += 1;
         labels.push(
-          `${coreSerial}'s flight #${cores[coreSerial].launches.length} ${
-            launch.rocket.second_stage.payloads[0].payload_id
-          }`
+          `${coreSerial}'s flight #${cores[coreSerial].launches.length} ${launch.rocket.second_stage.payloads[0].payload_id}`
         );
         const interval = Math.round(turnaround / (24 * 3600));
         daysIntervals.push(interval);
@@ -145,7 +144,7 @@ const reuseHistory = pastLaunches => {
       core: quickestTurnaroundCore,
       mission1: quickestTurnaroundMission1,
       mission2: quickestTurnaroundMission2,
-      turnaround: quickestTurnaround
+      turnaround: formatDuration(quickestTurnaround)
     },
     mostReflownCore: {
       launches: cores[mostReflownCore].launches.length,
@@ -156,4 +155,4 @@ const reuseHistory = pastLaunches => {
   };
 };
 
-export default reuseHistory;
+export default modelizer;

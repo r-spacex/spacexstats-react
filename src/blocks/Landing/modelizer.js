@@ -1,9 +1,8 @@
 import settings from 'settings';
 
-const landingHistory = pastLaunches => {
+const modelizer = ({ pastLaunches }) => {
   let totalLanded = 0;
   let heaviestLanding = { mass: 0, mission: '', landingType: '' };
-  let heaviestLandingGTO = { mass: 0, mission: '', landingType: '' };
 
   // For landing history graph
   const yearsStart = 2013; // First landing attempt
@@ -60,26 +59,15 @@ const landingHistory = pastLaunches => {
     });
 
     // Heaviest payload landings
-    // Exclude Falcon Heavy because it is irrelevant.
-    if (launch.rocket.rocket_id === 'falcon9') {
-      launch.rocket.second_stage.payloads.forEach(payload => {
-        if (payload.payload_mass_kg > heaviestLanding.mass) {
-          heaviestLanding = {
-            mass: payload.payload_mass_kg,
-            mission: payload.payload_id,
-            landingType: formattedLandingType
-          };
-        }
-
-        if (payload.orbit === 'GTO' && payload.payload_mass_kg > heaviestLandingGTO.mass) {
-          heaviestLandingGTO = {
-            mass: payload.payload_mass_kg,
-            mission: payload.payload_id,
-            landingType: formattedLandingType
-          };
-        }
-      });
-    }
+    launch.rocket.second_stage.payloads.forEach(payload => {
+      if (payload.payload_mass_kg > heaviestLanding.mass) {
+        heaviestLanding = {
+          mass: payload.payload_mass_kg,
+          mission: payload.payload_id,
+          landingType: formattedLandingType
+        };
+      }
+    });
   });
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
@@ -145,9 +133,8 @@ const landingHistory = pastLaunches => {
   return {
     totalLanded,
     landingHistoryChart,
-    heaviestLanding,
-    heaviestLandingGTO
+    heaviestLanding
   };
 };
 
-export default landingHistory;
+export default modelizer;

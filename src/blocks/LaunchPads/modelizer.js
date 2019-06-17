@@ -1,4 +1,4 @@
-const launchpadCount = pastLaunches => {
+const modelizer = ({ pastLaunches }) => {
   let totalSLC40 = 0;
   let totalHLC39A = 0;
   let totalVAFB = 0;
@@ -36,4 +36,4 @@ const launchpadCount = pastLaunches => {
   };
 };
 
-export default launchpadCount;
+export default modelizer;

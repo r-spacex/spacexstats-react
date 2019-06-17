@@ -1,9 +1,9 @@
 import settings from 'settings';
+import { formatDuration } from 'utils';
 
-const payloads = pastLaunches => {
+const modelizer = ({ pastLaunches }) => {
   let totalFlights = 0;
   let totalFlightTime = 0;
-  let totalISSResupplies = 0;
   let totalCargoUp = 0;
   let totalCargoDown = 0;
   let totalReflights = 0;
@@ -34,7 +34,6 @@ const payloads = pastLaunches => {
 
     if (launch.rocket.second_stage.payloads[0].payload_id.indexOf('CRS') !== -1) {
       if (launch.launch_success) {
-        totalISSResupplies += 1;
         totalCargoUp += launch.rocket.second_stage.payloads[0].payload_mass_kg;
         totalCargoDown += launch.rocket.second_stage.payloads[0].mass_returned_kg;
       }
@@ -72,8 +71,7 @@ const payloads = pastLaunches => {
 
   return {
     totalFlights,
-    totalISSResupplies,
-    totalFlightTime,
+    totalFlightTime: formatDuration(totalFlightTime),
     crsFlightTimesChart,
     totalCargoUp,
     totalCargoDown,
@@ -81,4 +79,4 @@ const payloads = pastLaunches => {
   };
 };
 
-export default payloads;
+export default modelizer;

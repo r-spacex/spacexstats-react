@@ -3,7 +3,22 @@ import React, { Component, Fragment } from 'react';
 import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 
-import Footer from 'blocks/Footer';
+import {
+  Dragon,
+  Footer,
+  Landing,
+  LaunchCount,
+  LaunchHistory,
+  LaunchPads,
+  Payloads,
+  People,
+  Reuse,
+  Starlink,
+  Starship,
+  Timelines,
+  Turnarounds,
+  Upcoming
+} from 'blocks';
 import StyleReset from 'components/StyleReset';
 import { apiGet, isInViewport, updateHash } from 'utils';
 import { actions } from 'redux/duck';
@@ -17,11 +32,17 @@ class Root extends Component {
     this.state = {
       launchesData: { pastLaunches: null, upcomingLaunches: null },
       currentTabs: {
+        dragon: null,
         landing: null,
         launchCount: null,
         launchHistory: null,
         launchPads: null,
+        payloads: null,
+        people: null,
         reuse: null,
+        starlink: null,
+        starship: null,
+        timelines: null,
         turnarounds: null,
         upcoming: null
       }
@@ -31,13 +52,14 @@ class Root extends Component {
       'upcoming',
       'launchcount',
       'launchhistory',
+      'launchpads',
       'landing',
       'reuse',
-      'launchpads',
       'turnarounds',
-      'dragon',
       'payloads',
+      'dragon',
       'people',
+      'starlink',
       'starship',
       'timelines',
       'infos'
@@ -71,154 +93,90 @@ class Root extends Component {
     ReactGA.pageview('/');
   }
 
-  updateHash = () => {
-    if (window.history.pushState) {
-      window.history.pushState(null, null, `#${this.currentAnchor}`);
-    }
-  };
-
-  // Update the current anchor
+  // Get the current anchor
   scrollSpy = () => {
     for (let i = 0; i < this.anchors.length; i++) {
       const testAnchor = this.anchors[i];
       if (isInViewport(testAnchor)) {
-        this.currentAnchor = testAnchor;
+        return testAnchor;
       }
     }
+    return '';
   };
 
-  moveTo = (targetAnchor, down = false) => {
-    scrollTo(targetAnchor);
-    this.updateHash();
-
-    ReactGA.event({
-      category: 'Scroll Arrow',
-      action: down ? 'Scroll down' : 'Scroll up',
-      label: targetAnchor
-    });
-  };
-
-  moveDown = () => {
-    this.scrollSpy();
-    const i = this.anchors.indexOf(this.currentAnchor);
-    if (i + 1 < this.anchors.length) {
-      this.moveTo(this.anchors[i + 1], true);
-    }
-  };
-
-  moveUp = () => {
-    this.scrollSpy();
-    const i = this.anchors.indexOf(this.currentAnchor);
-    if (i - 1 >= 0) {
-      this.moveTo(this.anchors[i - 1]);
-    }
+  changeTab = (section, tab) => {
+    this.setState(prevState => ({ currentTabs: { ...prevState, [section]: tab } }));
   };
 
   render() {
-    const { stats } = this.state;
-
-    if (!stats) {
-      return <div />;
-    }
+    const { currentTabs, launchesData } = this.state;
 
     return (
       <Fragment>
         <StyleReset />
-        <ContentBlock
-          titlePrefix="Next Launches"
-          backgroundImage="dscovrlaunch.jpg"
-          anchor={this.anchors[0]}
-          onMoveDown={this.moveDown}
-          stats={stats.nextLaunch}
+
+        <Upcoming
+          currentTab={currentTabs.upcoming}
+          changeTab={tab => this.changeTab('upcoming', tab)}
+          {...launchesData}
         />
-        <ContentBlock
-          titlePrefix="Launch Count"
-          backgroundImage="seslaunch.jpg"
-          anchor={this.anchors[1]}
-          onMoveDown={this.moveDown}
-          onMoveUp={this.moveUp}
-          stats={stats.launchCount}
+
+        <LaunchCount
+          currentTab={currentTabs.launchCount}
+          changeTab={tab => this.changeTab('launchCount', tab)}
+          {...launchesData}
         />
-        <ContentBlock
-          titlePrefix="Launch History"
-          backgroundImage="falconheavy.jpg"
-          anchor={this.anchors[2]}
-          onMoveDown={this.moveDown}
-          onMoveUp={this.moveUp}
-          stats={stats.launchHistory}
+
+        <LaunchHistory
+          currentTab={currentTabs.launchHistory}
+          changeTab={tab => this.changeTab('launchHistory', tab)}
+          {...launchesData}
         />
-        <ContentBlock
-          titlePrefix="Landing History"
-          backgroundImage="doublelanding.jpg"
-          anchor={this.anchors[3]}
-          onMoveDown={this.moveDown}
-          onMoveUp={this.moveUp}
-          stats={stats.landingHistory}
+
+        <LaunchPads
+          currentTab={currentTabs.launchPads}
+          changeTab={tab => this.changeTab('launchPads', tab)}
+          {...launchesData}
         />
-        <ContentBlock
-          titlePrefix="Reuse History"
-          backgroundImage="reuse.jpg"
-          anchor={this.anchors[4]}
-          onMoveDown={this.moveDown}
-          onMoveUp={this.moveUp}
-          stats={stats.reuseHistory}
+
+        <Landing currentTab={currentTabs.landing} changeTab={tab => this.changeTab('landing', tab)} {...launchesData} />
+
+        <Reuse currentTab={currentTabs.reuse} changeTab={tab => this.changeTab('reuse', tab)} {...launchesData} />
+
+        <Turnarounds
+          currentTab={currentTabs.turnarounds}
+          changeTab={tab => this.changeTab('turnarounds', tab)}
+          {...launchesData}
         />
-        <ContentBlock
-          titlePrefix="Launch Pads"
-          backgroundImage="capeflorida.jpg"
-          anchor={this.anchors[5]}
-          onMoveDown={this.moveDown}
-          onMoveUp={this.moveUp}
-          stats={stats.launchpadCount}
+
+        <Payloads
+          currentTab={currentTabs.payloads}
+          changeTab={tab => this.changeTab('payloads', tab)}
+          {...launchesData}
         />
-        <ContentBlock
-          titlePrefix="Turnarounds"
-          backgroundImage="thaicomlaunch.jpg"
-          anchor={this.anchors[6]}
-          onMoveDown={this.moveDown}
-          onMoveUp={this.moveUp}
-          stats={stats.turnarounds}
+
+        <Dragon currentTab={currentTabs.dragon} changeTab={tab => this.changeTab('dragon', tab)} {...launchesData} />
+
+        <People currentTab={currentTabs.people} changeTab={tab => this.changeTab('people', tab)} {...launchesData} />
+
+        <Starlink
+          currentTab={currentTabs.starlink}
+          changeTab={tab => this.changeTab('starlink', tab)}
+          {...launchesData}
         />
-        <ContentBlock
-          titlePrefix="Dragon"
-          backgroundImage="dragoncrs5.jpg"
-          anchor={this.anchors[7]}
-          onMoveDown={this.moveDown}
-          onMoveUp={this.moveUp}
-          stats={stats.dragon}
+
+        <Starship
+          currentTab={currentTabs.starship}
+          changeTab={tab => this.changeTab('starship', tab)}
+          {...launchesData}
         />
-        <ContentBlock
-          titlePrefix="Payloads"
-          backgroundImage="payloadfairing.jpg"
-          anchor={this.anchors[8]}
-          onMoveDown={this.moveDown}
-          onMoveUp={this.moveUp}
-          stats={stats.payloads}
+
+        <Timelines
+          currentTab={currentTabs.timelines}
+          changeTab={tab => this.changeTab('timelines', tab)}
+          {...launchesData}
         />
-        <ContentBlock
-          titlePrefix="People"
-          backgroundImage="dragonriders.jpg"
-          anchor={this.anchors[9]}
-          onMoveDown={this.moveDown}
-          onMoveUp={this.moveUp}
-          stats={stats.people}
-        />
-        <ContentBlock
-          titlePrefix="Starship"
-          backgroundImage="bfrcargo.jpg"
-          anchor={this.anchors[10]}
-          onMoveDown={this.moveDown}
-          onMoveUp={this.moveUp}
-          stats={stats.starship}
-        />
-        <ContentBlock
-          titlePrefix="Timelines"
-          backgroundImage="elonmusk.jpg"
-          anchor={this.anchors[11]}
-          onMoveDown={this.moveDown}
-          onMoveUp={this.moveUp}
-          stats={stats.timelines}
-        />
+
         <Footer />
       </Fragment>
     );

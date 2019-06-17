@@ -1,6 +1,7 @@
 import settings from 'settings';
+import { fromUnix } from 'utils';
 
-const timelines = pastLaunches => {
+const modelizer = ({ pastLaunches }) => {
   const quickestTurnarounds = {
     ccafs_slc_40: {
       turnaround: null,
@@ -136,16 +137,13 @@ const timelines = pastLaunches => {
     options
   };
 
-  const lastLaunchDate = pastLaunches[pastLaunches.length - 1].launch_date_utc;
+  const lastLaunchDate = fromUnix(pastLaunches[pastLaunches.length - 1].launch_date_unix);
   return {
     quickestTurnaround: quickestTurnarounds[quickestTurnaroundPad],
     quickestTurnaroundPadName,
-    quickestTurnaroundSLC40: quickestTurnarounds.ccafs_slc_40,
-    quickestTurnaroundHLC39A: quickestTurnarounds.ksc_lc_39a,
-    quickestTurnaroundSLC4E: quickestTurnarounds.vafb_slc_4e,
-    lastLaunchDate: new Date(lastLaunchDate).getTime() / 1000,
+    lastLaunchDate,
     daysBetweenLaunches
   };
 };
 
-export default timelines;
+export default modelizer;

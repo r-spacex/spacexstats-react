@@ -1,6 +1,6 @@
 import settings from 'settings';
 
-const launchHistory = (pastLaunches, upcomingLaunches) => {
+const modelizer = ({ pastLaunches, upcomingLaunches }) => {
   const yearsStart = 2006; // First Falcon 1 flight
   const yearsEnd = upcomingLaunches
     .map(launch => launch.launch_year)
@@ -25,15 +25,6 @@ const launchHistory = (pastLaunches, upcomingLaunches) => {
   const falconHeavyFlights = new Array(years.length).fill(0);
   const failureFlights = new Array(years.length).fill(0);
   const plannedFlights = new Array(years.length).fill(0);
-
-  const upmassPerOrbit = {
-    LEO: new Array(yearsUpmass.length).fill(0),
-    ISS: new Array(yearsUpmass.length).fill(0),
-    Polar: new Array(yearsUpmass.length).fill(0),
-    GTO: new Array(yearsUpmass.length).fill(0),
-    Interplanetary: new Array(yearsUpmass.length).fill(0),
-    Other: new Array(yearsUpmass.length).fill(0)
-  };
 
   const flights = [];
   const successRateFalcon9 = [];
@@ -97,37 +88,6 @@ const launchHistory = (pastLaunches, upcomingLaunches) => {
           break;
 
         default:
-      }
-
-      // Add upmass to orbit
-      let upmass = 0;
-      launch.rocket.second_stage.payloads.forEach(payload => {
-        upmass += payload.payload_mass_kg;
-      });
-
-      const yearUpmassIndex = launch.launch_year - yearsUpmassStart;
-      switch (launch.rocket.second_stage.payloads[0].orbit) {
-        case 'LEO':
-          upmassPerOrbit.LEO[yearUpmassIndex] += upmass;
-          break;
-        case 'ISS':
-          upmassPerOrbit.ISS[yearUpmassIndex] += upmass;
-          break;
-        case 'PO':
-          upmassPerOrbit.Polar[yearUpmassIndex] += upmass;
-          break;
-        case 'GTO':
-        case 'HEO':
-        case 'SSO':
-          upmassPerOrbit.GTO[yearUpmassIndex] += upmass;
-          break;
-        case 'ES-L1':
-        case 'HCO':
-          upmassPerOrbit.Interplanetary[yearUpmassIndex] += upmass;
-          break;
-
-        default:
-          upmassPerOrbit.Other[yearUpmassIndex] += upmass;
       }
     } else {
       failureFlights[yearIndex] += 1;
@@ -262,71 +222,10 @@ const launchHistory = (pastLaunches, upcomingLaunches) => {
     options: optionsSuccessRate
   };
 
-  const optionsUpmassPerYear = JSON.parse(JSON.stringify(options));
-  optionsUpmassPerYear.tooltips = {
-    mode: 'label',
-    callbacks: {
-      afterTitle: () => {
-        window.launchTotal = 0;
-      },
-      label: (tooltipItem, data) => {
-        const dataset = data.datasets[tooltipItem.datasetIndex];
-        const count = parseFloat(dataset.data[tooltipItem.index]);
-        window.launchTotal += count;
-
-        if (count === 0) {
-          return '';
-        }
-        return `${dataset.label}: ${count.toLocaleString()}kg`;
-      },
-      footer: () => `TOTAL: ${window.launchTotal.toLocaleString()}kg`
-    }
-  };
-
-  const upmassPerYear = {
-    data: {
-      labels: yearsUpmass,
-      datasets: [
-        {
-          label: 'LEO',
-          backgroundColor: settings.COLORS.blue,
-          data: upmassPerOrbit.LEO
-        },
-        {
-          label: 'ISS',
-          backgroundColor: settings.COLORS.lightblue,
-          data: upmassPerOrbit.ISS
-        },
-        {
-          label: 'Polar',
-          backgroundColor: settings.COLORS.yellow,
-          data: upmassPerOrbit.Polar
-        },
-        {
-          label: 'GTO',
-          backgroundColor: settings.COLORS.orange,
-          data: upmassPerOrbit.GTO
-        },
-        {
-          label: 'Interplanetary',
-          backgroundColor: settings.COLORS.red,
-          data: upmassPerOrbit.Interplanetary
-        },
-        {
-          label: 'Other',
-          backgroundColor: settings.COLORS.white,
-          data: upmassPerOrbit.Other
-        }
-      ]
-    },
-    options: optionsUpmassPerYear
-  };
-
   return {
     flightsPerYear,
-    successRates,
-    upmassPerYear
+    successRates
   };
 };
 
-export default launchHistory;
+export default modelizer;

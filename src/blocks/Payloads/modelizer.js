@@ -1,10 +1,9 @@
 import settings from 'settings';
 
-const payloads = pastLaunches => {
+const modelizer = ({ pastLaunches }) => {
   let heaviestPayload = { mass: 0, mission: '', customers: '' };
   let heaviestPayloadGTO = { mass: 0, mission: '', customers: '' };
   let totalMass = 0;
-  const internetConstellation = 62;
   const customers = {};
   const successfulLaunches = pastLaunches.filter(launch => launch.launch_success);
 
@@ -110,9 +109,8 @@ const payloads = pastLaunches => {
     totalMass,
     heaviestPayload,
     heaviestPayloadGTO,
-    internetConstellation,
     customersChart
   };
 };
 
-export default payloads;
+export default modelizer;
