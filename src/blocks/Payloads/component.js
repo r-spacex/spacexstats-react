@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import { Bar, Doughnut } from 'react-chartjs-2';
 import Section, { SectionContent, SectionDescription } from 'components/Section';
 import IntegerStat from 'components/IntegerStat';
 
 const Payloads = ({ currentTab, changeTab, data }) => {
   const tabs = [
     {
-      label: 'Total Mass',
+      label: 'Upmass',
       background: 'payloadfairing.jpg',
-      title: 'Total Mass'
+      title: 'Upmass'
     },
     {
       label: 'Heaviest',
@@ -43,11 +43,13 @@ const Payloads = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[0].label && (
             <Fragment>
               <SectionContent>
-                <IntegerStat value={parseInt(data.totalMass, 10)} subtitle="Kilograms" />
+                <Bar data={data.upmassPerYear.data} options={data.upmassPerYear.options} />
               </SectionContent>
               <SectionDescription>
-                {`These satellites can have a variety of masses, from the smallest cubesats which can weigh less than 1
-                kilogram, to huge comsats over 5 tonnes.`}
+                {`SpaceX has launched a total of ${data.totalMass} kilograms worth of payloads into a
+                variety of orbits, including interplanetary missions. With Falcon 9 and Falcon Heavy, SpaceX is able to
+                cover most orbit and mission types. These payloads can have a variety of masses, from the smallest
+                cubesats which can weigh less than 1 kilogram, to huge comsats over 5 tonnes.`}
               </SectionDescription>
             </Fragment>
           )}

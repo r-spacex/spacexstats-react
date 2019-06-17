@@ -12,6 +12,23 @@ const modelizer = ({ pastLaunches }) => {
     USAF: 0,
     NRO: 0
   };
+
+  // Custom years for upmass
+  const yearsUpmassStart = 2012; // Going beyond suborbital a decade before BO
+  const yearsUpmassEnd = new Date().getFullYear();
+  const yearsUpmass = [];
+  for (let i = yearsUpmassStart; i <= yearsUpmassEnd; i++) {
+    yearsUpmass.push(i);
+  }
+  const upmassPerOrbit = {
+    LEO: new Array(yearsUpmass.length).fill(0),
+    ISS: new Array(yearsUpmass.length).fill(0),
+    Polar: new Array(yearsUpmass.length).fill(0),
+    GTO: new Array(yearsUpmass.length).fill(0),
+    Interplanetary: new Array(yearsUpmass.length).fill(0),
+    Other: new Array(yearsUpmass.length).fill(0)
+  };
+
   const successfulLaunches = pastLaunches.filter(launch => launch.launch_success);
 
   successfulLaunches.forEach(launch => {
@@ -45,6 +62,35 @@ const modelizer = ({ pastLaunches }) => {
             customers: payload.customers.join('/')
           };
         }
+      }
+
+      // Add upmass to orbit
+      const upmass = payload.payload_mass_kg;
+      const yearUpmassIndex = launch.launch_year - yearsUpmassStart;
+      switch (payload.orbit) {
+        case 'VLEO':
+        case 'LEO':
+        case 'MEO':
+          upmassPerOrbit.LEO[yearUpmassIndex] += upmass;
+          break;
+        case 'ISS':
+          upmassPerOrbit.ISS[yearUpmassIndex] += upmass;
+          break;
+        case 'PO':
+          upmassPerOrbit.Polar[yearUpmassIndex] += upmass;
+          break;
+        case 'GTO':
+        case 'HEO':
+        case 'SSO':
+          upmassPerOrbit.GTO[yearUpmassIndex] += upmass;
+          break;
+        case 'ES-L1':
+        case 'HCO':
+          upmassPerOrbit.Interplanetary[yearUpmassIndex] += upmass;
+          break;
+
+        default:
+          upmassPerOrbit.Other[yearUpmassIndex] += upmass;
       }
     });
   });
@@ -82,11 +128,73 @@ const modelizer = ({ pastLaunches }) => {
     options
   };
 
+  const barchartOptions = JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)); // Clone object
+  const optionsUpmassPerYear = JSON.parse(JSON.stringify(barchartOptions));
+  optionsUpmassPerYear.tooltips = {
+    mode: 'label',
+    callbacks: {
+      afterTitle: () => {
+        window.launchTotal = 0;
+      },
+      label: (tooltipItem, data) => {
+        const dataset = data.datasets[tooltipItem.datasetIndex];
+        const count = parseFloat(dataset.data[tooltipItem.index]);
+        window.launchTotal += count;
+
+        if (count === 0) {
+          return '';
+        }
+        return `${dataset.label}: ${count.toLocaleString()}kg`;
+      },
+      footer: () => `TOTAL: ${window.launchTotal.toLocaleString()}kg`
+    }
+  };
+
+  const upmassPerYear = {
+    data: {
+      labels: yearsUpmass,
+      datasets: [
+        {
+          label: 'LEO',
+          backgroundColor: chartColors.blue,
+          data: upmassPerOrbit.LEO
+        },
+        {
+          label: 'ISS',
+          backgroundColor: chartColors.lightblue,
+          data: upmassPerOrbit.ISS
+        },
+        {
+          label: 'Polar',
+          backgroundColor: chartColors.yellow,
+          data: upmassPerOrbit.Polar
+        },
+        {
+          label: 'GTO',
+          backgroundColor: chartColors.orange,
+          data: upmassPerOrbit.GTO
+        },
+        {
+          label: 'Interplanetary',
+          backgroundColor: chartColors.red,
+          data: upmassPerOrbit.Interplanetary
+        },
+        {
+          label: 'Other',
+          backgroundColor: chartColors.white,
+          data: upmassPerOrbit.Other
+        }
+      ]
+    },
+    options: optionsUpmassPerYear
+  };
+
   return {
-    totalMass,
+    totalMass: parseInt(totalMass, 10).toLocaleString(),
     heaviestPayload,
     heaviestPayloadGTO,
-    customersChart
+    customersChart,
+    upmassPerYear
   };
 };
 
