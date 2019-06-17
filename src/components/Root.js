@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 
@@ -65,6 +67,9 @@ class Root extends Component {
   }
 
   componentWillMount() {
+    NProgress.configure({ minimum: 0, trickle: false, showSpinner: false });
+    NProgress.start();
+
     // Wait for the two datasets to be loaded then compute the stats
     Promise.all([apiGet('/launches'), apiGet('/launches/upcoming')]).then(values => {
       this.setState(
@@ -83,6 +88,7 @@ class Root extends Component {
 
           window.addEventListener('scroll', () => {
             updateHash(this.scrollSpy());
+            this.updateProgressBar();
           });
         }
       );
@@ -91,6 +97,17 @@ class Root extends Component {
     ReactGA.initialize('UA-108091199-1');
     ReactGA.pageview('/');
   }
+
+  updateProgressBar = () => {
+    const { body, documentElement } = document;
+    const scrollTop = 'scrollTop';
+    const scrollHeight = 'scrollHeight';
+    const scrollPercentage =
+      (documentElement[scrollTop] || body[scrollTop]) /
+      ((documentElement[scrollHeight] || body[scrollHeight]) - documentElement.clientHeight);
+
+    NProgress.set(scrollPercentage);
+  };
 
   // Get the current anchor
   scrollSpy = () => {

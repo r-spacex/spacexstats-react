@@ -42,6 +42,16 @@ const StyleReset = createGlobalStyle`
     padding: 0;
     margin: 0;
   }
+
+  /* Top progress bar */
+  #nprogress {
+    .bar {
+      background: ${colorUsages.progressBar};
+    }
+    .peg {
+      box-shadow: 0 0 10px ${colorUsages.progressBar}, 0 0 5px ${colorUsages.progressBar};
+    }
+  }
 `;
 
 export default StyleReset;

@@ -33,6 +33,7 @@
     "gatsby-source-filesystem": "^2.0.39",
     "gatsby-transformer-sharp": "^2.1.21",
     "hammerjs": "^2.0.8",
+    "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-chartjs-2": "^2.7.6",

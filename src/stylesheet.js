@@ -12,17 +12,20 @@ const palette = {
 };
 
 export const colorUsages = {
+  text: palette.lightGrey,
+  link: palette.blue,
+  linkHover: palette.yellow,
+
   contentBackground: 'rgba(24, 28, 31, 0.8)',
   contentShadow: 'rgba(24, 28, 31, 0.2)',
+  footer: palette.darkGrey,
+  footerBackground: palette.transparentWhite,
+
+  progressBar: palette.yellow,
   navbarActiveTab: palette.yellow,
   ribbonBackground: palette.yellow,
   ribbonBorder: palette.brown,
-  text: palette.lightGrey,
-  tableBorder: palette.lightGrey,
-  footer: palette.darkGrey,
-  footerBackground: palette.transparentWhite,
-  link: palette.blue,
-  linkHover: palette.yellow
+  tableBorder: palette.lightGrey
 };
 
 export const thresholds = {
