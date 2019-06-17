@@ -1,21 +1,7 @@
-// Colourblind friendly palette
-const colors = {
-  white: '#FAFAFA',
-  grey: '#BBBBBB',
-  yellow: '#F0E442',
-  orange: '#e79f00',
-  brown: '#69551f',
-  red: '#D55E00',
-  lightblue: '#9ad0f3',
-  blue: '#0072B2',
-  green: '#009E73',
-  pink: '#CC79A7',
-  black: '#000000'
-};
+import { chartColors } from 'stylesheet';
 
 export default {
   // Colors used by charts
-  COLORS: colors,
   DEFAULTCHARTOPTIONS: {
     title: {
       display: false
@@ -32,7 +18,7 @@ export default {
       position: 'bottom',
       labels: {
         fontFamily: 'Brandon',
-        fontColor: colors.white
+        fontColor: chartColors.white
       }
     },
     responsive: true,
@@ -60,11 +46,11 @@ export default {
           stacked: true,
           gridLines: {
             display: false,
-            color: colors.white
+            color: chartColors.white
           },
           ticks: {
             fontFamily: 'Brandon',
-            fontColor: colors.white
+            fontColor: chartColors.white
           }
         }
       ],
@@ -72,11 +58,11 @@ export default {
         {
           stacked: true,
           gridLines: {
-            color: colors.grey
+            color: chartColors.grey
           },
           ticks: {
             fontFamily: 'Brandon',
-            fontColor: colors.white
+            fontColor: chartColors.white
           }
         }
       ]

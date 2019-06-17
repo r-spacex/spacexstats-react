@@ -1,4 +1,5 @@
 import settings from 'settings';
+import { chartColors } from 'stylesheet';
 import { fromUnix } from 'utils';
 
 const modelizer = ({ pastLaunches }) => {
@@ -108,28 +109,28 @@ const modelizer = ({ pastLaunches }) => {
           type: 'line',
           data: runningAverage10FlightsData,
           fill: false,
-          borderColor: settings.COLORS.yellow,
-          backgroundColor: settings.COLORS.yellow,
-          pointBorderColor: settings.COLORS.yellow,
-          pointBackgroundColor: settings.COLORS.yellow,
-          pointHoverBackgroundColor: settings.COLORS.yellow,
-          pointHoverBorderColor: settings.COLORS.yellow
+          borderColor: chartColors.yellow,
+          backgroundColor: chartColors.yellow,
+          pointBorderColor: chartColors.yellow,
+          pointBackgroundColor: chartColors.yellow,
+          pointHoverBackgroundColor: chartColors.yellow,
+          pointHoverBorderColor: chartColors.yellow
         },
         {
           label: 'Running average',
           type: 'line',
           data: runningAverageData,
           fill: false,
-          borderColor: settings.COLORS.white,
-          backgroundColor: settings.COLORS.white,
-          pointBorderColor: settings.COLORS.white,
-          pointBackgroundColor: settings.COLORS.white,
-          pointHoverBackgroundColor: settings.COLORS.white,
-          pointHoverBorderColor: settings.COLORS.white
+          borderColor: chartColors.white,
+          backgroundColor: chartColors.white,
+          pointBorderColor: chartColors.white,
+          pointBackgroundColor: chartColors.white,
+          pointHoverBackgroundColor: chartColors.white,
+          pointHoverBorderColor: chartColors.white
         },
         {
           label: 'Days between launches',
-          backgroundColor: settings.COLORS.blue,
+          backgroundColor: chartColors.blue,
           data: daysIntervals
         }
       ]

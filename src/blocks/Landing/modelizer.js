@@ -1,4 +1,5 @@
 import settings from 'settings';
+import { chartColors } from 'stylesheet';
 
 const modelizer = ({ pastLaunches }) => {
   let totalLanded = 0;
@@ -102,27 +103,27 @@ const modelizer = ({ pastLaunches }) => {
       datasets: [
         {
           label: 'Ocean',
-          backgroundColor: settings.COLORS.blue,
+          backgroundColor: chartColors.blue,
           data: oceanLandings
         },
         {
           label: 'RTLS',
-          backgroundColor: settings.COLORS.green,
+          backgroundColor: chartColors.green,
           data: rtlsLandings
         },
         {
           label: 'ASDS - OCISLY',
-          backgroundColor: settings.COLORS.white,
+          backgroundColor: chartColors.white,
           data: ocislyLandings
         },
         {
           label: 'ASDS - JRTI',
-          backgroundColor: settings.COLORS.yellow,
+          backgroundColor: chartColors.yellow,
           data: jrtiLandings
         },
         {
           label: 'Failures',
-          backgroundColor: settings.COLORS.red,
+          backgroundColor: chartColors.red,
           data: failureLandings
         }
       ]

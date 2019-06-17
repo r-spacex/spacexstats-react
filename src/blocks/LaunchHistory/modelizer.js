@@ -1,4 +1,5 @@
 import settings from 'settings';
+import { chartColors } from 'stylesheet';
 
 const modelizer = ({ pastLaunches, upcomingLaunches }) => {
   const yearsStart = 2006; // First Falcon 1 flight
@@ -129,32 +130,32 @@ const modelizer = ({ pastLaunches, upcomingLaunches }) => {
       datasets: [
         {
           label: 'Falcon 1',
-          backgroundColor: settings.COLORS.green,
+          backgroundColor: chartColors.green,
           data: falcon1Flights
         },
         {
           label: 'New Falcon 9',
-          backgroundColor: settings.COLORS.blue,
+          backgroundColor: chartColors.blue,
           data: falcon9UnprovenFlights
         },
         {
           label: 'Used Falcon 9',
-          backgroundColor: settings.COLORS.lightblue,
+          backgroundColor: chartColors.lightblue,
           data: falcon9ProvenFlights
         },
         {
           label: 'Falcon Heavy',
-          backgroundColor: settings.COLORS.yellow,
+          backgroundColor: chartColors.yellow,
           data: falconHeavyFlights
         },
         {
           label: 'Failure',
-          backgroundColor: settings.COLORS.red,
+          backgroundColor: chartColors.red,
           data: failureFlights
         },
         {
           label: 'Planned',
-          backgroundColor: settings.COLORS.white,
+          backgroundColor: chartColors.white,
           data: plannedFlights
         }
       ]
@@ -186,36 +187,36 @@ const modelizer = ({ pastLaunches, upcomingLaunches }) => {
           type: 'line',
           data: successRateFalcon9,
           fill: false,
-          borderColor: settings.COLORS.yellow,
-          backgroundColor: settings.COLORS.yellow,
-          pointBorderColor: settings.COLORS.yellow,
-          pointBackgroundColor: settings.COLORS.yellow,
-          pointHoverBackgroundColor: settings.COLORS.yellow,
-          pointHoverBorderColor: settings.COLORS.yellow
+          borderColor: chartColors.yellow,
+          backgroundColor: chartColors.yellow,
+          pointBorderColor: chartColors.yellow,
+          pointBackgroundColor: chartColors.yellow,
+          pointHoverBackgroundColor: chartColors.yellow,
+          pointHoverBorderColor: chartColors.yellow
         },
         {
           label: 'Falcon Heavy',
           type: 'line',
           data: successRateFalconHeavy,
           fill: false,
-          borderColor: settings.COLORS.green,
-          backgroundColor: settings.COLORS.green,
-          pointBorderColor: settings.COLORS.green,
-          pointBackgroundColor: settings.COLORS.green,
-          pointHoverBackgroundColor: settings.COLORS.green,
-          pointHoverBorderColor: settings.COLORS.green
+          borderColor: chartColors.green,
+          backgroundColor: chartColors.green,
+          pointBorderColor: chartColors.green,
+          pointBackgroundColor: chartColors.green,
+          pointHoverBackgroundColor: chartColors.green,
+          pointHoverBorderColor: chartColors.green
         },
         {
           label: 'All rockets',
           type: 'line',
           data: successRateAll,
           fill: false,
-          borderColor: settings.COLORS.blue,
-          backgroundColor: settings.COLORS.blue,
-          pointBorderColor: settings.COLORS.blue,
-          pointBackgroundColor: settings.COLORS.blue,
-          pointHoverBackgroundColor: settings.COLORS.blue,
-          pointHoverBorderColor: settings.COLORS.blue
+          borderColor: chartColors.blue,
+          backgroundColor: chartColors.blue,
+          pointBorderColor: chartColors.blue,
+          pointBackgroundColor: chartColors.blue,
+          pointHoverBackgroundColor: chartColors.blue,
+          pointHoverBorderColor: chartColors.blue
         }
       ]
     },

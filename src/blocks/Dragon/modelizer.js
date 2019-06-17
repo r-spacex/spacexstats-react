@@ -1,4 +1,5 @@
 import settings from 'settings';
+import { chartColors } from 'stylesheet';
 import { formatDuration } from 'utils';
 
 const modelizer = ({ pastLaunches }) => {
@@ -61,7 +62,7 @@ const modelizer = ({ pastLaunches }) => {
       datasets: [
         {
           label: 'Flight times (hours)',
-          backgroundColor: settings.COLORS.blue,
+          backgroundColor: chartColors.blue,
           data: crsFlightTimes
         }
       ]
