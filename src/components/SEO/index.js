@@ -35,6 +35,8 @@ const SEO = () => {
       <meta name="author" content={author} />
 
       <link rel="dns-prefetch" href="https://api.spacexdata.com/" />
+      <link rel="preload" crossOrigin="anonymous" href="https://api.spacexdata.com/v2/launches" as="fetch" />
+      <link rel="preload" crossOrigin="anonymous" href="https://api.spacexdata.com/v2/launches/upcoming" as="fetch" />
       <link rel="preload" crossOrigin="anonymous" href="fonts/brandon-reg-webfont.ttf" as="font" />
       <link rel="preload" crossOrigin="anonymous" href="fonts/brandon-thin-webfont.ttf" as="font" />
       <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet" type="text/css" />

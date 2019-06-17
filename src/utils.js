@@ -1,8 +1,10 @@
-import axios from 'axios';
-
 // API
 export const apiGet = uri =>
-  new Promise(resolve => axios.get(`https://api.spacexdata.com/v2${uri}`).then(({ data }) => resolve(data)));
+  new Promise(resolve =>
+    fetch(`https://api.spacexdata.com/v2${uri}`, { mode: 'cors' })
+      .then(response => response.json())
+      .then(data => resolve(data))
+  );
 
 // Scroll
 export const isInViewport = testAnchor => {

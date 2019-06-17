@@ -23,8 +23,6 @@ import StyleReset from 'components/StyleReset';
 import { apiGet, isInViewport, updateHash } from 'utils';
 import { actions } from 'redux/duck';
 
-ReactGA.initialize('UA-108091199-1');
-
 class Root extends Component {
   constructor(props) {
     super(props);
@@ -90,6 +88,7 @@ class Root extends Component {
       );
     });
 
+    ReactGA.initialize('UA-108091199-1');
     ReactGA.pageview('/');
   }
 

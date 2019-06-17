@@ -13,7 +13,6 @@
     "test": "yarn test:lint"
   },
   "dependencies": {
-    "axios": "^0.19.0",
     "chart.js": "^2.8.0",
     "chartjs-plugin-zoom": "^0.7.0",
     "date-fns": "^1.30.1",
