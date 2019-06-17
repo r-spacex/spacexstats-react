@@ -23,6 +23,7 @@ module.exports = {
     // Assets
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-styled-components`,
 
     // SEO
     `gatsby-plugin-robots-txt`,
