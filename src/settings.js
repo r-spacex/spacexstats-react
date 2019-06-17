@@ -17,7 +17,7 @@ export default {
     legend: {
       position: 'bottom',
       labels: {
-        fontFamily: 'Brandon',
+        fontFamily: 'Noto',
         fontColor: chartColors.white
       }
     },
@@ -49,7 +49,7 @@ export default {
             color: chartColors.white
           },
           ticks: {
-            fontFamily: 'Brandon',
+            fontFamily: 'Noto',
             fontColor: chartColors.white
           }
         }

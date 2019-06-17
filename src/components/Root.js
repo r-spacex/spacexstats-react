@@ -66,7 +66,7 @@ class Root extends Component {
     ];
   }
 
-  componentWillMount() {
+  componentDidMount() {
     NProgress.configure({ minimum: 0, trickle: false, showSpinner: false });
     NProgress.start();
 
