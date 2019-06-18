@@ -36,7 +36,15 @@ const Footer = () => (
     <WhiteBackground>
       <FooterWrapper id="infos">
         <Text>
-          Photos on this page courtesy SpaceX, NASA and BocaChicaGal. All rights maintained by the respective owners.
+          Photos on this page courtesy SpaceX, NASA and BocaChicaGal. SpaceX Recaps by{' '}
+          <Link
+            eventLabel="Exit to SpaceX Recaps YouTube channel"
+            to="https://www.youtube.com/channel/UC0xhru07vavdPOqJxKRzPrg"
+            title="Jack Lishman's YouTube channel"
+          >
+            Jack Lishman
+          </Link>
+          . All rights maintained by the respective owners.
           <br />
           This site is fan-run and not affiliated with SpaceX in any way. For official information and news, please
           visit{' '}

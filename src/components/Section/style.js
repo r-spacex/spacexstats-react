@@ -20,6 +20,7 @@ export const Wrapper = styled.div`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  width: 95%;
 
   @media only screen and (min-width: ${thresholds.sm}) {
     width: ${thresholds.sm};
