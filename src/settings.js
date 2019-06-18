@@ -1,30 +1,35 @@
 import { chartColors } from 'stylesheet';
 
+const commonChartOptions = {
+  title: {
+    display: false
+  },
+  layout: {
+    padding: {
+      left: 14,
+      right: 14,
+      top: 0,
+      bottom: 0
+    }
+  },
+  legend: {
+    position: 'bottom',
+    labels: {
+      fontFamily: 'Noto',
+      fontColor: chartColors.white
+    }
+  },
+  responsive: true,
+  maintainAspectRatio: false
+};
+
 export default {
   // Colors used by charts
   DEFAULTCHARTOPTIONS: {
-    title: {
-      display: false
-    },
-    layout: {
-      padding: {
-        left: 14,
-        right: 14,
-        top: 0,
-        bottom: 0
-      }
-    },
-    legend: {
-      position: 'bottom',
-      labels: {
-        fontFamily: 'Noto',
-        fontColor: chartColors.white
-      }
-    },
-    responsive: true,
-    maintainAspectRatio: false
+    ...commonChartOptions
   },
   DEFAULTBARCHARTOPTIONS: {
+    ...commonChartOptions,
     pan: {
       enabled: true,
       mode: 'x',
@@ -61,7 +66,7 @@ export default {
             color: chartColors.grey
           },
           ticks: {
-            fontFamily: 'Brandon',
+            fontFamily: 'Noto',
             fontColor: chartColors.white
           }
         }
