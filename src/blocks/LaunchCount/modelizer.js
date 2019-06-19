@@ -1,3 +1,5 @@
+import { fromUnix } from 'utils';
+
 const modelizer = ({ pastLaunches }) => {
   let totalLaunches = 0;
   let totalFalcon9 = 0;
@@ -51,6 +53,8 @@ const modelizer = ({ pastLaunches }) => {
   totalFalcon9 -= 1;
   totalLaunches -= 1;
 
+  const lastLaunchDate = fromUnix(pastLaunches[pastLaunches.length - 1].launch_date_unix);
+
   return {
     totalLaunches,
     totalFalcon9,
@@ -60,7 +64,8 @@ const modelizer = ({ pastLaunches }) => {
     totalFalcon9Upmass,
     totalFalcon1Upmass,
     totalFalconHeavyUpmass,
-    totalBFRUpmass
+    totalBFRUpmass,
+    lastLaunchDate
   };
 };
 
