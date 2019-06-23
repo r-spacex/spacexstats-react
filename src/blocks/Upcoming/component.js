@@ -9,7 +9,7 @@ const Upcoming = ({ currentTab, changeTab, data }) => {
     {
       label: 'Up Next',
       background: 'dscovrlaunch.jpg',
-      title: data ? data.nextLaunch.payloadName : ''
+      title: data ? data.nextLaunch.missionName : ''
     },
     {
       label: 'Next Launches',

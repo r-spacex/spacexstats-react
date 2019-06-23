@@ -21,14 +21,14 @@ const Launchcount = ({ currentTab, changeTab, data }) => {
       title: 'Falcon Heavy'
     },
     {
-      label: 'Falcon 1',
-      background: 'seslaunch.jpg',
-      title: 'Falcon 1'
-    },
-    {
       label: 'Super Heavy/Starship',
       background: 'seslaunch.jpg',
       title: 'Super Heavy/Starship'
+    },
+    {
+      label: 'Falcon 1',
+      background: 'seslaunch.jpg',
+      title: 'Falcon 1'
     }
   ];
   const displayedTab = currentTab || tabs[0].label;

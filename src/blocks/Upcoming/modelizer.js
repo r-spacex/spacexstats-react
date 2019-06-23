@@ -104,6 +104,7 @@ const modelizer = ({ upcomingLaunches }) => {
 
   return {
     nextLaunch: {
+      missionName: nextLaunch.mission_name,
       localDate: format(fromUnix(nextLaunch.launch_date_unix), 'MMM Do, h:mm:ssa (UTCZ)'),
       date: fromUnix(nextLaunch.launch_date_unix),
       payloadName,
