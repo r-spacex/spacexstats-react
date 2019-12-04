@@ -4,7 +4,7 @@ import { formatDuration } from 'utils';
 
 const modelizer = ({ pastLaunches }) => {
   let totalReflown = 0;
-  const totalFairingsReflown = 0;
+  let totalFairingsReflown = 0;
   const cores = {};
   let quickestTurnaround = null;
   let quickestTurnaroundCore = null;
@@ -27,6 +27,10 @@ const modelizer = ({ pastLaunches }) => {
     const launch = notFalcon1Launches[i];
     const launchDate = new Date(launch.launch_date_utc).getTime() / 1000;
     let turnaround = null;
+
+    if (launch.reuse.fairings) {
+      totalFairingsReflown += 1;
+    }
 
     launch.rocket.first_stage.cores.forEach(core => {
       const coreSerial = core.core_serial;
