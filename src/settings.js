@@ -15,7 +15,7 @@ const commonChartOptions = {
   legend: {
     position: 'bottom',
     labels: {
-      fontFamily: 'Noto',
+      fontFamily: 'Noto Sans',
       fontColor: chartColors.white
     }
   },
@@ -54,7 +54,7 @@ export default {
             color: chartColors.white
           },
           ticks: {
-            fontFamily: 'Noto',
+            fontFamily: 'Noto Sans',
             fontColor: chartColors.white
           }
         }
@@ -66,7 +66,7 @@ export default {
             color: chartColors.grey
           },
           ticks: {
-            fontFamily: 'Noto',
+            fontFamily: 'Noto Sans',
             fontColor: chartColors.white
           }
         }
