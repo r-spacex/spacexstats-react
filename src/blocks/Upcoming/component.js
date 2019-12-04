@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Section, { SectionContent, SectionDescription } from 'components/Section';
 import Ribbon from 'components/Ribbon';
 import TableStat from 'components/TableStat';
@@ -34,19 +34,19 @@ const Upcoming = ({ currentTab, changeTab, data }) => {
       downAnchor="launchcount"
     >
       {data ? (
-        <Fragment>
+        <>
           {displayedTab === tabs[0].label && (
-            <Fragment>
+            <>
               <Ribbon>{data.nextLaunch.localDate}</Ribbon>
               <SectionContent>
                 <TimeStat value={data.nextLaunch.date} type="countdown" />
               </SectionContent>
               <SectionDescription>{data.nextLaunch.payloadDesc}</SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[1].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <TableStat
                   config={[
@@ -74,11 +74,11 @@ const Upcoming = ({ currentTab, changeTab, data }) => {
                   data={data.nextLaunches}
                 />
               </SectionContent>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[2].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <iframe
                   width="100%"
@@ -91,9 +91,9 @@ const Upcoming = ({ currentTab, changeTab, data }) => {
                   style={{ flexGrow: 1 }}
                 />
               </SectionContent>
-            </Fragment>
+            </>
           )}
-        </Fragment>
+        </>
       ) : (
         <SectionContent />
       )}

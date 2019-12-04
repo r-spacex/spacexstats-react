@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import format from 'date-fns/format';
 import Section, { SectionContent, SectionDescription } from 'components/Section';
 import IntegerStat from 'components/IntegerStat';
@@ -44,22 +44,22 @@ const Launchcount = ({ currentTab, changeTab, data }) => {
       downAnchor="launchhistory"
     >
       {data ? (
-        <Fragment>
+        <>
           {displayedTab === tabs[0].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalLaunches} subtitle="Flights" />
               </SectionContent>
               <SectionDescription>
-                {`As of ${format(data.lastLaunchDate, 'MMMM YYYY')}, SpaceX has launched ${data.totalLaunches} rockets,
+                {`As of ${format(data.lastLaunchDate, 'MMMM yyyy')}, SpaceX has launched ${data.totalLaunches} rockets,
                 carrying a variety of payloads to multiple destinations;including LEO, GTO, L1, and the ISS. SpaceX
                 currently has a manifest of over 60 flights that will fly over the coming years.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[1].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalFalcon9} subtitle="Flights" />
               </SectionContent>
@@ -69,11 +69,11 @@ const Launchcount = ({ currentTab, changeTab, data }) => {
                 ${Math.floor(data.totalFalcon9Upmass).toLocaleString()}kg to orbit. It is currently flying in its final
                 iteration (Falcon 9 v1.2 Block 5) enabling rapid reusability.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[2].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalFalconHeavy} subtitle="Flights" />
               </SectionContent>
@@ -82,11 +82,11 @@ const Launchcount = ({ currentTab, changeTab, data }) => {
                 expendable mode, rising on its 27 first stage Merlin 1D engines. Only the mighty Saturn V has delivered
                 more payload to orbit.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[3].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalBFR} subtitle="Flights" />
               </SectionContent>
@@ -95,11 +95,11 @@ const Launchcount = ({ currentTab, changeTab, data }) => {
                 carry up to 150 tonnes (reusable) to Low Earth Orbit. This will be the single largest rocket ever
                 designed, developed and then built.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[4].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalFalcon1} subtitle="Flights" />
               </SectionContent>
@@ -110,9 +110,9 @@ const Launchcount = ({ currentTab, changeTab, data }) => {
                 ${data.totalFalcon1} times over approximately 2 years, lifting 
                 ${Math.floor(data.totalFalcon1Upmass).toLocaleString()}kg to orbit.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
-        </Fragment>
+        </>
       ) : (
         <SectionContent />
       )}

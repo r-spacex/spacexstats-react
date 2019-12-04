@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Section, { SectionContent, SectionDescription } from 'components/Section';
 import TextStat from 'components/TextStat';
 
@@ -43,9 +43,9 @@ const Starship = ({ currentTab, changeTab, data }) => {
       downAnchor="timelines"
     >
       {data ? (
-        <Fragment>
+        <>
           {displayedTab === tabs[0].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <TextStat value="RIGHT NOW" />
               </SectionContent>
@@ -54,41 +54,41 @@ const Starship = ({ currentTab, changeTab, data }) => {
                 Heavy/Starship. A Starship hopper prototype has been built at their Boca Chica, Texas launch site and is
                 going through a number of incremental hop tests.
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[1].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <TextStat value="2020" />
               </SectionContent>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[2].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <TextStat value="2022" />
               </SectionContent>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[3].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <TextStat value="2023" />
               </SectionContent>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[4].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <TextStat value="2024" />
               </SectionContent>
-            </Fragment>
+            </>
           )}
-        </Fragment>
+        </>
       ) : (
         <SectionContent />
       )}

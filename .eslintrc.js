@@ -46,6 +46,7 @@ module.exports = {
     ],
     'no-loop-func': 0,
     'react/no-array-index-key': 0,
+    'react/jsx-props-no-spreading': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js'] }]
   }
 };

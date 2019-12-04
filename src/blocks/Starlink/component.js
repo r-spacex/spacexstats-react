@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Section, { SectionContent, SectionDescription } from 'components/Section';
 import IntegerStat from 'components/IntegerStat';
 
@@ -23,9 +23,9 @@ const Starlink = ({ currentTab, changeTab, data }) => {
       downAnchor="starship"
     >
       {data ? (
-        <Fragment>
+        <>
           {displayedTab === tabs[0].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.inSpace} subtitle="Satellites" />
               </SectionContent>
@@ -35,9 +35,9 @@ const Starlink = ({ currentTab, changeTab, data }) => {
                 internet to populations with little or no connectivity, including those in rural communities and places
                 where existing services are too expensive or unreliable.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
-        </Fragment>
+        </>
       ) : (
         <SectionContent />
       )}

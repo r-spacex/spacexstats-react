@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -128,7 +128,7 @@ class Root extends Component {
     const { currentTabs, launchesData } = this.state;
 
     return (
-      <Fragment>
+      <>
         <StyleReset />
 
         <Upcoming
@@ -194,7 +194,7 @@ class Root extends Component {
         />
 
         <Footer />
-      </Fragment>
+      </>
     );
   }
 }

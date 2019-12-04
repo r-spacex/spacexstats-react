@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Section, { SectionContent, SectionDescription } from 'components/Section';
 import TextStat from 'components/TextStat';
 import TimeStat from 'components/TimeStat';
@@ -39,9 +39,9 @@ const Timelines = ({ currentTab, changeTab, data }) => {
       downAnchor="infos"
     >
       {data ? (
-        <Fragment>
+        <>
           {displayedTab === tabs[0].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <TimeStat value={data.elonMuskBet} type="countdown" />
               </SectionContent>
@@ -50,11 +50,11 @@ const Timelines = ({ currentTab, changeTab, data }) => {
                 SpaceX would put a man on Mars by "2020 or 2025". Musk has continued to reiterate this rough timeframe
                 since. This countdown clock expires on 1 January 2026, at 00:00 UTC. No pressure, Elon.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[1].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <TimeStat value={data.gwynneShotwellBet} type="countdown" />
               </SectionContent>
@@ -64,11 +64,11 @@ const Timelines = ({ currentTab, changeTab, data }) => {
                 person to fly New York to Shanghai. This countdown clock expires on 1 January 2029, at 00:00 UTC. No
                 pressure, Gwynne.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[2].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <TimeStat value={data.foundingDate} type="timer" />
               </SectionContent>
@@ -78,11 +78,11 @@ const Timelines = ({ currentTab, changeTab, data }) => {
                 in El Segundo, where they built the Falcon 1. When they outgrew that, they moved to their current
                 facility in Hawthorne.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[3].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <TextStat value="Countless" />
               </SectionContent>
@@ -91,9 +91,9 @@ const Timelines = ({ currentTab, changeTab, data }) => {
                 boundaries of engineering and technology, ultimately providing humanity with cheaper, faster, more
                 reliable access to space. Thank you.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
-        </Fragment>
+        </>
       ) : (
         <SectionContent />
       )}

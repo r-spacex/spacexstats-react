@@ -1,45 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TimeStat from './component';
 
-const onIntervalHOC = (propFunc, interval) => Component =>
-  class OnInterval extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = propFunc(props);
-    }
-
-    componentWillMount() {
-      this.interval = setInterval(this.update, interval);
-    }
-
-    componentWillReceiveProps(newProps) {
-      this.update(newProps);
-    }
-
-    componentWillUnmount() {
-      clearInterval(this.interval);
-    }
-
-    update = newProps => this.setState(propFunc(newProps || this.props));
-
-    render() {
-      return (
-        <Component {...this.props} {...this.state}>
-          {this.children}
-        </Component>
-      );
-    }
-  };
-
-const calculateDuration = props => ({
-  value: (props.value.getTime() - Math.floor(Date.now())) / 1000
-});
+const calculateDuration = value => (value.getTime() - Math.floor(Date.now())) / 1000;
 
 const TimeStatContainer = ({ type, value }) => {
-  const Component = type === 'duration' ? TimeStat : onIntervalHOC(calculateDuration, 1000)(TimeStat);
+  const [time, setTime] = useState(type === 'duration' ? value : calculateDuration(value));
 
-  return <Component value={value} />;
+  useEffect(() => {
+    setTimeout(() => {
+      if (type !== 'duration') {
+        setTime(calculateDuration(value));
+      }
+    }, 1000);
+  });
+
+  return <TimeStat value={time} />;
 };
 
 TimeStatContainer.propTypes = {

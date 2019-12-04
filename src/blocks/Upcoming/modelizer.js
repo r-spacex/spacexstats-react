@@ -8,17 +8,17 @@ const displayLaunchTime = (date, precision) => {
     case 'second':
     case 'minute':
     case 'hour':
-      return format(date, 'MMM Do YYYY, HH:mm');
+      return format(date, 'MMM Do yyyy, HH:mm');
 
     case 'day':
-      return format(date, 'MMM Do YYYY');
+      return format(date, 'MMM Do yyyy');
 
     case 'quarter':
-      return `Q${getQuarter(date)} ${format(date, 'YYYY')}`;
+      return `Q${getQuarter(date)} ${format(date, 'yyyy')}`;
 
     case 'month':
     default:
-      return format(date, 'MMM YYYY');
+      return format(date, 'MMM yyyy');
   }
 };
 
@@ -105,7 +105,7 @@ const modelizer = ({ upcomingLaunches }) => {
   return {
     nextLaunch: {
       missionName: nextLaunch.mission_name,
-      localDate: format(fromUnix(nextLaunch.launch_date_unix), 'MMM Do, h:mm:ssa (UTCZ)'),
+      localDate: format(fromUnix(nextLaunch.launch_date_unix), "MMM Do, h:mm:ssa ('UTC'xxx)"),
       date: fromUnix(nextLaunch.launch_date_unix),
       payloadName,
       payloadDesc

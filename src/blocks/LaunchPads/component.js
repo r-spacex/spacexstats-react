@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Section, { SectionContent, SectionDescription } from 'components/Section';
 import IntegerStat from 'components/IntegerStat';
 
@@ -43,9 +43,9 @@ const LaunchPads = ({ currentTab, changeTab, data }) => {
       downAnchor="landing"
     >
       {data ? (
-        <Fragment>
+        <>
           {displayedTab === tabs[0].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalHLC39A} subtitle="Launches" />
               </SectionContent>
@@ -55,11 +55,11 @@ const LaunchPads = ({ currentTab, changeTab, data }) => {
                 holding up to 5 Falcon cores. CRS-10 was the first mission to launch from pad 39A on February
                 19th, 2017.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[1].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalSLC40} subtitle="Launches" />
               </SectionContent>
@@ -68,11 +68,11 @@ const LaunchPads = ({ currentTab, changeTab, data }) => {
                 carrying Dragon towards the International Space Station, and the starting point for many satellites
                 heading into Geostationary Earth Orbit.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[2].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalVAFB} subtitle="Launches" />
               </SectionContent>
@@ -81,11 +81,11 @@ const LaunchPads = ({ currentTab, changeTab, data }) => {
                 (mostly scientific and Earth observation) seeking a polar orbit around the Earth. SLC-4E was last used
                 in 2005 for the final flight of the Titan IV rocket.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[3].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalBocaChica} subtitle="Launches" />
               </SectionContent>
@@ -93,11 +93,11 @@ const LaunchPads = ({ currentTab, changeTab, data }) => {
                 {`Boca Chica Beach, Texas is the location of SpaceX's new private launch site. It is expected to become
                 operational not earlier than 2019.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[4].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalKwajalein} subtitle="Launches" />
               </SectionContent>
@@ -107,9 +107,9 @@ const LaunchPads = ({ currentTab, changeTab, data }) => {
                 demonstration rockets. Ironically, this climate also led to the failure of the first Falcon 1 launch,
                 during which the engine failed 25 seconds into flight due to a corroded bolt.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
-        </Fragment>
+        </>
       ) : (
         <SectionContent />
       )}

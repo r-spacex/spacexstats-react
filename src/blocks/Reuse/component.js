@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import Section, { SectionContent, SectionDescription } from 'components/Section';
 import IntegerStat from 'components/IntegerStat';
@@ -39,9 +39,9 @@ const Reuse = ({ currentTab, changeTab, data }) => {
       downAnchor="turnarounds"
     >
       {data ? (
-        <Fragment>
+        <>
           {displayedTab === tabs[0].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalReflown} subtitle="Reflown flights" />
               </SectionContent>
@@ -49,11 +49,11 @@ const Reuse = ({ currentTab, changeTab, data }) => {
                 {`Once on the ground, the booster must be able to be refurbished and reflown in minimal time and with
                 minimal cost. Only then can they be reflown, reducing launch costs significantly.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[1].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.mostReflownCore.launches} subtitle="Launches" />
               </SectionContent>
@@ -61,11 +61,11 @@ const Reuse = ({ currentTab, changeTab, data }) => {
                 {`The ${data.mostReflownCore.core} booster is the one who flew the most, it was used for these missions:
                 ${data.mostReflownCore.missions}.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[2].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <Bar data={data.daysBetweenReuses.data} options={data.daysBetweenReuses.options} />
               </SectionContent>
@@ -76,11 +76,11 @@ const Reuse = ({ currentTab, changeTab, data }) => {
                 ${data.quickestReuseTurnaround.core} booster, between the ${data.quickestReuseTurnaround.mission1}
                 and ${data.quickestReuseTurnaround.mission2} missions.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
 
           {displayedTab === tabs[3].label && (
-            <Fragment>
+            <>
               <SectionContent>
                 <IntegerStat value={data.totalFairingsReflown} subtitle="Reflown" />
               </SectionContent>
@@ -89,9 +89,9 @@ const Reuse = ({ currentTab, changeTab, data }) => {
                 consuming. Reusing them is the next step towards reduced launch costs. Although SpaceX already fished
                 out fairings, it has yet to retrieve them intact from the corrosion of salt water.`}
               </SectionDescription>
-            </Fragment>
+            </>
           )}
-        </Fragment>
+        </>
       ) : (
         <SectionContent />
       )}
