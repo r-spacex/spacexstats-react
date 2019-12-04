@@ -5,9 +5,9 @@ import IntegerStat from 'components/IntegerStat';
 const Starlink = ({ currentTab, changeTab, data }) => {
   const tabs = [
     {
-      label: 'In Space',
+      label: 'Sent In Space',
       background: 'starlink.jpg',
-      title: 'In Space'
+      title: 'Sent In Space'
     }
   ];
   const displayedTab = currentTab || tabs[0].label;
