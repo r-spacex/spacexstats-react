@@ -51,7 +51,7 @@ module.exports = {
         start_url: `/`,
         background_color: `#005189`,
         theme_color: `#005189`,
-        display: `stand-alone`,
+        display: `standalone`,
         icon: `static/oglogo.jpg`
       }
     },
