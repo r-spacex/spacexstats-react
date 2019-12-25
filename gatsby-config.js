@@ -42,19 +42,20 @@ module.exports = {
       }
     },
 
-    // {
-    //   resolve: `gatsby-plugin-manifest`,
-    //   options: {
-    //     name: `gatsby-starter-default`,
-    //     short_name: `starter`,
-    //     start_url: `/`,
-    //     background_color: `#663399`,
-    //     theme_color: `#663399`,
-    //     display: `minimal-ui`,
-    //     icon: `src/images/gatsby-icon.png` // This path is relative to the root of the site.
-    //   }
-    // },
-    // `gatsby-plugin-offline`,
+    // Offline capability
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `SpaceX Stats`,
+        short_name: `SpaceX Stats`,
+        start_url: `/`,
+        background_color: `#005189`,
+        theme_color: `#005189`,
+        display: `stand-alone`,
+        icon: `static/oglogo.jpg`
+      }
+    },
+    `gatsby-plugin-offline`,
     `gatsby-plugin-netlify`
   ]
 };
