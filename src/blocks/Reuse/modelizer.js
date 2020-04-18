@@ -28,7 +28,7 @@ const modelizer = ({ pastLaunches }) => {
     const launchDate = new Date(launch.launch_date_utc).getTime() / 1000;
     let turnaround = null;
 
-    if (launch.reuse.fairings) {
+    if (launch.rocket.fairings && launch.rocket.fairings.reused) {
       totalFairingsReflown += 1;
     }
 
