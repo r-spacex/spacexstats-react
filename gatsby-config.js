@@ -9,7 +9,8 @@ module.exports = {
   },
   plugins: [
     // Codebase
-    `gatsby-plugin-resolve-src`,
+    `gatsby-plugin-typescript`,
+    `gatsby-plugin-tsconfig-paths`,
     `gatsby-plugin-eslint`,
     `gatsby-plugin-react-helmet`,
     {

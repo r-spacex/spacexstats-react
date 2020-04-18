@@ -1,33 +1,46 @@
 const path = require('path');
 
 module.exports = {
-  extends: ['plugin:react/recommended', 'prettier', 'prettier/react'],
-  plugins: ['prettier', 'react', 'jsx-a11y'],
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'prettier',
+    'prettier/@typescript-eslint',
+    'prettier/react',
+  ],
+  plugins: ['import', 'prettier', 'react', '@typescript-eslint'],
   env: {
     browser: true,
+    es6: true,
     node: true,
   },
-  settings: {
-    'import/resolver': {
-      webpack: {
-        config: {
-          resolve: {
-            modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-          },
-        },
-      },
-    },
-  },
-  parser: 'babel-eslint',
-  parserOptions: {
-    ecmaVersion: 8, // optional, recommended 6+
+  globals: {
+    alert: true,
+    document: true,
+    localStorage: true,
+    navigator: true,
+    window: true,
+    HTMLElement: true,
   },
   rules: {
     'prettier/prettier': 'error',
     'import/extensions': 0,
     'import/no-unresolved': 0,
     'import/prefer-default-export': 0,
-    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: true,
+        optionalDependencies: false,
+        peerDependencies: false,
+      },
+    ],
+    // TODO remove js
+    'react/jsx-filename-extension': [
+      'error',
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
     'react/no-array-index-key': 2,
     'react/prop-types': 0,
     'react/require-default-props': 0,
@@ -42,6 +55,13 @@ module.exports = {
     'max-depth': ['error', 4], // TODO fix at 3
     'max-params': ['error', 5],
     'arrow-body-style': ['error', 'as-needed'],
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/explicit-member-accessibility': 0,
+    '@typescript-eslint/camelcase': 0,
+    '@typescript-eslint/interface-name-prefix': 0,
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-non-null-assertion': 0,
     curly: ['error', 'multi-line'],
   },
   settings: {
