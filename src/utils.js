@@ -1,7 +1,7 @@
 // API
 export const apiGet = (uri) =>
   new Promise((resolve) =>
-    fetch(`https://api.spacexdata.com/v2${uri}`, { mode: 'cors' })
+    fetch(`https://api.spacexdata.com/v3${uri}`, { mode: 'cors' })
       .then((response) => response.json())
       .then((data) => resolve(data))
   );
