@@ -8,18 +8,18 @@ const Turnarounds = ({ currentTab, changeTab, data }) => {
     {
       label: 'Quickest (same pad)',
       background: 'thaicomlaunch.jpg',
-      title: 'Quickest (same pad)'
+      title: 'Quickest (same pad)',
     },
     {
       label: 'Since Last Launch',
       background: 'thaicomlaunch.jpg',
-      title: 'Since Last Launch'
+      title: 'Since Last Launch',
     },
     {
       label: 'Day Intervals',
       background: 'thaicomlaunch.jpg',
-      title: 'Day Intervals'
-    }
+      title: 'Day Intervals',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TimeStat from './component';
 
-const calculateDuration = value => (value.getTime() - Math.floor(Date.now())) / 1000;
+const calculateDuration = (value) => (value.getTime() - Math.floor(Date.now())) / 1000;
 
 const TimeStatContainer = ({ type, value }) => {
   const [time, setTime] = useState(type === 'duration' ? value : calculateDuration(value));
@@ -20,7 +20,7 @@ const TimeStatContainer = ({ type, value }) => {
 
 TimeStatContainer.propTypes = {
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)]).isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
 };
 
 export default TimeStatContainer;

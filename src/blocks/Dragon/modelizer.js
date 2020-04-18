@@ -12,12 +12,12 @@ const modelizer = ({ pastLaunches }) => {
   const crsFlightTimes = [];
 
   const dragonLaunches = pastLaunches.filter(
-    launch =>
+    (launch) =>
       launch.rocket.second_stage.payloads[0].payload_type.indexOf('Dragon') !== -1 &&
       launch.rocket.second_stage.payloads[0].payload_id.indexOf('Dragon Qualification Unit') === -1
   );
 
-  dragonLaunches.forEach(launch => {
+  dragonLaunches.forEach((launch) => {
     const flightTime = launch.rocket.second_stage.payloads[0].flight_time_sec;
 
     if (launch.launch_success) {
@@ -52,8 +52,8 @@ const modelizer = ({ pastLaunches }) => {
         const dataset = data.datasets[tooltipItem.datasetIndex];
         const flightTime = dataset.data[tooltipItem.index];
         return `${dataset.label} : ${flightTime} hours`;
-      }
-    }
+      },
+    },
   };
 
   const crsFlightTimesChart = {
@@ -63,11 +63,11 @@ const modelizer = ({ pastLaunches }) => {
         {
           label: 'Flight times (hours)',
           backgroundColor: chartColors.blue,
-          data: crsFlightTimes
-        }
-      ]
+          data: crsFlightTimes,
+        },
+      ],
     },
-    options
+    options,
   };
 
   return {
@@ -76,7 +76,7 @@ const modelizer = ({ pastLaunches }) => {
     crsFlightTimesChart,
     totalCargoUp,
     totalCargoDown,
-    totalReflights
+    totalReflights,
   };
 };
 

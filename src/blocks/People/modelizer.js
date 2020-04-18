@@ -8,7 +8,7 @@ const modelizer = () => {
     inSpace,
     moonPopulation,
     marsPopulation,
-    employees
+    employees,
   };
 };
 

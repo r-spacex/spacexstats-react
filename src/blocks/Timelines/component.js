@@ -8,23 +8,23 @@ const Timelines = ({ currentTab, changeTab, data }) => {
     {
       label: "Elon Musk's Bet",
       background: 'elonmusk.jpg',
-      title: "Elon Musk's Bet"
+      title: "Elon Musk's Bet",
     },
     {
       label: "Gwynne Shotwell's Bet",
       background: 'gwynneshotwell.jpg',
-      title: "Gwynne Shotwell's Bet"
+      title: "Gwynne Shotwell's Bet",
     },
     {
       label: 'Time Since Founding',
       background: 'spacexhq.jpg',
-      title: 'Time Since Founding'
+      title: 'Time Since Founding',
     },
     {
       label: 'Hours Worked',
       background: 'rollout.jpg',
-      title: 'Hours Worked'
-    }
+      title: 'Hours Worked',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

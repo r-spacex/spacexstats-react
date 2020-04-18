@@ -19,7 +19,7 @@ import {
   Starship,
   Timelines,
   Turnarounds,
-  Upcoming
+  Upcoming,
 } from 'blocks';
 import StyleReset from 'components/StyleReset';
 import { apiGet, isInViewport, updateHash } from 'utils';
@@ -44,8 +44,8 @@ class Root extends Component {
         starship: null,
         timelines: null,
         turnarounds: null,
-        upcoming: null
-      }
+        upcoming: null,
+      },
     };
 
     this.anchors = [
@@ -62,7 +62,7 @@ class Root extends Component {
       'starlink',
       'starship',
       'timelines',
-      'infos'
+      'infos',
     ];
   }
 
@@ -71,10 +71,13 @@ class Root extends Component {
     NProgress.start();
 
     // Wait for the two datasets to be loaded then compute the stats
-    Promise.all([apiGet('/launches'), apiGet('/launches/upcoming')]).then(values => {
+    Promise.all([apiGet('/launches'), apiGet('/launches/upcoming')]).then((values) => {
       this.setState(
         {
-          launchesData: { pastLaunches: values[0], upcomingLaunches: values[1] }
+          launchesData: {
+            pastLaunches: values[0],
+            upcomingLaunches: values[1],
+          },
         },
         () => {
           const { navigateTo } = this.props;
@@ -121,7 +124,9 @@ class Root extends Component {
   };
 
   changeTab = (section, tab) => {
-    this.setState(prevState => ({ currentTabs: { ...prevState, [section]: tab } }));
+    this.setState((prevState) => ({
+      currentTabs: { ...prevState, [section]: tab },
+    }));
   };
 
   render() {
@@ -133,63 +138,67 @@ class Root extends Component {
 
         <Upcoming
           currentTab={currentTabs.upcoming}
-          changeTab={tab => this.changeTab('upcoming', tab)}
+          changeTab={(tab) => this.changeTab('upcoming', tab)}
           {...launchesData}
         />
 
         <LaunchCount
           currentTab={currentTabs.launchCount}
-          changeTab={tab => this.changeTab('launchCount', tab)}
+          changeTab={(tab) => this.changeTab('launchCount', tab)}
           {...launchesData}
         />
 
         <LaunchHistory
           currentTab={currentTabs.launchHistory}
-          changeTab={tab => this.changeTab('launchHistory', tab)}
+          changeTab={(tab) => this.changeTab('launchHistory', tab)}
           {...launchesData}
         />
 
         <LaunchPads
           currentTab={currentTabs.launchPads}
-          changeTab={tab => this.changeTab('launchPads', tab)}
+          changeTab={(tab) => this.changeTab('launchPads', tab)}
           {...launchesData}
         />
 
-        <Landing currentTab={currentTabs.landing} changeTab={tab => this.changeTab('landing', tab)} {...launchesData} />
+        <Landing
+          currentTab={currentTabs.landing}
+          changeTab={(tab) => this.changeTab('landing', tab)}
+          {...launchesData}
+        />
 
-        <Reuse currentTab={currentTabs.reuse} changeTab={tab => this.changeTab('reuse', tab)} {...launchesData} />
+        <Reuse currentTab={currentTabs.reuse} changeTab={(tab) => this.changeTab('reuse', tab)} {...launchesData} />
 
         <Turnarounds
           currentTab={currentTabs.turnarounds}
-          changeTab={tab => this.changeTab('turnarounds', tab)}
+          changeTab={(tab) => this.changeTab('turnarounds', tab)}
           {...launchesData}
         />
 
         <Payloads
           currentTab={currentTabs.payloads}
-          changeTab={tab => this.changeTab('payloads', tab)}
+          changeTab={(tab) => this.changeTab('payloads', tab)}
           {...launchesData}
         />
 
-        <Dragon currentTab={currentTabs.dragon} changeTab={tab => this.changeTab('dragon', tab)} {...launchesData} />
+        <Dragon currentTab={currentTabs.dragon} changeTab={(tab) => this.changeTab('dragon', tab)} {...launchesData} />
 
-        <People currentTab={currentTabs.people} changeTab={tab => this.changeTab('people', tab)} {...launchesData} />
+        <People currentTab={currentTabs.people} changeTab={(tab) => this.changeTab('people', tab)} {...launchesData} />
 
         <Starlink
           currentTab={currentTabs.starlink}
-          changeTab={tab => this.changeTab('starlink', tab)}
+          changeTab={(tab) => this.changeTab('starlink', tab)}
           {...launchesData}
         />
 
         <Starship
           currentTab={currentTabs.starship}
-          changeTab={tab => this.changeTab('starship', tab)}
+          changeTab={(tab) => this.changeTab('starship', tab)}
           {...launchesData}
         />
 
         <Timelines
           currentTab={currentTabs.timelines}
-          changeTab={tab => this.changeTab('timelines', tab)}
+          changeTab={(tab) => this.changeTab('timelines', tab)}
           {...launchesData}
         />
 
@@ -199,13 +208,10 @@ class Root extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  navigateTo: (anchor, down) => dispatch(actions.navigateTo(anchor, down))
+const mapDispatchToProps = (dispatch) => ({
+  navigateTo: (anchor, down) => dispatch(actions.navigateTo(anchor, down)),
 });
 
-const RootContainer = connect(
-  null,
-  mapDispatchToProps
-)(Root);
+const RootContainer = connect(null, mapDispatchToProps)(Root);
 
 export default RootContainer;

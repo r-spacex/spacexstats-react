@@ -10,7 +10,7 @@ const modelizer = ({ pastLaunches }) => {
     Commercial: 0,
     SpaceX: 0,
     USAF: 0,
-    NRO: 0
+    NRO: 0,
   };
 
   // Custom years for upmass
@@ -26,13 +26,13 @@ const modelizer = ({ pastLaunches }) => {
     Polar: new Array(yearsUpmass.length).fill(0),
     GTO: new Array(yearsUpmass.length).fill(0),
     Interplanetary: new Array(yearsUpmass.length).fill(0),
-    Other: new Array(yearsUpmass.length).fill(0)
+    Other: new Array(yearsUpmass.length).fill(0),
   };
 
-  const successfulLaunches = pastLaunches.filter(launch => launch.launch_success);
+  const successfulLaunches = pastLaunches.filter((launch) => launch.launch_success);
 
-  successfulLaunches.forEach(launch => {
-    launch.rocket.second_stage.payloads.forEach(payload => {
+  successfulLaunches.forEach((launch) => {
+    launch.rocket.second_stage.payloads.forEach((payload) => {
       // Only consider first customer
       const customer = payload.customers[0];
       if (customer.includes('NASA')) {
@@ -51,7 +51,7 @@ const modelizer = ({ pastLaunches }) => {
           heaviestPayload = {
             mass: payload.payload_mass_kg,
             mission: payload.payload_id,
-            customers: payload.customers.join('/')
+            customers: payload.customers.join('/'),
           };
         }
 
@@ -59,7 +59,7 @@ const modelizer = ({ pastLaunches }) => {
           heaviestPayloadGTO = {
             mass: payload.payload_mass_kg,
             mission: payload.payload_id,
-            customers: payload.customers.join('/')
+            customers: payload.customers.join('/'),
           };
         }
       }
@@ -106,8 +106,8 @@ const modelizer = ({ pastLaunches }) => {
         const missions = customers[customer];
 
         return `${customer}: ${missions} (${parseInt((100 * missions) / totalLaunches, 10)}%)`;
-      }
-    }
+      },
+    },
   };
   const customersChart = {
     data: {
@@ -120,12 +120,12 @@ const modelizer = ({ pastLaunches }) => {
             chartColors.lightblue,
             chartColors.white,
             chartColors.yellow,
-            chartColors.orange
-          ]
-        }
-      ]
+            chartColors.orange,
+          ],
+        },
+      ],
     },
-    options
+    options,
   };
 
   const barchartOptions = JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)); // Clone object
@@ -146,8 +146,8 @@ const modelizer = ({ pastLaunches }) => {
         }
         return `${dataset.label}: ${count.toLocaleString()}kg`;
       },
-      footer: () => `TOTAL: ${window.launchTotal.toLocaleString()}kg`
-    }
+      footer: () => `TOTAL: ${window.launchTotal.toLocaleString()}kg`,
+    },
   };
 
   const upmassPerYear = {
@@ -157,36 +157,36 @@ const modelizer = ({ pastLaunches }) => {
         {
           label: 'LEO',
           backgroundColor: chartColors.blue,
-          data: upmassPerOrbit.LEO
+          data: upmassPerOrbit.LEO,
         },
         {
           label: 'ISS',
           backgroundColor: chartColors.lightblue,
-          data: upmassPerOrbit.ISS
+          data: upmassPerOrbit.ISS,
         },
         {
           label: 'Polar',
           backgroundColor: chartColors.yellow,
-          data: upmassPerOrbit.Polar
+          data: upmassPerOrbit.Polar,
         },
         {
           label: 'GTO',
           backgroundColor: chartColors.orange,
-          data: upmassPerOrbit.GTO
+          data: upmassPerOrbit.GTO,
         },
         {
           label: 'Interplanetary',
           backgroundColor: chartColors.red,
-          data: upmassPerOrbit.Interplanetary
+          data: upmassPerOrbit.Interplanetary,
         },
         {
           label: 'Other',
           backgroundColor: chartColors.white,
-          data: upmassPerOrbit.Other
-        }
-      ]
+          data: upmassPerOrbit.Other,
+        },
+      ],
     },
-    options: optionsUpmassPerYear
+    options: optionsUpmassPerYear,
   };
 
   return {
@@ -194,7 +194,7 @@ const modelizer = ({ pastLaunches }) => {
     heaviestPayload,
     heaviestPayloadGTO,
     customersChart,
-    upmassPerYear
+    upmassPerYear,
   };
 };
 

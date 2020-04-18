@@ -1,7 +1,7 @@
 import format from 'date-fns/format';
 import { fromUnix } from 'utils';
 
-const getQuarter = date => Math.floor((date.getMonth() + 3) / 3);
+const getQuarter = (date) => Math.floor((date.getMonth() + 3) / 3);
 
 const displayLaunchTime = (date, precision) => {
   switch (precision) {
@@ -71,7 +71,7 @@ const modelizer = ({ upcomingLaunches }) => {
   const payloadNames = [];
   let payloadMass = 0;
 
-  nextLaunch.rocket.second_stage.payloads.forEach(payload => {
+  nextLaunch.rocket.second_stage.payloads.forEach((payload) => {
     payloadNames.push(payload.payload_id);
     payloadMass += payload.payload_mass_kg;
   });
@@ -85,7 +85,7 @@ const modelizer = ({ upcomingLaunches }) => {
                     ${payloadMass} kg of supplies and scientific cargo to the
                     International Space Station.`;
   } else {
-    payloadDesc = `A SpaceX ${nextLaunch.rocket.rocket_name} rocket will launch from
+    payloadDesc = `A SpaceX ${nextLaunch.rocket.rocket_name} rocket will launch from 
                     ${nextLaunch.launch_site.site_name_long},
                     lofting the ${payloadMass > 0 ? `${payloadMass} kg ` : ''}
                     satellite${nextLaunch.rocket.second_stage.payloads.length > 1 ? 's ' : ' '}
@@ -94,11 +94,11 @@ const modelizer = ({ upcomingLaunches }) => {
 
   payloadDesc += ' ';
 
-  const nextLaunches = upcomingLaunches.map(launch => ({
+  const nextLaunches = upcomingLaunches.map((launch) => ({
     mission: launch.mission_name,
     date: displayLaunchTime(fromUnix(launch.launch_date_unix), launch.tentative_max_precision),
     vehicule: launch.rocket.rocket_name,
-    launchpad: launch.launch_site.site_name
+    launchpad: launch.launch_site.site_name,
   }));
   nextLaunches.sort(sortLaunches);
 
@@ -108,9 +108,9 @@ const modelizer = ({ upcomingLaunches }) => {
       localDate: format(fromUnix(nextLaunch.launch_date_unix), "MMM do, h:mm:ssa ('UTC'xxx)"),
       date: fromUnix(nextLaunch.launch_date_unix),
       payloadName,
-      payloadDesc
+      payloadDesc,
     },
-    nextLaunches
+    nextLaunches,
   };
 };
 

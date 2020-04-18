@@ -5,16 +5,16 @@ module.exports = {
   plugins: ['react', 'jsx-a11y'],
   env: {
     browser: true,
-    node: true
+    node: true,
   },
   settings: {
     'import/resolver': {
-      webpack: { config: { resolve: { modules: [path.resolve(__dirname, 'src'), 'node_modules'] } } }
-    }
+      webpack: { config: { resolve: { modules: [path.resolve(__dirname, 'src'), 'node_modules'] } } },
+    },
   },
   parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 8 // optional, recommended 6+
+    ecmaVersion: 8, // optional, recommended 6+
   },
   rules: {
     'no-var': 'error', // optional, recommended when using es6+
@@ -28,8 +28,8 @@ module.exports = {
         arrays: 'only-multiline',
         imports: 'never',
         exports: 'never',
-        functions: 'never'
-      }
+        functions: 'never',
+      },
     ],
 
     // react plugin - options
@@ -41,12 +41,12 @@ module.exports = {
     'no-plusplus': [
       'error',
       {
-        allowForLoopAfterthoughts: true
-      }
+        allowForLoopAfterthoughts: true,
+      },
     ],
     'no-loop-func': 0,
     'react/no-array-index-key': 0,
     'react/jsx-props-no-spreading': 0,
-    'react/jsx-filename-extension': [1, { extensions: ['.js'] }]
-  }
+    'react/jsx-filename-extension': [1, { extensions: ['.js'] }],
+  },
 };

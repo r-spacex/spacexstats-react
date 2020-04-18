@@ -1,6 +1,6 @@
 const modelizer = () => {
   return {
-    inSpace: 62
+    inSpace: 62,
   };
 };
 

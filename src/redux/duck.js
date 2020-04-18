@@ -10,11 +10,11 @@ const navigateToType = 'NAVIGATE_TO';
 const navigateTo = (anchor, down) => ({
   type: navigateToType,
   anchor,
-  down
+  down,
 });
 
 export const actions = {
-  navigateTo
+  navigateTo,
 };
 
 /* ===== Selectors ===== */
@@ -32,7 +32,7 @@ const reducer = (state = initialState, action = {}) => {
       ReactGA.event({
         category: 'Scroll Arrow',
         action: action.down ? 'Scroll down' : 'Scroll up',
-        label: action.anchor
+        label: action.anchor,
       });
       break;
 

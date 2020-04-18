@@ -8,23 +8,23 @@ const Reuse = ({ currentTab, changeTab, data }) => {
     {
       label: 'Reflown',
       background: 'reuse.jpg',
-      title: 'Reflown'
+      title: 'Reflown',
     },
     {
       label: 'Most launches',
       background: 'reuse.jpg',
-      title: 'Most launches'
+      title: 'Most launches',
     },
     {
       label: 'Day intervals',
       background: 'reuse.jpg',
-      title: 'Day intervals'
+      title: 'Day intervals',
     },
     {
       label: 'Fairings',
       background: 'reuse.jpg',
-      title: 'Fairings'
-    }
+      title: 'Fairings',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

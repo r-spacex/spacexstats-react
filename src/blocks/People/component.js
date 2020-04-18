@@ -7,23 +7,23 @@ const People = ({ currentTab, changeTab, data }) => {
     {
       label: 'In Space',
       background: 'dragonriders.jpg',
-      title: 'In Space'
+      title: 'In Space',
     },
     {
       label: 'Moon Population',
       background: 'moon.jpg',
-      title: 'Moon Population'
+      title: 'Moon Population',
     },
     {
       label: 'Mars Population',
       background: 'mars.jpg',
-      title: 'Mars Population'
+      title: 'Mars Population',
     },
     {
       label: 'Employees',
       background: 'tankland.jpg',
-      title: 'Employees'
-    }
+      title: 'Employees',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

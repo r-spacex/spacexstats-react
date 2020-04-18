@@ -8,28 +8,28 @@ const Launchcount = ({ currentTab, changeTab, data }) => {
     {
       label: 'Total',
       background: 'seslaunch.jpg',
-      title: 'Total'
+      title: 'Total',
     },
     {
       label: 'Falcon 9',
       background: 'seslaunch.jpg',
-      title: 'Falcon 9'
+      title: 'Falcon 9',
     },
     {
       label: 'Falcon Heavy',
       background: 'seslaunch.jpg',
-      title: 'Falcon Heavy'
+      title: 'Falcon Heavy',
     },
     {
       label: 'Super Heavy/Starship',
       background: 'seslaunch.jpg',
-      title: 'Super Heavy/Starship'
+      title: 'Super Heavy/Starship',
     },
     {
       label: 'Falcon 1',
       background: 'seslaunch.jpg',
-      title: 'Falcon 1'
-    }
+      title: 'Falcon 1',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

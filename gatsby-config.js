@@ -5,7 +5,7 @@ module.exports = {
     title: `SpaceX Stats`,
     description: `SpaceX Stats is the ultimate place to keep track of SpaceX's achievements into providing cheaper access to space and making human life multiplanetary.`,
     author: `Albéric Trancart`,
-    siteUrl
+    siteUrl,
   },
   plugins: [
     // Codebase
@@ -16,8 +16,8 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`
-      }
+        path: `${__dirname}/src/images`,
+      },
     },
 
     // Assets
@@ -31,15 +31,15 @@ module.exports = {
     {
       resolve: `gatsby-plugin-canonical-urls`,
       options: {
-        siteUrl
-      }
+        siteUrl,
+      },
     },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: `UA-108091199-1`,
-        head: false
-      }
+        head: false,
+      },
     },
 
     // Offline capability
@@ -52,10 +52,10 @@ module.exports = {
         background_color: `#005189`,
         theme_color: `#005189`,
         display: `standalone`,
-        icon: `static/oglogo.jpg`
-      }
+        icon: `static/oglogo.jpg`,
+      },
     },
     `gatsby-plugin-offline`,
-    `gatsby-plugin-netlify`
-  ]
+    `gatsby-plugin-netlify`,
+  ],
 };

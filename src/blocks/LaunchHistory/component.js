@@ -7,13 +7,13 @@ const LauncHistory = ({ currentTab, changeTab, data }) => {
     {
       label: 'Launches Per Year',
       background: 'falconheavy.jpg',
-      title: 'Launches Per Year'
+      title: 'Launches Per Year',
     },
     {
       label: 'Success Rate',
       background: 'falconheavy.jpg',
-      title: 'Success Rate'
-    }
+      title: 'Success Rate',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

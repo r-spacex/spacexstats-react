@@ -19,13 +19,13 @@ const modelizer = ({ pastLaunches }) => {
   const failureLandings = new Array(years.length).fill(0);
 
   const landingAttemptsLaunches = pastLaunches.filter(
-    launch => launch.launch_success && launch.rocket.first_stage.cores[0].landing_type !== null
+    (launch) => launch.launch_success && launch.rocket.first_stage.cores[0].landing_type !== null
   );
 
   // List cores
-  landingAttemptsLaunches.forEach(launch => {
+  landingAttemptsLaunches.forEach((launch) => {
     let formattedLandingType;
-    launch.rocket.first_stage.cores.forEach(core => {
+    launch.rocket.first_stage.cores.forEach((core) => {
       if (core.land_success && core.landing_type !== 'Ocean') {
         totalLanded += 1;
       }
@@ -60,12 +60,12 @@ const modelizer = ({ pastLaunches }) => {
     });
 
     // Heaviest payload landings
-    launch.rocket.second_stage.payloads.forEach(payload => {
+    launch.rocket.second_stage.payloads.forEach((payload) => {
       if (payload.payload_mass_kg > heaviestLanding.mass) {
         heaviestLanding = {
           mass: payload.payload_mass_kg,
           mission: payload.payload_id,
-          landingType: formattedLandingType
+          landingType: formattedLandingType,
         };
       }
     });
@@ -93,8 +93,8 @@ const modelizer = ({ pastLaunches }) => {
         const total = window.landingTotal.toString();
         const rate = (100 * (total - window.landingFailures)) / total;
         return `TOTAL: ${total} (${rate.toFixed(0)}% success rate)`;
-      }
-    }
+      },
+    },
   };
 
   const landingHistoryChart = {
@@ -104,37 +104,37 @@ const modelizer = ({ pastLaunches }) => {
         {
           label: 'Ocean',
           backgroundColor: chartColors.blue,
-          data: oceanLandings
+          data: oceanLandings,
         },
         {
           label: 'RTLS',
           backgroundColor: chartColors.green,
-          data: rtlsLandings
+          data: rtlsLandings,
         },
         {
           label: 'ASDS - OCISLY',
           backgroundColor: chartColors.white,
-          data: ocislyLandings
+          data: ocislyLandings,
         },
         {
           label: 'ASDS - JRTI',
           backgroundColor: chartColors.yellow,
-          data: jrtiLandings
+          data: jrtiLandings,
         },
         {
           label: 'Failures',
           backgroundColor: chartColors.red,
-          data: failureLandings
-        }
-      ]
+          data: failureLandings,
+        },
+      ],
     },
-    options
+    options,
   };
 
   return {
     totalLanded,
     landingHistoryChart,
-    heaviestLanding
+    heaviestLanding,
   };
 };
 

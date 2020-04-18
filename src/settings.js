@@ -2,31 +2,31 @@ import { chartColors } from 'stylesheet';
 
 const commonChartOptions = {
   title: {
-    display: false
+    display: false,
   },
   layout: {
     padding: {
       left: 14,
       right: 14,
       top: 0,
-      bottom: 0
-    }
+      bottom: 0,
+    },
   },
   legend: {
     position: 'bottom',
     labels: {
       fontFamily: 'Noto Sans',
-      fontColor: chartColors.white
-    }
+      fontColor: chartColors.white,
+    },
   },
   responsive: true,
-  maintainAspectRatio: false
+  maintainAspectRatio: false,
 };
 
 export default {
   // Colors used by charts
   DEFAULTCHARTOPTIONS: {
-    ...commonChartOptions
+    ...commonChartOptions,
   },
   DEFAULTBARCHARTOPTIONS: {
     ...commonChartOptions,
@@ -34,16 +34,16 @@ export default {
       enabled: true,
       mode: 'x',
       rangeMin: {
-        x: 0
-      }
+        x: 0,
+      },
     },
     zoom: {
       enabled: true,
       drag: false,
       mode: 'x',
       rangeMin: {
-        x: 0
-      }
+        x: 0,
+      },
     },
     scales: {
       xAxes: [
@@ -51,26 +51,26 @@ export default {
           stacked: true,
           gridLines: {
             display: false,
-            color: chartColors.white
+            color: chartColors.white,
           },
           ticks: {
             fontFamily: 'Noto Sans',
-            fontColor: chartColors.white
-          }
-        }
+            fontColor: chartColors.white,
+          },
+        },
       ],
       yAxes: [
         {
           stacked: true,
           gridLines: {
-            color: chartColors.grey
+            color: chartColors.grey,
           },
           ticks: {
             fontFamily: 'Noto Sans',
-            fontColor: chartColors.white
-          }
-        }
-      ]
-    }
-  }
+            fontColor: chartColors.white,
+          },
+        },
+      ],
+    },
+  },
 };

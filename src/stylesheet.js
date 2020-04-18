@@ -15,7 +15,7 @@ const palette = {
   brown: '#69551f',
   orange: '#e79f00',
   red: '#d55e00',
-  pink: '#CC79A7'
+  pink: '#CC79A7',
 };
 
 // Colourblind friendly palette
@@ -30,7 +30,7 @@ export const chartColors = {
   blue: palette.blue,
   green: palette.green,
   pink: palette.pink,
-  black: palette.black
+  black: palette.black,
 };
 
 export const colorUsages = {
@@ -47,13 +47,13 @@ export const colorUsages = {
   navbarActiveTab: palette.yellow,
   ribbonBackground: palette.yellow,
   ribbonBorder: palette.brown,
-  tableBorder: palette.lightGrey
+  tableBorder: palette.lightGrey,
 };
 
 export const thresholds = {
   sm: '768px',
   md: '992px',
-  lg: '1200px'
+  lg: '1200px',
 };
 
 export const fonts = {
@@ -64,9 +64,9 @@ export const fonts = {
     font-family: 'BrandonThin', sans-serif;
     font-weight: 100;
     text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
-  `
+  `,
 };
 
 export const fontSizes = {
-  base: '14px'
+  base: '14px',
 };

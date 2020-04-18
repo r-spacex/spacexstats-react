@@ -4,7 +4,7 @@ import { chartColors } from 'stylesheet';
 const modelizer = ({ pastLaunches, upcomingLaunches }) => {
   const yearsStart = 2006; // First Falcon 1 flight
   const yearsEnd = upcomingLaunches
-    .map(launch => launch.launch_year)
+    .map((launch) => launch.launch_year)
     .sort()
     .slice(-1)
     .pop();
@@ -120,8 +120,8 @@ const modelizer = ({ pastLaunches, upcomingLaunches }) => {
         }
         return `${dataset.label}: ${count.toLocaleString()}`;
       },
-      footer: () => `TOTAL: ${window.launchTotal.toLocaleString()}`
-    }
+      footer: () => `TOTAL: ${window.launchTotal.toLocaleString()}`,
+    },
   };
 
   const flightsPerYear = {
@@ -131,36 +131,36 @@ const modelizer = ({ pastLaunches, upcomingLaunches }) => {
         {
           label: 'Falcon 1',
           backgroundColor: chartColors.green,
-          data: falcon1Flights
+          data: falcon1Flights,
         },
         {
           label: 'New Falcon 9',
           backgroundColor: chartColors.blue,
-          data: falcon9UnprovenFlights
+          data: falcon9UnprovenFlights,
         },
         {
           label: 'Used Falcon 9',
           backgroundColor: chartColors.lightblue,
-          data: falcon9ProvenFlights
+          data: falcon9ProvenFlights,
         },
         {
           label: 'Falcon Heavy',
           backgroundColor: chartColors.yellow,
-          data: falconHeavyFlights
+          data: falconHeavyFlights,
         },
         {
           label: 'Failure',
           backgroundColor: chartColors.red,
-          data: failureFlights
+          data: failureFlights,
         },
         {
           label: 'Planned',
           backgroundColor: chartColors.white,
-          data: plannedFlights
-        }
-      ]
+          data: plannedFlights,
+        },
+      ],
     },
-    options: optionsLaunchHistory
+    options: optionsLaunchHistory,
   };
 
   const optionsSuccessRate = JSON.parse(JSON.stringify(options));
@@ -174,8 +174,8 @@ const modelizer = ({ pastLaunches, upcomingLaunches }) => {
         const rate = parseFloat(dataset.data[tooltipItem.index]);
         window.total += rate;
         return `${dataset.label}: ${rate.toFixed(2)}%`;
-      }
-    }
+      },
+    },
   };
 
   const successRates = {
@@ -192,7 +192,7 @@ const modelizer = ({ pastLaunches, upcomingLaunches }) => {
           pointBorderColor: chartColors.yellow,
           pointBackgroundColor: chartColors.yellow,
           pointHoverBackgroundColor: chartColors.yellow,
-          pointHoverBorderColor: chartColors.yellow
+          pointHoverBorderColor: chartColors.yellow,
         },
         {
           label: 'Falcon Heavy',
@@ -204,7 +204,7 @@ const modelizer = ({ pastLaunches, upcomingLaunches }) => {
           pointBorderColor: chartColors.green,
           pointBackgroundColor: chartColors.green,
           pointHoverBackgroundColor: chartColors.green,
-          pointHoverBorderColor: chartColors.green
+          pointHoverBorderColor: chartColors.green,
         },
         {
           label: 'All rockets',
@@ -216,16 +216,16 @@ const modelizer = ({ pastLaunches, upcomingLaunches }) => {
           pointBorderColor: chartColors.blue,
           pointBackgroundColor: chartColors.blue,
           pointHoverBackgroundColor: chartColors.blue,
-          pointHoverBorderColor: chartColors.blue
-        }
-      ]
+          pointHoverBorderColor: chartColors.blue,
+        },
+      ],
     },
-    options: optionsSuccessRate
+    options: optionsSuccessRate,
   };
 
   return {
     flightsPerYear,
-    successRates
+    successRates,
   };
 };
 

@@ -7,28 +7,28 @@ const LaunchPads = ({ currentTab, changeTab, data }) => {
     {
       label: 'KSC',
       background: 'ses10.jpg',
-      title: 'KSC'
+      title: 'KSC',
     },
     {
       label: 'Cape Canaveral',
       background: 'capeflorida.jpg',
-      title: 'Cape Canaveral'
+      title: 'Cape Canaveral',
     },
     {
       label: 'Vandenberg',
       background: 'iridium1.jpg',
-      title: 'Vandenberg'
+      title: 'Vandenberg',
     },
     {
       label: 'Boca Chica',
       background: 'bocachica.jpg',
-      title: 'Boca Chica'
+      title: 'Boca Chica',
     },
     {
       label: 'Kwajalein',
       background: 'kwaj.jpg',
-      title: 'Kwajalein'
-    }
+      title: 'Kwajalein',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

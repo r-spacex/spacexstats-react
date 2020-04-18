@@ -12,7 +12,7 @@ const modelizer = ({ pastLaunches }) => {
   let quickestTurnaroundMission1 = null;
   let quickestTurnaroundMission2 = null;
 
-  const notFalcon1Launches = pastLaunches.filter(launch => launch.rocket.rocket_id !== 'falcon1');
+  const notFalcon1Launches = pastLaunches.filter((launch) => launch.rocket.rocket_id !== 'falcon1');
 
   // Reuse intervals chart
   const labels = [];
@@ -32,13 +32,13 @@ const modelizer = ({ pastLaunches }) => {
       totalFairingsReflown += 1;
     }
 
-    launch.rocket.first_stage.cores.forEach(core => {
+    launch.rocket.first_stage.cores.forEach((core) => {
       const coreSerial = core.core_serial;
 
       if (!(coreSerial in cores)) {
         cores[coreSerial] = {
           reflown: false,
-          launches: []
+          launches: [],
         };
       } else {
         totalReflown += 1;
@@ -64,7 +64,7 @@ const modelizer = ({ pastLaunches }) => {
       cores[coreSerial].launches.push({
         name: launch.rocket.second_stage.payloads[0].payload_id,
         date: launchDate,
-        turnaround
+        turnaround,
       });
 
       // Reuse intervals
@@ -92,7 +92,7 @@ const modelizer = ({ pastLaunches }) => {
 
   // Get mission names of most reflown core
   const mostReflownCoreMissions = [];
-  cores[mostReflownCore].launches.forEach(launch => {
+  cores[mostReflownCore].launches.forEach((launch) => {
     mostReflownCoreMissions.push(launch.name);
   });
 
@@ -118,7 +118,7 @@ const modelizer = ({ pastLaunches }) => {
           pointBorderColor: chartColors.yellow,
           pointBackgroundColor: chartColors.yellow,
           pointHoverBackgroundColor: chartColors.yellow,
-          pointHoverBorderColor: chartColors.yellow
+          pointHoverBorderColor: chartColors.yellow,
         },
         {
           label: 'Running average',
@@ -130,16 +130,16 @@ const modelizer = ({ pastLaunches }) => {
           pointBorderColor: chartColors.white,
           pointBackgroundColor: chartColors.white,
           pointHoverBackgroundColor: chartColors.white,
-          pointHoverBorderColor: chartColors.white
+          pointHoverBorderColor: chartColors.white,
         },
         {
           label: 'Days between launches',
           backgroundColor: chartColors.blue,
-          data: daysIntervals
-        }
-      ]
+          data: daysIntervals,
+        },
+      ],
     },
-    options
+    options,
   };
 
   return {
@@ -149,14 +149,14 @@ const modelizer = ({ pastLaunches }) => {
       core: quickestTurnaroundCore,
       mission1: quickestTurnaroundMission1,
       mission2: quickestTurnaroundMission2,
-      turnaround: formatDuration(quickestTurnaround)
+      turnaround: formatDuration(quickestTurnaround),
     },
     mostReflownCore: {
       launches: cores[mostReflownCore].launches.length,
       missions: mostReflownCoreMissions.join(', '),
-      core: mostReflownCore
+      core: mostReflownCore,
     },
-    daysBetweenReuses
+    daysBetweenReuses,
   };
 };
 

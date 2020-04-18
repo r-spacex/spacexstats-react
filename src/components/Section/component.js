@@ -3,7 +3,7 @@ import Navbar from 'components/Navbar';
 import { Background, Wrapper, Title, Content, Control } from './style';
 
 const Section = ({ children, title, tabs, currentTab, changeTab, navigateTo, upAnchor, selfAnchor, downAnchor }) => {
-  const displayedTab = tabs.find(tab => tab.label === currentTab);
+  const displayedTab = tabs.find((tab) => tab.label === currentTab);
   const navigateUp = () => navigateTo(upAnchor, false);
   const navigateDown = () => navigateTo(downAnchor, true);
 
@@ -18,7 +18,7 @@ const Section = ({ children, title, tabs, currentTab, changeTab, navigateTo, upA
         <Content>
           {upAnchor && <Control onClick={navigateUp} role="button" tabIndex="0" up />}
 
-          <Navbar tabs={tabs.map(tab => tab.label)} value={currentTab} onChange={changeTab} />
+          <Navbar tabs={tabs.map((tab) => tab.label)} value={currentTab} onChange={changeTab} />
 
           {children}
 

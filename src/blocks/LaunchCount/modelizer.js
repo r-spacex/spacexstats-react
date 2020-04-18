@@ -12,12 +12,12 @@ const modelizer = ({ pastLaunches }) => {
   let totalFalconHeavyUpmass = 0;
   let totalBFRUpmass = 0;
 
-  pastLaunches.forEach(launch => {
+  pastLaunches.forEach((launch) => {
     totalLaunches += 1;
 
     let upmass = 0;
     if (launch.launch_success) {
-      launch.rocket.second_stage.payloads.forEach(payload => {
+      launch.rocket.second_stage.payloads.forEach((payload) => {
         upmass += payload.payload_mass_kg;
       });
     }
@@ -65,7 +65,7 @@ const modelizer = ({ pastLaunches }) => {
     totalFalcon1Upmass,
     totalFalconHeavyUpmass,
     totalBFRUpmass,
-    lastLaunchDate
+    lastLaunchDate,
   };
 };
 

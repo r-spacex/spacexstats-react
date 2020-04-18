@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 const TextStat = ({ value }) => <Wrapper>{value}</Wrapper>;
 
 TextStat.propTypes = {
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
 };
 
 export default TextStat;

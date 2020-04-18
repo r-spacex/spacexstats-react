@@ -7,8 +7,8 @@ const Starlink = ({ currentTab, changeTab, data }) => {
     {
       label: 'Sent In Space',
       background: 'starlink.jpg',
-      title: 'Sent In Space'
-    }
+      title: 'Sent In Space',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

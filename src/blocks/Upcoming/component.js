@@ -9,18 +9,18 @@ const Upcoming = ({ currentTab, changeTab, data }) => {
     {
       label: 'Up Next',
       background: 'dscovrlaunch.jpg',
-      title: data ? data.nextLaunch.missionName : ''
+      title: data ? data.nextLaunch.missionName : '',
     },
     {
       label: 'Next Launches',
       background: 'dscovrlaunch.jpg',
-      title: 'Next Launches'
+      title: 'Next Launches',
     },
     {
       label: 'Recent Updates',
       background: 'dscovrlaunch.jpg',
-      title: 'Recent Updates'
-    }
+      title: 'Recent Updates',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 
@@ -53,23 +53,23 @@ const Upcoming = ({ currentTab, changeTab, data }) => {
                     {
                       width: '40%',
                       header: 'Mission',
-                      renderCell: ({ mission }) => mission
+                      renderCell: ({ mission }) => mission,
                     },
                     {
                       width: '26%',
                       header: 'Date (UTC)',
-                      renderCell: ({ date }) => date
+                      renderCell: ({ date }) => date,
                     },
                     {
                       width: '17%',
                       header: 'Vehicle',
-                      renderCell: ({ vehicle }) => vehicle
+                      renderCell: ({ vehicle }) => vehicle,
                     },
                     {
                       width: '17%',
                       header: 'Launchpad',
-                      renderCell: ({ launchpad }) => launchpad
-                    }
+                      renderCell: ({ launchpad }) => launchpad,
+                    },
                   ]}
                   data={data.nextLaunches}
                 />

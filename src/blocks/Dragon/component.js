@@ -8,23 +8,23 @@ const Dragon = ({ currentTab, changeTab, data }) => {
     {
       label: 'Missions',
       background: 'dragoncrs5.jpg',
-      title: 'Missions'
+      title: 'Missions',
     },
     {
       label: 'Flight Times',
       background: 'dragoncrs5.jpg',
-      title: 'Flight Times'
+      title: 'Flight Times',
     },
     {
       label: 'Up',
       background: 'dragoncrs5.jpg',
-      title: 'Up'
+      title: 'Up',
     },
     {
       label: 'Down',
       background: 'dragoncrs5.jpg',
-      title: 'Down'
-    }
+      title: 'Down',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

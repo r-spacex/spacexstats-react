@@ -1,13 +1,13 @@
 // API
-export const apiGet = uri =>
-  new Promise(resolve =>
+export const apiGet = (uri) =>
+  new Promise((resolve) =>
     fetch(`https://api.spacexdata.com/v2${uri}`, { mode: 'cors' })
-      .then(response => response.json())
-      .then(data => resolve(data))
+      .then((response) => response.json())
+      .then((data) => resolve(data))
   );
 
 // Scroll
-export const isInViewport = testAnchor => {
+export const isInViewport = (testAnchor) => {
   const element = document.getElementById(testAnchor);
 
   if (!element) {
@@ -19,7 +19,7 @@ export const isInViewport = testAnchor => {
   return rect.top >= -(viewportHeight / 2) && rect.top < viewportHeight / 2;
 };
 
-export const scrollTo = testAnchor => {
+export const scrollTo = (testAnchor) => {
   const element = document.getElementById(testAnchor);
 
   if (!element) {
@@ -29,16 +29,16 @@ export const scrollTo = testAnchor => {
   element.scrollIntoView({ behavior: 'smooth' });
 };
 
-export const updateHash = hash => {
+export const updateHash = (hash) => {
   if (window.history.pushState && hash !== '') {
     window.history.pushState(null, null, `#${hash}`);
   }
 };
 
 // Time
-export const fromUnix = unixDate => new Date(unixDate * 1000);
+export const fromUnix = (unixDate) => new Date(unixDate * 1000);
 
-export const formatDuration = durationInSeconds => {
+export const formatDuration = (durationInSeconds) => {
   const SECONDS_PER_DAY = 24 * 3600;
   const days = Math.floor(durationInSeconds / SECONDS_PER_DAY);
   const hours = Math.floor((durationInSeconds - SECONDS_PER_DAY * days) / 3600);

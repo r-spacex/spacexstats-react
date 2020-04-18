@@ -39,7 +39,7 @@ const TimeStat = ({ value }) => {
 };
 
 TimeStat.propTypes = {
-  value: PropTypes.number.isRequired
+  value: PropTypes.number.isRequired,
 };
 
 export default TimeStat;

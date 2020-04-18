@@ -7,28 +7,28 @@ const Starship = ({ currentTab, changeTab, data }) => {
     {
       label: 'Hop Tests',
       background: 'bfshop.jpg',
-      title: 'Hop Tests'
+      title: 'Hop Tests',
     },
     {
       label: 'Orbital Tests',
       background: 'bfrorbital.jpg',
-      title: 'Orbital Tests'
+      title: 'Orbital Tests',
     },
     {
       label: 'Cargo to Mars',
       background: 'bfrcargo.jpg',
-      title: 'Cargo to Mars'
+      title: 'Cargo to Mars',
     },
     {
       label: '#dearMoon',
       background: 'bfrdearmoon.jpg',
-      title: '#dearMoon'
+      title: '#dearMoon',
     },
     {
       label: 'Crew to Mars',
       background: 'mars.jpg',
-      title: 'Crew to Mars'
-    }
+      title: 'Crew to Mars',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

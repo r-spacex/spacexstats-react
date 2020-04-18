@@ -5,7 +5,7 @@ const modelizer = ({ pastLaunches }) => {
   const totalBocaChica = 0;
   let totalKwajalein = 0;
 
-  pastLaunches.forEach(launch => {
+  pastLaunches.forEach((launch) => {
     switch (launch.launch_site.site_id) {
       case 'ccafs_slc_40':
         totalSLC40 += 1;
@@ -32,7 +32,7 @@ const modelizer = ({ pastLaunches }) => {
     totalHLC39A,
     totalVAFB,
     totalBocaChica,
-    totalKwajalein
+    totalKwajalein,
   };
 };
 

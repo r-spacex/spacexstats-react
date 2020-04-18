@@ -8,18 +8,18 @@ const Landing = ({ currentTab, changeTab, data }) => {
     {
       label: 'Cores Landed',
       background: 'doublelanding.jpg',
-      title: 'Cores Landed'
+      title: 'Cores Landed',
     },
     {
       label: 'Landing History',
       background: 'doublelanding.jpg',
-      title: 'Landing History'
+      title: 'Landing History',
     },
     {
       label: 'Heaviest',
       background: 'doublelanding.jpg',
-      title: 'Heaviest Landing'
-    }
+      title: 'Heaviest Landing',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

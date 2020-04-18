@@ -8,20 +8,20 @@ const modelizer = ({ pastLaunches }) => {
       turnaround: null,
       mission1: null,
       mission2: null,
-      previousMission: null
+      previousMission: null,
     },
     ksc_lc_39a: {
       turnaround: null,
       mission1: null,
       mission2: null,
-      previousMission: null
+      previousMission: null,
     },
     vafb_slc_4e: {
       turnaround: null,
       mission1: null,
       mission2: null,
-      previousMission: null
-    }
+      previousMission: null,
+    },
   };
   let quickestTurnaroundPad = null;
   let quickestTurnaroundPadName = '';
@@ -73,13 +73,13 @@ const modelizer = ({ pastLaunches }) => {
         quickestTurnarounds[launchpad] = {
           turnaround: padTurnaround,
           mission1: quickestPadTurnaround.previousMissionName,
-          mission2: currentMissionName
+          mission2: currentMissionName,
         };
       } else if (quickestPadTurnaround.previousMission !== null && padTurnaround < quickestPadTurnaround.turnaround) {
         quickestTurnarounds[launchpad] = {
           turnaround: padTurnaround,
           mission1: quickestPadTurnaround.previousMissionName,
-          mission2: currentMissionName
+          mission2: currentMissionName,
         };
       }
       quickestTurnarounds[launchpad].previousMission = launchDate;
@@ -114,7 +114,7 @@ const modelizer = ({ pastLaunches }) => {
           pointBorderColor: chartColors.yellow,
           pointBackgroundColor: chartColors.yellow,
           pointHoverBackgroundColor: chartColors.yellow,
-          pointHoverBorderColor: chartColors.yellow
+          pointHoverBorderColor: chartColors.yellow,
         },
         {
           label: 'Running average',
@@ -126,16 +126,16 @@ const modelizer = ({ pastLaunches }) => {
           pointBorderColor: chartColors.white,
           pointBackgroundColor: chartColors.white,
           pointHoverBackgroundColor: chartColors.white,
-          pointHoverBorderColor: chartColors.white
+          pointHoverBorderColor: chartColors.white,
         },
         {
           label: 'Days between launches',
           backgroundColor: chartColors.blue,
-          data: daysIntervals
-        }
-      ]
+          data: daysIntervals,
+        },
+      ],
     },
-    options
+    options,
   };
 
   const lastLaunchDate = fromUnix(pastLaunches[pastLaunches.length - 1].launch_date_unix);
@@ -143,7 +143,7 @@ const modelizer = ({ pastLaunches }) => {
     quickestTurnaround: quickestTurnarounds[quickestTurnaroundPad],
     quickestTurnaroundPadName,
     lastLaunchDate,
-    daysBetweenLaunches
+    daysBetweenLaunches,
   };
 };
 

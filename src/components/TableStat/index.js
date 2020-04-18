@@ -64,11 +64,11 @@ const TableStat = ({ config, data, noDataMessage }) => (
 TableStat.propTypes = {
   config: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  noDataMessage: PropTypes.string
+  noDataMessage: PropTypes.string,
 };
 
 TableStat.defaultProps = {
-  noDataMessage: 'Nothing to display.'
+  noDataMessage: 'Nothing to display.',
 };
 
 export default TableStat;

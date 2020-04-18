@@ -8,23 +8,23 @@ const Payloads = ({ currentTab, changeTab, data }) => {
     {
       label: 'Upmass',
       background: 'payloadfairing.jpg',
-      title: 'Upmass'
+      title: 'Upmass',
     },
     {
       label: 'Heaviest',
       background: 'payloadfairing.jpg',
-      title: 'Heaviest'
+      title: 'Heaviest',
     },
     {
       label: 'Heaviest to GTO',
       background: 'payloadfairing.jpg',
-      title: 'Heaviest to GTO'
+      title: 'Heaviest to GTO',
     },
     {
       label: 'Customers',
       background: 'payloadfairing.jpg',
-      title: 'Customers'
-    }
+      title: 'Customers',
+    },
   ];
   const displayedTab = currentTab || tabs[0].label;
 

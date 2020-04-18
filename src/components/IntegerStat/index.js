@@ -32,12 +32,12 @@ const IntegerStat = ({ value, subtitle }) => (
 );
 
 IntegerStat.defaultProps = {
-  subtitle: null
+  subtitle: null,
 };
 
 IntegerStat.propTypes = {
   subtitle: PropTypes.string,
-  value: PropTypes.number.isRequired
+  value: PropTypes.number.isRequired,
 };
 
 export default IntegerStat;

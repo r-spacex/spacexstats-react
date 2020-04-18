@@ -9,7 +9,7 @@
     "build": "gatsby build",
     "start": "gatsby develop",
     "serve": "gatsby serve",
-    "test:lint": "eslint .",
+    "test:lint": "eslint --fix .",
     "test": "yarn test:lint"
   },
   "dependencies": {

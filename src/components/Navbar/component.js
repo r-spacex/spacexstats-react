@@ -5,7 +5,7 @@ import ReactGA from 'react-ga';
 import { Wrapper, Tab } from './style';
 
 class Navbar extends Component {
-  changeTab = tab => {
+  changeTab = (tab) => {
     const { onChange, value } = this.props;
 
     if (tab === value) {
@@ -17,7 +17,7 @@ class Navbar extends Component {
     ReactGA.event({
       category: 'Tab',
       action: 'Change',
-      label: tab
+      label: tab,
     });
   };
 
@@ -46,7 +46,7 @@ class Navbar extends Component {
 Navbar.propTypes = {
   tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 
 export default Navbar;
