@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga';
-import { scrollTo, updateHash } from 'utils';
+import { scrollTo, updateHash } from 'utils/scroll';
 
 /* ===== Action types ===== */
 

@@ -1,6 +1,6 @@
 import settings from 'settings';
 import { chartColors } from 'stylesheet';
-import { formatDuration } from 'utils';
+import { formatDuration } from 'utils/date';
 
 const modelizer = ({ pastLaunches }) => {
   let totalFlights = 0;

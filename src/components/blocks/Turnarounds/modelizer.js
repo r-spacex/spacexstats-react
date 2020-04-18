@@ -1,6 +1,6 @@
 import settings from 'settings';
 import { chartColors } from 'stylesheet';
-import { fromUnix } from 'utils';
+import { fromUnix } from 'utils/date';
 
 const modelizer = ({ pastLaunches }) => {
   const quickestTurnarounds = {

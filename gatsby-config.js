@@ -21,6 +21,9 @@ module.exports = {
       },
     },
 
+    // Custom plugin
+    `gatsby-source-spacex-api`,
+
     // Assets
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,

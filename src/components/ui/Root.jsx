@@ -22,7 +22,7 @@ import {
   Upcoming,
 } from 'components/blocks';
 import StyleReset from 'components/ui/StyleReset';
-import { apiGet, isInViewport, updateHash } from 'utils';
+import { isInViewport, updateHash } from 'utils/scroll';
 import { actions } from 'redux/duck';
 
 class Root extends Component {
@@ -30,7 +30,7 @@ class Root extends Component {
     super(props);
 
     this.state = {
-      launchesData: { pastLaunches: null, upcomingLaunches: null, cores: null },
+      launchesData: props.data,
       currentTabs: {
         dragon: null,
         landing: null,
@@ -70,36 +70,18 @@ class Root extends Component {
     NProgress.configure({ minimum: 0, trickle: false, showSpinner: false });
     NProgress.start();
 
-    // Wait for the two datasets to be loaded then compute the stats
-    Promise.all([
-      apiGet('/launches'),
-      apiGet('/launches/upcoming'),
-      apiGet('/cores'),
-    ]).then((values) => {
-      this.setState(
-        {
-          launchesData: {
-            pastLaunches: values[0],
-            upcomingLaunches: values[1],
-            cores: values[2],
-          },
-        },
-        () => {
-          const { navigateTo } = this.props;
+    const { navigateTo } = this.props;
 
-          setTimeout(() => {
-            if (window.location.hash !== '') {
-              const anchor = window.location.hash.replace('#', '');
-              navigateTo(anchor, true);
-            }
-          }, 1000);
+    setTimeout(() => {
+      if (window.location.hash !== '') {
+        const anchor = window.location.hash.replace('#', '');
+        navigateTo(anchor, true);
+      }
+    }, 1000);
 
-          window.addEventListener('scroll', () => {
-            updateHash(this.scrollSpy());
-            this.updateProgressBar();
-          });
-        },
-      );
+    window.addEventListener('scroll', () => {
+      updateHash(this.scrollSpy());
+      this.updateProgressBar();
     });
 
     ReactGA.initialize('UA-108091199-1');

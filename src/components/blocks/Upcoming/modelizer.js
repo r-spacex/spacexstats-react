@@ -1,5 +1,5 @@
 import format from 'date-fns/format';
-import { fromUnix } from 'utils';
+import { fromUnix } from 'utils/date';
 
 const getQuarter = (date) => Math.floor((date.getMonth() + 3) / 3);
 

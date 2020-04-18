@@ -1,4 +1,4 @@
-import { fromUnix } from 'utils';
+import { fromUnix } from 'utils/date';
 
 const modelizer = ({ pastLaunches }) => {
   let totalLaunches = 0;

@@ -7,7 +7,9 @@
       "components/*": ["src/components/*"],
       "pages/*": ["src/pages/*"],
       "redux/*": ["src/redux/*"],
-      "stylesheet": ["src/stylesheet"]
+      "settings": ["src/settings"],
+      "stylesheet": ["src/stylesheet"],
+      "utils/*": ["src/utils/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,
