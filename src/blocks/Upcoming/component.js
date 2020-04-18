@@ -1,5 +1,8 @@
 import React from 'react';
-import Section, { SectionContent, SectionDescription } from 'components/Section';
+import Section, {
+  SectionContent,
+  SectionDescription,
+} from 'components/Section';
 import Ribbon from 'components/Ribbon';
 import TableStat from 'components/TableStat';
 import TimeStat from 'components/TimeStat';
@@ -41,7 +44,9 @@ const Upcoming = ({ currentTab, changeTab, data }) => {
               <SectionContent>
                 <TimeStat value={data.nextLaunch.date} type="countdown" />
               </SectionContent>
-              <SectionDescription>{data.nextLaunch.payloadDesc}</SectionDescription>
+              <SectionDescription>
+                {data.nextLaunch.payloadDesc}
+              </SectionDescription>
             </>
           )}
 
@@ -71,6 +76,7 @@ const Upcoming = ({ currentTab, changeTab, data }) => {
                       renderCell: ({ launchpad }) => launchpad,
                     },
                   ]}
+                  rowKey="mission"
                   data={data.nextLaunches}
                 />
               </SectionContent>

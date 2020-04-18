@@ -1,6 +1,8 @@
 const modelizer = ({ pastLaunches }) => {
   const starlinkLaunches = pastLaunches.filter((launch) =>
-    launch.rocket.second_stage.payloads.some((payload) => payload.payload_id.includes('Starlink'))
+    launch.rocket.second_stage.payloads.some((payload) =>
+      payload.payload_id.includes('Starlink'),
+    ),
   );
 
   return {

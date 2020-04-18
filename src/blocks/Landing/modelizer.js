@@ -19,7 +19,9 @@ const modelizer = ({ pastLaunches }) => {
   const failureLandings = new Array(years.length).fill(0);
 
   const landingAttemptsLaunches = pastLaunches.filter(
-    (launch) => launch.launch_success && launch.rocket.first_stage.cores[0].landing_type !== null
+    (launch) =>
+      launch.launch_success &&
+      launch.rocket.first_stage.cores[0].landing_type !== null,
   );
 
   // List cores
@@ -72,7 +74,10 @@ const modelizer = ({ pastLaunches }) => {
   });
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
-  options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
+  options = Object.assign(
+    options,
+    JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)),
+  );
   options.tooltips = {
     mode: 'label',
     callbacks: {

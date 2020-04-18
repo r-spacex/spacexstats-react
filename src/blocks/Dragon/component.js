@@ -1,6 +1,9 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import Section, { SectionContent, SectionDescription } from 'components/Section';
+import Section, {
+  SectionContent,
+  SectionDescription,
+} from 'components/Section';
 import IntegerStat from 'components/IntegerStat';
 
 const Dragon = ({ currentTab, changeTab, data }) => {
@@ -56,7 +59,10 @@ const Dragon = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[1].label && (
             <>
               <SectionContent>
-                <Bar data={data.crsFlightTimesChart.data} options={data.crsFlightTimesChart.options} />
+                <Bar
+                  data={data.crsFlightTimesChart.data}
+                  options={data.crsFlightTimesChart.options}
+                />
               </SectionContent>
               <SectionDescription>
                 {`Shown above is a graph plotting individual mission flight time per each Dragon mission, for a total of 
@@ -69,11 +75,15 @@ const Dragon = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[2].label && (
             <>
               <SectionContent>
-                <IntegerStat value={parseInt(data.totalCargoUp, 10)} subtitle="Kilograms up" />
+                <IntegerStat
+                  value={parseInt(data.totalCargoUp, 10)}
+                  subtitle="Kilograms up"
+                />
               </SectionContent>
               <SectionDescription>
-                Dragon remains the only spacecraft in service capable of returning significant quantities of cargo from
-                the Station to Earth - up to 6 tonnes up and 3 tonnes down.
+                Dragon remains the only spacecraft in service capable of
+                returning significant quantities of cargo from the Station to
+                Earth - up to 6 tonnes up and 3 tonnes down.
               </SectionDescription>
             </>
           )}
@@ -81,11 +91,15 @@ const Dragon = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[3].label && (
             <>
               <SectionContent>
-                <IntegerStat value={parseInt(data.totalCargoDown, 10)} subtitle="Kilograms down" />
+                <IntegerStat
+                  value={parseInt(data.totalCargoDown, 10)}
+                  subtitle="Kilograms down"
+                />
               </SectionContent>
               <SectionDescription>
-                Dragon remains the only spacecraft in service capable of returning significant quantities of cargo from
-                the Station to Earth - up to 6 tonnes up and 3 tonnes down.
+                Dragon remains the only spacecraft in service capable of
+                returning significant quantities of cargo from the Station to
+                Earth - up to 6 tonnes up and 3 tonnes down.
               </SectionDescription>
             </>
           )}

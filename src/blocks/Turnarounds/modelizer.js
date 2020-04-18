@@ -29,7 +29,9 @@ const modelizer = ({ pastLaunches }) => {
   const labels = [];
   const daysIntervals = new Array(pastLaunches.length - 1).fill(0);
   const runningAverageData = new Array(pastLaunches.length - 1).fill(0);
-  const runningAverage10FlightsData = new Array(pastLaunches.length - 1).fill(0);
+  const runningAverage10FlightsData = new Array(pastLaunches.length - 1).fill(
+    0,
+  );
   let runningAverage = 0;
   let runningAverage10Flights = 0;
 
@@ -37,12 +39,13 @@ const modelizer = ({ pastLaunches }) => {
     const launch = pastLaunches[i];
 
     const launchDate = new Date(launch.launch_date_utc).getTime() / 1000;
-    const previousLaunchDate = new Date(pastLaunches[i - 1].launch_date_utc).getTime() / 1000;
+    const previousLaunchDate =
+      new Date(pastLaunches[i - 1].launch_date_utc).getTime() / 1000;
     const turnaround = launchDate - previousLaunchDate;
 
     // Fill bar chart
     labels.push(
-      `#${launch.flight_number} ${launch.rocket.rocket_name} ${launch.rocket.second_stage.payloads[0].payload_id}`
+      `#${launch.flight_number} ${launch.rocket.rocket_name} ${launch.rocket.second_stage.payloads[0].payload_id}`,
     );
     const interval = Math.round(turnaround / (24 * 3600));
     daysIntervals[i - 1] = interval;
@@ -53,8 +56,11 @@ const modelizer = ({ pastLaunches }) => {
       runningAverage10Flights = runningAverage;
     } else {
       // If we compute for 10 flights there are 9 intervals
-      runningAverage10Flights = (runningAverage10Flights * 9 - daysIntervals[i - 10]) / 8;
-      runningAverage10Flights = Math.round((runningAverage10Flights * 8 + interval) / 9);
+      runningAverage10Flights =
+        (runningAverage10Flights * 9 - daysIntervals[i - 10]) / 8;
+      runningAverage10Flights = Math.round(
+        (runningAverage10Flights * 8 + interval) / 9,
+      );
     }
     runningAverage10FlightsData[i - 1] = runningAverage10Flights;
 
@@ -64,18 +70,26 @@ const modelizer = ({ pastLaunches }) => {
       const launchpad = launch.launch_site.site_id;
       const quickestPadTurnaround = quickestTurnarounds[launchpad];
       const padTurnaround = launchDate - quickestPadTurnaround.previousMission;
-      const currentMissionName = launch.rocket.second_stage.payloads[0].payload_id;
+      const currentMissionName =
+        launch.rocket.second_stage.payloads[0].payload_id;
 
       // This is the first mission accounted for this pad
       if (quickestPadTurnaround.previousMission === null) {
-        quickestTurnarounds[launchpad].mission1 = launch.rocket.second_stage.payloads[0].payload_id;
-      } else if (quickestPadTurnaround.previousMission !== null && quickestPadTurnaround.turnaround === null) {
+        quickestTurnarounds[launchpad].mission1 =
+          launch.rocket.second_stage.payloads[0].payload_id;
+      } else if (
+        quickestPadTurnaround.previousMission !== null &&
+        quickestPadTurnaround.turnaround === null
+      ) {
         quickestTurnarounds[launchpad] = {
           turnaround: padTurnaround,
           mission1: quickestPadTurnaround.previousMissionName,
           mission2: currentMissionName,
         };
-      } else if (quickestPadTurnaround.previousMission !== null && padTurnaround < quickestPadTurnaround.turnaround) {
+      } else if (
+        quickestPadTurnaround.previousMission !== null &&
+        padTurnaround < quickestPadTurnaround.turnaround
+      ) {
         quickestTurnarounds[launchpad] = {
           turnaround: padTurnaround,
           mission1: quickestPadTurnaround.previousMissionName,
@@ -86,7 +100,10 @@ const modelizer = ({ pastLaunches }) => {
       quickestTurnarounds[launchpad].previousMissionName = currentMissionName;
 
       // Check if quickest turnaround ever
-      if (quickestTurnaroundPad === null || padTurnaround < quickestTurnarounds[quickestTurnaroundPad].turnaround) {
+      if (
+        quickestTurnaroundPad === null ||
+        padTurnaround < quickestTurnarounds[quickestTurnaroundPad].turnaround
+      ) {
         quickestTurnaroundPad = launchpad;
         quickestTurnaroundPadName = launch.launch_site.site_name;
       }
@@ -94,7 +111,10 @@ const modelizer = ({ pastLaunches }) => {
   }
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
-  options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
+  options = Object.assign(
+    options,
+    JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)),
+  );
   options.scales.xAxes[0].ticks.display = false;
   options.scales.xAxes[0].stacked = false;
   options.scales.yAxes[0].stacked = false;
@@ -138,7 +158,9 @@ const modelizer = ({ pastLaunches }) => {
     options,
   };
 
-  const lastLaunchDate = fromUnix(pastLaunches[pastLaunches.length - 1].launch_date_unix);
+  const lastLaunchDate = fromUnix(
+    pastLaunches[pastLaunches.length - 1].launch_date_unix,
+  );
   return {
     quickestTurnaround: quickestTurnarounds[quickestTurnaroundPad],
     quickestTurnaroundPadName,

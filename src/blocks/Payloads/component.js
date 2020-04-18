@@ -1,6 +1,9 @@
 import React from 'react';
 import { Bar, Doughnut } from 'react-chartjs-2';
-import Section, { SectionContent, SectionDescription } from 'components/Section';
+import Section, {
+  SectionContent,
+  SectionDescription,
+} from 'components/Section';
 import IntegerStat from 'components/IntegerStat';
 
 const Payloads = ({ currentTab, changeTab, data }) => {
@@ -43,7 +46,10 @@ const Payloads = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[0].label && (
             <>
               <SectionContent>
-                <Bar data={data.upmassPerYear.data} options={data.upmassPerYear.options} />
+                <Bar
+                  data={data.upmassPerYear.data}
+                  options={data.upmassPerYear.options}
+                />
               </SectionContent>
               <SectionDescription>
                 {`SpaceX has launched a total of ${data.totalMass} kilograms worth of payloads into a
@@ -57,7 +63,10 @@ const Payloads = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[1].label && (
             <>
               <SectionContent>
-                <IntegerStat value={parseInt(data.heaviestPayload.mass, 10)} subtitle="Kilograms" />
+                <IntegerStat
+                  value={parseInt(data.heaviestPayload.mass, 10)}
+                  subtitle="Kilograms"
+                />
               </SectionContent>
               <SectionDescription>
                 {`${data.heaviestPayload.mission}, launched for ${data.heaviestPayload.customers} represents the heaviest
@@ -69,7 +78,10 @@ const Payloads = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[2].label && (
             <>
               <SectionContent>
-                <IntegerStat value={parseInt(data.heaviestPayloadGTO.mass, 10)} subtitle="Kilograms" />
+                <IntegerStat
+                  value={parseInt(data.heaviestPayloadGTO.mass, 10)}
+                  subtitle="Kilograms"
+                />
               </SectionContent>
               <SectionDescription>
                 {`Geostationary Orbit serves as the nest for heavy communications satellites, where they can orbit the
@@ -82,10 +94,14 @@ const Payloads = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[3].label && (
             <>
               <SectionContent>
-                <Doughnut data={data.customersChart.data} options={data.customersChart.options} />
+                <Doughnut
+                  data={data.customersChart.data}
+                  options={data.customersChart.options}
+                />
               </SectionContent>
               <SectionDescription>
-                SpaceX has many commercial customers as well as public agencies such as NASA and USAF.
+                SpaceX has many commercial customers as well as public agencies
+                such as NASA and USAF.
               </SectionDescription>
             </>
           )}

@@ -29,7 +29,9 @@ const modelizer = ({ pastLaunches }) => {
     Other: new Array(yearsUpmass.length).fill(0),
   };
 
-  const successfulLaunches = pastLaunches.filter((launch) => launch.launch_success);
+  const successfulLaunches = pastLaunches.filter(
+    (launch) => launch.launch_success,
+  );
 
   successfulLaunches.forEach((launch) => {
     launch.rocket.second_stage.payloads.forEach((payload) => {
@@ -55,7 +57,10 @@ const modelizer = ({ pastLaunches }) => {
           };
         }
 
-        if (payload.orbit === 'GTO' && payload.payload_mass_kg > heaviestPayloadGTO.mass) {
+        if (
+          payload.orbit === 'GTO' &&
+          payload.payload_mass_kg > heaviestPayloadGTO.mass
+        ) {
           heaviestPayloadGTO = {
             mass: payload.payload_mass_kg,
             mission: payload.payload_id,
@@ -95,7 +100,10 @@ const modelizer = ({ pastLaunches }) => {
     });
   });
 
-  const totalLaunches = Object.values(customers).reduce((total, currentValue) => total + currentValue, 0);
+  const totalLaunches = Object.values(customers).reduce(
+    (total, currentValue) => total + currentValue,
+    0,
+  );
   const options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
   options.tooltips = {
     mode: 'label',
@@ -105,7 +113,10 @@ const modelizer = ({ pastLaunches }) => {
         const customer = data.labels[index];
         const missions = customers[customer];
 
-        return `${customer}: ${missions} (${parseInt((100 * missions) / totalLaunches, 10)}%)`;
+        return `${customer}: ${missions} (${parseInt(
+          (100 * missions) / totalLaunches,
+          10,
+        )}%)`;
       },
     },
   };
@@ -128,7 +139,9 @@ const modelizer = ({ pastLaunches }) => {
     options,
   };
 
-  const barchartOptions = JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)); // Clone object
+  const barchartOptions = JSON.parse(
+    JSON.stringify(settings.DEFAULTBARCHARTOPTIONS),
+  ); // Clone object
   const optionsUpmassPerYear = JSON.parse(JSON.stringify(barchartOptions));
   optionsUpmassPerYear.tooltips = {
     mode: 'label',

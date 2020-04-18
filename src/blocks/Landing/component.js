@@ -1,6 +1,9 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import Section, { SectionContent, SectionDescription } from 'components/Section';
+import Section, {
+  SectionContent,
+  SectionDescription,
+} from 'components/Section';
 import IntegerStat from 'components/IntegerStat';
 
 const Landing = ({ currentTab, changeTab, data }) => {
@@ -52,10 +55,14 @@ const Landing = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[1].label && (
             <>
               <SectionContent>
-                <Bar data={data.landingHistoryChart.data} options={data.landingHistoryChart.options} />
+                <Bar
+                  data={data.landingHistoryChart.data}
+                  options={data.landingHistoryChart.options}
+                />
               </SectionContent>
               <SectionDescription>
-                SpaceX begun its testing of booster landings in 2013. Now landings are almost routine for the public.
+                SpaceX begun its testing of booster landings in 2013. Now
+                landings are almost routine for the public.
               </SectionDescription>
             </>
           )}
@@ -63,7 +70,10 @@ const Landing = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[2].label && (
             <>
               <SectionContent>
-                <IntegerStat value={data.heaviestLanding.mass} subtitle="Kilograms" />
+                <IntegerStat
+                  value={data.heaviestLanding.mass}
+                  subtitle="Kilograms"
+                />
               </SectionContent>
               <SectionDescription>
                 {`The heaviest mission launched to date that enabled a successful landing was the 

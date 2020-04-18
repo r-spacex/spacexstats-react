@@ -12,7 +12,9 @@ const modelizer = ({ pastLaunches }) => {
   let quickestTurnaroundMission1 = null;
   let quickestTurnaroundMission2 = null;
 
-  const notFalcon1Launches = pastLaunches.filter((launch) => launch.rocket.rocket_id !== 'falcon1');
+  const notFalcon1Launches = pastLaunches.filter(
+    (launch) => launch.rocket.rocket_id !== 'falcon1',
+  );
 
   // Reuse intervals chart
   const labels = [];
@@ -48,7 +50,10 @@ const modelizer = ({ pastLaunches }) => {
         turnaround = launchDate - previousLaunch.date;
 
         // Check for most reflown core
-        if (mostReflownCore === null || previousLaunches.length + 1 > cores[mostReflownCore].launches.length) {
+        if (
+          mostReflownCore === null ||
+          previousLaunches.length + 1 > cores[mostReflownCore].launches.length
+        ) {
           mostReflownCore = coreSerial;
         }
 
@@ -57,7 +62,8 @@ const modelizer = ({ pastLaunches }) => {
           quickestTurnaround = turnaround;
           quickestTurnaroundCore = coreSerial;
           quickestTurnaroundMission1 = previousLaunch.name;
-          quickestTurnaroundMission2 = launch.rocket.second_stage.payloads[0].payload_id;
+          quickestTurnaroundMission2 =
+            launch.rocket.second_stage.payloads[0].payload_id;
         }
       }
 
@@ -71,19 +77,26 @@ const modelizer = ({ pastLaunches }) => {
       if (cores[coreSerial].launches.length > 1) {
         reflownMissions += 1;
         labels.push(
-          `${coreSerial}'s flight #${cores[coreSerial].launches.length} ${launch.rocket.second_stage.payloads[0].payload_id}`
+          `${coreSerial}'s flight #${cores[coreSerial].launches.length} ${launch.rocket.second_stage.payloads[0].payload_id}`,
         );
         const interval = Math.round(turnaround / (24 * 3600));
         daysIntervals.push(interval);
-        runningAverage = Math.round((runningAverage * (reflownMissions - 1) + interval) / reflownMissions); // eslint-disable-line max-len
+        runningAverage = Math.round(
+          (runningAverage * (reflownMissions - 1) + interval) / reflownMissions,
+        ); // eslint-disable-line max-len
         runningAverageData.push(runningAverage);
 
         if (reflownMissions < 10) {
           runningAverage10Flights = runningAverage;
         } else {
           // If we compute for 10 flights there are 9 intervals
-          runningAverage10Flights = (runningAverage10Flights * 9 - daysIntervals[reflownMissions - 10]) / 8; // eslint-disable-line max-len
-          runningAverage10Flights = Math.round((runningAverage10Flights * 8 + interval) / 9);
+          runningAverage10Flights =
+            (runningAverage10Flights * 9 -
+              daysIntervals[reflownMissions - 10]) /
+            8; // eslint-disable-line max-len
+          runningAverage10Flights = Math.round(
+            (runningAverage10Flights * 8 + interval) / 9,
+          );
         }
         runningAverage10FlightsData.push(runningAverage10Flights);
       }
@@ -97,7 +110,10 @@ const modelizer = ({ pastLaunches }) => {
   });
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
-  options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
+  options = Object.assign(
+    options,
+    JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)),
+  );
   options.scales.xAxes[0].ticks.display = false;
   options.scales.xAxes[0].stacked = false;
   options.scales.yAxes[0].stacked = false;

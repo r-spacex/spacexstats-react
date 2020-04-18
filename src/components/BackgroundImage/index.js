@@ -22,15 +22,19 @@ const BackgroundImg = ({ filename, children, tag, ...rest }) => (
       }
     `}
     render={(data) => {
-      const image = data.images.edges.find((n) => {
-        return n.node.relativePath.includes(filename);
-      });
+      const image = data.images.edges.find((n) =>
+        n.node.relativePath.includes(filename),
+      );
       if (!image) {
         return null;
       }
 
       return (
-        <BackgroundImage Tag={tag} fluid={image.node.childImageSharp.fluid} {...rest}>
+        <BackgroundImage
+          Tag={tag}
+          fluid={image.node.childImageSharp.fluid}
+          {...rest}
+        >
           {children}
         </BackgroundImage>
       );

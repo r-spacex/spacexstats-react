@@ -15,7 +15,7 @@ const SEO = () => {
           }
         }
       }
-    `
+    `,
   );
 
   const { title, description, author, siteUrl } = site.siteMetadata;
@@ -35,9 +35,23 @@ const SEO = () => {
       <meta name="author" content={author} />
 
       <link rel="dns-prefetch" href="https://api.spacexdata.com/" />
-      <link rel="preload" crossOrigin="anonymous" href="fonts/brandon-reg-webfont.ttf" as="font" />
-      <link rel="preload" crossOrigin="anonymous" href="fonts/brandon-thin-webfont.ttf" as="font" />
-      <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet" type="text/css" />
+      <link
+        rel="preload"
+        crossOrigin="anonymous"
+        href="fonts/brandon-reg-webfont.ttf"
+        as="font"
+      />
+      <link
+        rel="preload"
+        crossOrigin="anonymous"
+        href="fonts/brandon-thin-webfont.ttf"
+        as="font"
+      />
+      <link
+        href="https://fonts.googleapis.com/css?family=Noto+Sans"
+        rel="stylesheet"
+        type="text/css"
+      />
     </Helmet>
   );
 };

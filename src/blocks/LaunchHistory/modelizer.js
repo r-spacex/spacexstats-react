@@ -53,17 +53,24 @@ const modelizer = ({ pastLaunches, upcomingLaunches }) => {
     }
     if (launch.rocket.rocket_id === 'falcon9') {
       falcon9LaunchesCount += 1;
-      const ratio = (falcon9LaunchesCount - failuresFalcon9) / falcon9LaunchesCount;
+      const ratio =
+        (falcon9LaunchesCount - failuresFalcon9) / falcon9LaunchesCount;
       successRateFalcon9.push(100 * ratio);
     } else {
-      successRateFalcon9.push(successRateFalcon9[successRateFalcon9.length - 1]);
+      successRateFalcon9.push(
+        successRateFalcon9[successRateFalcon9.length - 1],
+      );
     }
     if (launch.rocket.rocket_id === 'falconheavy') {
       falconHeavyLaunchesCount += 1;
-      const ratio = (falconHeavyLaunchesCount - failuresFalconHeavy) / falconHeavyLaunchesCount;
+      const ratio =
+        (falconHeavyLaunchesCount - failuresFalconHeavy) /
+        falconHeavyLaunchesCount;
       successRateFalconHeavy.push(100 * ratio);
     } else {
-      successRateFalconHeavy.push(successRateFalconHeavy[successRateFalconHeavy.length - 1]);
+      successRateFalconHeavy.push(
+        successRateFalconHeavy[successRateFalconHeavy.length - 1],
+      );
     }
     successRateAll.push((100 * (i - failuresAll)) / i);
 
@@ -101,7 +108,10 @@ const modelizer = ({ pastLaunches, upcomingLaunches }) => {
   }
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS)); // Clone object
-  options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
+  options = Object.assign(
+    options,
+    JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)),
+  );
 
   const optionsLaunchHistory = JSON.parse(JSON.stringify(options));
   optionsLaunchHistory.tooltips = {

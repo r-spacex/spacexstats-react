@@ -3,7 +3,7 @@ export const apiGet = (uri) =>
   new Promise((resolve) =>
     fetch(`https://api.spacexdata.com/v3${uri}`, { mode: 'cors' })
       .then((response) => response.json())
-      .then((data) => resolve(data))
+      .then((data) => resolve(data)),
   );
 
 // Scroll
@@ -15,7 +15,8 @@ export const isInViewport = (testAnchor) => {
   }
 
   const rect = element.getBoundingClientRect();
-  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  const viewportHeight =
+    window.innerHeight || document.documentElement.clientHeight;
   return rect.top >= -(viewportHeight / 2) && rect.top < viewportHeight / 2;
 };
 

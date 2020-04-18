@@ -36,7 +36,8 @@ const Footer = () => (
     <WhiteBackground>
       <FooterWrapper id="infos">
         <Text>
-          Photos on this page courtesy SpaceX, NASA and BocaChicaGal. SpaceX Recaps by{' '}
+          Photos on this page courtesy SpaceX, NASA and BocaChicaGal. SpaceX
+          Recaps by{' '}
           <Link
             eventLabel="Exit to SpaceX Recaps YouTube channel"
             to="https://www.youtube.com/channel/UC0xhru07vavdPOqJxKRzPrg"
@@ -46,20 +47,33 @@ const Footer = () => (
           </Link>
           . All rights maintained by the respective owners.
           <br />
-          This site is fan-run and not affiliated with SpaceX in any way. For official information and news, please
-          visit{' '}
-          <Link eventLabel="Exit to SpaceX official website" to="http://www.spacex.com" title="Official SpaceX website">
+          This site is fan-run and not affiliated with SpaceX in any way. For
+          official information and news, please visit{' '}
+          <Link
+            eventLabel="Exit to SpaceX official website"
+            to="http://www.spacex.com"
+            title="Official SpaceX website"
+          >
             www.spacex.com
           </Link>
           .
         </Text>
         <Text>
-          Original site concept and design by /u/EchoLogic, now recoded by /u/kornelord with{' '}
-          <Link eventLabel="Exit to GatsbyJS website" to="https://www.gatsbyjs.org/" title="GatsbyJS">
+          Original site concept and design by /u/EchoLogic, now recoded by
+          /u/kornelord with{' '}
+          <Link
+            eventLabel="Exit to GatsbyJS website"
+            to="https://www.gatsbyjs.org/"
+            title="GatsbyJS"
+          >
             GatsbyJS
           </Link>{' '}
           and{' '}
-          <Link eventLabel="Exit to r/spacex's API" to="https://github.com/r-spacex/SpaceX-API" title="r/spacex's API">
+          <Link
+            eventLabel="Exit to r/spacex's API"
+            to="https://github.com/r-spacex/SpaceX-API"
+            title="r/spacex's API"
+          >
             r/spacex’s API
           </Link>
           .<br />
@@ -92,7 +106,11 @@ const Footer = () => (
           </Link>
           .
           <br />
-          <Link eventLabel="Exit to Github Repo" to="https://github.com/r-spacex/spacexstats-react" title="Contribute!">
+          <Link
+            eventLabel="Exit to Github Repo"
+            to="https://github.com/r-spacex/spacexstats-react"
+            title="Contribute!"
+          >
             GitHub repository
           </Link>
         </Text>

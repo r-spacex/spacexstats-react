@@ -30,7 +30,7 @@ class Root extends Component {
     super(props);
 
     this.state = {
-      launchesData: { pastLaunches: null, upcomingLaunches: null },
+      launchesData: { pastLaunches: null, upcomingLaunches: null, cores: null },
       currentTabs: {
         dragon: null,
         landing: null,
@@ -71,12 +71,17 @@ class Root extends Component {
     NProgress.start();
 
     // Wait for the two datasets to be loaded then compute the stats
-    Promise.all([apiGet('/launches'), apiGet('/launches/upcoming')]).then((values) => {
+    Promise.all([
+      apiGet('/launches'),
+      apiGet('/launches/upcoming'),
+      apiGet('/cores'),
+    ]).then((values) => {
       this.setState(
         {
           launchesData: {
             pastLaunches: values[0],
             upcomingLaunches: values[1],
+            cores: values[2],
           },
         },
         () => {
@@ -93,7 +98,7 @@ class Root extends Component {
             updateHash(this.scrollSpy());
             this.updateProgressBar();
           });
-        }
+        },
       );
     });
 
@@ -107,7 +112,8 @@ class Root extends Component {
     const scrollHeight = 'scrollHeight';
     const scrollPercentage =
       (documentElement[scrollTop] || body[scrollTop]) /
-      ((documentElement[scrollHeight] || body[scrollHeight]) - documentElement.clientHeight);
+      ((documentElement[scrollHeight] || body[scrollHeight]) -
+        documentElement.clientHeight);
 
     NProgress.set(scrollPercentage);
   };
@@ -166,7 +172,11 @@ class Root extends Component {
           {...launchesData}
         />
 
-        <Reuse currentTab={currentTabs.reuse} changeTab={(tab) => this.changeTab('reuse', tab)} {...launchesData} />
+        <Reuse
+          currentTab={currentTabs.reuse}
+          changeTab={(tab) => this.changeTab('reuse', tab)}
+          {...launchesData}
+        />
 
         <Turnarounds
           currentTab={currentTabs.turnarounds}
@@ -180,9 +190,17 @@ class Root extends Component {
           {...launchesData}
         />
 
-        <Dragon currentTab={currentTabs.dragon} changeTab={(tab) => this.changeTab('dragon', tab)} {...launchesData} />
+        <Dragon
+          currentTab={currentTabs.dragon}
+          changeTab={(tab) => this.changeTab('dragon', tab)}
+          {...launchesData}
+        />
 
-        <People currentTab={currentTabs.people} changeTab={(tab) => this.changeTab('people', tab)} {...launchesData} />
+        <People
+          currentTab={currentTabs.people}
+          changeTab={(tab) => this.changeTab('people', tab)}
+          {...launchesData}
+        />
 
         <Starlink
           currentTab={currentTabs.starlink}

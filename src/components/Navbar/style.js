@@ -26,7 +26,8 @@ export const Tab = styled.button`
   border-bottom: 3px solid transparent;
   transition: border-color 0.3s ease-in-out;
 
-  border-color: ${({ active }) => (active ? colorUsages.navbarActiveTab : 'transparent')};
+  border-color: ${({ active }) =>
+    active ? colorUsages.navbarActiveTab : 'transparent'};
 `;
 
 export const Wrapper = styled.nav`

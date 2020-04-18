@@ -1,5 +1,8 @@
 import React from 'react';
-import Section, { SectionContent, SectionDescription } from 'components/Section';
+import Section, {
+  SectionContent,
+  SectionDescription,
+} from 'components/Section';
 import TextStat from 'components/TextStat';
 import TimeStat from 'components/TimeStat';
 

@@ -13,8 +13,11 @@ const modelizer = ({ pastLaunches }) => {
 
   const dragonLaunches = pastLaunches.filter(
     (launch) =>
-      launch.rocket.second_stage.payloads[0].payload_type.indexOf('Dragon') !== -1 &&
-      launch.rocket.second_stage.payloads[0].payload_id.indexOf('Dragon Qualification Unit') === -1
+      launch.rocket.second_stage.payloads[0].payload_type.indexOf('Dragon') !==
+        -1 &&
+      launch.rocket.second_stage.payloads[0].payload_id.indexOf(
+        'Dragon Qualification Unit',
+      ) === -1,
   );
 
   dragonLaunches.forEach((launch) => {
@@ -28,23 +31,34 @@ const modelizer = ({ pastLaunches }) => {
       }
 
       // Check if reused
-      if (launch.reuse.capsule) {
+      if (launch.reuse && launch.reuse.capsule) {
         totalReflights += 1;
       }
     }
 
-    if (launch.rocket.second_stage.payloads[0].payload_id.indexOf('CRS') !== -1) {
+    if (
+      launch.rocket.second_stage.payloads[0].payload_id.indexOf('CRS') !== -1
+    ) {
       if (launch.launch_success) {
         totalCargoUp += launch.rocket.second_stage.payloads[0].payload_mass_kg;
-        totalCargoDown += launch.rocket.second_stage.payloads[0].mass_returned_kg;
+        totalCargoDown +=
+          launch.rocket.second_stage.payloads[0].mass_returned_kg;
       }
-      crsLabels.push(launch.rocket.second_stage.payloads[0].payload_id.replace('SpaceX ', ''));
+      crsLabels.push(
+        launch.rocket.second_stage.payloads[0].payload_id.replace(
+          'SpaceX ',
+          '',
+        ),
+      );
       crsFlightTimes.push((flightTime / 3600).toFixed(1));
     }
   });
 
   let options = JSON.parse(JSON.stringify(settings.DEFAULTCHARTOPTIONS));
-  options = Object.assign(options, JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)));
+  options = Object.assign(
+    options,
+    JSON.parse(JSON.stringify(settings.DEFAULTBARCHARTOPTIONS)),
+  );
   options.tooltips = {
     mode: 'label',
     callbacks: {

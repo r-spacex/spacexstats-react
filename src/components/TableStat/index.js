@@ -29,23 +29,23 @@ const Cell = styled.td`
   padding-bottom: 0.2rem;
 `;
 
-const TableStat = ({ config, data, noDataMessage }) => (
+const TableStat = ({ config, data, noDataMessage, rowKey }) => (
   <Wrapper>
     <Table>
       <thead>
         <tr>
-          {config.map(({ width, header = '', align = 'left' }, index) => (
-            <Cell as="th" key={index} width={width} align={align}>
+          {config.map(({ width, header = '', align = 'left' }) => (
+            <Cell as="th" key={header} width={width} align={align}>
               {header}
             </Cell>
           ))}
         </tr>
       </thead>
       <tbody>
-        {data.map((rowData, rowIndex) => (
-          <BodyRow key={rowIndex}>
-            {config.map(({ width, renderCell, align = 'left' }, colIndex) => (
-              <Cell key={colIndex} width={width} align={align}>
+        {data.map((rowData) => (
+          <BodyRow key={rowData[rowKey]}>
+            {config.map(({ header, width, renderCell, align = 'left' }) => (
+              <Cell key={header} width={width} align={align}>
                 {renderCell(rowData)}
               </Cell>
             ))}

@@ -53,7 +53,9 @@ const modelizer = ({ pastLaunches }) => {
   totalFalcon9 -= 1;
   totalLaunches -= 1;
 
-  const lastLaunchDate = fromUnix(pastLaunches[pastLaunches.length - 1].launch_date_unix);
+  const lastLaunchDate = fromUnix(
+    pastLaunches[pastLaunches.length - 1].launch_date_unix,
+  );
 
   return {
     totalLaunches,

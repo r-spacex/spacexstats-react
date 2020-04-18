@@ -1,7 +1,5 @@
-const modelizer = () => {
-  return {
-    inSpace: 62,
-  };
-};
+const modelizer = () => ({
+  inSpace: 62,
+});
 
 export default modelizer;

@@ -1,6 +1,9 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import Section, { SectionContent, SectionDescription } from 'components/Section';
+import Section, {
+  SectionContent,
+  SectionDescription,
+} from 'components/Section';
 import IntegerStat from 'components/IntegerStat';
 
 const Reuse = ({ currentTab, changeTab, data }) => {
@@ -43,7 +46,10 @@ const Reuse = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[0].label && (
             <>
               <SectionContent>
-                <IntegerStat value={data.totalReflown} subtitle="Reflown flights" />
+                <IntegerStat
+                  value={data.totalReflown}
+                  subtitle="Reflown flights"
+                />
               </SectionContent>
               <SectionDescription>
                 {`Once on the ground, the booster must be able to be refurbished and reflown in minimal time and with
@@ -55,7 +61,10 @@ const Reuse = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[1].label && (
             <>
               <SectionContent>
-                <IntegerStat value={data.mostReflownCore.launches} subtitle="Launches" />
+                <IntegerStat
+                  value={data.mostReflownCore.launches}
+                  subtitle="Launches"
+                />
               </SectionContent>
               <SectionDescription>
                 {`The ${data.mostReflownCore.core} booster is the one who flew the most, it was used for these missions:
@@ -67,7 +76,10 @@ const Reuse = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[2].label && (
             <>
               <SectionContent>
-                <Bar data={data.daysBetweenReuses.data} options={data.daysBetweenReuses.options} />
+                <Bar
+                  data={data.daysBetweenReuses.data}
+                  options={data.daysBetweenReuses.options}
+                />
               </SectionContent>
               <SectionDescription>
                 {`The turnaround for a reflown booster includes the refurbishment time but also the time to find a
@@ -82,7 +94,10 @@ const Reuse = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[3].label && (
             <>
               <SectionContent>
-                <IntegerStat value={data.totalFairingsReflown} subtitle="Reflown" />
+                <IntegerStat
+                  value={data.totalFairingsReflown}
+                  subtitle="Reflown"
+                />
               </SectionContent>
               <SectionDescription>
                 {`Made of carbon fiber, the industrial process required to make the fairings is time and factory space

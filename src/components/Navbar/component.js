@@ -26,9 +26,9 @@ class Navbar extends Component {
 
     return (
       <Wrapper>
-        {tabs.map((tab, index) => (
+        {tabs.map((tab) => (
           <Tab
-            key={index}
+            key={tab}
             type="button"
             onClick={() => {
               this.changeTab(tab);

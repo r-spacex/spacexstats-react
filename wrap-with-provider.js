@@ -5,4 +5,8 @@ import createStore from 'redux/createStore';
 
 const store = createStore();
 
-export default ({ element }) => <Provider store={store}>{element}</Provider>;
+const AppWithProvider = ({ element }) => (
+  <Provider store={store}>{element}</Provider>
+);
+
+export default AppWithProvider;

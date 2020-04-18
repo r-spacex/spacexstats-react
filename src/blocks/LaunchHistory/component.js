@@ -1,6 +1,9 @@
 import React from 'react';
 import { Bar, Line } from 'react-chartjs-2';
-import Section, { SectionContent, SectionDescription } from 'components/Section';
+import Section, {
+  SectionContent,
+  SectionDescription,
+} from 'components/Section';
 
 const LauncHistory = ({ currentTab, changeTab, data }) => {
   const tabs = [
@@ -32,7 +35,10 @@ const LauncHistory = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[0].label && (
             <>
               <SectionContent>
-                <Bar data={data.flightsPerYear.data} options={data.flightsPerYear.options} />
+                <Bar
+                  data={data.flightsPerYear.data}
+                  options={data.flightsPerYear.options}
+                />
               </SectionContent>
               <SectionDescription>
                 {`With an ever-increasing launch cadence, SpaceX has surpassed other launch providers by annual vehicles
@@ -44,7 +50,10 @@ const LauncHistory = ({ currentTab, changeTab, data }) => {
           {displayedTab === tabs[1].label && (
             <>
               <SectionContent>
-                <Line data={data.successRates.data} options={data.successRates.options} />
+                <Line
+                  data={data.successRates.data}
+                  options={data.successRates.options}
+                />
               </SectionContent>
               <SectionDescription>
                 {`In order to provide a reliable access to space, SpaceX will have to beat every other provider with its
