@@ -23,6 +23,14 @@ export const scrollTo = (testAnchor: string, smooth = true) => {
   } else {
     element.scrollIntoView();
   }
+
+  const sectionTitle = element.querySelector(
+    'h1, h2, h3, h4, h5, h6',
+  ) as HTMLElement;
+  if (sectionTitle) {
+    console.log(sectionTitle);
+    sectionTitle.focus({ preventScroll: true });
+  }
 };
 
 export const updateHash = (hash: string) => {

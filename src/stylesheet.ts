@@ -3,7 +3,7 @@ import { css } from 'styled-components';
 export const palette = {
   black: '#000000',
   transparentDark: 'rgba(24, 28, 31, 0.8)',
-  shadowDark: 'rgba(24, 28, 31, 0.2)',
+  shadowDark: 'rgba(24, 28, 31, 0.35)',
   lightGrey: '#fafafa',
   grey: '#bbbbbb',
   darkGrey: '#21272B',

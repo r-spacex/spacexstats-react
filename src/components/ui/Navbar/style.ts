@@ -29,6 +29,10 @@ export const Tab = styled.button<TabProps>`
   border-bottom: 3px solid transparent;
   border-color: ${({ active }) => (active ? palette.yellow : 'transparent')};
   transition: border-color 0.3s ease-in-out;
+
+  :focus {
+    border-color: ${({ active }) => (active ? palette.yellow : palette.grey)};
+  }
 `;
 
 export const Wrapper = styled.nav`

@@ -52,7 +52,7 @@ const Section: React.FC<Props> = ({ id, title, tabs, up, down }) => {
       filename={`backgrounds/${displayedTab.background}`}
     >
       <Wrapper id={id} ref={sectionRef} data-tab={currentTab}>
-        <Title>
+        <Title tabIndex={-1}>
           {title}
           {displayedTab.title && ` - ${displayedTab.title}`}
         </Title>
@@ -75,6 +75,7 @@ const Section: React.FC<Props> = ({ id, title, tabs, up, down }) => {
               const targetTab = tabs.find((tab) => tab.label === tabLabel)!;
               changeTab(targetTab.id);
             }}
+            aria-label="Navigate to previous section"
           />
 
           {displayedTab.render}
@@ -86,6 +87,7 @@ const Section: React.FC<Props> = ({ id, title, tabs, up, down }) => {
               }
               type="button"
               down
+              aria-label="Navigate to next section"
             />
           )}
         </Content>

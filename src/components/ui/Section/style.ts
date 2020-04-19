@@ -38,6 +38,10 @@ export const Title = styled.h2`
   display: flex;
   align-items: center;
 
+  :focus {
+    outline: none;
+  }
+
   height: 60px;
   @media (min-width: ${thresholds.sm}) {
     font-size: 3rem;
@@ -98,32 +102,49 @@ export const Control = styled.button<ButtonProps>`
   position: absolute;
   cursor: pointer;
   right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  transition: ease-in-out all 0.3s;
+  border: 1px solid transparent;
+
+  :focus {
+    border-color: ${palette.yellow};
+    box-shadow: 0 0 10px ${palette.yellow}, 0 0 5px ${palette.yellow};
+  }
 
   &:before {
     content: '';
     display: inline-block;
     height: ${chevronWidth};
     width: ${chevronWidth};
-    vertical-align: top;
     border-style: solid;
     border-width: ${chevronThickness} ${chevronThickness} 0 0;
     border-color: ${palette.lightGrey};
 
     position: relative;
-    left: 0.15em;
-
-    top: ${({ up }) => (up ? `0` : `0.15rem`)};
     transform: rotate(${({ up }) => (up ? `-45deg` : `135deg`)});
+
+    /* Manually visually center inside outline */
+    ${({ up }) =>
+      up &&
+      css`
+        top: 6px;
+      `}
+    ${({ down }) =>
+      down &&
+      css`
+        bottom: 2px;
+      `}
   }
 
   ${({ up }) =>
     up &&
     css`
-      top: -2rem;
+      top: -2.5rem;
     `}
   ${({ down }) =>
     down &&
     css`
-      bottom: -2rem;
+      bottom: -2.5rem;
     `}
 `;
