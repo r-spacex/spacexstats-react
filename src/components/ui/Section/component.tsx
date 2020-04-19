@@ -27,7 +27,6 @@ const Section: React.FC<Props> = ({ id, title, tabs, up, down }) => {
   const dispatch = useDispatch();
   const currentTab = useSelector(selectCurrentTab(id)) || tabs[0].id;
   const displayedTab = tabs.find((tab) => tab.id === currentTab)!;
-  console.log('render', currentTab);
 
   const changeTab = (tab: string) => {
     dispatch(actions.changeTab({ section: id, tab }));

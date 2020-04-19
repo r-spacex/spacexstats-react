@@ -35,8 +35,13 @@ const displayLaunchTime = (date: Date, precision: LaunchDatePrecision) => {
       return `Q${getQuarter(date)} ${format(date, 'yyyy')}`;
 
     case LaunchDatePrecision.month:
-    default:
       return format(date, 'MMM yyyy');
+
+    case LaunchDatePrecision.year:
+      return format(date, 'yyyy');
+
+    default:
+      return 'Invalid date';
   }
 };
 
@@ -44,15 +49,22 @@ const sortLaunches = (
   { launch_date_unix: dateAUnix, tentative_max_precision: precisionA }: Launch,
   { launch_date_unix: dateBUnix, tentative_max_precision: precisionB }: Launch,
 ) => {
+  const dateA = fromUnix(dateAUnix);
+  const dateB = fromUnix(dateBUnix);
+
+  if (precisionA === LaunchDatePrecision.year) {
+    if (precisionB === LaunchDatePrecision.year) {
+      return dateA.getFullYear() - dateB.getFullYear();
+    }
+    return 1;
+  }
+
   if (
     precisionA === LaunchDatePrecision.quarter &&
     precisionB === LaunchDatePrecision.quarter
   ) {
     return dateAUnix - dateBUnix;
   }
-
-  const dateA = fromUnix(dateAUnix);
-  const dateB = fromUnix(dateBUnix);
 
   // Priority to day-positioned dates, then months, then quarters
   const quarterA = getQuarter(dateA);
