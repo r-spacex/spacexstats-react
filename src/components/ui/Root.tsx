@@ -20,7 +20,7 @@ import {
   Footer,
 } from 'components/blocks';
 import StyleReset from 'components/ui/StyleReset';
-import { getScrollPercentage } from 'utils/scroll';
+import { getScrollPercentage, scrollTo } from 'utils/scroll';
 import { actions, sections, SectionId } from 'redux/navigation';
 import { SpaceXData, BlockProps } from 'types';
 
@@ -52,12 +52,7 @@ const Root: React.FC<SpaceXData> = (data) => {
           tab,
         }),
       );
-      dispatch(
-        actions.navigateTo({
-          section: section as SectionId,
-          down: true,
-        }),
-      );
+      scrollTo(section, false);
     }
 
     window.addEventListener('scroll', () => {

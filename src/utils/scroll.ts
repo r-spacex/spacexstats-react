@@ -11,14 +11,18 @@ export const isInViewport = (testAnchor: string) => {
   return rect.top >= -(viewportHeight / 2) && rect.top < viewportHeight / 2;
 };
 
-export const scrollTo = (testAnchor: string) => {
+export const scrollTo = (testAnchor: string, smooth = true) => {
   const element = document.getElementById(testAnchor);
 
   if (!element) {
     return;
   }
 
-  element.scrollIntoView();
+  if (smooth) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    element.scrollIntoView();
+  }
 };
 
 export const updateHash = (hash: string) => {
