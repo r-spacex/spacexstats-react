@@ -7,9 +7,9 @@ import Ribbon from 'components/ui/Ribbon';
 import TableStat from 'components/ui/TableStat';
 import TimeStat from 'components/ui/TimeStat';
 import { modelizer, ModelizedUpcomingLaunch } from './modelizer';
-import { SpaceXData } from 'types';
+import { BlockProps } from 'types';
 
-const Upcoming: React.FC<SpaceXData> = (data) => {
+const Upcoming: React.FC<BlockProps> = ({ data, ...rest }) => {
   const { nextLaunch, nextLaunches } = modelizer(data);
 
   const tabs = [
@@ -87,14 +87,7 @@ const Upcoming: React.FC<SpaceXData> = (data) => {
     },
   ];
 
-  return (
-    <Section
-      id="upcoming"
-      title="Upcoming"
-      tabs={tabs}
-      downSection="launchcount"
-    />
-  );
+  return <Section title="Upcoming" tabs={tabs} {...rest} />;
 };
 
 export default Upcoming;

@@ -20,8 +20,8 @@ import {
   Footer,
 } from 'components/blocks';
 import StyleReset from 'components/ui/StyleReset';
-import { isInViewport, updateHash, getScrollPercentage } from 'utils/scroll';
-import { actions, sections } from 'redux/navigation';
+import { getScrollPercentage } from 'utils/scroll';
+import { actions, sections, SectionId } from 'redux/navigation';
 import { SpaceXData } from 'types';
 
 const Root: React.FC<SpaceXData> = (data) => {
@@ -31,22 +31,39 @@ const Root: React.FC<SpaceXData> = (data) => {
     NProgress.configure({ minimum: 0, trickle: false, showSpinner: false });
     NProgress.start();
 
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     ReactGA.initialize('UA-108091199-1');
     ReactGA.pageview('/');
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (window.location.hash !== '') {
-        const section = window.location.hash.replace('#', '');
-        dispatch(actions.navigateTo({ section, down: true }));
+        const anchorHash = window.location.hash.replace('#', '');
+        const [section, tab] = anchorHash.split(/\-(.+)/);
+
+        if (!sections.includes(section as SectionId)) {
+          return;
+        }
+
+        dispatch(
+          actions.changeTab({
+            section: section as SectionId,
+            tab,
+          }),
+        );
+        dispatch(
+          actions.navigateTo({
+            section: section as SectionId,
+            down: true,
+          }),
+        );
       }
-    }, 1000);
+    }, 700);
 
     window.addEventListener('scroll', () => {
       NProgress.set(getScrollPercentage());
-      const currentSection = sections.find((section) => isInViewport(section));
-      if (currentSection) {
-        updateHash(currentSection);
-      }
     });
   }, []);
 
@@ -54,7 +71,7 @@ const Root: React.FC<SpaceXData> = (data) => {
     <>
       <StyleReset />
 
-      <Upcoming {...data} />
+      <Upcoming data={data} id="upcoming" downSection="about" />
 
       {/* 
       <LaunchCount {...data} />
@@ -81,8 +98,8 @@ const Root: React.FC<SpaceXData> = (data) => {
 
       <Timelines {...data} /> 
       
+    */}
       <Footer />
-      */}
     </>
   );
 };

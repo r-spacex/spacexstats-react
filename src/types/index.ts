@@ -1,3 +1,5 @@
+import { SectionId } from 'redux/navigation';
+
 export enum RocketType {
   f1 = 'falcon1',
   f9 = 'falcon9',
@@ -125,4 +127,11 @@ export interface SpaceXData {
   pastLaunches: Launch[];
   upcomingLaunches: Launch[];
   cores: Core[];
+}
+
+export interface BlockProps {
+  data: SpaceXData;
+  id: SectionId;
+  upSection?: SectionId;
+  downSection?: SectionId;
 }

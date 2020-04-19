@@ -17,7 +17,7 @@ export type NavigationState = Readonly<{
   starlink: string | null;
   starship: string | null;
   timelines: string | null;
-  infos: string | null;
+  about: string | null;
 }>;
 
 const initialState: NavigationState = {
@@ -34,10 +34,11 @@ const initialState: NavigationState = {
   starlink: null,
   starship: null,
   timelines: null,
-  infos: null,
+  about: null,
 };
 
-export const sections = Object.keys(initialState);
+export type SectionId = keyof NavigationState;
+export const sections = Object.keys(initialState) as SectionId[];
 
 export const { actions, reducer } = createSlice({
   name: 'navigation',
@@ -45,19 +46,16 @@ export const { actions, reducer } = createSlice({
   reducers: {
     changeTab: (
       state,
-      {
-        payload,
-      }: PayloadAction<{ section: keyof NavigationState; tab?: string }>,
+      { payload }: PayloadAction<{ section: SectionId; tab: string }>,
     ) => ({
       ...state,
       [payload.section]: payload.tab !== undefined ? payload.tab : null,
     }),
     navigateTo: (
       state,
-      { payload }: PayloadAction<{ section: string; down: boolean }>,
+      { payload }: PayloadAction<{ section: SectionId; down: boolean }>,
     ) => {
       scrollTo(payload.section);
-      updateHash(payload.section);
 
       ReactGA.event({
         category: 'Scroll Arrow',
@@ -65,11 +63,11 @@ export const { actions, reducer } = createSlice({
         label: payload.section,
       });
 
-      return initialState;
+      return state;
     },
   },
 });
 
-export const selectCurrentTab = (section: keyof NavigationState) => (
+export const selectCurrentTab = (section: SectionId) => (
   state: RootState,
 ): string | null => state.navigation[section];
