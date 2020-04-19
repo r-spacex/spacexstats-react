@@ -54,8 +54,10 @@ const buildStarshipHopsChart = () => {
     },
   };
   const options = deepmerge(settings.DEFAULTBARCHARTOPTIONS, customOptions);
+  if (options.scales?.xAxes?.length) {
+    options.scales.xAxes[0].stacked = true;
+  }
   if (options.scales?.yAxes?.length) {
-    options.scales.yAxes[0].stacked = false;
     options.scales.yAxes[0].type = 'logarithmic';
   }
 
