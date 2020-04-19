@@ -19,7 +19,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat value="RIGHT NOW" />
+            <TextStat>RIGHT NOW</TextStat>
           </SectionContent>
           <SectionDescription>
             SpaceX is conducting an experimental test program of its future
@@ -38,7 +38,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat value="2020" />
+            <TextStat>2020</TextStat>
           </SectionContent>
         </>
       ),
@@ -51,7 +51,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat value="2022" />
+            <TextStat>2022</TextStat>
           </SectionContent>
         </>
       ),
@@ -64,7 +64,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat value="2023" />
+            <TextStat>2023</TextStat>
           </SectionContent>
         </>
       ),
@@ -77,7 +77,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat value="2024" />
+            <TextStat>2024</TextStat>
           </SectionContent>
         </>
       ),

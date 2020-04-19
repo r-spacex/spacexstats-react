@@ -34,7 +34,8 @@ const BackgroundImg: React.FC<Props> = ({
       }
     `}
     render={(data) => {
-      const image = data.images.edges.find((n) =>
+      // eslint-disable-next-line
+      const image = data.images.edges.find((n: any) =>
         n.node.relativePath.includes(filename),
       );
       if (!image) {

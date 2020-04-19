@@ -1,12 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Wrapper, Value, Subtitle } from './style';
 
 const ONE_MINUTE_IN_S = 60;
 const ONE_HOUR_IN_S = ONE_MINUTE_IN_S * 60;
 const ONE_DAY_IN_S = ONE_HOUR_IN_S * 24;
 
-const TimeStat = ({ value }) => {
+interface Props {
+  value: number;
+}
+
+const TimeStat: React.FC<Props> = ({ value }) => {
   let secondsLeft = Math.floor(Math.abs(value));
   const days = Math.floor(secondsLeft / ONE_DAY_IN_S);
   secondsLeft -= ONE_DAY_IN_S * days;
@@ -36,10 +39,6 @@ const TimeStat = ({ value }) => {
       </Value>
     </Wrapper>
   );
-};
-
-TimeStat.propTypes = {
-  value: PropTypes.number.isRequired,
 };
 
 export default TimeStat;
