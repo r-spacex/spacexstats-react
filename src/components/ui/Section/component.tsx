@@ -17,17 +17,11 @@ interface Props {
   id: SectionId;
   title: string;
   tabs: SectionTab[];
-  upSection?: SectionId;
-  downSection?: SectionId;
+  up?: SectionId;
+  down?: SectionId;
 }
 
-const Section: React.FC<Props> = ({
-  id,
-  title,
-  tabs,
-  upSection,
-  downSection,
-}) => {
+const Section: React.FC<Props> = ({ id, title, tabs, up, down }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
@@ -65,12 +59,10 @@ const Section: React.FC<Props> = ({
         </Title>
 
         <Content>
-          {upSection && (
+          {up && (
             <Control
               onClick={() =>
-                dispatch(
-                  actions.navigateTo({ section: upSection, down: false }),
-                )
+                dispatch(actions.navigateTo({ section: up, down: false }))
               }
               role="button"
               up
@@ -88,12 +80,10 @@ const Section: React.FC<Props> = ({
 
           {displayedTab.render}
 
-          {downSection && (
+          {down && (
             <Control
               onClick={() =>
-                dispatch(
-                  actions.navigateTo({ section: downSection, down: true }),
-                )
+                dispatch(actions.navigateTo({ section: down, down: true }))
               }
               type="button"
               down

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import { getSpacing, palette } from 'stylesheet';
 
-import { colorUsages } from 'stylesheet';
-
-const ribbonHeight = '40px';
+export const ribbonHeight = '40px';
 const ribbonWidth = '250px';
 const ribbonLeftCornerSize = '30px';
 const ribbonRightCornerSize = '10px';
@@ -11,7 +10,7 @@ const ribbonRightCornerSize = '10px';
 const Wrapper = styled.div`
   position: absolute;
   right: 0;
-  top: 4rem;
+  top: ${getSpacing(8)};
   width: ${ribbonWidth};
 `;
 
@@ -26,7 +25,7 @@ const Text = styled.div`
   text-align: center;
   text-transform: uppercase;
 
-  background-color: ${colorUsages.ribbonBackground};
+  background-color: ${palette.yellow};
 
   &:before,
   &:after {
@@ -40,7 +39,7 @@ const Text = styled.div`
   &:before {
     top: 0;
     left: -${ribbonLeftCornerSize};
-    border-right: ${ribbonLeftCornerSize} solid ${colorUsages.ribbonBackground};
+    border-right: ${ribbonLeftCornerSize} solid ${palette.yellow};
     border-bottom: ${ribbonHeight} solid transparent;
   }
 
@@ -48,11 +47,15 @@ const Text = styled.div`
     top: ${ribbonHeight};
     right: 0;
     border-right: ${ribbonRightCornerSize} solid transparent;
-    border-top: ${ribbonRightCornerSize} solid ${colorUsages.ribbonBorder};
+    border-top: ${ribbonRightCornerSize} solid ${palette.brown};
   }
 `;
 
-const Ribbon = ({ children }) => (
+interface Props {
+  children: ReactNode;
+}
+
+const Ribbon: React.FC<Props> = ({ children }) => (
   <Wrapper>
     <Text>{children}</Text>
   </Wrapper>

@@ -3,8 +3,16 @@ import Section, {
   SectionContent,
   SectionDescription,
 } from 'components/ui/Section';
-import Ribbon from 'components/ui/Ribbon';
-import TableStat from 'components/ui/TableStat';
+import Ribbon, { ribbonHeight } from 'components/ui/Ribbon';
+import {
+  TableContainer,
+  Table,
+  TableHeader,
+  TableHeaderRow,
+  TableBody,
+  TableRow,
+  TableCell,
+} from 'components/ui/Table';
 import TimeStat from 'components/ui/TimeStat';
 import { modelizer, ModelizedUpcomingLaunch } from './modelizer';
 import { BlockProps } from 'types';
@@ -21,7 +29,7 @@ const Upcoming: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <Ribbon>{nextLaunch.localDate}</Ribbon>
-          <SectionContent>
+          <SectionContent style={{ marginTop: ribbonHeight }}>
             <TimeStat value={nextLaunch.date} type="countdown" />
           </SectionContent>
           <SectionDescription>{nextLaunch.description}</SectionDescription>
@@ -35,33 +43,48 @@ const Upcoming: React.FC<BlockProps> = ({ data, ...rest }) => {
       title: 'Next Launches',
       render: (
         <SectionContent>
-          <TableStat
-            config={[
-              {
-                width: '40%',
-                header: 'Mission',
-                renderCell: ({ mission }: ModelizedUpcomingLaunch) => mission,
-              },
-              {
-                width: '26%',
-                header: 'Date (UTC)',
-                renderCell: ({ date }: ModelizedUpcomingLaunch) => date,
-              },
-              {
-                width: '17%',
-                header: 'Vehicle',
-                renderCell: ({ vehicle }: ModelizedUpcomingLaunch) => vehicle,
-              },
-              {
-                width: '17%',
-                header: 'Launchpad',
-                renderCell: ({ launchpad }: ModelizedUpcomingLaunch) =>
-                  launchpad,
-              },
-            ]}
-            rowKey="mission"
-            data={nextLaunches}
-          />
+          <TableContainer>
+            <Table>
+              <TableHeader>
+                <TableHeaderRow>
+                  <TableCell as="th" style={{ width: '40%' }}>
+                    Mission
+                  </TableCell>
+                  <TableCell as="th" style={{ width: '26%' }}>
+                    Date (UTC)
+                  </TableCell>
+                  <TableCell as="th" style={{ width: '17%' }}>
+                    Vehicle
+                  </TableCell>
+                  <TableCell as="th" style={{ width: '17%' }}>
+                    Launchpad
+                  </TableCell>
+                </TableHeaderRow>
+              </TableHeader>
+              <TableBody>
+                {nextLaunches.map(
+                  ({
+                    mission,
+                    date,
+                    vehicle,
+                    launchpad,
+                  }: ModelizedUpcomingLaunch) => (
+                    <TableRow key={mission}>
+                      <TableCell>{mission}</TableCell>
+                      <TableCell>{date}</TableCell>
+                      <TableCell>{vehicle}</TableCell>
+                      <TableCell>{launchpad}</TableCell>
+                    </TableRow>
+                  ),
+                )}
+                {nextLaunches.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={4}>No launches to display</TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </SectionContent>
       ),
     },

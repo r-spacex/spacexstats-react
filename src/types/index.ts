@@ -132,6 +132,6 @@ export interface SpaceXData {
 export interface BlockProps {
   data: SpaceXData;
   id: SectionId;
-  upSection?: SectionId;
-  downSection?: SectionId;
+  up?: SectionId;
+  down?: SectionId;
 }

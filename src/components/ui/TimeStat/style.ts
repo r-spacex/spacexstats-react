@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import { fonts, thresholds } from 'stylesheet';
 
 export const Wrapper = styled.div`
@@ -16,12 +15,12 @@ export const Value = styled.div`
   min-width: 2ch;
   line-height: 1;
 
-  font-size: 2.5rem;
+  font-size: 2rem;
   @media (min-width: ${thresholds.sm}) {
-    font-size: 7rem;
+    font-size: 6rem;
   }
   @media (min-width: ${thresholds.md}) {
-    font-size: 10rem;
+    font-size: 8rem;
   }
 `;
 

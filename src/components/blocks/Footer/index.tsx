@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { colorUsages } from 'stylesheet';
+import { palette, getSpacing } from 'stylesheet';
 import { Background, Wrapper } from 'components/ui/Section';
 import { isInViewport, updateHash } from 'utils/scroll';
 import Link from 'components/ui/Link';
@@ -15,9 +15,9 @@ const WhiteBackground = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100%;
-  padding: 1rem;
-  background-color: ${colorUsages.footerBackground};
-  color: ${colorUsages.footer};
+  padding: ${getSpacing(2)};
+  background-color: ${palette.transparentWhite};
+  color: ${palette.darkGrey};
 `;
 
 const FooterWrapper = styled(Wrapper)`
@@ -28,7 +28,7 @@ const FooterWrapper = styled(Wrapper)`
 `;
 
 const Text = styled.p`
-  margin-bottom: 1rem;
+  margin-bottom: ${getSpacing(2)};
 `;
 
 const FOOTER_SECTION_ID = 'about';

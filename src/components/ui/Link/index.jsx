@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { colorUsages } from 'stylesheet';
 import { OutboundLink } from 'react-ga';
+import { palette } from 'stylesheet';
 
 const Link = styled(OutboundLink)`
   &:link,
@@ -12,12 +12,12 @@ const Link = styled(OutboundLink)`
 
   &:link,
   &:visited {
-    color: ${colorUsages.link};
+    color: ${palette.blue};
   }
 
   &:hover,
   &:active {
-    color: ${colorUsages.linkHover};
+    color: ${palette.yellow};
   }
 `;
 

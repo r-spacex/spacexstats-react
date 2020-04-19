@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { colorUsages, fonts, fontSizes } from 'stylesheet';
+import { fonts, palette } from 'stylesheet';
 
 const StyleReset = createGlobalStyle`
   @font-face {
@@ -20,14 +20,13 @@ const StyleReset = createGlobalStyle`
   html {
     height: 100%;
     ${fonts.main}
-    font-size: ${fontSizes.base};
-    color: ${colorUsages.text};
+    color: ${palette.lightGrey};
   }
 
   body {
     min-height: 100%;
   }
-
+ 
   button {
     border: 0;
     background-color: transparent;
@@ -46,10 +45,10 @@ const StyleReset = createGlobalStyle`
   /* Top progress bar */
   #nprogress {
     .bar {
-      background: ${colorUsages.progressBar};
+      background: ${palette.yellow};
     }
     .peg {
-      box-shadow: 0 0 10px ${colorUsages.progressBar}, 0 0 5px ${colorUsages.progressBar};
+      box-shadow: 0 0 10px ${palette.yellow}, 0 0 5px ${palette.yellow};
     }
   }
 `;

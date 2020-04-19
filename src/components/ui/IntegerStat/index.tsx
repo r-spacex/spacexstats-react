@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-import { fonts, thresholds } from 'stylesheet';
+import { fonts, getSpacing, thresholds } from 'stylesheet';
 
 const Wrapper = styled.div`
   ${fonts.special}
@@ -10,34 +8,30 @@ const Wrapper = styled.div`
   text-transform: uppercase;
   line-height: 1;
 
-  font-size: 5rem;
+  font-size: 4rem;
   @media (min-width: ${thresholds.sm}) {
-    font-size: 10rem;
+    font-size: 8rem;
   }
 `;
 
 const Subtitle = styled.div`
-  margin-top: 1rem;
+  margin-top: ${getSpacing(2)};
   font-size: 1.5rem;
   @media (min-width: ${thresholds.sm}) {
     font-size: 2rem;
   }
 `;
 
-const IntegerStat = ({ value, subtitle }) => (
+interface Props {
+  subtitle?: string;
+  value: number;
+}
+
+const IntegerStat: React.FC<Props> = ({ value, subtitle }) => (
   <Wrapper>
     {value.toLocaleString()}
     {subtitle && <Subtitle>{subtitle}</Subtitle>}
   </Wrapper>
 );
-
-IntegerStat.defaultProps = {
-  subtitle: null,
-};
-
-IntegerStat.propTypes = {
-  subtitle: PropTypes.string,
-  value: PropTypes.number.isRequired,
-};
 
 export default IntegerStat;

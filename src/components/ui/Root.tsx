@@ -14,7 +14,7 @@ import {
   // People,
   // Reuse,
   // Starlink,
-  // Starship,
+  Starship,
   // Timelines,
   // Turnarounds,
   Footer,
@@ -71,7 +71,8 @@ const Root: React.FC<SpaceXData> = (data) => {
     <>
       <StyleReset />
 
-      <Upcoming data={data} id="upcoming" downSection="about" />
+      <Upcoming data={data} id="upcoming" down="starship" />
+      <Starship data={data} id="starship" up="upcoming" down="about" />
 
       {/* 
       <LaunchCount {...data} />

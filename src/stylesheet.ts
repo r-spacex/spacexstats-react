@@ -1,11 +1,13 @@
 import { css } from 'styled-components';
 
-const palette = {
-  transparentWhite: 'rgba(250, 250, 250, 0.75)',
+export const palette = {
+  black: '#000000',
+  transparentDark: 'rgba(24, 28, 31, 0.8)',
+  shadowDark: 'rgba(24, 28, 31, 0.2)',
   lightGrey: '#fafafa',
   grey: '#bbbbbb',
   darkGrey: '#21272B',
-  black: '#000000',
+  transparentWhite: 'rgba(250, 250, 250, 0.75)',
 
   lightblue: '#9ad0f3',
   blue: '#0072b2',
@@ -33,23 +35,6 @@ export const chartColors = {
   black: palette.black,
 };
 
-export const colorUsages = {
-  text: palette.lightGrey,
-  link: palette.blue,
-  linkHover: palette.yellow,
-
-  contentBackground: 'rgba(24, 28, 31, 0.8)',
-  contentShadow: 'rgba(24, 28, 31, 0.2)',
-  footer: palette.darkGrey,
-  footerBackground: palette.transparentWhite,
-
-  progressBar: palette.yellow,
-  navbarActiveTab: palette.yellow,
-  ribbonBackground: palette.yellow,
-  ribbonBorder: palette.brown,
-  tableBorder: palette.lightGrey,
-};
-
 export const thresholds = {
   sm: '768px',
   md: '992px',
@@ -59,6 +44,7 @@ export const thresholds = {
 export const fonts = {
   main: css`
     font-family: 'Noto Sans', sans-serif;
+    font-size: 16px;
   `,
   special: css`
     font-family: 'BrandonThin', sans-serif;
@@ -67,6 +53,4 @@ export const fonts = {
   `,
 };
 
-export const fontSizes = {
-  base: '14px',
-};
+export const getSpacing = (size: number) => `${size * 8}px`;

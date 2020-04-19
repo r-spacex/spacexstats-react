@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import BackgroundImage from 'components/ui/BackgroundImage';
 
-import { colorUsages, fonts, thresholds } from 'stylesheet';
+import { getSpacing, palette, fonts, thresholds } from 'stylesheet';
 
 export const Background = styled(BackgroundImage)`
   display: flex;
@@ -37,15 +37,15 @@ export const Title = styled.h2`
   ${fonts.special}
   display: flex;
   align-items: center;
-  padding: 0.5rem;
 
-  height: 5rem;
+  height: 60px;
   @media (min-width: ${thresholds.sm}) {
     font-size: 3rem;
-    height: 10rem;
+    height: 120px;
   }
 `;
 
+const SHADOW_SIZE = '3px';
 export const Content = styled.div`
   flex-grow: 1;
 
@@ -54,9 +54,9 @@ export const Content = styled.div`
   position: relative;
   justify-content: center;
 
-  min-height: 20rem;
-  margin-bottom: 5rem;
-  background-color: ${colorUsages.contentBackground};
+  min-height: 450px;
+  margin-bottom: ${getSpacing(8)};
+  background-color: ${palette.transparentDark};
   z-index: 0;
 
   /* Custom "shadow" border */
@@ -64,17 +64,17 @@ export const Content = styled.div`
     z-index: -1;
     content: '';
     position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border: 3px solid ${colorUsages.contentShadow};
+    top: -${SHADOW_SIZE};
+    left: -${SHADOW_SIZE};
+    right: -${SHADOW_SIZE};
+    bottom: -${SHADOW_SIZE};
+    border: ${SHADOW_SIZE} solid ${palette.shadowDark};
   }
 `;
 
 export const SectionContent = styled.div`
   position: relative;
-  padding: 1rem;
+  padding: ${getSpacing(2)};
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -82,8 +82,8 @@ export const SectionContent = styled.div`
 `;
 
 export const SectionDescription = styled.div`
-  min-height: 8rem; /* It can host 3 lines on normal conditions */
-  padding: 2rem 1rem;
+  min-height: 120px; /* It can host 3 lines on normal conditions */
+  padding: ${getSpacing(4)} ${getSpacing(2)};
 `;
 
 const chevronThickness = '0.25rem';
@@ -107,7 +107,7 @@ export const Control = styled.button<ButtonProps>`
     vertical-align: top;
     border-style: solid;
     border-width: ${chevronThickness} ${chevronThickness} 0 0;
-    border-color: ${colorUsages.text};
+    border-color: ${palette.lightGrey};
 
     position: relative;
     left: 0.15em;
