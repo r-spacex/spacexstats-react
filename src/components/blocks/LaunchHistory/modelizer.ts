@@ -2,7 +2,9 @@ import settings from 'settings';
 import { chartColors } from 'stylesheet';
 import { ChartOptions, ChartData } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { SpaceXData, RocketType } from 'types';
+import { SpaceXData, RocketType, Launch } from 'types';
+import last from 'lodash/last';
+import range from 'lodash/range';
 
 export interface ModelizedSectionData {
   flightsPerYear: {
@@ -15,119 +17,103 @@ export interface ModelizedSectionData {
   };
 }
 
-export const modelizer = ({
-  pastLaunches,
-  upcomingLaunches,
-}: SpaceXData): ModelizedSectionData => {
+const buildFlightsPerYearChart = (
+  pastLaunches: Launch[],
+  upcomingLaunches: Launch[],
+) => {
   const yearsStart = 2006; // First Falcon 1 flight
-  const yearsEnd = parseInt(
-    upcomingLaunches
-      .map((launch) => launch.launch_year)
-      .sort()
-      .slice(-1)
-      .pop()!,
+  const sortedUpcomingLaunches = upcomingLaunches.map((launch) =>
+    parseInt(launch.launch_year),
+  );
+  sortedUpcomingLaunches.sort();
+  const yearsEnd = last(sortedUpcomingLaunches);
+  const years = range(
+    yearsStart,
+    yearsEnd ? yearsEnd + 1 : new Date().getFullYear(),
   );
 
-  const years = [];
-  for (let i = yearsStart; i <= yearsEnd; i++) {
-    years.push(i);
-  }
+  const data = {
+    labels: years,
+    datasets: [
+      {
+        label: 'Falcon 1',
+        backgroundColor: chartColors.green,
+        data: years.map(
+          (year) =>
+            pastLaunches.filter(
+              ({ launch_year, rocket, launch_success }) =>
+                parseInt(launch_year) === year &&
+                rocket.rocket_id === RocketType.f1 &&
+                launch_success,
+            ).length,
+        ),
+      },
+      {
+        label: 'New Falcon 9',
+        backgroundColor: chartColors.blue,
+        data: years.map(
+          (year) =>
+            pastLaunches.filter(
+              ({ launch_year, rocket, launch_success }) =>
+                parseInt(launch_year) === year &&
+                rocket.rocket_id === RocketType.f9 &&
+                launch_success &&
+                !rocket.first_stage.cores[0].reused,
+            ).length,
+        ),
+      },
+      {
+        label: 'Used Falcon 9',
+        backgroundColor: chartColors.lightblue,
+        data: years.map(
+          (year) =>
+            pastLaunches.filter(
+              ({ launch_year, rocket, launch_success }) =>
+                parseInt(launch_year) === year &&
+                rocket.rocket_id === RocketType.f9 &&
+                launch_success &&
+                rocket.first_stage.cores[0].reused,
+            ).length,
+        ),
+      },
+      {
+        label: 'Falcon Heavy',
+        backgroundColor: chartColors.yellow,
+        data: years.map(
+          (year) =>
+            pastLaunches.filter(
+              ({ launch_year, rocket, launch_success }) =>
+                parseInt(launch_year) === year &&
+                rocket.rocket_id === RocketType.fh &&
+                launch_success,
+            ).length,
+        ),
+      },
+      {
+        label: 'Failure',
+        backgroundColor: chartColors.red,
+        data: years.map(
+          (year) =>
+            pastLaunches.filter(
+              ({ launch_year, launch_success }) =>
+                parseInt(launch_year) === year && !launch_success,
+            ).length,
+        ),
+      },
+      {
+        label: 'Planned',
+        backgroundColor: chartColors.white,
+        data: years.map(
+          (year) =>
+            upcomingLaunches.filter(
+              ({ launch_year }) => parseInt(launch_year) === year,
+            ).length,
+        ),
+      },
+    ],
+  };
 
-  // Custom years for upmass
-  const yearsUpmassStart = 2008; // Going beyond suborbital a decade before BO
-  const yearsUpmass = [];
-  for (let i = yearsUpmassStart; i <= yearsEnd; i++) {
-    yearsUpmass.push(i);
-  }
-
-  const falcon1Flights = new Array(years.length).fill(0);
-  const falcon9UnprovenFlights = new Array(years.length).fill(0);
-  const falcon9ProvenFlights = new Array(years.length).fill(0);
-  const falconHeavyFlights = new Array(years.length).fill(0);
-  const failureFlights = new Array(years.length).fill(0);
-  const plannedFlights = new Array(years.length).fill(0);
-
-  const flights = [];
-  const successRateFalcon9: number[] = [];
-  const successRateFalconHeavy: number[] = [];
-  const successRateAll = [];
-  let falcon9LaunchesCount = 0;
-  let failuresFalcon9 = 0;
-  let falconHeavyLaunchesCount = 0;
-  let failuresFalconHeavy = 0;
-  let failuresAll = 0;
-
-  for (let i = 1; i < pastLaunches.length + 1; i++) {
-    const launch = pastLaunches[i - 1];
-    flights.push(`#${i}`);
-
-    // Build success rate chart
-    if (launch.launch_success === false) {
-      failuresAll += 1;
-      if (launch.rocket.rocket_id === RocketType.f9) {
-        failuresFalcon9 += 1;
-      }
-      if (launch.rocket.rocket_id === RocketType.fh) {
-        failuresFalconHeavy += 1;
-      }
-    }
-    if (launch.rocket.rocket_id === RocketType.f9) {
-      falcon9LaunchesCount += 1;
-      const ratio =
-        (falcon9LaunchesCount - failuresFalcon9) / falcon9LaunchesCount;
-      successRateFalcon9.push(100 * ratio);
-    } else {
-      successRateFalcon9.push(
-        successRateFalcon9[successRateFalcon9.length - 1],
-      );
-    }
-    if (launch.rocket.rocket_id === RocketType.fh) {
-      falconHeavyLaunchesCount += 1;
-      const ratio =
-        (falconHeavyLaunchesCount - failuresFalconHeavy) /
-        falconHeavyLaunchesCount;
-      successRateFalconHeavy.push(100 * ratio);
-    } else {
-      successRateFalconHeavy.push(
-        successRateFalconHeavy[successRateFalconHeavy.length - 1],
-      );
-    }
-    successRateAll.push((100 * (i - failuresAll)) / i);
-
-    // If failure, put in failures then ignore
-    const yearIndex = parseInt(launch.launch_year) - yearsStart;
-
-    if (launch.launch_success) {
-      switch (launch.rocket.rocket_id) {
-        case RocketType.f1:
-          falcon1Flights[yearIndex] += 1;
-          break;
-
-        case RocketType.f9:
-          if (launch.rocket.first_stage.cores[0].reused) {
-            falcon9ProvenFlights[yearIndex] += 1;
-          } else {
-            falcon9UnprovenFlights[yearIndex] += 1;
-          }
-          break;
-
-        case RocketType.fh:
-          falconHeavyFlights[yearIndex] += 1;
-          break;
-
-        default:
-      }
-    } else {
-      failureFlights[yearIndex] += 1;
-    }
-  }
-
-  for (let j = 0; j < upcomingLaunches.length; j++) {
-    const yearIndex = parseInt(upcomingLaunches[j].launch_year) - yearsStart;
-    plannedFlights[yearIndex] += 1;
-  }
-
-  const flightsPerYearCustomOptions: ChartOptions = {
+  const customOptions: ChartOptions = {
     tooltips: {
       mode: 'label',
       callbacks: {
@@ -150,54 +136,78 @@ export const modelizer = ({
       },
     },
   };
-  const flightsPerYearOptions: ChartOptions = deepmerge(
+  const options: ChartOptions = deepmerge(
     settings.DEFAULTBARCHARTOPTIONS,
-    flightsPerYearCustomOptions,
+    customOptions,
   );
-  if (flightsPerYearOptions.scales?.xAxes?.length) {
-    flightsPerYearOptions.scales.xAxes[0].stacked = true;
+  if (options.scales?.xAxes?.length) {
+    options.scales.xAxes[0].stacked = true;
   }
-  if (flightsPerYearOptions.scales?.yAxes?.length) {
-    flightsPerYearOptions.scales.yAxes[0].stacked = true;
+  if (options.scales?.yAxes?.length) {
+    options.scales.yAxes[0].stacked = true;
   }
 
-  const flightsPerYearData = {
-    labels: years,
+  return { data, options };
+};
+
+const computeSuccessRate = (
+  pastLaunches: Launch[],
+  flightNumber: number,
+  rocketType?: RocketType,
+): number => {
+  const launchesUpToThatPoint = pastLaunches.filter(
+    ({ flight_number, rocket }) =>
+      flight_number <= flightNumber &&
+      (!rocketType || rocket.rocket_id === rocketType),
+  );
+
+  const launchSuccess = launchesUpToThatPoint.filter(
+    ({ launch_success }) => launch_success,
+  ).length;
+
+  return (100 * launchSuccess) / launchesUpToThatPoint.length;
+};
+
+const buildSuccessRateChart = (pastLaunches: Launch[]) => {
+  const flightNumbers = pastLaunches.map(({ flight_number }) => flight_number);
+
+  const data = {
+    labels: flightNumbers.map((flight_number) => `#${flight_number}`),
     datasets: [
       {
-        label: 'Falcon 1',
-        backgroundColor: chartColors.green,
-        data: falcon1Flights,
-      },
-      {
-        label: 'New Falcon 9',
-        backgroundColor: chartColors.blue,
-        data: falcon9UnprovenFlights,
-      },
-      {
-        label: 'Used Falcon 9',
-        backgroundColor: chartColors.lightblue,
-        data: falcon9ProvenFlights,
+        label: 'Falcon 9',
+        type: 'line',
+        data: flightNumbers.map((flightNumber) =>
+          computeSuccessRate(pastLaunches, flightNumber, RocketType.f9),
+        ),
+        fill: false,
+        borderColor: chartColors.yellow,
+        backgroundColor: chartColors.yellow,
       },
       {
         label: 'Falcon Heavy',
-        backgroundColor: chartColors.yellow,
-        data: falconHeavyFlights,
+        type: 'line',
+        data: flightNumbers.map((flightNumber) =>
+          computeSuccessRate(pastLaunches, flightNumber, RocketType.fh),
+        ),
+        fill: false,
+        borderColor: chartColors.green,
+        backgroundColor: chartColors.green,
       },
       {
-        label: 'Failure',
-        backgroundColor: chartColors.red,
-        data: failureFlights,
-      },
-      {
-        label: 'Planned',
-        backgroundColor: chartColors.white,
-        data: plannedFlights,
+        label: 'All rockets',
+        type: 'line',
+        data: flightNumbers.map((flightNumber) =>
+          computeSuccessRate(pastLaunches, flightNumber),
+        ),
+        fill: false,
+        borderColor: chartColors.blue,
+        backgroundColor: chartColors.blue,
       },
     ],
   };
 
-  const successRateCustomOptions: ChartOptions = {
+  const customOptions: ChartOptions = {
     tooltips: {
       mode: 'label',
       callbacks: {
@@ -213,61 +223,15 @@ export const modelizer = ({
       },
     },
   };
-  const successRateOptions = deepmerge(
-    settings.DEFAULTBARCHARTOPTIONS,
-    successRateCustomOptions,
-  );
+  const options = deepmerge(settings.DEFAULTBARCHARTOPTIONS, customOptions);
 
-  const successRateData = {
-    labels: flights,
-    datasets: [
-      {
-        label: 'Falcon 9',
-        type: 'line',
-        data: successRateFalcon9,
-        fill: false,
-        borderColor: chartColors.yellow,
-        backgroundColor: chartColors.yellow,
-        pointBorderColor: chartColors.yellow,
-        pointBackgroundColor: chartColors.yellow,
-        pointHoverBackgroundColor: chartColors.yellow,
-        pointHoverBorderColor: chartColors.yellow,
-      },
-      {
-        label: 'Falcon Heavy',
-        type: 'line',
-        data: successRateFalconHeavy,
-        fill: false,
-        borderColor: chartColors.green,
-        backgroundColor: chartColors.green,
-        pointBorderColor: chartColors.green,
-        pointBackgroundColor: chartColors.green,
-        pointHoverBackgroundColor: chartColors.green,
-        pointHoverBorderColor: chartColors.green,
-      },
-      {
-        label: 'All rockets',
-        type: 'line',
-        data: successRateAll,
-        fill: false,
-        borderColor: chartColors.blue,
-        backgroundColor: chartColors.blue,
-        pointBorderColor: chartColors.blue,
-        pointBackgroundColor: chartColors.blue,
-        pointHoverBackgroundColor: chartColors.blue,
-        pointHoverBorderColor: chartColors.blue,
-      },
-    ],
-  };
-
-  return {
-    flightsPerYear: {
-      data: flightsPerYearData,
-      options: flightsPerYearOptions,
-    },
-    successRates: {
-      data: successRateData,
-      options: successRateOptions,
-    },
-  };
+  return { data, options };
 };
+
+export const modelizer = ({
+  pastLaunches,
+  upcomingLaunches,
+}: SpaceXData): ModelizedSectionData => ({
+  flightsPerYear: buildFlightsPerYearChart(pastLaunches, upcomingLaunches),
+  successRates: buildSuccessRateChart(pastLaunches),
+});
