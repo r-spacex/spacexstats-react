@@ -7,7 +7,11 @@ import last from 'lodash/last';
 import range from 'lodash/range';
 
 export interface ModelizedSectionData {
-  flightsPerYear: {
+  launchesPerYear: {
+    data: ChartData;
+    options: ChartOptions;
+  };
+  launchesPerRocket: {
     data: ChartData;
     options: ChartOptions;
   };
@@ -15,9 +19,10 @@ export interface ModelizedSectionData {
     data: ChartData;
     options: ChartOptions;
   };
+  totalLaunchCount: number;
 }
 
-const buildFlightsPerYearChart = (
+const buildLaunchesPerYearChart = (
   pastLaunches: Launch[],
   upcomingLaunches: Launch[],
 ) => {
@@ -228,10 +233,45 @@ const buildSuccessRateChart = (pastLaunches: Launch[]) => {
   return { data, options };
 };
 
+const buildLaunchesPerRocketChart = (pastLaunches: Launch[]) => {
+  const launchesPerRocket = {
+    'Falcon 1': pastLaunches.filter(
+      ({ rocket }) => rocket.rocket_id === RocketType.f1,
+    ).length,
+    'Falcon 9': pastLaunches.filter(
+      ({ rocket }) => rocket.rocket_id === RocketType.f9,
+    ).length,
+    'Falcon Heavy': pastLaunches.filter(
+      ({ rocket }) => rocket.rocket_id === RocketType.fh,
+    ).length,
+  };
+
+  const data = {
+    labels: Object.keys(launchesPerRocket),
+    datasets: [
+      {
+        data: Object.values(launchesPerRocket),
+        backgroundColor: [
+          chartColors.green,
+          chartColors.blue,
+          chartColors.yellow,
+        ],
+      },
+    ],
+  };
+
+  const customOptions: ChartOptions = {};
+  const options = deepmerge(settings.DEFAULTCHARTOPTIONS, customOptions);
+
+  return { data, options };
+};
+
 export const modelizer = ({
   pastLaunches,
   upcomingLaunches,
 }: SpaceXData): ModelizedSectionData => ({
-  flightsPerYear: buildFlightsPerYearChart(pastLaunches, upcomingLaunches),
+  launchesPerYear: buildLaunchesPerYearChart(pastLaunches, upcomingLaunches),
+  launchesPerRocket: buildLaunchesPerRocketChart(pastLaunches),
   successRates: buildSuccessRateChart(pastLaunches),
+  totalLaunchCount: pastLaunches.length,
 });

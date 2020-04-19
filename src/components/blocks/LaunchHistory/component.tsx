@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar, Line } from 'react-chartjs-2';
+import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import Section, {
   SectionContent,
   SectionDescription,
@@ -8,23 +8,51 @@ import { modelizer } from './modelizer';
 import { BlockProps } from 'types';
 
 const LauncHistory: React.FC<BlockProps> = ({ data, ...rest }) => {
-  const { flightsPerYear, successRates } = modelizer(data);
+  const {
+    launchesPerYear,
+    launchesPerRocket,
+    successRates,
+    totalLaunchCount,
+  } = modelizer(data);
 
   const tabs = [
     {
       id: 'per-year',
-      label: 'Launches Per Year',
+      label: 'Per Year',
       background: 'falconheavy.jpg',
-      title: 'Launches Per Year',
+      title: 'Per Year',
       render: (
         <>
           <SectionContent>
-            <Bar data={flightsPerYear.data} options={flightsPerYear.options} />
+            <Bar
+              data={launchesPerYear.data}
+              options={launchesPerYear.options}
+            />
           </SectionContent>
           <SectionDescription>
             {`With an ever-increasing launch cadence, SpaceX has surpassed other
             launch providers by annual vehicles launched and continues, nearly year-on-year,
             to set vehicle flight records.`}
+          </SectionDescription>
+        </>
+      ),
+    },
+    {
+      id: 'per-rocket',
+      label: 'Per Rocket',
+      background: 'falconheavy.jpg',
+      title: 'Per Rocket',
+      render: (
+        <>
+          <SectionContent>
+            <Doughnut
+              data={launchesPerRocket.data}
+              options={launchesPerRocket.options}
+            />
+          </SectionContent>
+          <SectionDescription>
+            {`As of today, SpaceX has launched ${totalLaunchCount} rockets, carrying
+            a variety of payloads to multiple destinations;including LEO, GTO, L1, and the ISS.`}
           </SectionDescription>
         </>
       ),
