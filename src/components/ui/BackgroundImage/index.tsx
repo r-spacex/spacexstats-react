@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { StaticQuery, graphql } from 'gatsby';
 import BackgroundImage from 'gatsby-background-image';
 
-const BackgroundImg = ({ filename, children, tag, ...rest }) => (
+interface Props {
+  filename: string;
+  children: ReactNode;
+  // eslint-disable-next-line
+  tag: any;
+}
+
+const BackgroundImg: React.FC<Props> = ({
+  filename,
+  children,
+  tag,
+  ...rest
+}) => (
   <StaticQuery
     query={graphql`
       query {

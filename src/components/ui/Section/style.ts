@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import BackgroundImage from 'components/ui/BackgroundImage';
 
 import { colorUsages, fonts, thresholds } from 'stylesheet';
@@ -89,7 +89,12 @@ export const SectionDescription = styled.div`
 const chevronThickness = '0.25rem';
 const chevronWidth = '1rem';
 
-export const Control = styled.button`
+interface ButtonProps {
+  up?: boolean;
+  down?: boolean;
+}
+
+export const Control = styled.button<ButtonProps>`
   position: absolute;
   cursor: pointer;
   right: 1rem;
@@ -111,6 +116,14 @@ export const Control = styled.button`
     transform: rotate(${({ up }) => (up ? `-45deg` : `135deg`)});
   }
 
-  ${({ up }) => up && `top: -2rem`}
-  ${({ down }) => down && `bottom: -2rem`}
+  ${({ up }) =>
+    up &&
+    css`
+      top: -2rem;
+    `}
+  ${({ down }) =>
+    down &&
+    css`
+      bottom: -2rem;
+    `}
 `;

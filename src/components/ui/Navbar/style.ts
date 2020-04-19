@@ -1,8 +1,11 @@
 import styled from 'styled-components';
-
 import { colorUsages, thresholds } from 'stylesheet';
 
-export const Tab = styled.button`
+interface TabProps {
+  active: boolean;
+}
+
+export const Tab = styled.button<TabProps>`
   display: flex;
   flex-wrap: wrap;
 

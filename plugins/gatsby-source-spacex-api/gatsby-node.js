@@ -16,13 +16,12 @@ exports.sourceNodes = async ({
   createNodeId,
   createContentDigest,
 }) => {
-  const [pastLaunches, upcomingLaunches, cores] = await Promise.all([
+  const [launches, cores] = await Promise.all([
     apiGet('/launches'),
-    apiGet('/launches/upcoming'),
     apiGet('/cores'),
   ]);
 
-  const data = { pastLaunches, upcomingLaunches, cores };
+  const data = { launches, cores };
 
   const { createNode } = actions;
   Object.keys(data).forEach((endpoint) => {

@@ -2,14 +2,15 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "components/*": ["src/components/*"],
-      "pages/*": ["src/pages/*"],
-      "redux/*": ["src/redux/*"],
-      "settings": ["src/settings"],
-      "stylesheet": ["src/stylesheet"],
-      "utils/*": ["src/utils/*"]
+      "components/*": ["components/*"],
+      "pages/*": ["pages/*"],
+      "redux/*": ["redux/*"],
+      "settings": ["settings"],
+      "stylesheet": ["stylesheet"],
+      "types/*": ["types/*"],
+      "utils/*": ["utils/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,

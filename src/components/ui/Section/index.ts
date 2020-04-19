@@ -1,4 +1,4 @@
-export { default } from './container';
+export { default } from './component';
 export {
   Background,
   Wrapper,
