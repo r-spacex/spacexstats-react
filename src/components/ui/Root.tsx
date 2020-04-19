@@ -8,7 +8,7 @@ import {
   // Dragon,
   // Landing,
   // LaunchCount,
-  // LaunchHistory,
+  LaunchHistory,
   // LaunchPads,
   // Payloads,
   // People,
@@ -22,7 +22,7 @@ import {
 import StyleReset from 'components/ui/StyleReset';
 import { getScrollPercentage } from 'utils/scroll';
 import { actions, sections, SectionId } from 'redux/navigation';
-import { SpaceXData } from 'types';
+import { SpaceXData, BlockProps } from 'types';
 
 const Root: React.FC<SpaceXData> = (data) => {
   const dispatch = useDispatch();
@@ -67,39 +67,33 @@ const Root: React.FC<SpaceXData> = (data) => {
     });
   }, []);
 
+  const sectionComponents: {
+    id: SectionId;
+    Component: React.FC<BlockProps>;
+  }[] = [
+    { id: 'upcoming', Component: Upcoming },
+    { id: 'starship', Component: Starship },
+    { id: 'launchhistory', Component: LaunchHistory },
+  ];
+
   return (
     <>
       <StyleReset />
 
-      <Upcoming data={data} id="upcoming" down="starship" />
-      <Starship data={data} id="starship" up="upcoming" down="about" />
+      {sectionComponents.map(({ id, Component }, index) => (
+        <Component
+          key={id}
+          id={id}
+          data={data}
+          up={index > 0 ? sectionComponents[index - 1].id : undefined}
+          down={
+            index + 1 < sectionComponents.length
+              ? sectionComponents[index + 1].id
+              : 'about'
+          }
+        />
+      ))}
 
-      {/* 
-      <LaunchCount {...data} />
-
-      <LaunchHistory {...data} />
-
-      <LaunchPads {...data} />
-
-      <Landing {...data} />
-
-      <Reuse {...data} />
-
-      <Turnarounds {...data} />
-
-      <Payloads {...data} />
-
-      <Dragon {...data} />
-
-      <People {...data} />
-
-      <Starlink {...data} />
-
-      <Starship {...data} />
-
-      <Timelines {...data} /> 
-      
-    */}
       <Footer />
     </>
   );

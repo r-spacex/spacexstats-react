@@ -1,0 +1,273 @@
+import settings from 'settings';
+import { chartColors } from 'stylesheet';
+import { ChartOptions, ChartData } from 'chart.js';
+import deepmerge from 'deepmerge';
+import { SpaceXData, RocketType } from 'types';
+
+export interface ModelizedSectionData {
+  flightsPerYear: {
+    data: ChartData;
+    options: ChartOptions;
+  };
+  successRates: {
+    data: ChartData;
+    options: ChartOptions;
+  };
+}
+
+export const modelizer = ({
+  pastLaunches,
+  upcomingLaunches,
+}: SpaceXData): ModelizedSectionData => {
+  const yearsStart = 2006; // First Falcon 1 flight
+  const yearsEnd = parseInt(
+    upcomingLaunches
+      .map((launch) => launch.launch_year)
+      .sort()
+      .slice(-1)
+      .pop()!,
+  );
+
+  const years = [];
+  for (let i = yearsStart; i <= yearsEnd; i++) {
+    years.push(i);
+  }
+
+  // Custom years for upmass
+  const yearsUpmassStart = 2008; // Going beyond suborbital a decade before BO
+  const yearsUpmass = [];
+  for (let i = yearsUpmassStart; i <= yearsEnd; i++) {
+    yearsUpmass.push(i);
+  }
+
+  const falcon1Flights = new Array(years.length).fill(0);
+  const falcon9UnprovenFlights = new Array(years.length).fill(0);
+  const falcon9ProvenFlights = new Array(years.length).fill(0);
+  const falconHeavyFlights = new Array(years.length).fill(0);
+  const failureFlights = new Array(years.length).fill(0);
+  const plannedFlights = new Array(years.length).fill(0);
+
+  const flights = [];
+  const successRateFalcon9: number[] = [];
+  const successRateFalconHeavy: number[] = [];
+  const successRateAll = [];
+  let falcon9LaunchesCount = 0;
+  let failuresFalcon9 = 0;
+  let falconHeavyLaunchesCount = 0;
+  let failuresFalconHeavy = 0;
+  let failuresAll = 0;
+
+  for (let i = 1; i < pastLaunches.length + 1; i++) {
+    const launch = pastLaunches[i - 1];
+    flights.push(`#${i}`);
+
+    // Build success rate chart
+    if (launch.launch_success === false) {
+      failuresAll += 1;
+      if (launch.rocket.rocket_id === RocketType.f9) {
+        failuresFalcon9 += 1;
+      }
+      if (launch.rocket.rocket_id === RocketType.fh) {
+        failuresFalconHeavy += 1;
+      }
+    }
+    if (launch.rocket.rocket_id === RocketType.f9) {
+      falcon9LaunchesCount += 1;
+      const ratio =
+        (falcon9LaunchesCount - failuresFalcon9) / falcon9LaunchesCount;
+      successRateFalcon9.push(100 * ratio);
+    } else {
+      successRateFalcon9.push(
+        successRateFalcon9[successRateFalcon9.length - 1],
+      );
+    }
+    if (launch.rocket.rocket_id === RocketType.fh) {
+      falconHeavyLaunchesCount += 1;
+      const ratio =
+        (falconHeavyLaunchesCount - failuresFalconHeavy) /
+        falconHeavyLaunchesCount;
+      successRateFalconHeavy.push(100 * ratio);
+    } else {
+      successRateFalconHeavy.push(
+        successRateFalconHeavy[successRateFalconHeavy.length - 1],
+      );
+    }
+    successRateAll.push((100 * (i - failuresAll)) / i);
+
+    // If failure, put in failures then ignore
+    const yearIndex = parseInt(launch.launch_year) - yearsStart;
+
+    if (launch.launch_success) {
+      switch (launch.rocket.rocket_id) {
+        case RocketType.f1:
+          falcon1Flights[yearIndex] += 1;
+          break;
+
+        case RocketType.f9:
+          if (launch.rocket.first_stage.cores[0].reused) {
+            falcon9ProvenFlights[yearIndex] += 1;
+          } else {
+            falcon9UnprovenFlights[yearIndex] += 1;
+          }
+          break;
+
+        case RocketType.fh:
+          falconHeavyFlights[yearIndex] += 1;
+          break;
+
+        default:
+      }
+    } else {
+      failureFlights[yearIndex] += 1;
+    }
+  }
+
+  for (let j = 0; j < upcomingLaunches.length; j++) {
+    const yearIndex = parseInt(upcomingLaunches[j].launch_year) - yearsStart;
+    plannedFlights[yearIndex] += 1;
+  }
+
+  const flightsPerYearCustomOptions: ChartOptions = {
+    tooltips: {
+      mode: 'label',
+      callbacks: {
+        label: (tooltipItem, data) => {
+          if (!data.datasets) {
+            return '';
+          }
+          const dataset = data.datasets[tooltipItem.datasetIndex!];
+          return tooltipItem.yLabel
+            ? `${dataset.label}: ${tooltipItem.yLabel}`
+            : '';
+        },
+        footer: (tooltipItems) => {
+          const totalCount = tooltipItems.reduce(
+            (sum, tooltipItem) => sum + (tooltipItem.yLabel as number),
+            0,
+          );
+          return `TOTAL: ${totalCount}`;
+        },
+      },
+    },
+  };
+  const flightsPerYearOptions: ChartOptions = deepmerge(
+    settings.DEFAULTBARCHARTOPTIONS,
+    flightsPerYearCustomOptions,
+  );
+  if (flightsPerYearOptions.scales?.xAxes?.length) {
+    flightsPerYearOptions.scales.xAxes[0].stacked = true;
+  }
+  if (flightsPerYearOptions.scales?.yAxes?.length) {
+    flightsPerYearOptions.scales.yAxes[0].stacked = true;
+  }
+
+  const flightsPerYearData = {
+    labels: years,
+    datasets: [
+      {
+        label: 'Falcon 1',
+        backgroundColor: chartColors.green,
+        data: falcon1Flights,
+      },
+      {
+        label: 'New Falcon 9',
+        backgroundColor: chartColors.blue,
+        data: falcon9UnprovenFlights,
+      },
+      {
+        label: 'Used Falcon 9',
+        backgroundColor: chartColors.lightblue,
+        data: falcon9ProvenFlights,
+      },
+      {
+        label: 'Falcon Heavy',
+        backgroundColor: chartColors.yellow,
+        data: falconHeavyFlights,
+      },
+      {
+        label: 'Failure',
+        backgroundColor: chartColors.red,
+        data: failureFlights,
+      },
+      {
+        label: 'Planned',
+        backgroundColor: chartColors.white,
+        data: plannedFlights,
+      },
+    ],
+  };
+
+  const successRateCustomOptions: ChartOptions = {
+    tooltips: {
+      mode: 'label',
+      callbacks: {
+        label: (tooltipItem, data) => {
+          if (!data.datasets) {
+            return '';
+          }
+          const dataset = data.datasets[tooltipItem.datasetIndex!];
+          return tooltipItem.yLabel
+            ? `${dataset.label}: ${(tooltipItem.yLabel as number).toFixed(2)}%`
+            : '';
+        },
+      },
+    },
+  };
+  const successRateOptions = deepmerge(
+    settings.DEFAULTBARCHARTOPTIONS,
+    successRateCustomOptions,
+  );
+
+  const successRateData = {
+    labels: flights,
+    datasets: [
+      {
+        label: 'Falcon 9',
+        type: 'line',
+        data: successRateFalcon9,
+        fill: false,
+        borderColor: chartColors.yellow,
+        backgroundColor: chartColors.yellow,
+        pointBorderColor: chartColors.yellow,
+        pointBackgroundColor: chartColors.yellow,
+        pointHoverBackgroundColor: chartColors.yellow,
+        pointHoverBorderColor: chartColors.yellow,
+      },
+      {
+        label: 'Falcon Heavy',
+        type: 'line',
+        data: successRateFalconHeavy,
+        fill: false,
+        borderColor: chartColors.green,
+        backgroundColor: chartColors.green,
+        pointBorderColor: chartColors.green,
+        pointBackgroundColor: chartColors.green,
+        pointHoverBackgroundColor: chartColors.green,
+        pointHoverBorderColor: chartColors.green,
+      },
+      {
+        label: 'All rockets',
+        type: 'line',
+        data: successRateAll,
+        fill: false,
+        borderColor: chartColors.blue,
+        backgroundColor: chartColors.blue,
+        pointBorderColor: chartColors.blue,
+        pointBackgroundColor: chartColors.blue,
+        pointHoverBackgroundColor: chartColors.blue,
+        pointHoverBorderColor: chartColors.blue,
+      },
+    ],
+  };
+
+  return {
+    flightsPerYear: {
+      data: flightsPerYearData,
+      options: flightsPerYearOptions,
+    },
+    successRates: {
+      data: successRateData,
+      options: successRateOptions,
+    },
+  };
+};

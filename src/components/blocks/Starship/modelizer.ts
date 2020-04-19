@@ -24,7 +24,7 @@ const hops: Hop[] = [
 ];
 
 export const modelizer = (_: SpaceXData): ModelizedSectionData => {
-  const data = {
+  const starshipHopsData = {
     labels: hops.map((hop) =>
       hop.date ? format(hop.date, 'MMM do yyyy') : 'Next tentative',
     ),
@@ -42,7 +42,7 @@ export const modelizer = (_: SpaceXData): ModelizedSectionData => {
     ],
   };
 
-  const starshipHopsOptions: ChartOptions = {
+  const starshipHopsCustomOptions: ChartOptions = {
     tooltips: {
       mode: 'label',
       callbacks: {
@@ -53,20 +53,19 @@ export const modelizer = (_: SpaceXData): ModelizedSectionData => {
       },
     },
   };
-
-  const options = deepmerge(
+  const starshipHopsOptions = deepmerge(
     settings.DEFAULTBARCHARTOPTIONS,
-    starshipHopsOptions,
+    starshipHopsCustomOptions,
   );
-  if (options.scales?.yAxes?.length) {
-    options.scales.yAxes[0].stacked = false;
-    options.scales.yAxes[0].type = 'logarithmic';
+  if (starshipHopsOptions.scales?.yAxes?.length) {
+    starshipHopsOptions.scales.yAxes[0].stacked = false;
+    starshipHopsOptions.scales.yAxes[0].type = 'logarithmic';
   }
 
   return {
     starshipHops: {
-      data,
-      options,
+      data: starshipHopsData,
+      options: starshipHopsOptions,
     },
   };
 };

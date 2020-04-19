@@ -50,7 +50,6 @@ export default {
     scales: {
       xAxes: [
         {
-          stacked: true,
           gridLines: {
             display: false,
             color: chartColors.white,
@@ -62,7 +61,6 @@ export default {
       ],
       yAxes: [
         {
-          stacked: true,
           gridLines: {
             color: chartColors.grey,
           },
