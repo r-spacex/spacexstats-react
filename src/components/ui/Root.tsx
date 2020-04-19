@@ -38,29 +38,27 @@ const Root: React.FC<SpaceXData> = (data) => {
     ReactGA.initialize('UA-108091199-1');
     ReactGA.pageview('/');
 
-    setTimeout(async () => {
-      if (window.location.hash !== '') {
-        const anchorHash = window.location.hash.replace('#', '');
-        const [section, tab] = anchorHash.split(/\-(.+)/);
+    if (window.location.hash !== '') {
+      const anchorHash = window.location.hash.replace('#', '');
+      const [section, tab] = anchorHash.split(/\-(.+)/);
 
-        if (!sections.includes(section as SectionId)) {
-          return;
-        }
-
-        dispatch(
-          actions.changeTab({
-            section: section as SectionId,
-            tab,
-          }),
-        );
-        dispatch(
-          actions.navigateTo({
-            section: section as SectionId,
-            down: true,
-          }),
-        );
+      if (!sections.includes(section as SectionId)) {
+        return;
       }
-    }, 700);
+
+      dispatch(
+        actions.changeTab({
+          section: section as SectionId,
+          tab,
+        }),
+      );
+      dispatch(
+        actions.navigateTo({
+          section: section as SectionId,
+          down: true,
+        }),
+      );
+    }
 
     window.addEventListener('scroll', () => {
       NProgress.set(getScrollPercentage());

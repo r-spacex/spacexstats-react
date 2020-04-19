@@ -18,7 +18,7 @@ export const scrollTo = (testAnchor: string) => {
     return;
   }
 
-  element.scrollIntoView({ behavior: 'smooth' });
+  element.scrollIntoView();
 };
 
 export const updateHash = (hash: string) => {
