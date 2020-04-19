@@ -17,6 +17,7 @@
     "chart.js": "^2.9.3",
     "chartjs-plugin-zoom": "^0.7.5",
     "date-fns": "^2.12.0",
+    "deepmerge": "^4.2.2",
     "gatsby": "^2.20.24",
     "gatsby-background-image": "^1.1.1",
     "gatsby-image": "^2.3.4",

@@ -1,6 +1,9 @@
 import { chartColors } from 'stylesheet';
 
 const commonChartOptions = {
+  defaultFontFamily: 'Noto Sans',
+  defaultFontColor: chartColors.white,
+  defaultColor: chartColors.white,
   title: {
     display: false,
   },
@@ -15,7 +18,6 @@ const commonChartOptions = {
   legend: {
     position: 'bottom',
     labels: {
-      fontFamily: 'Noto Sans',
       fontColor: chartColors.white,
     },
   },
@@ -54,7 +56,6 @@ export default {
             color: chartColors.white,
           },
           ticks: {
-            fontFamily: 'Noto Sans',
             fontColor: chartColors.white,
           },
         },
@@ -66,7 +67,6 @@ export default {
             color: chartColors.grey,
           },
           ticks: {
-            fontFamily: 'Noto Sans',
             fontColor: chartColors.white,
           },
         },
