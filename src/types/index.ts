@@ -6,6 +6,13 @@ export enum RocketType {
   fh = 'falconheavy',
 }
 
+export enum Launchpad {
+  kwajalein = 'kwajalein_atoll',
+  slc40 = 'ccafs_slc_40',
+  vafb = 'vafb_slc_4e',
+  lc39a = 'ksc_lc_39a',
+}
+
 export enum LaunchDatePrecision {
   second = 'second',
   minute = 'minute',
@@ -89,7 +96,7 @@ export interface Launch {
     fairings: LaunchFairings | null;
   };
   launch_site: {
-    site_id: string;
+    site_id: Launchpad;
     site_name: string;
   };
   launch_success: boolean;

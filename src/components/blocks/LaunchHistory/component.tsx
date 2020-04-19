@@ -11,6 +11,7 @@ const LauncHistory: React.FC<BlockProps> = ({ data, ...rest }) => {
   const {
     launchesPerYear,
     launchesPerRocket,
+    launchesPerLaunchpad,
     successRates,
     totalLaunchCount,
   } = modelizer(data);
@@ -48,6 +49,26 @@ const LauncHistory: React.FC<BlockProps> = ({ data, ...rest }) => {
             <Doughnut
               data={launchesPerRocket.data}
               options={launchesPerRocket.options}
+            />
+          </SectionContent>
+          <SectionDescription>
+            {`As of today, SpaceX has launched ${totalLaunchCount} rockets, carrying
+            a variety of payloads to multiple destinations;including LEO, GTO, L1, and the ISS.`}
+          </SectionDescription>
+        </>
+      ),
+    },
+    {
+      id: 'per-launchpad',
+      label: 'Per Launchpad',
+      background: 'falconheavy.jpg',
+      title: 'Per Launchpad',
+      render: (
+        <>
+          <SectionContent>
+            <Doughnut
+              data={launchesPerLaunchpad.data}
+              options={launchesPerLaunchpad.options}
             />
           </SectionContent>
           <SectionDescription>
