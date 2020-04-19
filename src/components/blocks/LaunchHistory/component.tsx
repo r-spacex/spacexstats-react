@@ -41,7 +41,7 @@ const LauncHistory: React.FC<BlockProps> = ({ data, ...rest }) => {
     {
       id: 'per-rocket',
       label: 'Per Rocket',
-      background: 'falconheavy.jpg',
+      background: 'iridium1.jpg',
       title: 'Per Rocket',
       render: (
         <>
@@ -61,7 +61,7 @@ const LauncHistory: React.FC<BlockProps> = ({ data, ...rest }) => {
     {
       id: 'per-launchpad',
       label: 'Per Launchpad',
-      background: 'falconheavy.jpg',
+      background: 'capeflorida.jpg',
       title: 'Per Launchpad',
       render: (
         <>
@@ -72,8 +72,10 @@ const LauncHistory: React.FC<BlockProps> = ({ data, ...rest }) => {
             />
           </SectionContent>
           <SectionDescription>
-            {`As of today, SpaceX has launched ${totalLaunchCount} rockets, carrying
-            a variety of payloads to multiple destinations;including LEO, GTO, L1, and the ISS.`}
+            {`SpaceX launches rockets from multiple launchpads to allow for a
+            variety of orbits. Omelek Island in Kwajalein Atoll was SpaceX's
+            first launch site, and now the company has 4 launch pads. Boca Chica
+            is a privately owned launchpad and will exclusively launch Starship.`}
           </SectionDescription>
         </>
       ),
@@ -81,7 +83,7 @@ const LauncHistory: React.FC<BlockProps> = ({ data, ...rest }) => {
     {
       id: 'success-rate',
       label: 'Success Rate',
-      background: 'falconheavy.jpg',
+      background: 'ses10.jpg',
       title: 'Success Rate',
       render: (
         <>
