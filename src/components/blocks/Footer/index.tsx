@@ -51,8 +51,7 @@ const Footer: React.FC = () => {
       <WhiteBackground>
         <FooterWrapper id={FOOTER_SECTION_ID}>
           <Text>
-            Photos on this page courtesy SpaceX, NASA and BocaChicaGal. SpaceX
-            Recaps by{' '}
+            Photos on this page courtesy SpaceX and NASA. SpaceX Recaps by{' '}
             <Link
               eventLabel="Exit to SpaceX Recaps YouTube channel"
               to="https://www.youtube.com/channel/UC0xhru07vavdPOqJxKRzPrg"

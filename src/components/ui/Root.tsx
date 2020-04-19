@@ -11,11 +11,11 @@ import {
   LaunchHistory,
   // LaunchPads,
   // Payloads,
-  // People,
+  People,
   // Reuse,
   // Starlink,
   Starship,
-  // Timelines,
+  Timelines,
   // Turnarounds,
   Footer,
 } from 'components/blocks';
@@ -72,6 +72,8 @@ const Root: React.FC<SpaceXData> = (data) => {
     { id: 'upcoming', Component: Upcoming },
     { id: 'starship', Component: Starship },
     { id: 'launchhistory', Component: LaunchHistory },
+    { id: 'people', Component: People },
+    { id: 'timelines', Component: Timelines },
   ];
 
   return (
