@@ -2,17 +2,19 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Root from 'components/ui/Root';
 import SEO from 'components/ui/SEO';
-import { SpaceXAPIData } from 'types';
+import { Launch, Core } from 'types';
 
 interface Props {
   data: {
-    spacexData: SpaceXAPIData;
+    spacexdatalaunches: { launches: Launch[] };
+    spacexdatacores: { cores: Core[] };
   };
 }
 
 const IndexPage: React.FC<Props> = ({
   data: {
-    spacexData: { launches, cores },
+    spacexdatalaunches: { launches },
+    spacexdatacores: { cores },
   },
 }) => {
   const pastLaunches = launches.filter((launch) => !launch.upcoming);
@@ -34,7 +36,7 @@ export default IndexPage;
 
 export const query = graphql`
   query IndexQuery {
-    spacexData {
+    spacexdatalaunches {
       launches {
         flight_number
         mission_name
@@ -85,6 +87,8 @@ export const query = graphql`
         details
         upcoming
       }
+    }
+    spacexdatacores {
       cores {
         core_serial
         status

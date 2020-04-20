@@ -33,7 +33,7 @@ exports.sourceNodes = async ({
       parent: null,
       children: [],
       internal: {
-        type: `spacexData`,
+        type: `spacexdata${endpoint}`,
         mediaType: `text/html`,
         content: nodeContent,
         contentDigest: createContentDigest(nodeData),
