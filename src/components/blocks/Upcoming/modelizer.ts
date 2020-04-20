@@ -46,7 +46,6 @@ const displayLaunchTime = (date: Date, precision: LaunchDatePrecision) => {
 };
 
 const sortLaunches = (launchA: Launch, launchB: Launch) => {
-  console.log(launchA);
   const yearA = parseInt(launchA.launch_year);
   const yearB = parseInt(launchB.launch_year);
 

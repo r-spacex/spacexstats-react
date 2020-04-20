@@ -12,7 +12,7 @@ import {
   // LaunchPads,
   // Payloads,
   People,
-  // Reuse,
+  Reuse,
   // Starlink,
   Starship,
   Timelines,
@@ -67,6 +67,7 @@ const Root: React.FC<SpaceXData> = (data) => {
     { id: 'upcoming', Component: Upcoming },
     { id: 'starship', Component: Starship },
     { id: 'launchhistory', Component: LaunchHistory },
+    { id: 'reuse', Component: Reuse },
     { id: 'people', Component: People },
     { id: 'timelines', Component: Timelines },
   ];

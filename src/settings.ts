@@ -44,7 +44,6 @@ export default {
         {
           gridLines: {
             display: false,
-            color: chartColors.white,
           },
           ticks: {
             fontColor: chartColors.white,
@@ -54,7 +53,9 @@ export default {
       yAxes: [
         {
           gridLines: {
-            color: chartColors.grey,
+            display: true,
+            color: chartColors.white,
+            zeroLineColor: chartColors.white,
           },
           ticks: {
             fontColor: chartColors.white,
