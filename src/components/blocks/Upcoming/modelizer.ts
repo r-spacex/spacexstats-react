@@ -45,51 +45,89 @@ const displayLaunchTime = (date: Date, precision: LaunchDatePrecision) => {
   }
 };
 
-const sortLaunches = (
-  { launch_date_unix: dateAUnix, tentative_max_precision: precisionA }: Launch,
-  { launch_date_unix: dateBUnix, tentative_max_precision: precisionB }: Launch,
-) => {
-  const dateA = fromUnix(dateAUnix);
-  const dateB = fromUnix(dateBUnix);
+const sortLaunches = (launchA: Launch, launchB: Launch) => {
+  console.log(launchA);
+  const yearA = parseInt(launchA.launch_year);
+  const yearB = parseInt(launchB.launch_year);
 
-  if (precisionA === LaunchDatePrecision.year) {
-    if (precisionB === LaunchDatePrecision.year) {
-      return dateA.getFullYear() - dateB.getFullYear();
-    }
+  // This is the logic: better precision always comes first in the same time scale
+  // Are these launches the same year?
+  if (yearA > yearB) {
     return 1;
   }
-
-  if (
-    precisionA === LaunchDatePrecision.quarter &&
-    precisionB === LaunchDatePrecision.quarter
-  ) {
-    return dateAUnix - dateBUnix;
+  if (yearA < yearB) {
+    return -1;
   }
 
-  // Priority to day-positioned dates, then months, then quarters
+  // These launches are the same year, is one of them more precise?
+  const precisionA = launchA.tentative_max_precision;
+  const precisionB = launchB.tentative_max_precision;
+  if (
+    precisionA === LaunchDatePrecision.year &&
+    precisionB !== LaunchDatePrecision.year
+  ) {
+    return 1;
+  }
+  if (
+    precisionA !== LaunchDatePrecision.year &&
+    precisionB === LaunchDatePrecision.year
+  ) {
+    return -1;
+  }
+
+  // Now the launches are the same year and same precision
+  // Are these launches the same quarter?
+  const dateA = fromUnix(launchA.launch_date_unix);
+  const dateB = fromUnix(launchB.launch_date_unix);
   const quarterA = getQuarter(dateA);
   const quarterB = getQuarter(dateB);
-  if (quarterA === quarterB) {
-    if (precisionA === LaunchDatePrecision.quarter) {
-      return 1;
-    }
-    if (precisionB === LaunchDatePrecision.quarter) {
-      return -1;
-    }
+
+  if (quarterA > quarterB) {
+    return 1;
+  }
+  if (quarterA < quarterB) {
+    return -1;
   }
 
+  // These launches are the same quarter, is one of them more precise?
+  if (
+    precisionA === LaunchDatePrecision.quarter &&
+    precisionB !== LaunchDatePrecision.quarter
+  ) {
+    return 1;
+  }
+  if (
+    precisionA !== LaunchDatePrecision.quarter &&
+    precisionB === LaunchDatePrecision.quarter
+  ) {
+    return -1;
+  }
+
+  // Are these launches the same month?
   const monthA = dateA.getMonth();
   const monthB = dateB.getMonth();
-  if (monthA === monthB) {
-    if (precisionA === LaunchDatePrecision.month) {
-      return 1;
-    }
-    if (precisionB === LaunchDatePrecision.month) {
-      return -1;
-    }
+  if (monthA > monthB) {
+    return 1;
+  }
+  if (monthA < monthB) {
+    return -1;
   }
 
-  return dateAUnix - dateBUnix;
+  // These launches are the same month, is one of them more precise?
+  if (
+    precisionA === LaunchDatePrecision.month &&
+    precisionB !== LaunchDatePrecision.month
+  ) {
+    return 1;
+  }
+  if (
+    precisionA !== LaunchDatePrecision.month &&
+    precisionB === LaunchDatePrecision.month
+  ) {
+    return -1;
+  }
+
+  return launchA.launch_date_unix - launchB.launch_date_unix;
 };
 
 const getPayloadDescription = (launch: Launch): string => {
