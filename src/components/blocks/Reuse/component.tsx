@@ -20,21 +20,22 @@ const Reuse: React.FC<BlockProps> = ({ data, ...rest }) => {
 
   const tabs = [
     {
-      id: 'reflown',
-      label: 'Reflown',
+      id: 'reused-flights',
+      label: 'Reused flights',
       background: 'reuse.jpg',
-      title: 'Reflown',
+      title: 'Reused flights',
       render: (
         <>
           <SectionContent>
             <IntegerStat
               value={reflownLaunchesCount}
-              subtitle="Reflown flights"
+              subtitle="Reused flights"
             />
           </SectionContent>
           <SectionDescription>
-            {`Once on the ground, the booster must be able to be refurbished and reflown in minimal time and with
-          minimal cost. Only then can they be reflown, reducing launch costs significantly.`}
+            {`Once on the ground, the booster must be able to be refurbished and
+            reflown in minimal time and with minimal cost. Only then can they be
+            reflown, reducing launch costs significantly.`}
           </SectionDescription>
         </>
       ),
@@ -70,11 +71,14 @@ const Reuse: React.FC<BlockProps> = ({ data, ...rest }) => {
             />
           </SectionContent>
           <SectionDescription>
-            {`The turnaround for a reflown booster includes the refurbishment time but also the time to find a
-          customer willing to use it. SpaceX's ultimate goal is to achieve a 24h turnaround. The quickest
-          turnaround for the same booster was set at ${quickestReuseTurnaround.turnaround} by the
-          ${quickestReuseTurnaround.core} booster, between the ${quickestReuseTurnaround.launch1}
-          and ${quickestReuseTurnaround.launch2} missions.`}
+            {`The turnaround for a reflown booster includes the refurbishment time
+            but also the time to find a customer willing to use it. SpaceX's
+            ultimate goal is to achieve a 24h turnaround. The quickest
+            turnaround for the same booster was set at
+            ${quickestReuseTurnaround.turnaround} by the
+            ${quickestReuseTurnaround.core} booster, between the 
+            ${quickestReuseTurnaround.launch1}
+            and ${quickestReuseTurnaround.launch2} missions.`}
           </SectionDescription>
         </>
       ),
