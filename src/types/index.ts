@@ -37,6 +37,7 @@ export enum LandingVehicle {
 }
 
 export enum Orbit {
+  esl1 = 'ES-L1',
   hco = 'HCO',
   heo = 'HEO',
   gto = 'GTO',
@@ -46,6 +47,8 @@ export enum Orbit {
   po = 'PO',
   sso = 'SSO',
   vleo = 'VLEO',
+  // Unorminal
+  suborbital = 'so',
 }
 
 export interface Payload {

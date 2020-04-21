@@ -5,7 +5,6 @@ import Section, {
   SectionDescription,
 } from 'components/ui/Section';
 import IntegerStat from 'components/ui/IntegerStat';
-
 import { modelizer } from './modelizer';
 import { BlockProps } from 'types';
 
@@ -19,10 +18,10 @@ const Landing: React.FC<BlockProps> = ({ data, ...rest }) => {
 
   const tabs = [
     {
-      id: 'cores-landed',
-      label: 'Cores Landed',
+      id: 'boosters-landed',
+      label: 'Boosters Landed',
       background: 'doublelanding.jpg',
-      title: 'Cores Landed',
+      title: 'Boosters Landed',
       render: (
         <>
           <SectionContent>

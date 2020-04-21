@@ -253,6 +253,7 @@ const buildFairingsRecoveryChart = (pastLaunches: Launch[]) => {
   }
   if (options.scales?.yAxes?.length) {
     options.scales.yAxes[0].stacked = true;
+    options.scales.yAxes[0].ticks.stepSize = 1;
   }
 
   return { data, options };

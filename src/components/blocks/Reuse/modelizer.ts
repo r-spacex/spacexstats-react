@@ -86,6 +86,9 @@ const buildMostLaunchesChart = (cores: Core[]) => {
   if (options.scales?.xAxes?.length) {
     options.scales.xAxes[0].stacked = true;
   }
+  if (options.scales?.yAxes?.length) {
+    options.scales.yAxes[0].ticks.stepSize = 1;
+  }
 
   return { data, options, mostLaunchedCore: sortedCores[0] };
 };

@@ -4,19 +4,17 @@ import 'nprogress/nprogress.css';
 import ReactGA from 'react-ga';
 import { useDispatch } from 'react-redux';
 import {
-  Upcoming,
   // Dragon,
-  // Landing,
+  Footer,
   LaunchHistory,
-  // LaunchPads,
-  // Payloads,
+  Payloads,
   People,
   Recovery,
   Reuse,
   // Starlink,
   Starship,
   Timelines,
-  Footer,
+  Upcoming,
 } from 'components/blocks';
 import StyleReset from 'components/ui/StyleReset';
 import { getScrollPercentage, scrollTo } from 'utils/scroll';
@@ -68,6 +66,7 @@ const Root: React.FC<SpaceXData> = (data) => {
     { id: 'launchhistory', Component: LaunchHistory },
     { id: 'recovery', Component: Recovery },
     { id: 'reuse', Component: Reuse },
+    { id: 'payloads', Component: Payloads },
     { id: 'people', Component: People },
     { id: 'timelines', Component: Timelines },
   ];
