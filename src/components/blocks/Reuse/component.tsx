@@ -4,10 +4,10 @@ import Section, {
   SectionDescription,
 } from 'components/ui/Section';
 import IntegerStat from 'components/ui/IntegerStat';
-import { modelizer } from './modelizer';
-import { BlockProps } from 'types';
 import TimeStat from 'components/ui/TimeStat';
 import { Bar } from 'react-chartjs-2';
+import { modelizer } from './modelizer';
+import { BlockProps } from 'types';
 
 const Reuse: React.FC<BlockProps> = ({ data, ...rest }) => {
   const {
@@ -94,9 +94,9 @@ const Reuse: React.FC<BlockProps> = ({ data, ...rest }) => {
             <IntegerStat value={reflownFairingsCount} subtitle="Reflown" />
           </SectionContent>
           <SectionDescription>
-            {`Made of carbon fiber, the industrial process required to make the fairings is time and factory space
-                consuming. Reusing them is the next step towards reduced launch costs. Although SpaceX already fished
-                out fairings, it has yet to retrieve them intact from the corrosion of salt water.`}
+            {`Once SpaceX checked that the fairings were intact from the corrosion
+            of salt water, they can be reused on future flights. The first
+            fairing reuse happened in November 2019 on a Starlink launch.`}
           </SectionDescription>
         </>
       ),

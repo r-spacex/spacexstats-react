@@ -24,6 +24,7 @@ export enum LaunchDatePrecision {
 }
 
 export enum LandingType {
+  ocean = 'Ocean',
   asds = 'ASDS',
   rtls = 'RTLS',
 }
@@ -67,6 +68,16 @@ export interface LaunchFairings {
   ship: string;
 }
 
+export interface LaunchCore {
+  core_serial: string;
+  flight: number;
+  land_success: boolean;
+  landing_intent: boolean;
+  landing_type: LandingType;
+  landing_vehicle: LandingVehicle;
+  reused: boolean;
+}
+
 export interface Launch {
   flight_number: number;
   mission_name: string;
@@ -78,17 +89,7 @@ export interface Launch {
     rocket_id: RocketType;
     rocket_name: string;
     first_stage: {
-      cores: [
-        {
-          core_serial: string;
-          flight: number;
-          land_success: boolean;
-          landing_intent: boolean;
-          landing_type: LaunchDatePrecision;
-          landing_vehicle: LandingVehicle;
-          reused: boolean;
-        },
-      ];
+      cores: LaunchCore[];
     };
     second_stage: {
       payloads: Payload[];
