@@ -139,7 +139,7 @@ export const modelizer = ({
     0,
   );
 
-  const mostLaunches = buildMostLaunchesChart(cores, pastLaunches);
+  const mostLaunches = buildMostLaunchesChart(cores);
   const { mostLaunchedCore } = mostLaunches;
 
   const reflownFairingsCount = pastLaunches.filter(
