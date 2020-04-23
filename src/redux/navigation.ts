@@ -1,16 +1,13 @@
 import ReactGA from 'react-ga';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { scrollTo, updateHash } from 'utils/scroll';
+import { scrollTo } from 'utils/scroll';
 import { RootState } from './types';
 
 export type NavigationState = Readonly<{
   upcoming: string | null;
-  launchcount: string | null;
   launchhistory: string | null;
-  launchpads: string | null;
-  landing: string | null;
+  recovery: string | null;
   reuse: string | null;
-  turnarounds: string | null;
   payloads: string | null;
   dragon: string | null;
   people: string | null;
@@ -22,12 +19,9 @@ export type NavigationState = Readonly<{
 
 const initialState: NavigationState = {
   upcoming: null,
-  launchcount: null,
   launchhistory: null,
-  launchpads: null,
-  landing: null,
+  recovery: null,
   reuse: null,
-  turnarounds: null,
   payloads: null,
   dragon: null,
   people: null,

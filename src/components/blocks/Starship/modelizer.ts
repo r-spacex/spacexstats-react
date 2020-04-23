@@ -44,7 +44,6 @@ const buildStarshipHopsChart = () => {
 
   const customOptions: ChartOptions = {
     tooltips: {
-      mode: 'label',
       callbacks: {
         label: (tooltipItem) =>
           tooltipItem.value && parseInt(tooltipItem.value) > 0

@@ -63,7 +63,6 @@ const buildMostLaunchesChart = (cores: Core[]) => {
 
   const customOptions: ChartOptions = {
     tooltips: {
-      mode: 'label',
       callbacks: {
         label: (tooltipItem) => {
           const currentCore = sortedCores.find(

@@ -68,7 +68,6 @@ const buildCustomersChart = (pastLaunches: Launch[]) => {
 
   const customOptions: ChartOptions = {
     tooltips: {
-      mode: 'label',
       callbacks: {
         label: (tooltipItem) => {
           if (
@@ -164,7 +163,6 @@ const buildUpmassPerYearChart = (pastLaunches: Launch[]) => {
 
   const customOptions: ChartOptions = {
     tooltips: {
-      mode: 'label',
       callbacks: {
         label: (tooltipItem) => {
           if (
@@ -174,8 +172,8 @@ const buildUpmassPerYearChart = (pastLaunches: Launch[]) => {
             return '';
           }
           const dataset = data.datasets[tooltipItem.datasetIndex];
-          return `${dataset.label}: ${(
-            tooltipItem.yLabel || 0
+          return `${dataset.label}: ${Math.ceil(
+            Number(tooltipItem.yLabel),
           ).toLocaleString()}kg`;
         },
         footer: (tooltipItems) => {
@@ -183,7 +181,7 @@ const buildUpmassPerYearChart = (pastLaunches: Launch[]) => {
             (sum, tooltipItem) => sum + (tooltipItem.yLabel as number),
             0,
           );
-          return `TOTAL: ${totalCount.toLocaleString()}kg`;
+          return `TOTAL: ${Math.ceil(totalCount).toLocaleString()}kg`;
         },
       },
     },
@@ -195,7 +193,7 @@ const buildUpmassPerYearChart = (pastLaunches: Launch[]) => {
   if (options.scales?.yAxes?.length) {
     options.scales.yAxes[0].stacked = true;
     options.scales.yAxes[0].ticks.callback = (label) =>
-      `${Number(label).toLocaleString()} kg`;
+      `${Math.ceil(Number(label)).toLocaleString()}kg`;
   }
 
   return { data, options };

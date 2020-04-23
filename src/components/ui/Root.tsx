@@ -4,7 +4,7 @@ import 'nprogress/nprogress.css';
 import ReactGA from 'react-ga';
 import { useDispatch } from 'react-redux';
 import {
-  // Dragon,
+  Dragon,
   Footer,
   LaunchHistory,
   Payloads,
@@ -67,6 +67,7 @@ const Root: React.FC<SpaceXData> = (data) => {
     { id: 'recovery', Component: Recovery },
     { id: 'reuse', Component: Reuse },
     { id: 'payloads', Component: Payloads },
+    { id: 'dragon', Component: Dragon },
     { id: 'people', Component: People },
     { id: 'timelines', Component: Timelines },
   ];
