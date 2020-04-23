@@ -106,7 +106,7 @@ const buildUpmassPerYearChart = (pastLaunches: Launch[]) => {
   pastLaunches.forEach((launch) => {
     launch.rocket.second_stage.payloads.forEach((payload) => {
       if (!Object.values(Orbit).includes(payload.orbit)) {
-        console.log(
+        console.warn(
           `Unhandled orbit: ${payload.orbit} for launch ${launch.mission_name}`,
         );
       }
@@ -163,25 +163,26 @@ const buildUpmassPerYearChart = (pastLaunches: Launch[]) => {
 
   const customOptions: ChartOptions = {
     tooltips: {
+      mode: 'x',
       callbacks: {
         label: (tooltipItem) => {
           if (
-            !tooltipItem.datasetIndex ||
+            tooltipItem.datasetIndex === undefined ||
             !data.datasets[tooltipItem.datasetIndex]
           ) {
             return '';
           }
           const dataset = data.datasets[tooltipItem.datasetIndex];
-          return `${dataset.label}: ${Math.ceil(
-            Number(tooltipItem.yLabel),
-          ).toLocaleString()}kg`;
+          return `${dataset.label}: ${Math.floor(
+            Number(tooltipItem.yLabel) / 1000,
+          ).toLocaleString()}t`;
         },
         footer: (tooltipItems) => {
           const totalCount = tooltipItems.reduce(
             (sum, tooltipItem) => sum + (tooltipItem.yLabel as number),
             0,
           );
-          return `TOTAL: ${Math.ceil(totalCount).toLocaleString()}kg`;
+          return `TOTAL: ${Math.floor(totalCount / 1000).toLocaleString()}t`;
         },
       },
     },
@@ -193,7 +194,7 @@ const buildUpmassPerYearChart = (pastLaunches: Launch[]) => {
   if (options.scales?.yAxes?.length) {
     options.scales.yAxes[0].stacked = true;
     options.scales.yAxes[0].ticks.callback = (label) =>
-      `${Math.ceil(Number(label)).toLocaleString()}kg`;
+      `${Math.floor(Number(label) / 1000).toLocaleString()}t`;
   }
 
   return { data, options };
@@ -234,7 +235,9 @@ export const modelizer = ({
   return {
     customers: buildCustomersChart(pastLaunches),
     upmassPerYear: buildUpmassPerYearChart(pastLaunches),
-    totalMass: launchMasses.reduce((sum, { mass }) => sum + mass, 0),
+    totalMass: Math.floor(
+      launchMasses.reduce((sum, { mass }) => sum + mass, 0) / 1000,
+    ),
     heaviestPayload,
     heaviestPayloadGTO,
   };

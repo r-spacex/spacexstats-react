@@ -71,15 +71,6 @@ export const buildInSpaceChart = (starlinkLaunches: Launch[]) => {
         borderColor: chartColors.green,
         pointRadius: 0,
       },
-      {
-        label: 'Extended constellation',
-        type: 'line',
-        data: months.map(() => 12000),
-        lineTension: 0,
-        fill: false,
-        borderColor: chartColors.white,
-        pointRadius: 0,
-      },
     ],
   };
 
@@ -96,6 +87,9 @@ export const buildInSpaceChart = (starlinkLaunches: Launch[]) => {
     },
   };
   const options = deepmerge(settings.DEFAULTBARCHARTOPTIONS, customOptions);
+  if (options.scales?.yAxes?.length) {
+    options.scales.yAxes[0].ticks.callback = (label) => `${label} sats`;
+  }
 
   return { data, options };
 };
@@ -145,6 +139,7 @@ export const buildLaunchRateChart = (starlinkLaunches: Launch[]) => {
   }
   if (options.scales?.yAxes?.length) {
     options.scales.yAxes[0].stacked = true;
+    options.scales.yAxes[0].ticks.callback = (label) => `${label} sats`;
   }
 
   return { data, options };

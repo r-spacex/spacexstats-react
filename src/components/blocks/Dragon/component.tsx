@@ -85,7 +85,7 @@ const Dragon: React.FC<BlockProps> = ({ data, ...rest }) => {
             <IntegerStat value={0} subtitle="Flights" />
           </SectionContent>
           <SectionDescription>
-            {`In early 2020, NASA has selected SpaceX to deliver supplies to the
+            {`In March 2020, NASA has selected SpaceX to deliver supplies to the
             planned Gateway mini-space station in lunar orbit using a new
             version of the Dragon cargo vehicle launched atop Falcon Heavy
             rockets.`}

@@ -9,16 +9,16 @@ export const buildLaunchesPerLaunchpadChart = (pastLaunches: Launch[]) => {
     'Kwajalein Atoll': pastLaunches.filter(
       ({ launch_site }) => launch_site.site_id === Launchpad.kwajalein,
     ).length,
-    'Vandenberg Air Force Base SLC 4E': pastLaunches.filter(
+    'Vandenberg AFB SLC 4E': pastLaunches.filter(
       ({ launch_site }) => launch_site.site_id === Launchpad.vafb,
     ).length,
-    'Cape Canaveral Air Force Station SLC 40': pastLaunches.filter(
+    'Cape Canaveral SLC 40': pastLaunches.filter(
       ({ launch_site }) => launch_site.site_id === Launchpad.slc40,
     ).length,
-    'KSC Historic Launch Complex 39A': pastLaunches.filter(
+    'KSC Historic LC 39A': pastLaunches.filter(
       ({ launch_site }) => launch_site.site_id === Launchpad.lc39a,
     ).length,
-    'Boca Chica, South Texas': 0,
+    'Boca Chica, Texas': 0,
   };
 
   const data = {

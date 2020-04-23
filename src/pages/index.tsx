@@ -47,6 +47,7 @@ export const query = graphql`
         rocket {
           rocket_id
           rocket_name
+          rocket_type
           first_stage {
             cores {
               core_serial

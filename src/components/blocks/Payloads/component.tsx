@@ -46,7 +46,7 @@ const Payloads: React.FC<BlockProps> = ({ data, ...rest }) => {
             <Bar data={upmassPerYear.data} options={upmassPerYear.options} />
           </SectionContent>
           <SectionDescription>
-            {`SpaceX has launched a total of ${totalMass} kilograms worth of
+            {`SpaceX has launched a total of ${totalMass} metric tons worth of
             payloads into a variety of orbits, including interplanetary
             missions. With Falcon 9 and Falcon Heavy, SpaceX is able to cover
             most orbit and mission types. These payloads can have a variety of

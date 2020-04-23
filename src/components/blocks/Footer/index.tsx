@@ -73,24 +73,42 @@ const Footer: React.FC = () => {
             .
           </Text>
           <Text>
-            Original site concept and design by /u/EchoLogic, now recoded by
-            /u/kornelord with{' '}
+            Made with{' '}
             <Link
               eventLabel="Exit to GatsbyJS website"
               to="https://www.gatsbyjs.org/"
               title="GatsbyJS"
             >
               GatsbyJS
-            </Link>{' '}
-            and{' '}
+            </Link>
+            ,{' '}
             <Link
               eventLabel="Exit to r/spacex's API"
               to="https://github.com/r-spacex/SpaceX-API"
               title="r/spacex's API"
             >
               r/spacex’s API
+            </Link>{' '}
+            and ❤. Maintained by /u/kornelord.
+            <br />
+            Domain name rehosted by{' '}
+            <Link
+              eventLabel="Exit to Brandtamos' profile"
+              to="https://www.reddit.com/user/brandtamos"
+              title="Brandtamos' Reddit profile"
+            >
+              /u/brandtamos
             </Link>
-            .<br />
+            .{' '}
+            <Link
+              eventLabel="Exit to Github Repo"
+              to="https://github.com/r-spacex/spacexstats-react"
+              title="Contribute!"
+            >
+              GitHub repository
+            </Link>
+          </Text>
+          <Text>
             Contact for feedback:{' '}
             <Link
               eventLabel="Exit to kornelord's profile"
@@ -108,25 +126,6 @@ const Footer: React.FC = () => {
               Albéric Trancart on Twitter
             </Link>
             .
-          </Text>
-          <Text>
-            Domain name rehosted by{' '}
-            <Link
-              eventLabel="Exit to Brandtamos' profile"
-              to="https://www.reddit.com/user/brandtamos"
-              title="Brandtamos' Reddit profile"
-            >
-              /u/brandtamos
-            </Link>
-            .
-            <br />
-            <Link
-              eventLabel="Exit to Github Repo"
-              to="https://github.com/r-spacex/spacexstats-react"
-              title="Contribute!"
-            >
-              GitHub repository
-            </Link>
           </Text>
         </FooterWrapper>
       </WhiteBackground>

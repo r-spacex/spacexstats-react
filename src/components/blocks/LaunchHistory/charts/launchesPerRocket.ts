@@ -3,6 +3,7 @@ import { chartColors } from 'stylesheet';
 import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
 import { RocketType, Launch } from 'types';
+import groupBy from 'lodash/groupBy';
 
 export const buildLaunchesPerRocketChart = (pastLaunches: Launch[]) => {
   const launchesPerRocket = {
@@ -33,7 +34,30 @@ export const buildLaunchesPerRocketChart = (pastLaunches: Launch[]) => {
     ],
   };
 
-  const customOptions: ChartOptions = {};
+  const customOptions: ChartOptions = {
+    tooltips: {
+      callbacks: {
+        afterLabel: (tooltipItem) => {
+          if (
+            tooltipItem.index &&
+            data.labels[tooltipItem.index] === 'Falcon 9'
+          ) {
+            const falcon9Launches = pastLaunches.filter(
+              ({ rocket }) => rocket.rocket_id === RocketType.f9,
+            );
+            const versions = groupBy(
+              falcon9Launches,
+              (launch) => launch.rocket.rocket_type,
+            );
+            return `(${Object.keys(versions)
+              .map((version) => `${versions[version].length} ${version}`)
+              .join(', ')})`;
+          }
+          return '';
+        },
+      },
+    },
+  };
   const options = deepmerge(settings.DEFAULTCHARTOPTIONS, customOptions);
 
   return { data, options };

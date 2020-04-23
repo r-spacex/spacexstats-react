@@ -77,6 +77,9 @@ export const buildSuccessRateChart = (pastLaunches: Launch[]) => {
     },
   };
   const options = deepmerge(settings.DEFAULTBARCHARTOPTIONS, customOptions);
+  if (options.scales?.yAxes?.length) {
+    options.scales.yAxes[0].ticks.callback = (label) => `${label}%`;
+  }
 
   return { data, options };
 };

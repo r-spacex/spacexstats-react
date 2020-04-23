@@ -23,6 +23,14 @@ const hops: Hop[] = [
   { date: null, height: 150, tentative: true },
 ];
 
+const formatHeight = (label: string | number) => {
+  const height = Number(label);
+  if (height >= 1000) {
+    return `${Math.floor(height / 1000).toLocaleString()}km`;
+  }
+  return `${Math.floor(height).toLocaleString()}m`;
+};
+
 const buildStarshipHopsChart = () => {
   const data = {
     labels: hops.map((hop) =>
@@ -47,7 +55,7 @@ const buildStarshipHopsChart = () => {
       callbacks: {
         label: (tooltipItem) =>
           tooltipItem.value && parseInt(tooltipItem.value) > 0
-            ? `Height: ${parseInt(tooltipItem.value).toLocaleString()}m`
+            ? `Height: ${formatHeight(tooltipItem.value)}`
             : '',
       },
     },
@@ -58,6 +66,7 @@ const buildStarshipHopsChart = () => {
   }
   if (options.scales?.yAxes?.length) {
     options.scales.yAxes[0].type = 'logarithmic';
+    options.scales.yAxes[0].ticks.callback = formatHeight;
   }
 
   return { data, options };

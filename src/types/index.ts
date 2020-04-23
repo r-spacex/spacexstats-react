@@ -91,6 +91,7 @@ export interface Launch {
   rocket: {
     rocket_id: RocketType;
     rocket_name: string;
+    rocket_type: string;
     first_stage: {
       cores: LaunchCore[];
     };
