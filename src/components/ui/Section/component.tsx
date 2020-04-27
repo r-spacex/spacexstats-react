@@ -1,7 +1,7 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentTab, actions, SectionId } from 'redux/navigation';
-import { isInViewport, updateHash } from 'utils/scroll';
+import { updateSectionUrl } from 'utils/scroll';
 import Navbar from 'components/ui/Navbar';
 import { Background, Wrapper, Title, Content, Control } from './style';
 
@@ -22,36 +22,21 @@ interface Props {
 }
 
 const Section: React.FC<Props> = ({ id, title, tabs, up, down }) => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
   const dispatch = useDispatch();
   const currentTab = useSelector(selectCurrentTab(id)) || tabs[0].id;
   const displayedTab = tabs.find((tab) => tab.id === currentTab)!;
 
-  const changeTab = (tab: string) => {
-    dispatch(actions.changeTab({ section: id, tab }));
-    updateHash(`${id}-${tab}`);
+  const changeTab = async (tab: string) => {
+    await dispatch(actions.changeTab({ section: id, tab }));
+    updateSectionUrl();
   };
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    window.addEventListener('scroll', () => {
-      const currentTabFromRef = sectionRef?.current?.dataset?.tab;
-      if (isInViewport(id) && currentTabFromRef) {
-        updateHash(`${id}-${currentTabFromRef}`);
-      }
-    });
-  }, [currentTab]);
 
   return (
     <Background
       tag="section"
       filename={`backgrounds/${displayedTab.background}`}
     >
-      <Wrapper id={id} ref={sectionRef} data-tab={currentTab}>
+      <Wrapper id={id} data-tab={currentTab}>
         <Title tabIndex={-1}>
           {title}
           {displayedTab.title && ` - ${displayedTab.title}`}

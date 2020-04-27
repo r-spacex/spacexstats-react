@@ -17,7 +17,7 @@ import {
   Upcoming,
 } from 'components/blocks';
 import StyleReset from 'components/ui/StyleReset';
-import { getScrollPercentage, scrollTo } from 'utils/scroll';
+import { getScrollPercentage, scrollTo, updateSectionUrl } from 'utils/scroll';
 import { actions, sections, SectionId } from 'redux/navigation';
 import { SpaceXData, BlockProps } from 'types';
 
@@ -52,9 +52,12 @@ const Root: React.FC<SpaceXData> = (data) => {
       scrollTo(section, false);
     }
 
-    window.addEventListener('scroll', () => {
-      NProgress.set(getScrollPercentage());
-    });
+    setTimeout(() => {
+      window.addEventListener('scroll', () => {
+        NProgress.set(getScrollPercentage());
+        updateSectionUrl();
+      });
+    }, 300);
   }, []);
 
   const sectionComponents: {
