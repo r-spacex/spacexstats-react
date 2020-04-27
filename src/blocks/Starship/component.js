@@ -50,7 +50,7 @@ const Starship = ({ currentTab, changeTab, data }) => {
                 <TextStat value="RIGHT NOW" />
               </SectionContent>
               <SectionDescription>
-                SpaceX is conducting an experimental test program of its future launch vehicule, the Super
+                SpaceX is conducting an experimental test program of its future launch vehicle, the Super
                 Heavy/Starship. A Starship hopper prototype has been built at their Boca Chica, Texas launch site and is
                 going through a number of incremental hop tests.
               </SectionDescription>
