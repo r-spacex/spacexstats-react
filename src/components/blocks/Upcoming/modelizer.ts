@@ -156,13 +156,13 @@ const getPayloadDescription = (launch: Launch): string => {
 export const modelizer = ({
   upcomingLaunches,
 }: SpaceXData): ModelizedSectionData => {
-  // Find first launch with non-null launch date
-  const nextLaunch =
-    upcomingLaunches.find((launch) => launch.launch_date_utc !== null) ||
-    upcomingLaunches[0];
-
   const nextLaunches = upcomingLaunches.map((launch) => launch);
   nextLaunches.sort(sortLaunches);
+
+  // Find first launch with non-null launch date
+  const nextLaunch =
+    nextLaunches.find((launch) => launch.launch_date_utc !== null) ||
+    nextLaunches[0];
 
   return {
     nextLaunch: {
