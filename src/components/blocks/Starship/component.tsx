@@ -25,7 +25,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
           <SectionDescription>
             {`SpaceX is conducting an experimental test program of its future
             launch vehicle, the Super Heavy/Starship. Incremental hop tests
-            will serve to validate landing procedures for a reusabe second stage
+            will serve to validate landing procedures for a reusable second stage
             and a heat shielding technology.`}
           </SectionDescription>
         </>
