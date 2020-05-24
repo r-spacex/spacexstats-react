@@ -169,7 +169,7 @@ export const modelizer = ({
       mission: nextLaunch.mission_name,
       localDate: format(
         fromUnix(nextLaunch.launch_date_unix),
-        "MMM do, h:mm:ssa ('UTC'xxx)",
+        "MMM do, h:mm ('UTC'xxx)",
       ),
       date: fromUnix(nextLaunch.launch_date_unix),
       payload: nextLaunch.rocket.second_stage.payloads[0]?.payload_id,
