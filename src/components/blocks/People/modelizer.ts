@@ -8,7 +8,7 @@ export interface ModelizedSectionData {
 }
 
 export const modelizer = (_: SpaceXData): ModelizedSectionData => ({
-  dragonriders: 0,
+  dragonriders: 2,
   moonPopulation: 0,
   marsPopulation: 0,
   employees: 7000,

@@ -24,11 +24,10 @@ const People: React.FC<BlockProps> = ({ data, ...rest }) => {
             <IntegerStat value={dragonriders} subtitle="People" />
           </SectionContent>
           <SectionDescription>
-            {`No SpaceX astronauts have flown yet. Dragon 2, being developed as
+            {`${dragonriders} astronauts have flown aboard the Dragon 2, being developed as
             part of NASA's Commercial Crew Transportation Capability (CCtCap)
-            program, performed a pad abort test in May 2015. The first orbital
-            test (DM-1) has been conducted and the first crewed test is planned
-            for May/June 2020.`}
+            program.  In July 2020, Dragon 2 became the first privately developed
+            spacecraft to carry astronauts into orbit.`}
           </SectionDescription>
         </>
       ),
