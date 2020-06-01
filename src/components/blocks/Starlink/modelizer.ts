@@ -155,7 +155,7 @@ export const modelizer = ({ pastLaunches }: SpaceXData) => {
   return {
     inSpace: buildInSpaceChart(starlinkLaunches),
     launchRate: buildLaunchRateChart(starlinkLaunches),
-    deorbited: 3,
+    deorbited: 5,
   };
 };
 
