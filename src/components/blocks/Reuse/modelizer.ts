@@ -29,7 +29,18 @@ export interface ModelizedSectionData {
 }
 
 const buildMostLaunchesChart = (cores: Core[]) => {
-  const sortedCores = orderBy(cores, 'reuse_count', 'desc').slice(0, 9);
+  const sortedCores = orderBy(
+    cores,
+    [
+      'reuse_count',
+      (core) =>
+        core.status === CoreStatus.active || core.status === CoreStatus.unknown
+          ? 0
+          : 1,
+      'core_serial',
+    ],
+    ['desc', 'asc', 'asc'],
+  ).slice(0, 9);
 
   const data = {
     labels: sortedCores.map((core) => core.core_serial),
