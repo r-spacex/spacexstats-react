@@ -4,6 +4,7 @@ import { formatDuration } from 'utils/date';
 import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
 import { Launch } from 'types';
+import { getFlightTime } from './commercialCrewFlights';
 
 export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
   const crsFlights = dragonLaunches.filter(
@@ -23,11 +24,10 @@ export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
         data: crsFlights.map((launch) => {
           const {
             payload_type,
-            flight_time_sec,
             reused,
           } = launch.rocket.second_stage.payloads[0];
           return payload_type.includes('Dragon 1') && !reused
-            ? Math.floor(flight_time_sec / 3600)
+            ? getFlightTime(launch)
             : 0;
         }),
       },
@@ -37,11 +37,10 @@ export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
         data: crsFlights.map((launch) => {
           const {
             payload_type,
-            flight_time_sec,
             reused,
           } = launch.rocket.second_stage.payloads[0];
           return payload_type.includes('Dragon 1') && reused
-            ? Math.floor(flight_time_sec / 3600)
+            ? getFlightTime(launch)
             : 0;
         }),
       },
@@ -72,8 +71,8 @@ export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
             return '';
           }
           const dataset = data.datasets[tooltipItem.datasetIndex];
-          return `${dataset.label}: ${Math.floor(
-            launch.rocket.second_stage.payloads[0].flight_time_sec / 3600,
+          return `${dataset.label}: ${getFlightTime(
+            launch,
           ).toLocaleString()} hours`;
         },
         footer: (tooltipItems) => {
@@ -111,11 +110,7 @@ export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
     options,
     totalFlightTime: formatDuration(
       Math.floor(
-        crsFlights.reduce(
-          (sum, launch) =>
-            sum + launch.rocket.second_stage.payloads[0].flight_time_sec,
-          0,
-        ),
+        crsFlights.reduce((sum, launch) => sum + getFlightTime(launch), 0),
       ),
     ),
   };

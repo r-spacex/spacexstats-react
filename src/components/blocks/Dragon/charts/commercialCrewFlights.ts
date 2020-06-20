@@ -5,6 +5,12 @@ import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
 import { Launch } from 'types';
 
+export const getFlightTime = (launch: Launch) =>
+  Math.floor(
+    (launch.rocket.second_stage.payloads[0].flight_time_sec ??
+      new Date().getTime() / 1000 - launch.launch_date_unix) / 3600,
+  );
+
 export const buildCommercialCrewFlightsChart = (dragonLaunches: Launch[]) => {
   const crewFlights = dragonLaunches.filter((launch) =>
     launch.rocket.second_stage.payloads[0].payload_type.includes('Crew Dragon'),
@@ -20,11 +26,8 @@ export const buildCommercialCrewFlightsChart = (dragonLaunches: Launch[]) => {
           if (launch.mission_name.includes('Abort')) {
             return 1;
           }
-          const {
-            flight_time_sec,
-            reused,
-          } = launch.rocket.second_stage.payloads[0];
-          return !reused ? Math.floor(flight_time_sec / 3600) : 0;
+          const { reused } = launch.rocket.second_stage.payloads[0];
+          return !reused ? getFlightTime(launch) : 0;
         }),
       },
       {
@@ -54,9 +57,7 @@ export const buildCommercialCrewFlightsChart = (dragonLaunches: Launch[]) => {
           const dataset = data.datasets[tooltipItem.datasetIndex];
           const flightTime = launch.mission_name.includes('Abort')
             ? '8 minutes 54 seconds'
-            : `${Math.floor(
-                launch.rocket.second_stage.payloads[0].flight_time_sec / 3600,
-              ).toLocaleString()} hours`;
+            : `${getFlightTime(launch).toLocaleString()} hours`;
           return `${dataset.label}: ${flightTime}`;
         },
         footer: (tooltipItems) => {
@@ -86,11 +87,7 @@ export const buildCommercialCrewFlightsChart = (dragonLaunches: Launch[]) => {
     options,
     totalFlightTime: formatDuration(
       Math.floor(
-        crewFlights.reduce(
-          (sum, launch) =>
-            sum + launch.rocket.second_stage.payloads[0].flight_time_sec,
-          0,
-        ) / 3600,
+        crewFlights.reduce((sum, launch) => sum + getFlightTime(launch), 0),
       ),
     ),
   };
