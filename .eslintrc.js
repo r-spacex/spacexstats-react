@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
@@ -62,6 +60,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-non-null-assertion': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
     curly: ['error', 'multi-line'],
   },
   settings: {
