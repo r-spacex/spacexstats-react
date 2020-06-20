@@ -3,6 +3,7 @@ import { SpaceXData } from 'types';
 import { buildMissionTypesChart } from './charts/missionTypes';
 import { buildCrsFlightsChart } from './charts/crsFlights';
 import { buildCommercialCrewFlightsChart } from './charts/commercialCrewFlights';
+import { getPayload } from 'utils/launch';
 
 export interface ModelizedSectionData {
   missions: {
@@ -23,20 +24,23 @@ export interface ModelizedSectionData {
 
 export const modelizer = ({
   pastLaunches,
+  payloads,
 }: SpaceXData): ModelizedSectionData => {
   const exclusionList = ['Dragon Qualification Unit'];
-  const dragonLaunches = pastLaunches.filter(
-    (launch) =>
-      launch.rocket.second_stage.payloads[0].payload_type.indexOf('Dragon') !==
-        -1 &&
-      !exclusionList.includes(
-        launch.rocket.second_stage.payloads[0].payload_id,
-      ),
-  );
+  const dragonLaunches = pastLaunches.filter((launch) => {
+    const payload = getPayload(launch, payloads);
+    return (
+      payload.type.indexOf('Dragon') !== -1 &&
+      !exclusionList.includes(payload.type)
+    );
+  });
 
   return {
-    missions: buildMissionTypesChart(dragonLaunches),
-    crsFlights: buildCrsFlightsChart(dragonLaunches),
-    commercialCrewFlights: buildCommercialCrewFlightsChart(dragonLaunches),
+    missions: buildMissionTypesChart(dragonLaunches, payloads),
+    crsFlights: buildCrsFlightsChart(dragonLaunches, payloads),
+    commercialCrewFlights: buildCommercialCrewFlightsChart(
+      dragonLaunches,
+      payloads,
+    ),
   };
 };

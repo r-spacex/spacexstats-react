@@ -3,31 +3,35 @@ import { chartColors } from 'stylesheet';
 import { formatDuration } from 'utils/date';
 import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { Launch } from 'types';
+import { Launch, Payload } from 'types';
+import { getPayload } from 'utils/launch';
 
-export const getFlightTime = (launch: Launch) =>
+export const getFlightTime = (launch: Launch, payloads: Payload[]) =>
   Math.floor(
-    (launch.rocket.second_stage.payloads[0].flight_time_sec ??
-      new Date().getTime() / 1000 - launch.launch_date_unix) / 3600,
+    (getPayload(launch, payloads).dragon.flight_time_sec ??
+      new Date().getTime() / 1000 - launch.date_unix) / 3600,
   );
 
-export const buildCommercialCrewFlightsChart = (dragonLaunches: Launch[]) => {
+export const buildCommercialCrewFlightsChart = (
+  dragonLaunches: Launch[],
+  payloads: Payload[],
+) => {
   const crewFlights = dragonLaunches.filter((launch) =>
-    launch.rocket.second_stage.payloads[0].payload_type.includes('Crew Dragon'),
+    getPayload(launch, payloads).type.includes('Crew Dragon'),
   );
 
   const data = {
-    labels: crewFlights.map((launch) => launch.mission_name),
+    labels: crewFlights.map((launch) => launch.name),
     datasets: [
       {
         label: 'NASA',
         backgroundColor: chartColors.blue,
         data: crewFlights.map((launch) => {
-          if (launch.mission_name.includes('Abort')) {
+          if (launch.name.includes('Abort')) {
             return 1;
           }
-          const { reused } = launch.rocket.second_stage.payloads[0];
-          return !reused ? getFlightTime(launch) : 0;
+          const { reused } = getPayload(launch, payloads);
+          return !reused ? getFlightTime(launch, payloads) : 0;
         }),
       },
       {
@@ -43,7 +47,7 @@ export const buildCommercialCrewFlightsChart = (dragonLaunches: Launch[]) => {
       callbacks: {
         label: (tooltipItem) => {
           const launch = dragonLaunches.find(
-            (launch) => launch.mission_name === tooltipItem.xLabel,
+            (launch) => launch.name === tooltipItem.xLabel,
           );
           if (!launch || tooltipItem.yLabel === 0) {
             return '';
@@ -55,14 +59,14 @@ export const buildCommercialCrewFlightsChart = (dragonLaunches: Launch[]) => {
             return '';
           }
           const dataset = data.datasets[tooltipItem.datasetIndex];
-          const flightTime = launch.mission_name.includes('Abort')
+          const flightTime = launch.name.includes('Abort')
             ? '8 minutes 54 seconds'
-            : `${getFlightTime(launch).toLocaleString()} hours`;
+            : `${getFlightTime(launch, payloads).toLocaleString()} hours`;
           return `${dataset.label}: ${flightTime}`;
         },
         footer: (tooltipItems) => {
           const launch = dragonLaunches.find(
-            (launch) => launch.mission_name === tooltipItems[0].xLabel,
+            (launch) => launch.name === tooltipItems[0].xLabel,
           );
           if (!launch) {
             return '';
@@ -87,7 +91,10 @@ export const buildCommercialCrewFlightsChart = (dragonLaunches: Launch[]) => {
     options,
     totalFlightTime: formatDuration(
       Math.floor(
-        crewFlights.reduce((sum, launch) => sum + getFlightTime(launch), 0),
+        crewFlights.reduce(
+          (sum, launch) => sum + getFlightTime(launch, payloads),
+          0,
+        ),
       ),
     ),
   };

@@ -1,39 +1,56 @@
 import { SectionId } from 'redux/navigation';
 
 export enum RocketType {
-  f1 = 'falcon1',
-  f9 = 'falcon9',
-  fh = 'falconheavy',
+  f1 = '5e9d0d95eda69955f709d1eb',
+  f9 = '5e9d0d95eda69973a809d1ec',
+  fh = '5e9d0d95eda69974db09d1ed',
+  starship = '5e9d0d96eda699382d09d1ee',
 }
 
-export enum Launchpad {
-  kwajalein = 'kwajalein_atoll',
-  slc40 = 'ccafs_slc_40',
-  vafb = 'vafb_slc_4e',
-  lc39a = 'ksc_lc_39a',
+export interface Rocket {
+  id: RocketType;
+  name: string;
 }
 
+export enum LaunchpadType {
+  kwajalein = '5e9e4502f5090995de566f86',
+  slc40 = '5e9e4501f509094ba4566f84',
+  vafb = '5e9e4502f509092b78566f87',
+  lc39a = '5e9e4502f509094188566f88',
+}
+
+export interface Launchpad {
+  id: LaunchpadType;
+  name: string;
+}
+
+export enum LandpadType {
+  lz1 = '5e9e3032383ecb267a34e7c7',
+  lz2 = '5e9e3032383ecb90a834e7c8',
+  lz4 = '5e9e3032383ecb554034e7c9',
+  jrtiv1 = '5e9e3032383ecb761634e7cb',
+  jrti = '5e9e3033383ecbb9e534e7cc',
+  ocisly = '5e9e3032383ecb6bb234e7ca',
+  asog = '5e9e3033383ecb075134e7cd',
+}
+
+export interface Landpad {
+  id: LandpadType;
+  name: string;
+}
 export enum LaunchDatePrecision {
-  second = 'second',
-  minute = 'minute',
-  hour = 'hour',
-  day = 'day',
-  month = 'month',
-  quarter = 'quarter',
   year = 'year',
+  half = 'half',
+  quarter = 'quarter',
+  month = 'month',
+  day = 'day',
+  hour = 'hour',
 }
 
 export enum LandingType {
   ocean = 'Ocean',
   asds = 'ASDS',
   rtls = 'RTLS',
-}
-
-export enum LandingVehicle {
-  jrti = 'JRTI',
-  ocisly = 'OCISLY',
-  lz1 = 'LZ-1',
-  lz2 = 'LZ-2',
 }
 
 export enum Orbit {
@@ -52,61 +69,51 @@ export enum Orbit {
 }
 
 export interface Payload {
-  payload_id: string;
-  norad_id: number[];
+  id: string;
+  name: string;
+  type: string;
+  norad_ids: number[];
   reused: boolean;
   customers: string[];
-  nationality: string;
-  payload_type: string;
-  payload_mass_kg: number;
+  mass_kg: number | null;
   orbit: Orbit;
-  mass_returned_kg: number;
-  flight_time_sec: number;
+  dragon: {
+    mass_returned_kg: number | null;
+    flight_time_sec: number | null;
+  };
 }
 
 export interface LaunchFairings {
   recovery_attempt: boolean;
-  recovered: boolean;
+  recovered: boolean | null;
   reused: boolean;
-  ship: string;
 }
 
 export interface LaunchCore {
-  core_serial: string;
+  core: string;
   flight: number;
-  land_success: boolean;
-  landing_intent: boolean;
+  landing_success: boolean;
+  landing_attempt: boolean;
   landing_type: LandingType;
-  landing_vehicle: LandingVehicle;
+  landpad: LandpadType;
   reused: boolean;
 }
 
 export interface Launch {
+  id: string;
   flight_number: number;
-  mission_name: string;
-  launch_year: string;
-  launch_date_unix: number;
-  launch_date_utc: string;
-  tentative_max_precision: LaunchDatePrecision;
-  rocket: {
-    rocket_id: RocketType;
-    rocket_name: string;
-    rocket_type: string;
-    first_stage: {
-      cores: LaunchCore[];
-    };
-    second_stage: {
-      payloads: Payload[];
-    };
-    fairings: LaunchFairings | null;
-  };
-  launch_site: {
-    site_id: Launchpad;
-    site_name: string;
-  };
-  launch_success: boolean;
-  details: string;
+  name: string;
+  date_unix: number;
+  date_utc: string;
+  date_precision: LaunchDatePrecision;
+  rocket: RocketType;
+  payloads: string[];
+  launchpad: LaunchpadType;
+  success: boolean;
+  details: string | null;
   upcoming: boolean;
+  cores: LaunchCore[];
+  fairings: LaunchFairings;
   crew: null;
 }
 
@@ -115,19 +122,16 @@ export enum CoreStatus {
   inactive = 'inactive',
   lost = 'lost',
   unknown = 'unknown',
+  expended = 'expended',
+  retired = 'retired',
 }
 
 export interface Core {
-  core_serial: string;
+  id: string;
+  serial: string;
   status: CoreStatus;
-  missions: [
-    {
-      name: string;
-      flight: number;
-    },
-  ];
+  launches: string[];
   reuse_count: number;
-  details: string;
 }
 
 export interface SpaceXAPIData {
@@ -139,6 +143,10 @@ export interface SpaceXData {
   pastLaunches: Launch[];
   upcomingLaunches: Launch[];
   cores: Core[];
+  rockets: Rocket[];
+  payloads: Payload[];
+  launchpads: Launchpad[];
+  landpads: Landpad[];
 }
 
 export interface BlockProps {

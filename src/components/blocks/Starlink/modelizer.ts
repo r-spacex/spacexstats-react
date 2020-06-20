@@ -22,7 +22,7 @@ export interface ModelizedSectionData {
 
 const MONTH_FORMAT = 'MM-yyyy';
 export const buildInSpaceChart = (starlinkLaunches: Launch[]) => {
-  const start = fromUnix(starlinkLaunches[0].launch_date_unix);
+  const start = fromUnix(starlinkLaunches[0].date_unix);
   const months = eachMonthOfInterval({ start, end: new Date() });
 
   const data = {
@@ -35,7 +35,7 @@ export const buildInSpaceChart = (starlinkLaunches: Launch[]) => {
           (month) =>
             starlinkLaunches.filter(
               (launch) =>
-                fromUnix(launch.launch_date_unix).getTime() <
+                fromUnix(launch.date_unix).getTime() <
                 endOfMonth(month).getTime(),
             ).length * 60,
         ),
@@ -95,7 +95,7 @@ export const buildInSpaceChart = (starlinkLaunches: Launch[]) => {
 };
 
 export const buildLaunchRateChart = (starlinkLaunches: Launch[]) => {
-  const start = fromUnix(starlinkLaunches[0].launch_date_unix);
+  const start = fromUnix(starlinkLaunches[0].date_unix);
   const months = eachMonthOfInterval({ start, end: new Date() });
 
   const data = {
@@ -107,7 +107,7 @@ export const buildLaunchRateChart = (starlinkLaunches: Launch[]) => {
           (month) =>
             starlinkLaunches.filter(
               (launch) =>
-                format(fromUnix(launch.launch_date_unix), MONTH_FORMAT) ===
+                format(fromUnix(launch.date_unix), MONTH_FORMAT) ===
                 format(month, MONTH_FORMAT),
             ).length * 60,
         ),
@@ -147,9 +147,7 @@ export const buildLaunchRateChart = (starlinkLaunches: Launch[]) => {
 
 export const modelizer = ({ pastLaunches }: SpaceXData) => {
   const starlinkLaunches = pastLaunches.filter((launch) =>
-    launch.rocket.second_stage.payloads.some((payload) =>
-      payload.payload_id.includes('Starlink'),
-    ),
+    launch.name.includes('Starlink'),
   );
 
   return {

@@ -5,6 +5,7 @@ import deepmerge from 'deepmerge';
 import { SpaceXData, Launch, Orbit, Payload } from 'types';
 import orderBy from 'lodash/orderBy';
 import range from 'lodash/range';
+import { launchYear, getPayloads, getPayload } from 'utils/launch';
 
 export interface ModelizedSectionData {
   customers: {
@@ -28,11 +29,11 @@ export interface ModelizedSectionData {
   };
 }
 
-const buildCustomersChart = (pastLaunches: Launch[]) => {
+const buildCustomersChart = (pastLaunches: Launch[], payloads: Payload[]) => {
   const customers = { NASA: 0, Commercial: 0, SpaceX: 0, USAF: 0, NRO: 0 };
 
   pastLaunches.forEach((launch) => {
-    launch.rocket.second_stage.payloads.forEach((payload) => {
+    getPayloads(launch, payloads).forEach((payload) => {
       // Only consider first customer
       const customer = payload.customers[0];
 
@@ -97,17 +98,20 @@ interface LaunchPayload {
   payload: Payload;
 }
 
-const buildUpmassPerYearChart = (pastLaunches: Launch[]) => {
+const buildUpmassPerYearChart = (
+  pastLaunches: Launch[],
+  allPayloads: Payload[],
+) => {
   const yearsStart = 2012; // Going beyond suborbital a decade before BO
   const yearsEnd = new Date().getFullYear();
-  const years = range(yearsStart, yearsEnd + 1).map((year) => String(year));
+  const years = range(yearsStart, yearsEnd + 1);
 
   const payloads: LaunchPayload[] = [];
   pastLaunches.forEach((launch) => {
-    launch.rocket.second_stage.payloads.forEach((payload) => {
+    getPayloads(launch, allPayloads).forEach((payload) => {
       if (!Object.values(Orbit).includes(payload.orbit)) {
         console.warn(
-          `Unhandled orbit: ${payload.orbit} for launch ${launch.mission_name}`,
+          `Unhandled orbit: ${payload.orbit} for launch ${launch.name}`,
         );
       }
       payloads.push({
@@ -122,12 +126,9 @@ const buildUpmassPerYearChart = (pastLaunches: Launch[]) => {
       payloads
         .filter(
           ({ launch, payload }) =>
-            launch.launch_year === year && orbits.includes(payload.orbit),
+            launchYear(launch) === year && orbits.includes(payload.orbit),
         )
-        .reduce(
-          (sum, { payload: { payload_mass_kg } }) => sum + payload_mass_kg,
-          0,
-        ),
+        .reduce((sum, { payload: { mass_kg } }) => sum + (mass_kg ?? 0), 0),
     );
 
   const data = {
@@ -202,39 +203,43 @@ const buildUpmassPerYearChart = (pastLaunches: Launch[]) => {
 
 export const modelizer = ({
   pastLaunches,
+  payloads,
 }: SpaceXData): ModelizedSectionData => {
   const launchMasses = pastLaunches.map((launch) => ({
     launch,
-    mass: launch.rocket.second_stage.payloads.reduce(
-      (sum, payload) => sum + payload.payload_mass_kg,
+    mass: getPayloads(launch, payloads).reduce(
+      (sum, payload) => sum + (payload.mass_kg ?? 0),
       0,
     ),
   }));
+  console.log(launchMasses);
 
   const sortedLaunchMasses = orderBy(launchMasses, 'mass', 'desc');
   const heaviestPayloadLaunch = sortedLaunchMasses[0];
   const heaviestPayload = {
     mass: heaviestPayloadLaunch.mass,
-    mission: heaviestPayloadLaunch.launch.mission_name,
-    customers: heaviestPayloadLaunch.launch.rocket.second_stage.payloads[0].customers.join(
-      ', ',
-    ),
+    mission: heaviestPayloadLaunch.launch.name,
+    customers: getPayload(
+      heaviestPayloadLaunch.launch,
+      payloads,
+    ).customers.join(', '),
   };
 
   const heaviestPayloadLaunchGTO = sortedLaunchMasses.filter(
-    ({ launch }) => launch.rocket.second_stage.payloads[0].orbit === Orbit.gto,
+    ({ launch }) => getPayload(launch, payloads).orbit === Orbit.gto,
   )[0];
   const heaviestPayloadGTO = {
     mass: heaviestPayloadLaunchGTO.mass,
-    mission: heaviestPayloadLaunchGTO.launch.mission_name,
-    customers: heaviestPayloadLaunchGTO.launch.rocket.second_stage.payloads[0].customers.join(
-      ', ',
-    ),
+    mission: heaviestPayloadLaunchGTO.launch.name,
+    customers: getPayload(
+      heaviestPayloadLaunchGTO.launch,
+      payloads,
+    ).customers.join(', '),
   };
 
   return {
-    customers: buildCustomersChart(pastLaunches),
-    upmassPerYear: buildUpmassPerYearChart(pastLaunches),
+    customers: buildCustomersChart(pastLaunches, payloads),
+    upmassPerYear: buildUpmassPerYearChart(pastLaunches, payloads),
     totalMass: Math.floor(
       launchMasses.reduce((sum, { mass }) => sum + mass, 0) / 1000,
     ),

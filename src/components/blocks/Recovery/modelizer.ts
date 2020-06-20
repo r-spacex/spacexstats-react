@@ -3,15 +3,17 @@ import { chartColors } from 'stylesheet';
 import {
   SpaceXData,
   LandingType,
-  LandingVehicle,
   Launch,
   LaunchCore,
+  Landpad,
+  LandpadType,
 } from 'types';
 import { ChartData, ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
 import last from 'lodash/last';
 import orderBy from 'lodash/orderBy';
 import range from 'lodash/range';
+import { launchYear, getPayloads } from 'utils/launch';
 
 export interface ModelizedSectionData {
   landedBoostersCount: number;
@@ -30,10 +32,7 @@ export interface ModelizedSectionData {
   };
 }
 
-const formatLandingType = (
-  landingType: LandingType,
-  landingVehicle: LandingVehicle,
-) => {
+const formatLandingType = (landingType: LandingType, landpad: Landpad) => {
   if (landingType === LandingType.ocean) {
     return 'an ocean landing';
   }
@@ -46,7 +45,7 @@ const formatLandingType = (
     return 'Unexpected landing type!';
   }
 
-  return `an ASDS landing on ${landingVehicle}`;
+  return `an ASDS landing on ${landpad.name}`;
 };
 
 interface LandingAttempt {
@@ -57,10 +56,10 @@ interface LandingAttempt {
 const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
   const landingAttempts: LandingAttempt[] = [];
   pastLaunches.forEach((launch) => {
-    if (!launch.launch_success) {
+    if (!launch.success) {
       return;
     }
-    launch.rocket.first_stage.cores.forEach((core) => {
+    launch.cores.forEach((core) => {
       if (core.landing_type === null) {
         return;
       }
@@ -71,14 +70,14 @@ const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
     });
   });
 
-  const yearsStart = parseInt(landingAttempts[0].launch.launch_year);
-  const yearsEnd = parseInt(last(landingAttempts)!.launch.launch_year);
-  const years = range(yearsStart, yearsEnd + 1).map((year) => String(year));
+  const yearsStart = launchYear(landingAttempts[0].launch);
+  const yearsEnd = launchYear(last(landingAttempts)!.launch);
+  const years = range(yearsStart, yearsEnd + 1);
 
   const successfulLandings = landingAttempts.filter(
-    ({ core }) => core.land_success,
+    ({ core }) => core.landing_success,
   );
-  const failures = landingAttempts.filter(({ core }) => !core.land_success);
+  const failures = landingAttempts.filter(({ core }) => !core.landing_success);
 
   const data = {
     labels: years,
@@ -90,7 +89,7 @@ const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
           (year) =>
             successfulLandings.filter(
               ({ launch, core }) =>
-                launch.launch_year === year &&
+                launchYear(launch) === year &&
                 core.landing_type === LandingType.ocean,
             ).length,
         ),
@@ -102,7 +101,7 @@ const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
           (year) =>
             successfulLandings.filter(
               ({ launch, core }) =>
-                launch.launch_year === year &&
+                launchYear(launch) === year &&
                 core.landing_type === LandingType.rtls,
             ).length,
         ),
@@ -114,8 +113,8 @@ const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
           (year) =>
             successfulLandings.filter(
               ({ launch, core }) =>
-                launch.launch_year === year &&
-                core.landing_vehicle === LandingVehicle.ocisly,
+                launchYear(launch) === year &&
+                core.landpad === LandpadType.ocisly,
             ).length,
         ),
       },
@@ -126,8 +125,9 @@ const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
           (year) =>
             successfulLandings.filter(
               ({ launch, core }) =>
-                launch.launch_year === year &&
-                core.landing_vehicle === LandingVehicle.jrti,
+                launchYear(launch) === year &&
+                (core.landpad === LandpadType.jrti ||
+                  core.landpad === LandpadType.jrtiv1),
             ).length,
         ),
       },
@@ -136,7 +136,7 @@ const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
         backgroundColor: chartColors.red,
         data: years.map(
           (year) =>
-            failures.filter(({ launch }) => launch.launch_year === year).length,
+            failures.filter(({ launch }) => launchYear(launch) === year).length,
         ),
       },
     ],
@@ -160,7 +160,7 @@ const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
             0,
           );
           const failuresCount = failures.filter(
-            ({ launch }) => launch.launch_year === tooltipItems[0].xLabel,
+            ({ launch }) => launchYear(launch) === tooltipItems[0].xLabel,
           ).length;
           const rate = (100 * (totalCount - failuresCount)) / totalCount;
           return `TOTAL: ${totalCount} (${rate.toFixed(0)}% success rate)`;
@@ -181,16 +181,15 @@ const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
 
 const buildFairingsRecoveryChart = (pastLaunches: Launch[]) => {
   const recoveryAttempts = pastLaunches.filter(
-    (launch) =>
-      launch.rocket.fairings && launch.rocket.fairings.recovery_attempt,
+    (launch) => launch.fairings?.recovery_attempt,
   );
 
-  const yearsStart = parseInt(recoveryAttempts[0].launch_year);
-  const yearsEnd = parseInt(last(recoveryAttempts)!.launch_year);
-  const years = range(yearsStart, yearsEnd + 1).map((year) => String(year));
+  const yearsStart = launchYear(recoveryAttempts[0]);
+  const yearsEnd = launchYear(last(recoveryAttempts)!);
+  const years = range(yearsStart, yearsEnd + 1);
 
   const failures = recoveryAttempts.filter(
-    (launch) => !launch.rocket.fairings?.recovered,
+    (launch) => !launch.fairings?.recovered,
   );
 
   const data = {
@@ -203,8 +202,7 @@ const buildFairingsRecoveryChart = (pastLaunches: Launch[]) => {
           (year) =>
             recoveryAttempts.filter(
               (launch) =>
-                launch.launch_year === year &&
-                launch.rocket.fairings?.recovered,
+                launchYear(launch) === year && launch.fairings?.recovered,
             ).length,
         ),
       },
@@ -213,7 +211,7 @@ const buildFairingsRecoveryChart = (pastLaunches: Launch[]) => {
         backgroundColor: chartColors.red,
         data: years.map(
           (year) =>
-            failures.filter((launch) => launch.launch_year === year).length,
+            failures.filter((launch) => launchYear(launch) === year).length,
         ),
       },
     ],
@@ -238,7 +236,7 @@ const buildFairingsRecoveryChart = (pastLaunches: Launch[]) => {
             0,
           );
           const failuresCount = failures.filter(
-            (launch) => launch.launch_year === tooltipItems[0].xLabel,
+            (launch) => launchYear(launch) === tooltipItems[0].xLabel,
           ).length;
           const rate = (100 * (totalCount - failuresCount)) / totalCount;
           return `TOTAL: ${totalCount} (${rate.toFixed(0)}% success rate)`;
@@ -260,13 +258,15 @@ const buildFairingsRecoveryChart = (pastLaunches: Launch[]) => {
 
 export const modelizer = ({
   pastLaunches,
+  payloads,
+  landpads,
 }: SpaceXData): ModelizedSectionData => {
   const landedBoostersCount = pastLaunches.reduce(
     (sum, launch) =>
       sum +
-      launch.rocket.first_stage.cores.filter(
+      launch.cores.filter(
         (core) =>
-          core.land_success &&
+          core.landing_success &&
           (core.landing_type === LandingType.rtls ||
             core.landing_type === LandingType.asds),
       ).length,
@@ -274,14 +274,14 @@ export const modelizer = ({
   );
 
   const landingMasses = pastLaunches.map((launch) => ({
-    mass: launch.rocket.second_stage.payloads.reduce(
-      (sum, payload) => (sum += payload.payload_mass_kg),
+    mass: getPayloads(launch, payloads).reduce(
+      (sum, payload) => (sum += payload.mass_kg ?? 0),
       0,
     ),
-    mission: launch.mission_name,
+    mission: launch.name,
     landingType: formatLandingType(
-      launch.rocket.first_stage.cores[0].landing_type,
-      launch.rocket.first_stage.cores[0].landing_vehicle,
+      launch.cores[0].landing_type,
+      landpads.find((landpad) => landpad.id === launch.cores[0].landpad)!,
     ),
   }));
   const sortedLandingMasses = orderBy(landingMasses, 'mass', 'desc');

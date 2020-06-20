@@ -5,6 +5,7 @@ import { SpaceXData, Core, Launch, CoreStatus } from 'types';
 import { ChartData, ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
 import orderBy from 'lodash/orderBy';
+import { getMissions } from 'utils/launch';
 
 interface Turnaround {
   core: string;
@@ -28,7 +29,7 @@ export interface ModelizedSectionData {
   reflownFairingsCount: number;
 }
 
-const buildMostLaunchesChart = (cores: Core[]) => {
+const buildMostLaunchesChart = (cores: Core[], launches: Launch[]) => {
   const sortedCores = orderBy(
     cores,
     [
@@ -37,26 +38,31 @@ const buildMostLaunchesChart = (cores: Core[]) => {
         core.status === CoreStatus.active || core.status === CoreStatus.unknown
           ? 0
           : 1,
-      'core_serial',
+      'serial',
     ],
     ['desc', 'asc', 'asc'],
   ).slice(0, 9);
 
   const data = {
-    labels: sortedCores.map((core) => core.core_serial),
+    labels: sortedCores.map((core) => core.serial),
     datasets: [
       {
         label: 'Lost cores',
         backgroundColor: chartColors.orange,
         data: sortedCores.map((core) =>
-          core.status === CoreStatus.lost ? core.reuse_count + 1 : 0,
+          core.status === CoreStatus.lost || core.status === CoreStatus.expended
+            ? core.reuse_count + 1
+            : 0,
         ),
       },
       {
         label: 'Retired cores',
         backgroundColor: chartColors.white,
         data: sortedCores.map((core) =>
-          core.status === CoreStatus.inactive ? core.reuse_count + 1 : 0,
+          core.status === CoreStatus.inactive ||
+          core.status === CoreStatus.retired
+            ? core.reuse_count + 1
+            : 0,
         ),
       },
       {
@@ -77,9 +83,9 @@ const buildMostLaunchesChart = (cores: Core[]) => {
       callbacks: {
         label: (tooltipItem) => {
           const currentCore = sortedCores.find(
-            (core) => core.core_serial === tooltipItem.xLabel,
+            (core) => core.serial === tooltipItem.xLabel,
           )!;
-          const missions = currentCore.missions
+          const missions = getMissions(currentCore, launches)
             .map((mission) => mission.name)
             .join(', ');
 
@@ -108,28 +114,26 @@ const getQuickestReuseTurnaround = (cores: Core[], pastLaunches: Launch[]) => {
 
   const turnarounds: Turnaround[] = [];
   reusedCores.forEach((core) => {
-    core.missions.forEach((mission, index) => {
+    core.launches.forEach((launchId, index) => {
       if (index === 0) {
         return;
       }
 
       const launch1 = pastLaunches.find(
-        (launch) => launch.flight_number === core.missions[index - 1].flight,
+        (launch) => launch.id === core.launches[index - 1],
       );
-      const launch2 = pastLaunches.find(
-        (launch) => launch.flight_number === mission.flight,
-      );
+      const launch2 = pastLaunches.find((launch) => launch.id === launchId);
 
       if (!launch1 || !launch2) {
         return;
       }
 
-      const turnaround = launch2.launch_date_unix - launch1.launch_date_unix;
+      const turnaround = launch2.date_unix - launch1.date_unix;
 
       turnarounds.push({
-        core: core.core_serial,
-        launch1: launch1.mission_name,
-        launch2: launch2.mission_name,
+        core: core.serial,
+        launch1: launch1.name,
+        launch2: launch2.name,
         turnaround: formatDuration(turnaround),
         turnaroundTime: turnaround,
       });
@@ -150,20 +154,20 @@ export const modelizer = ({
     0,
   );
 
-  const mostLaunches = buildMostLaunchesChart(cores);
+  const mostLaunches = buildMostLaunchesChart(cores, pastLaunches);
   const { mostLaunchedCore } = mostLaunches;
 
   const reflownFairingsCount = pastLaunches.filter(
-    (launch) => launch.rocket.fairings && launch.rocket.fairings.reused,
+    (launch) => launch.fairings?.reused,
   ).length;
 
   return {
     reflownLaunchesCount,
     mostLaunches,
     mostReflownCore: {
-      serial: mostLaunchedCore.core_serial,
-      missions: mostLaunchedCore.missions
-        .map((mission) => mission.name)
+      serial: mostLaunchedCore.serial,
+      missions: getMissions(mostLaunchedCore, pastLaunches)
+        .map((launch) => launch.name)
         .join(', '),
     },
     quickestReuseTurnaround: getQuickestReuseTurnaround(cores, pastLaunches),
