@@ -8,9 +8,14 @@ import { modelizer } from './modelizer';
 import { BlockProps } from 'types';
 
 const People: React.FC<BlockProps> = ({ data, ...rest }) => {
-  const { dragonriders, moonPopulation, marsPopulation, employees } = modelizer(
-    data,
-  );
+  const {
+    dragonriders,
+    currentlyInSpace,
+    moonPopulation,
+    marsPopulation,
+    employees,
+    starman,
+  } = modelizer(data);
 
   const tabs = [
     {
@@ -25,8 +30,7 @@ const People: React.FC<BlockProps> = ({ data, ...rest }) => {
           </SectionContent>
           <SectionDescription>
             {`Dragon 2, developed as part of NASA's Commercial Crew Transportation
-            Capability (CCtCap) program, will be used by NASA astronauts and
-            space tourists alike. The first crewed mission flew in May 2020.`}
+            Capability (CCtCap) program, flew for the first time in May 2020. ${currentlyInSpace}`}
           </SectionDescription>
         </>
       ),
@@ -77,6 +81,23 @@ const People: React.FC<BlockProps> = ({ data, ...rest }) => {
           <SectionContent>
             <IntegerStat value={employees} subtitle="People" />
           </SectionContent>
+        </>
+      ),
+    },
+    {
+      id: 'starman',
+      label: 'Starman',
+      background: 'starman.jpg',
+      title: 'Starman',
+      render: (
+        <>
+          <SectionContent>
+            <IntegerStat
+              value={Math.floor(starman.earth_distance_km)}
+              subtitle="km from Earth"
+            />
+          </SectionContent>
+          <SectionDescription>{starman.details}</SectionDescription>
         </>
       ),
     },
