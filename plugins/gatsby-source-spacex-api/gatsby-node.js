@@ -23,6 +23,10 @@ exports.sourceNodes = async ({
     payloads,
     launchpads,
     landpads,
+    crew,
+    starlink,
+    company,
+    roadster,
   ] = await Promise.all([
     apiGet('/launches'),
     apiGet('/cores'),
@@ -30,9 +34,24 @@ exports.sourceNodes = async ({
     apiGet('/payloads'),
     apiGet('/launchpads'),
     apiGet('/landpads'),
+    apiGet('/crew'),
+    apiGet('/starlink'),
+    apiGet('/company'),
+    apiGet('/roadster'),
   ]);
 
-  const data = { launches, cores, rockets, payloads, launchpads, landpads };
+  const data = {
+    launches,
+    cores,
+    rockets,
+    payloads,
+    launchpads,
+    landpads,
+    crew,
+    starlink,
+    company,
+    roadster,
+  };
 
   const { createNode } = actions;
   Object.keys(data).forEach((endpoint) => {

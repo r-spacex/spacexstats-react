@@ -99,6 +99,21 @@ export interface LaunchCore {
   reused: boolean;
 }
 
+export enum CrewStatus {
+  active = 'active',
+  inactive = 'inactive',
+  retired = 'retired',
+  unknown = 'unknown',
+}
+
+export interface Crew {
+  id: string;
+  name: string;
+  agency: string | null;
+  launches: string[];
+  status: CrewStatus;
+}
+
 export interface Launch {
   id: string;
   flight_number: number;
@@ -114,7 +129,7 @@ export interface Launch {
   upcoming: boolean;
   cores: LaunchCore[];
   fairings: LaunchFairings;
-  crew: null;
+  crew: string[];
 }
 
 export enum CoreStatus {
@@ -134,9 +149,28 @@ export interface Core {
   reuse_count: number;
 }
 
-export interface SpaceXAPIData {
-  launches: Launch[];
-  cores: Core[];
+export interface Starlink {
+  id: string;
+  launch: string;
+  version: string;
+  spaceTrack: {
+    OBJECT_NAME: string;
+    LAUNCH_DATE: string;
+    DECAY_DATE: string | null;
+    DECAYED: 1 | 0;
+  };
+}
+
+export interface Company {
+  id: string;
+  employees: number;
+}
+
+export interface Roadster {
+  id: string;
+  earth_distance_km: number;
+  speed_kph: number;
+  details: string;
 }
 
 export interface SpaceXData {
@@ -147,6 +181,10 @@ export interface SpaceXData {
   payloads: Payload[];
   launchpads: Launchpad[];
   landpads: Landpad[];
+  crew: Crew[];
+  starlink: Starlink[];
+  company: Company;
+  roadster: Roadster;
 }
 
 export interface BlockProps {

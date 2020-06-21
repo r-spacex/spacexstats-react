@@ -2,7 +2,18 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Root from 'components/ui/Root';
 import SEO from 'components/ui/SEO';
-import { Launch, Launchpad, Landpad, Core, Rocket, Payload } from 'types';
+import {
+  Launch,
+  Launchpad,
+  Landpad,
+  Core,
+  Rocket,
+  Payload,
+  Crew,
+  Starlink,
+  Roadster,
+  Company,
+} from 'types';
 
 interface Props {
   data: {
@@ -12,6 +23,10 @@ interface Props {
     spacexdatapayloads: { payloads: Payload[] };
     spacexdatalaunchpads: { launchpads: Launchpad[] };
     spacexdatalandpads: { landpads: Landpad[] };
+    spacexdatacrew: { crew: Crew[] };
+    spacexdatastarlink: { starlink: Starlink[] };
+    spacexdatacompany: { company: Company };
+    spacexdataroadster: { roadster: Roadster };
   };
 }
 
@@ -23,6 +38,10 @@ const IndexPage: React.FC<Props> = ({
     spacexdatapayloads: { payloads },
     spacexdatalaunchpads: { launchpads },
     spacexdatalandpads: { landpads },
+    spacexdatacrew: { crew },
+    spacexdatastarlink: { starlink },
+    spacexdatacompany: { company },
+    spacexdataroadster: { roadster },
   },
 }) => {
   const pastLaunches = launches.filter((launch) => !launch.upcoming);
@@ -38,6 +57,10 @@ const IndexPage: React.FC<Props> = ({
         payloads={payloads}
         launchpads={launchpads}
         landpads={landpads}
+        crew={crew}
+        starlink={starlink}
+        company={company}
+        roadster={roadster}
         upcomingLaunches={upcomingLaunches}
       />
     </>
@@ -102,6 +125,42 @@ export const query = graphql`
       landpads {
         id
         name
+      }
+    }
+    spacexdatacompany {
+      company {
+        id
+        employees
+      }
+    }
+    spacexdataroadster {
+      roadster {
+        id
+        earth_distance_km
+        speed_kph
+        details
+      }
+    }
+    spacexdatacrew {
+      crew {
+        id
+        name
+        agency
+        launches
+        status
+      }
+    }
+    spacexdatastarlink {
+      starlink {
+        id
+        launch
+        version
+        spaceTrack {
+          OBJECT_NAME
+          LAUNCH_DATE
+          DECAY_DATE
+          DECAYED
+        }
       }
     }
     spacexdatapayloads {
