@@ -1,6 +1,6 @@
 import { ChartOptions, ChartData } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { SpaceXData, Launch } from 'types';
+import { SpaceXData, Starlink } from 'types';
 import { fromUnix } from 'utils/date';
 import endOfMonth from 'date-fns/endOfMonth';
 import eachMonthOfInterval from 'date-fns/eachMonthOfInterval';
@@ -20,10 +20,13 @@ export interface ModelizedSectionData {
   deorbited: number;
 }
 
+const FIRST_STARLINK_LAUNCH = new Date('2019-05-24');
 const MONTH_FORMAT = 'MM-yyyy';
-export const buildInSpaceChart = (starlinkLaunches: Launch[]) => {
-  const start = fromUnix(starlinkLaunches[0].date_unix);
-  const months = eachMonthOfInterval({ start, end: new Date() });
+export const buildInSpaceChart = (starlinks: Starlink[]) => {
+  const months = eachMonthOfInterval({
+    start: FIRST_STARLINK_LAUNCH,
+    end: new Date(),
+  });
 
   const data = {
     labels: months.map((month) => format(month, MONTH_FORMAT)),
@@ -33,11 +36,15 @@ export const buildInSpaceChart = (starlinkLaunches: Launch[]) => {
         type: 'line',
         data: months.map(
           (month) =>
-            starlinkLaunches.filter(
-              (launch) =>
-                fromUnix(launch.date_unix).getTime() <
-                endOfMonth(month).getTime(),
-            ).length * 60,
+            starlinks.filter(
+              ({ spaceTrack: { LAUNCH_DATE } }) =>
+                new Date(LAUNCH_DATE).getTime() < endOfMonth(month).getTime(),
+            ).length -
+            starlinks.filter(
+              ({ spaceTrack: { DECAY_DATE } }) =>
+                DECAY_DATE &&
+                new Date(DECAY_DATE).getTime() < endOfMonth(month).getTime(),
+            ).length,
         ),
         lineTension: 0,
         fill: false,
@@ -94,9 +101,11 @@ export const buildInSpaceChart = (starlinkLaunches: Launch[]) => {
   return { data, options };
 };
 
-export const buildLaunchRateChart = (starlinkLaunches: Launch[]) => {
-  const start = fromUnix(starlinkLaunches[0].date_unix);
-  const months = eachMonthOfInterval({ start, end: new Date() });
+export const buildLaunchRateChart = (starlinks: Starlink[]) => {
+  const months = eachMonthOfInterval({
+    start: FIRST_STARLINK_LAUNCH,
+    end: new Date(),
+  });
 
   const data = {
     labels: months.map((month) => format(month, MONTH_FORMAT)),
@@ -105,11 +114,11 @@ export const buildLaunchRateChart = (starlinkLaunches: Launch[]) => {
         label: 'Falcon 9',
         data: months.map(
           (month) =>
-            starlinkLaunches.filter(
-              (launch) =>
-                format(fromUnix(launch.date_unix), MONTH_FORMAT) ===
+            starlinks.filter(
+              ({ spaceTrack: { LAUNCH_DATE } }) =>
+                format(new Date(LAUNCH_DATE), MONTH_FORMAT) ===
                 format(month, MONTH_FORMAT),
-            ).length * 60,
+            ).length,
         ),
         backgroundColor: chartColors.blue,
       },
@@ -145,15 +154,12 @@ export const buildLaunchRateChart = (starlinkLaunches: Launch[]) => {
   return { data, options };
 };
 
-export const modelizer = ({ pastLaunches }: SpaceXData) => {
-  const starlinkLaunches = pastLaunches.filter((launch) =>
-    launch.name.includes('Starlink'),
-  );
-
+export const modelizer = ({ starlink }: SpaceXData) => {
   return {
-    inSpace: buildInSpaceChart(starlinkLaunches),
-    launchRate: buildLaunchRateChart(starlinkLaunches),
-    deorbited: 5,
+    inSpace: buildInSpaceChart(starlink),
+    launchRate: buildLaunchRateChart(starlink),
+    deorbited: starlink.filter(({ spaceTrack: { DECAYED } }) => DECAYED === 1)
+      .length,
   };
 };
 
