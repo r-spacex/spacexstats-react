@@ -109,7 +109,7 @@ export const buildCrsFlightsChart = (
     totalFlightTime: formatDuration(
       Math.floor(
         crsFlights.reduce(
-          (sum, launch) => sum + getFlightTime(launch, payloads),
+          (sum, launch) => sum + getFlightTime(launch, payloads) * 3600,
           0,
         ),
       ),
