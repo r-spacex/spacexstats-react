@@ -103,6 +103,7 @@ export const buildLaunchesPerYearChart = (
 
   const customOptions: ChartOptions = {
     tooltips: {
+      mode: 'label',
       callbacks: {
         label: (tooltipItem, data) => {
           if (!data.datasets) {
