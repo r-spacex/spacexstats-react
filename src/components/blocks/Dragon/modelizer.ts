@@ -25,6 +25,7 @@ export interface ModelizedSectionData {
 export const modelizer = ({
   pastLaunches,
   payloads,
+  crew,
 }: SpaceXData): ModelizedSectionData => {
   const exclusionList = ['Dragon Qualification Unit'];
   const dragonLaunches = pastLaunches.filter((launch) => {
@@ -41,6 +42,7 @@ export const modelizer = ({
     commercialCrewFlights: buildCommercialCrewFlightsChart(
       dragonLaunches,
       payloads,
+      crew,
     ),
   };
 };
