@@ -5,6 +5,7 @@ import deepmerge from 'deepmerge';
 import { RocketType, Launch } from 'types';
 import last from 'lodash/last';
 import range from 'lodash/range';
+import { launchYear } from 'utils/launch';
 
 export const buildLaunchesPerYearChart = (
   pastLaunches: Launch[],
@@ -12,7 +13,7 @@ export const buildLaunchesPerYearChart = (
 ) => {
   const yearsStart = 2006; // First Falcon 1 flight
   const sortedUpcomingLaunches = upcomingLaunches.map((launch) =>
-    parseInt(launch.launch_year),
+    launchYear(launch),
   );
   sortedUpcomingLaunches.sort();
   const yearsEnd = last(sortedUpcomingLaunches);
@@ -30,10 +31,10 @@ export const buildLaunchesPerYearChart = (
         data: years.map(
           (year) =>
             pastLaunches.filter(
-              ({ launch_year, rocket, launch_success }) =>
-                parseInt(launch_year) === year &&
-                rocket.rocket_id === RocketType.f1 &&
-                launch_success,
+              (launch) =>
+                launchYear(launch) === year &&
+                launch.rocket === RocketType.f1 &&
+                launch.success,
             ).length,
         ),
       },
@@ -43,11 +44,11 @@ export const buildLaunchesPerYearChart = (
         data: years.map(
           (year) =>
             pastLaunches.filter(
-              ({ launch_year, rocket, launch_success }) =>
-                parseInt(launch_year) === year &&
-                rocket.rocket_id === RocketType.f9 &&
-                launch_success &&
-                !rocket.first_stage.cores[0].reused,
+              (launch) =>
+                launchYear(launch) === year &&
+                launch.rocket === RocketType.f9 &&
+                launch.success &&
+                !launch.cores[0].reused,
             ).length,
         ),
       },
@@ -57,11 +58,11 @@ export const buildLaunchesPerYearChart = (
         data: years.map(
           (year) =>
             pastLaunches.filter(
-              ({ launch_year, rocket, launch_success }) =>
-                parseInt(launch_year) === year &&
-                rocket.rocket_id === RocketType.f9 &&
-                launch_success &&
-                rocket.first_stage.cores[0].reused,
+              (launch) =>
+                launchYear(launch) === year &&
+                launch.rocket === RocketType.f9 &&
+                launch.success &&
+                launch.cores[0].reused,
             ).length,
         ),
       },
@@ -71,10 +72,10 @@ export const buildLaunchesPerYearChart = (
         data: years.map(
           (year) =>
             pastLaunches.filter(
-              ({ launch_year, rocket, launch_success }) =>
-                parseInt(launch_year) === year &&
-                rocket.rocket_id === RocketType.fh &&
-                launch_success,
+              (launch) =>
+                launchYear(launch) === year &&
+                launch.rocket === RocketType.fh &&
+                launch.success,
             ).length,
         ),
       },
@@ -84,8 +85,7 @@ export const buildLaunchesPerYearChart = (
         data: years.map(
           (year) =>
             pastLaunches.filter(
-              ({ launch_year, launch_success }) =>
-                parseInt(launch_year) === year && !launch_success,
+              (launch) => launchYear(launch) === year && !launch.success,
             ).length,
         ),
       },
@@ -94,9 +94,8 @@ export const buildLaunchesPerYearChart = (
         backgroundColor: chartColors.white,
         data: years.map(
           (year) =>
-            upcomingLaunches.filter(
-              ({ launch_year }) => parseInt(launch_year) === year,
-            ).length,
+            upcomingLaunches.filter((launch) => launchYear(launch) === year)
+              .length,
         ),
       },
     ],
@@ -104,6 +103,7 @@ export const buildLaunchesPerYearChart = (
 
   const customOptions: ChartOptions = {
     tooltips: {
+      mode: 'label',
       callbacks: {
         label: (tooltipItem, data) => {
           if (!data.datasets) {

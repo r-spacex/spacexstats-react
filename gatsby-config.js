@@ -59,7 +59,7 @@ module.exports = {
         icon: `static/oglogo.jpg`,
       },
     },
-    `gatsby-plugin-offline`,
+    `gatsby-plugin-remove-serviceworker`,
     `gatsby-plugin-netlify`,
   ],
 };

@@ -11,13 +11,11 @@ const computeSuccessRate = (
 ): number => {
   const launchesUpToThatPoint = pastLaunches.filter(
     ({ flight_number, rocket }) =>
-      flight_number <= flightNumber &&
-      (!rocketType || rocket.rocket_id === rocketType),
+      flight_number <= flightNumber && (!rocketType || rocket === rocketType),
   );
 
-  const launchSuccess = launchesUpToThatPoint.filter(
-    ({ launch_success }) => launch_success,
-  ).length;
+  const launchSuccess = launchesUpToThatPoint.filter(({ success }) => success)
+    .length;
 
   return (100 * launchSuccess) / launchesUpToThatPoint.length;
 };

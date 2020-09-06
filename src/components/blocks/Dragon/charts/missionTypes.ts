@@ -2,18 +2,20 @@ import settings from 'settings';
 import { chartColors } from 'stylesheet';
 import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { Launch } from 'types';
+import { Launch, Payload } from 'types';
+import { getPayload } from 'utils/launch';
 
-export const buildMissionTypesChart = (dragonLaunches: Launch[]) => {
+export const buildMissionTypesChart = (
+  dragonLaunches: Launch[],
+  payloads: Payload[],
+) => {
   const missions = {
-    CRS: dragonLaunches.filter(
-      (launch) =>
-        launch.rocket.second_stage.payloads[0].payload_id.includes('COTS') ||
-        launch.rocket.second_stage.payloads[0].payload_id.includes('CRS'),
-    ).length,
+    CRS: dragonLaunches.filter((launch) => {
+      const payloadName = getPayload(launch, payloads).name;
+      return payloadName.includes('COTS') || payloadName.includes('CRS');
+    }).length,
     Crew: dragonLaunches.filter(
-      (launch) =>
-        launch.rocket.second_stage.payloads[0].payload_type === 'Crew Dragon',
+      (launch) => getPayload(launch, payloads).type === 'Crew Dragon',
     ).length,
     DragonXL: 0,
   };

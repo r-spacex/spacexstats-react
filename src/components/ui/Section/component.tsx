@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentTab, actions, SectionId } from 'redux/navigation';
 import { updateSectionUrl } from 'utils/scroll';

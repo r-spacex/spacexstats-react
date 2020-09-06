@@ -20,6 +20,7 @@ interface Hop {
 const hops: Hop[] = [
   { date: new Date('2019-07-25'), height: 20 },
   { date: new Date('2019-08-27'), height: 150 },
+  { date: new Date('2020-08-04'), height: 150 },
   { date: null, height: 150, tentative: true },
 ];
 

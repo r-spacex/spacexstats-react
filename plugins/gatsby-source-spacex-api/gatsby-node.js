@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 const fetch = require('node-fetch');
 
-const API_URL = 'https://api.spacexdata.com/v3';
+const API_URL = 'https://api.spacexdata.com/v4';
 
 const apiGet = async (endpoint) => {
   const response = await fetch(`${API_URL}${endpoint}`, {
@@ -16,12 +16,42 @@ exports.sourceNodes = async ({
   createNodeId,
   createContentDigest,
 }) => {
-  const [launches, cores] = await Promise.all([
+  const [
+    launches,
+    cores,
+    rockets,
+    payloads,
+    launchpads,
+    landpads,
+    crew,
+    starlink,
+    company,
+    roadster,
+  ] = await Promise.all([
     apiGet('/launches'),
     apiGet('/cores'),
+    apiGet('/rockets'),
+    apiGet('/payloads'),
+    apiGet('/launchpads'),
+    apiGet('/landpads'),
+    apiGet('/crew'),
+    apiGet('/starlink'),
+    apiGet('/company'),
+    apiGet('/roadster'),
   ]);
 
-  const data = { launches, cores };
+  const data = {
+    launches,
+    cores,
+    rockets,
+    payloads,
+    launchpads,
+    landpads,
+    crew,
+    starlink,
+    company,
+    roadster,
+  };
 
   const { createNode } = actions;
   Object.keys(data).forEach((endpoint) => {

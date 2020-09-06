@@ -2,12 +2,31 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Root from 'components/ui/Root';
 import SEO from 'components/ui/SEO';
-import { Launch, Core } from 'types';
+import {
+  Launch,
+  Launchpad,
+  Landpad,
+  Core,
+  Rocket,
+  Payload,
+  Crew,
+  Starlink,
+  Roadster,
+  Company,
+} from 'types';
 
 interface Props {
   data: {
     spacexdatalaunches: { launches: Launch[] };
     spacexdatacores: { cores: Core[] };
+    spacexdatarockets: { rockets: Rocket[] };
+    spacexdatapayloads: { payloads: Payload[] };
+    spacexdatalaunchpads: { launchpads: Launchpad[] };
+    spacexdatalandpads: { landpads: Landpad[] };
+    spacexdatacrew: { crew: Crew[] };
+    spacexdatastarlink: { starlink: Starlink[] };
+    spacexdatacompany: { company: Company };
+    spacexdataroadster: { roadster: Roadster };
   };
 }
 
@@ -15,6 +34,14 @@ const IndexPage: React.FC<Props> = ({
   data: {
     spacexdatalaunches: { launches },
     spacexdatacores: { cores },
+    spacexdatarockets: { rockets },
+    spacexdatapayloads: { payloads },
+    spacexdatalaunchpads: { launchpads },
+    spacexdatalandpads: { landpads },
+    spacexdatacrew: { crew },
+    spacexdatastarlink: { starlink },
+    spacexdatacompany: { company },
+    spacexdataroadster: { roadster },
   },
 }) => {
   const pastLaunches = launches.filter((launch) => !launch.upcoming);
@@ -26,6 +53,14 @@ const IndexPage: React.FC<Props> = ({
       <Root
         cores={cores}
         pastLaunches={pastLaunches}
+        rockets={rockets}
+        payloads={payloads}
+        launchpads={launchpads}
+        landpads={landpads}
+        crew={crew}
+        starlink={starlink}
+        company={company}
+        roadster={roadster}
         upcomingLaunches={upcomingLaunches}
       />
     </>
@@ -38,67 +73,110 @@ export const query = graphql`
   query IndexQuery {
     spacexdatalaunches {
       launches {
+        id
         flight_number
-        mission_name
-        launch_year
-        launch_date_unix
-        launch_date_utc
-        tentative_max_precision
-        rocket {
-          rocket_id
-          rocket_name
-          rocket_type
-          first_stage {
-            cores {
-              core_serial
-              flight
-              land_success
-              landing_intent
-              landing_type
-              landing_vehicle
-              reused
-            }
-          }
-          second_stage {
-            payloads {
-              payload_id
-              norad_id
-              reused
-              customers
-              nationality
-              payload_type
-              payload_mass_kg
-              orbit
-              mass_returned_kg
-              flight_time_sec
-            }
-          }
-          fairings {
-            recovery_attempt
-            recovered
-            reused
-            ship
-          }
+        name
+        date_unix
+        date_utc
+        date_precision
+        rocket
+        launchpad
+        success
+        payloads
+        cores {
+          flight
+          landing_success
+          landing_attempt
+          landing_type
+          landpad
+          reused
         }
-        launch_site {
-          site_id
-          site_name
+        fairings {
+          recovery_attempt
+          recovered
+          reused
         }
-        launch_success
         details
         upcoming
       }
     }
     spacexdatacores {
       cores {
-        core_serial
+        id
+        serial
         status
-        missions {
-          name
-          flight
-        }
         reuse_count
+        launches
+      }
+    }
+    spacexdatarockets {
+      rockets {
+        id
+        name
+      }
+    }
+    spacexdatalaunchpads {
+      launchpads {
+        id
+        name
+      }
+    }
+    spacexdatalandpads {
+      landpads {
+        id
+        name
+      }
+    }
+    spacexdatacompany {
+      company {
+        id
+        employees
+      }
+    }
+    spacexdataroadster {
+      roadster {
+        id
+        earth_distance_km
+        speed_kph
         details
+      }
+    }
+    spacexdatacrew {
+      crew {
+        id
+        name
+        agency
+        launches
+        status
+      }
+    }
+    spacexdatastarlink {
+      starlink {
+        id
+        launch
+        version
+        spaceTrack {
+          OBJECT_NAME
+          LAUNCH_DATE
+          DECAY_DATE
+          DECAYED
+        }
+      }
+    }
+    spacexdatapayloads {
+      payloads {
+        id
+        name
+        type
+        norad_ids
+        reused
+        customers
+        mass_kg
+        orbit
+        dragon {
+          mass_returned_kg
+          flight_time_sec
+        }
       }
     }
   }
