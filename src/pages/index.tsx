@@ -159,7 +159,6 @@ export const query = graphql`
           OBJECT_NAME
           LAUNCH_DATE
           DECAY_DATE
-          DECAYED
         }
       }
     }
