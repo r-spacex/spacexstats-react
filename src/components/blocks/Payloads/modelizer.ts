@@ -212,7 +212,6 @@ export const modelizer = ({
       0,
     ),
   }));
-  console.log(launchMasses);
 
   const sortedLaunchMasses = orderBy(launchMasses, 'mass', 'desc');
   const heaviestPayloadLaunch = sortedLaunchMasses[0];
