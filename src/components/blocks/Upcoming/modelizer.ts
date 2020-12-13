@@ -180,7 +180,6 @@ export const modelizer = ({
 }: SpaceXData): ModelizedSectionData => {
   const nextLaunches = upcomingLaunches.map((launch) => launch);
   nextLaunches.sort(sortLaunches);
-  console.log(nextLaunches);
 
   // Find first launch with non-null launch date
   const nextLaunch =

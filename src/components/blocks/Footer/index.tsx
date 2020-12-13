@@ -68,7 +68,8 @@ const Footer: React.FC = () => (
           >
             r/spacex’s API
           </Link>{' '}
-          and ❤. Maintained by /u/kornelord.
+          and ❤. Website is updated every 24 hours based on the API data.
+          Maintained by /u/kornelord.
           <br />
           Domain name rehosted by{' '}
           <Link
