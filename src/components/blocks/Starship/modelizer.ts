@@ -22,7 +22,7 @@ const hops: Hop[] = [
   { date: new Date('2019-08-27'), height: 150 },
   { date: new Date('2020-08-04'), height: 150 },
   { date: new Date('2020-09-03'), height: 150 },
-  { date: null, height: 15000, tentative: true },
+  { date: new Date('2020-12-09'), height: 12500 },
 ];
 
 const formatHeight = (label: string | number) => {
