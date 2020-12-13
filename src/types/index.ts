@@ -157,7 +157,6 @@ export interface Starlink {
     OBJECT_NAME: string;
     LAUNCH_DATE: string;
     DECAY_DATE: string | null;
-    DECAYED: 1 | 0;
   };
 }
 

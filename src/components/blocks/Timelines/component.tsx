@@ -26,8 +26,8 @@ const Timelines: React.FC<BlockProps> = ({ data, ...rest }) => {
             {`In April 2009, Michael S. Malone revealed, while interviewing Elon
             Musk, that the two had a bet that SpaceX would put a man on Mars by
             "2020 or 2025". Musk has continued to reiterate this rough timeframe
-            since. This countdown clock expires on 1 January 2026, at 00:00 UTC.`}
-            No pressure, Elon.
+            since. This countdown clock expires on 1 January 2026, at 00:00 UTC.
+            No pressure, Elon.`}
           </SectionDescription>
         </>
       ),

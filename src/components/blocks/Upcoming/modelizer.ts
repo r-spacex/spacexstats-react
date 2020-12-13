@@ -164,11 +164,11 @@ const getPayloadDescription = (
     return `A SpaceX Dragon capsule will launch into LEO atop a ${rocket.name} rocket from ${launchpad.name}, carrying ${payloadMass} kg of supplies and scientific cargo to the International Space Station.`;
   }
 
-  return `A SpaceX ${rocket.name} rocket will launch from 
-  ${launchpad.name}, lofting the 
-  ${payloadMass > 0 ? `${payloadMass} kg ` : ''} 
+  return `A SpaceX ${rocket.name} rocket will launch from
+  ${launchpad.name}, lofting the
+  ${payloadMass > 0 ? `${payloadMass} kg ` : ''}
   satellite${payloads.length > 1 ? 's ' : ' '}
-  ${payloadNames.join('/')} to a 
+  ${payloadNames.join('/')} to a
   ${payloads[0].orbit} trajectory.`;
 };
 
@@ -183,7 +183,10 @@ export const modelizer = ({
 
   // Find first launch with non-null launch date
   const nextLaunch =
-    nextLaunches.find((launch) => launch.date_utc !== null) || nextLaunches[0];
+    nextLaunches.find(
+      (launch) =>
+        launch.date_utc !== null && fromUnix(launch.date_unix) > new Date(),
+    ) || nextLaunches[0];
 
   return {
     nextLaunch: {

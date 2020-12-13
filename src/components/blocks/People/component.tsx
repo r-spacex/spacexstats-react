@@ -30,7 +30,7 @@ const People: React.FC<BlockProps> = ({ data, ...rest }) => {
           </SectionContent>
           <SectionDescription>
             {`Dragon 2, developed as part of NASA's Commercial Crew Transportation
-            Capability (CCtCap) program, flew for the first time in May 2020. ${currentlyInSpace}`}
+            Capability (CCtCap) program, flew for the first time in May 2020. ${dragonriders} different people were spent to space by SpaceX`}
           </SectionDescription>
         </>
       ),

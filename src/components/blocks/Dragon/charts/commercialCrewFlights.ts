@@ -3,7 +3,7 @@ import { chartColors } from 'stylesheet';
 import { formatDuration } from 'utils/date';
 import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { Launch, Payload } from 'types';
+import { Crew, Launch, Payload } from 'types';
 import { getPayload } from 'utils/launch';
 
 export const getFlightTime = (launch: Launch, payloads: Payload[]) =>
@@ -15,6 +15,7 @@ export const getFlightTime = (launch: Launch, payloads: Payload[]) =>
 export const buildCommercialCrewFlightsChart = (
   dragonLaunches: Launch[],
   payloads: Payload[],
+  crew: Crew[],
 ) => {
   const crewFlights = dragonLaunches.filter((launch) =>
     getPayload(launch, payloads).type.includes('Crew Dragon'),
@@ -71,7 +72,12 @@ export const buildCommercialCrewFlightsChart = (
           if (!launch) {
             return '';
           }
-          return `People: 0`;
+
+          const crewCount = crew.filter((person) =>
+            person.launches.includes(launch.id),
+          ).length;
+
+          return `People: ${crewCount}`;
         },
       },
     },
