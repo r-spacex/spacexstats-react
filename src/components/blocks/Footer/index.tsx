@@ -37,15 +37,8 @@ const Footer: React.FC = () => (
     <WhiteBackground>
       <FooterWrapper id={FOOTER_SECTION_ID}>
         <Text>
-          Photos on this page courtesy SpaceX and NASA. SpaceX Recaps by{' '}
-          <Link
-            eventLabel="Exit to SpaceX Recaps YouTube channel"
-            to="https://www.youtube.com/channel/UC0xhru07vavdPOqJxKRzPrg"
-            title="Jack Lishman's YouTube channel"
-          >
-            Jack Lishman
-          </Link>
-          . All rights maintained by the respective owners.
+          Photos on this page courtesy SpaceX and NASA. All rights maintained by
+          the respective owners.
           <br />
           This site is fan-run and not affiliated with SpaceX in any way. For
           official information and news, please visit{' '}
@@ -75,7 +68,8 @@ const Footer: React.FC = () => (
           >
             r/spacex’s API
           </Link>{' '}
-          and ❤. Maintained by /u/kornelord.
+          and ❤. Website is updated every 24 hours based on the API data.
+          Maintained by /u/kornelord.
           <br />
           Domain name rehosted by{' '}
           <Link

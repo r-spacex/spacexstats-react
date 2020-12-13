@@ -9,9 +9,11 @@ const computeSuccessRate = (
   flightNumber: number,
   rocketType?: RocketType,
 ): number => {
+  const givenLaunch = pastLaunches[flightNumber];
   const launchesUpToThatPoint = pastLaunches.filter(
-    ({ flight_number, rocket }) =>
-      flight_number <= flightNumber && (!rocketType || rocket === rocketType),
+    ({ date_utc, rocket }) =>
+      new Date(date_utc) <= new Date(givenLaunch.date_utc) &&
+      (!rocketType || rocket === rocketType),
   );
 
   const launchSuccess = launchesUpToThatPoint.filter(({ success }) => success)
@@ -21,10 +23,18 @@ const computeSuccessRate = (
 };
 
 export const buildSuccessRateChart = (pastLaunches: Launch[]) => {
-  const flightNumbers = pastLaunches.map(({ flight_number }) => flight_number);
+  pastLaunches.sort((a, b) => {
+    const dateA = new Date(a.date_utc);
+    const dateB = new Date(b.date_utc);
+    if (dateA > dateB) {
+      return 1;
+    }
+    return -1;
+  });
+  const flightNumbers = pastLaunches.map((_value, index) => index);
 
   const data = {
-    labels: flightNumbers.map((flight_number) => `#${flight_number}`),
+    labels: flightNumbers.map((value) => `#${value + 1}`),
     datasets: [
       {
         label: 'Falcon 9',
