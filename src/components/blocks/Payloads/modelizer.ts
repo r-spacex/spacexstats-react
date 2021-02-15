@@ -34,6 +34,10 @@ const buildCustomersChart = (pastLaunches: Launch[], payloads: Payload[]) => {
 
   pastLaunches.forEach((launch) => {
     getPayloads(launch, payloads).forEach((payload) => {
+      if (payload.customers.length === 0) {
+        return;
+      }
+
       // Only consider first customer
       const customer = payload.customers[0];
 
