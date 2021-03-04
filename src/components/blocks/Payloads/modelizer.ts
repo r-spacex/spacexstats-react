@@ -34,6 +34,10 @@ const buildCustomersChart = (pastLaunches: Launch[], payloads: Payload[]) => {
 
   pastLaunches.forEach((launch) => {
     getPayloads(launch, payloads).forEach((payload) => {
+      if (payload.customers.length === 0) {
+        return;
+      }
+
       // Only consider first customer
       const customer = payload.customers[0];
 
@@ -212,7 +216,6 @@ export const modelizer = ({
       0,
     ),
   }));
-  console.log(launchMasses);
 
   const sortedLaunchMasses = orderBy(launchMasses, 'mass', 'desc');
   const heaviestPayloadLaunch = sortedLaunchMasses[0];

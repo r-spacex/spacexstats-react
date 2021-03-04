@@ -16,15 +16,6 @@ import {
 import TimeStat from 'components/ui/TimeStat';
 import { modelizer, ModelizedUpcomingLaunch } from './modelizer';
 import { BlockProps } from 'types';
-import styled from 'styled-components';
-import { thresholds } from 'stylesheet';
-
-const VideoWrapper = styled.div`
-  width: 100%;
-  @media (min-width: ${thresholds.sm}) {
-    width: 60%;
-  }
-`;
 
 const Upcoming: React.FC<BlockProps> = ({ data, ...rest }) => {
   const { nextLaunch, nextLaunches } = modelizer(data);
@@ -94,45 +85,6 @@ const Upcoming: React.FC<BlockProps> = ({ data, ...rest }) => {
               </TableBody>
             </Table>
           </TableContainer>
-        </SectionContent>
-      ),
-    },
-    {
-      id: 'recent-updates',
-      label: 'Recent Updates',
-      background: 'starshipsn4.jpg',
-      title: 'Recent Updates',
-      render: (
-        <SectionContent style={{ alignItems: 'center' }}>
-          <VideoWrapper>
-            <div
-              style={{
-                position: 'relative',
-                width: '100%',
-                paddingBottom: '56%',
-              }}
-            >
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  right: 0,
-                  bottom: 0,
-                  left: 0,
-                }}
-              >
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src="https://www.youtube-nocookie.com/embed/videoseries?list=PLKH6J0WU0gbsJpSO_Awf4wb07BKikj0qr"
-                  title="SpaceX recaps by Jack Lishman"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            </div>
-          </VideoWrapper>
         </SectionContent>
       ),
     },

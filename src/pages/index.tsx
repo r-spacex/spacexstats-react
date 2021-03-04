@@ -44,7 +44,9 @@ const IndexPage: React.FC<Props> = ({
     spacexdataroadster: { roadster },
   },
 }) => {
-  const pastLaunches = launches.filter((launch) => !launch.upcoming);
+  const pastLaunches = launches.filter(
+    (launch) => !launch.upcoming && launch.success !== null,
+  );
   const upcomingLaunches = launches.filter((launch) => launch.upcoming);
 
   return (
@@ -159,7 +161,6 @@ export const query = graphql`
           OBJECT_NAME
           LAUNCH_DATE
           DECAY_DATE
-          DECAYED
         }
       }
     }
