@@ -42,7 +42,12 @@ export const buildCrsFlightsChart = (
       {
         label: 'Dragon 2',
         backgroundColor: chartColors.green,
-        data: crsFlights.map(() => 0),
+        data: crsFlights.map((launch) => {
+          const { type, reused } = getPayload(launch, payloads);
+          return type.includes('Dragon 2.0') && reused
+            ? getFlightTime(launch, payloads)
+            : 0;
+        }),
       },
     ],
   };

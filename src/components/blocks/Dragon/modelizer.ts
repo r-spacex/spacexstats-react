@@ -31,7 +31,7 @@ export const modelizer = ({
   const dragonLaunches = pastLaunches.filter((launch) => {
     const payload = getPayload(launch, payloads);
     return (
-      payload.type.indexOf('Dragon') !== -1 &&
+      payload.type.includes('Dragon') &&
       !exclusionList.includes(payload.type)
     );
   });
