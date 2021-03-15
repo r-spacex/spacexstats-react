@@ -28,6 +28,12 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-styled-components`,
+    {
+      resolve: `gatsby-plugin-build-date`,
+      options: {
+        formatAsDateString: false
+      }
+    },
 
     // SEO
     `gatsby-plugin-robots-txt`,

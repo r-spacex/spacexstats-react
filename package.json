@@ -22,6 +22,7 @@
     "gatsby": "^3.0.0",
     "gatsby-background-image": "^1.1.1",
     "gatsby-image": "^3.0.0",
+    "gatsby-plugin-build-date": "^1.0.0",
     "gatsby-plugin-canonical-urls": "^3.0.0",
     "gatsby-plugin-eslint": "^3.0.0",
     "gatsby-plugin-google-analytics": "^3.0.0",

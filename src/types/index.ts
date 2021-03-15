@@ -173,6 +173,7 @@ export interface Roadster {
 }
 
 export interface SpaceXData {
+  buildDate: string;
   pastLaunches: Launch[];
   upcomingLaunches: Launch[];
   cores: Core[];
