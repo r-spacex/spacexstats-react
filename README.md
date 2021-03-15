@@ -11,12 +11,11 @@ Go there to see the latest version of this app without needing to compile it you
 
 - Node >= v8.0.0
 - Yarn >= v1.13.0
-- Gatsby CLI >= v2.6.7: run `npm install -g gatsby-cli`
 
 ### Setup instructions
 
-1. In the project directory, run `npm install` command.
-2. Run `gatsby develop`.
+1. In the project directory, run `yarn` command.
+2. Run `yarn start`.
 3. Open `http://localhost:8000/`.
 4. ...
 5. Profit!
