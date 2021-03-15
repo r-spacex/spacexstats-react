@@ -1,5 +1,10 @@
 # SpaceX Stats
 
+## View online
+
+The `master` branch of this project is deployed at <https://www.spacexstats.xyz/>.  
+Go there to see the latest version of this app without needing to compile it yourself.
+
 ## Installation
 
 ### Prereqs
