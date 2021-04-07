@@ -25,6 +25,7 @@ const hops: Hop[] = [
   { date: new Date('2020-12-09'), height: 12500 },
   { date: new Date('2021-02-02'), height: 10000 },
   { date: new Date('2021-03-03'), height: 10000 },
+  { date: new Date('2021-03-30'), height: 10000 },
 ];
 
 const formatHeight = (label: string | number) => {
