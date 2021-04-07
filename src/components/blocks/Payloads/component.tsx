@@ -19,23 +19,6 @@ const Payloads: React.FC<BlockProps> = ({ data, ...rest }) => {
 
   const tabs = [
     {
-      id: 'customers',
-      label: 'Customers',
-      background: 'payloadfairing.jpg',
-      title: 'Customers',
-      render: (
-        <>
-          <SectionContent>
-            <Doughnut data={customers.data} options={customers.options} />
-          </SectionContent>
-          <SectionDescription>
-            {`SpaceX has many commercial customers as well as public agencies such
-            as NASA and USAF.`}
-          </SectionDescription>
-        </>
-      ),
-    },
-    {
       id: 'upmass-per-year',
       label: 'Upmass',
       background: 'payloadfairing.jpg',
@@ -52,6 +35,23 @@ const Payloads: React.FC<BlockProps> = ({ data, ...rest }) => {
             most orbit and mission types. These payloads can have a variety of
             masses, from the smallest cubesats which can weigh less than 1
             kilogram, to huge comsats over 5 tonnes.`}
+          </SectionDescription>
+        </>
+      ),
+    },
+    {
+      id: 'customers',
+      label: 'Customers',
+      background: 'payloadfairing.jpg',
+      title: 'Customers',
+      render: (
+        <>
+          <SectionContent>
+            <Doughnut data={customers.data} options={customers.options} />
+          </SectionContent>
+          <SectionDescription>
+            {`SpaceX has many commercial customers as well as public agencies such
+            as NASA and USAF.`}
           </SectionDescription>
         </>
       ),
