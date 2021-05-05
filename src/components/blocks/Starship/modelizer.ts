@@ -41,7 +41,7 @@ const buildStarshipHopsChart = () => {
   const data = {
     labels: hops.map((hop) =>
       hop.date ? 
-         (date instanceof Date ? format(hop.date, 'MMM do yyyy'): date) : 
+         (hop.date instanceof Date ? format(hop.date, 'MMM do yyyy'): hop.date) : 
          'Next tentative',
     ),
     datasets: [
