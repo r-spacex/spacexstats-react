@@ -160,7 +160,7 @@ const buildUpmassPerYearChart = (
       },
       {
         label: 'Interplanetary',
-        backgroundColor: chartColors.red,
+        backgroundColor: chartColors.green,
         data: getMassForYear([Orbit.hco, Orbit.esl1]),
       },
     ],

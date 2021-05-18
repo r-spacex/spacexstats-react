@@ -20,6 +20,11 @@ Open Source website to use API data of <a href="https://github.com/r-spacex/Spac
 The `master` branch of this project is deployed at <https://www.spacexstats.xyz/>.  
 Go there to see the latest version of this app without needing to compile it yourself.
 
+## View online
+
+The `master` branch of this project is deployed at <https://www.spacexstats.xyz/>.  
+Go there to see the latest version of this app without needing to compile it yourself.
+
 ## Installation
 
 ### Prereqs
@@ -27,8 +32,8 @@ Go there to see the latest version of this app without needing to compile it you
 - Node >= v8.0.0
 - Yarn >= v1.13.0
 
-After downloading Node & Npm locally : 
 `npm install --global yarn`
+
 
 ### Setup instructions
 

@@ -17,6 +17,9 @@ import {
 
 interface Props {
   data: {
+    currentBuildDate: {
+      currentDate: string;
+    };
     spacexdatalaunches: { launches: Launch[] };
     spacexdatacores: { cores: Core[] };
     spacexdatarockets: { rockets: Rocket[] };
@@ -32,6 +35,7 @@ interface Props {
 
 const IndexPage: React.FC<Props> = ({
   data: {
+    currentBuildDate: { currentDate },
     spacexdatalaunches: { launches },
     spacexdatacores: { cores },
     spacexdatarockets: { rockets },
@@ -53,6 +57,7 @@ const IndexPage: React.FC<Props> = ({
     <>
       <SEO />
       <Root
+        buildDate={currentDate}
         cores={cores}
         pastLaunches={pastLaunches}
         rockets={rockets}
@@ -73,6 +78,9 @@ export default IndexPage;
 
 export const query = graphql`
   query IndexQuery {
+    currentBuildDate {
+      currentDate
+    }
     spacexdatalaunches {
       launches {
         id

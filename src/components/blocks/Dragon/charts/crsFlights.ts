@@ -42,7 +42,12 @@ export const buildCrsFlightsChart = (
       {
         label: 'Dragon 2',
         backgroundColor: chartColors.green,
-        data: crsFlights.map(() => 0),
+        data: crsFlights.map((launch) => {
+          const { type, reused } = getPayload(launch, payloads);
+          return type.includes('Dragon 2.0') && reused
+            ? getFlightTime(launch, payloads)
+            : 0;
+        }),
       },
     ],
   };
@@ -86,7 +91,7 @@ export const buildCrsFlightsChart = (
 
           return `Transported: ${Math.floor(
             currentPayload.mass_kg,
-          ).toLocaleString()}kg (Up) and ${Math.floor(
+          ).toLocaleString()}kg (up) and ${Math.floor(
             currentPayload.dragon.mass_returned_kg,
           ).toLocaleString()}kg (down)`;
         },

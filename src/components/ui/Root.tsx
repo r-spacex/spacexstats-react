@@ -94,7 +94,7 @@ const Root: React.FC<SpaceXData> = (data) => {
         />
       ))}
 
-      <Footer />
+      <Footer buildDate={data.buildDate} />
     </>
   );
 };

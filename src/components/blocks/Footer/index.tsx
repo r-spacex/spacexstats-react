@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { palette, getSpacing } from 'stylesheet';
 import { Background, Wrapper } from 'components/ui/Section';
 import Link from 'components/ui/Link';
+import format from 'date-fns/format';
 
 const FooterBackground = styled(Background)`
   display: block;
@@ -32,7 +33,11 @@ const Text = styled.p`
 
 const FOOTER_SECTION_ID = 'about';
 
-const Footer: React.FC = () => (
+interface Props {
+  buildDate: string;
+}
+
+const Footer: React.FC<Props> = ({ buildDate }) => (
   <FooterBackground filename="backgrounds/orbcommdark.jpg" tag="footer">
     <WhiteBackground>
       <FooterWrapper id={FOOTER_SECTION_ID}>
@@ -52,6 +57,9 @@ const Footer: React.FC = () => (
           .
         </Text>
         <Text>
+          Website is updated every 24 hours based on the API data (latest build
+          on {format(new Date(buildDate), 'MMM do yyyy, HH:mm')} UTC).
+          <br />
           Made with{' '}
           <Link
             eventLabel="Exit to GatsbyJS website"
@@ -68,18 +76,7 @@ const Footer: React.FC = () => (
           >
             r/spacex’s API
           </Link>{' '}
-          and ❤. Website is updated every 24 hours based on the API data.
-          Maintained by /u/kornelord.
-          <br />
-          Domain name rehosted by{' '}
-          <Link
-            eventLabel="Exit to Brandtamos' profile"
-            to="https://www.reddit.com/user/brandtamos"
-            title="Brandtamos' Reddit profile"
-          >
-            /u/brandtamos
-          </Link>
-          .{' '}
+          and ❤.{' '}
           <Link
             eventLabel="Exit to Github Repo"
             to="https://github.com/r-spacex/spacexstats-react"
@@ -89,7 +86,7 @@ const Footer: React.FC = () => (
           </Link>
         </Text>
         <Text>
-          Contact for feedback:{' '}
+          Maintained by /u/kornelord. Contact for feedback:{' '}
           <Link
             eventLabel="Exit to kornelord's profile"
             to="https://www.reddit.com/user/kornelord"
@@ -104,6 +101,15 @@ const Footer: React.FC = () => (
             title="kornelord's Twitter profile"
           >
             Albéric Trancart on Twitter
+          </Link>
+          .<br />
+          Domain name rehosted by{' '}
+          <Link
+            eventLabel="Exit to Brandtamos' profile"
+            to="https://www.reddit.com/user/brandtamos"
+            title="Brandtamos' Reddit profile"
+          >
+            /u/brandtamos
           </Link>
           .
         </Text>
