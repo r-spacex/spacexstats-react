@@ -91,7 +91,7 @@ export const buildCrsFlightsChart = (
 
           return `Transported: ${Math.floor(
             currentPayload.mass_kg,
-          ).toLocaleString()}kg (Up) and ${Math.floor(
+          ).toLocaleString()}kg (up) and ${Math.floor(
             currentPayload.dragon.mass_returned_kg,
           ).toLocaleString()}kg (down)`;
         },
