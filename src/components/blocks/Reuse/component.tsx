@@ -20,6 +20,23 @@ const Reuse: React.FC<BlockProps> = ({ data, ...rest }) => {
 
   const tabs = [
     {
+      id: 'most-launches',
+      label: 'Most launches',
+      background: 'reuse.jpg',
+      title: 'Most launches',
+      render: (
+        <>
+          <SectionContent>
+            <Bar data={mostLaunches.data} options={mostLaunches.options} />
+          </SectionContent>
+          <SectionDescription>
+            {`The ${mostReflownCore.serial} booster is the one who flew the most,
+            it was used for these missions: ${mostReflownCore.missions}.`}
+          </SectionDescription>
+        </>
+      ),
+    },
+    {
       id: 'reused-flights',
       label: 'Reused flights',
       background: 'reuse.jpg',
@@ -36,23 +53,6 @@ const Reuse: React.FC<BlockProps> = ({ data, ...rest }) => {
             {`Once on the ground, the booster must be able to be refurbished and
             reflown in minimal time and with minimal cost. Only then can they be
             reflown, reducing launch costs significantly.`}
-          </SectionDescription>
-        </>
-      ),
-    },
-    {
-      id: 'most-launches',
-      label: 'Most launches',
-      background: 'reuse.jpg',
-      title: 'Most launches',
-      render: (
-        <>
-          <SectionContent>
-            <Bar data={mostLaunches.data} options={mostLaunches.options} />
-          </SectionContent>
-          <SectionDescription>
-            {`The ${mostReflownCore.serial} booster is the one who flew the most,
-            it was used for these missions: ${mostReflownCore.missions}.`}
           </SectionDescription>
         </>
       ),
