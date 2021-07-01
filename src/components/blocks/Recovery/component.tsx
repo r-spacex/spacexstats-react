@@ -18,26 +18,6 @@ const Landing: React.FC<BlockProps> = ({ data, ...rest }) => {
 
   const tabs = [
     {
-      id: 'boosters-landed',
-      label: 'Boosters Landed',
-      background: 'doublelanding.jpg',
-      title: 'Boosters Landed',
-      render: (
-        <>
-          <SectionContent>
-            <IntegerStat value={landedBoostersCount} subtitle="Landed" />
-          </SectionContent>
-          <SectionDescription>
-            {`For SpaceX to succeed at reducing the cost of getting payload to
-            orbit, reusability of launch vehicles is imperative. The first phase
-            of this involves returning the first stage of the rocket back safely
-            to Earth intact - an incredibly difficult task involving a
-            combination of three burns that must be executed perfectly.`}
-          </SectionDescription>
-        </>
-      ),
-    },
-    {
       id: 'landing-history',
       label: 'Landing History',
       background: 'doublelanding.jpg',
@@ -50,6 +30,26 @@ const Landing: React.FC<BlockProps> = ({ data, ...rest }) => {
           <SectionDescription>
             {`SpaceX begun its testing of booster landings in 2013. Now landings
             are almost routine for the public.`}
+          </SectionDescription>
+        </>
+      ),
+    },
+    {
+      id: 'boosters-landed',
+      label: 'Boosters Landings',
+      background: 'doublelanding.jpg',
+      title: 'Boosters Landings',
+      render: (
+        <>
+          <SectionContent>
+            <IntegerStat value={landedBoostersCount} subtitle="Landings" />
+          </SectionContent>
+          <SectionDescription>
+            {`For SpaceX to succeed at reducing the cost of getting payload to
+            orbit, reusability of launch vehicles is imperative. The first phase
+            of this involves returning the first stage of the rocket back safely
+            to Earth intact - an incredibly difficult task involving a
+            combination of three burns that must be executed perfectly.`}
           </SectionDescription>
         </>
       ),
