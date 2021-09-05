@@ -84,7 +84,7 @@ const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
     datasets: [
       {
         label: 'Ocean',
-        backgroundColor: chartColors.blue,
+        backgroundColor: chartColors.yellow,
         data: years.map(
           (year) =>
             successfulLandings.filter(
@@ -120,7 +120,7 @@ const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
       },
       {
         label: 'ASDS - JRTI',
-        backgroundColor: chartColors.yellow,
+        backgroundColor: chartColors.lightblue,
         data: years.map(
           (year) =>
             successfulLandings.filter(
@@ -128,6 +128,18 @@ const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
                 launchYear(launch) === year &&
                 (core.landpad === LandpadType.jrti ||
                   core.landpad === LandpadType.jrtiv1),
+            ).length,
+        ),
+      },
+      {
+        label: 'ASDS - ASOG',
+        backgroundColor: chartColors.blue,
+        data: years.map(
+          (year) =>
+            successfulLandings.filter(
+              ({ launch, core }) =>
+                launchYear(launch) === year &&
+                core.landpad === LandpadType.asog,
             ).length,
         ),
       },
