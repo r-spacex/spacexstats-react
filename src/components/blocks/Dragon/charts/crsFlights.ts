@@ -40,7 +40,17 @@ export const buildCrsFlightsChart = (
         }),
       },
       {
-        label: 'Dragon 2',
+        label: 'New Dragon 2',
+        backgroundColor: chartColors.white,
+        data: crsFlights.map((launch) => {
+          const { type, reused } = getPayload(launch, payloads);
+          return type.includes('Dragon 2.0') && !reused
+            ? getFlightTime(launch, payloads)
+            : 0;
+        }),
+      },
+      {
+        label: 'Reused Dragon 2',
         backgroundColor: chartColors.green,
         data: crsFlights.map((launch) => {
           const { type, reused } = getPayload(launch, payloads);
