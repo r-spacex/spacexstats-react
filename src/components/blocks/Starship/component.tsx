@@ -39,7 +39,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat>2021</TextStat>
+            <TextStat>2022</TextStat>
           </SectionContent>
           <SectionDescription>
             {`SpaceX is already in talks with three potential customers for a
@@ -59,7 +59,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat>2022</TextStat>
+            <TextStat>2024</TextStat>
           </SectionContent>
           <SectionDescription>
             {`While Starship will be developed to enter mass production and
@@ -100,7 +100,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
             <TextStat>2024</TextStat>
           </SectionContent>
           <SectionDescription>
-            {`By 2024, Starship should have dozens of successful flights under its
+            {`By 2026, Starship should have dozens of successful flights under its
             belt in the near-Earth space. SpaceX's goal is to land two cargo and
             two crewed Starships on Mars in five years. After that, the rest
             should be history.`}
