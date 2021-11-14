@@ -31,14 +31,21 @@ export const buildCommercialCrewFlightsChart = (
           if (launch.name.includes('Abort')) {
             return 1;
           }
-          const { reused } = getPayload(launch, payloads);
-          return !reused ? getFlightTime(launch, payloads) : 0;
+          const { customers } = getPayload(launch, payloads);
+          return customers[0].includes('NASA')
+            ? getFlightTime(launch, payloads)
+            : 0;
         }),
       },
       {
         label: 'Tourists',
         backgroundColor: chartColors.orange,
-        data: crewFlights.map(() => 0),
+        data: crewFlights.map((launch) => {
+          const { customers } = getPayload(launch, payloads);
+          return !customers[0].includes('NASA')
+            ? getFlightTime(launch, payloads)
+            : 0;
+        }),
       },
     ],
   };
