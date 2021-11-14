@@ -37,6 +37,16 @@ export const buildSuccessRateChart = (pastLaunches: Launch[]) => {
     labels: flightNumbers.map((value) => `#${value + 1}`),
     datasets: [
       {
+        label: 'Falcon 1',
+        type: 'line',
+        data: flightNumbers.map((flightNumber) =>
+          computeSuccessRate(pastLaunches, flightNumber, RocketType.f1),
+        ),
+        fill: false,
+        borderColor: chartColors.white,
+        backgroundColor: chartColors.white,
+      },
+      {
         label: 'Falcon 9',
         type: 'line',
         data: flightNumbers.map((flightNumber) =>
