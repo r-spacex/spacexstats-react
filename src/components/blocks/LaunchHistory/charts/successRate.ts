@@ -16,8 +16,9 @@ const computeSuccessRate = (
       (!rocketType || rocket === rocketType),
   );
 
-  const launchSuccess = launchesUpToThatPoint.filter(({ success }) => success)
-    .length;
+  const launchSuccess = launchesUpToThatPoint.filter(
+    ({ success }) => success,
+  ).length;
 
   return (100 * launchSuccess) / launchesUpToThatPoint.length;
 };

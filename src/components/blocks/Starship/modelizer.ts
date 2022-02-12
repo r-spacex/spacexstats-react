@@ -27,7 +27,7 @@ const hops: Hop[] = [
   { date: new Date('2021-03-03'), height: 10000 },
   { date: new Date('2021-03-30'), height: 10000 },
   { date: new Date('2021-05-05'), height: 10000 },
-  { date: "NET 2022", height: 250000, tentative: true},
+  { date: 'NET 2022', height: 250000, tentative: true },
 ];
 
 const formatHeight = (label: string | number) => {
@@ -41,9 +41,11 @@ const formatHeight = (label: string | number) => {
 const buildStarshipHopsChart = () => {
   const data = {
     labels: hops.map((hop) =>
-      hop.date ? 
-         (hop.date instanceof Date ? format(hop.date, 'MMM do yyyy'): hop.date) : 
-         'Next tentative',
+      hop.date
+        ? hop.date instanceof Date
+          ? format(hop.date, 'MMM do yyyy')
+          : hop.date
+        : 'Next tentative',
     ),
     datasets: [
       {

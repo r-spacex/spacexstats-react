@@ -8,14 +8,8 @@ import { modelizer } from './modelizer';
 import { BlockProps } from 'types';
 
 const People: React.FC<BlockProps> = ({ data, ...rest }) => {
-  const {
-    dragonriders,
-    currentlyInSpace,
-    moonPopulation,
-    marsPopulation,
-    employees,
-    starman,
-  } = modelizer(data);
+  const { dragonriders, moonPopulation, marsPopulation, employees, starman } =
+    modelizer(data);
 
   const tabs = [
     {

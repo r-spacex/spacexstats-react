@@ -62,6 +62,7 @@ export const { actions, reducer } = createSlice({
   },
 });
 
-export const selectCurrentTab = (section: SectionId) => (
-  state: RootState,
-): string | null => state.navigation[section];
+export const selectCurrentTab =
+  (section: SectionId) =>
+  (state: RootState): string | null =>
+    state.navigation[section];
