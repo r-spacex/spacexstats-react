@@ -38,7 +38,6 @@ module.exports = {
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
     ],
     'react/no-array-index-key': 2,
-    'react/prop-types': 0,
     'react/require-default-props': 0,
     'react/jsx-curly-brace-presence': [
       'error',
