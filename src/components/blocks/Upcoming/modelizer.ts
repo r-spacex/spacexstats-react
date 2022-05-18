@@ -152,6 +152,9 @@ const getPayloadDescription = (
   }
 
   const payloads = getPayloads(launch, allPayloads);
+  if (payloads.length === 0) {
+    return 'Unknown payload given for this mission. This description may be updated later!';
+  }
   const payloadMass = payloads.reduce(
     (total, current) => (total += current.mass_kg ?? 0),
     0,
@@ -196,7 +199,7 @@ export const modelizer = ({
         "MMM do, h:mma ('UTC'xxx)",
       ),
       date: fromUnix(nextLaunch.date_unix),
-      payload: getPayload(nextLaunch, payloads).name,
+      payload: getPayload(nextLaunch, payloads)?.name ?? 'Unkown payload',
       description: getPayloadDescription(
         nextLaunch,
         rockets.find((rocket) => rocket.id === nextLaunch.rocket)!,
