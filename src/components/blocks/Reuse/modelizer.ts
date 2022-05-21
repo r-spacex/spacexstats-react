@@ -81,19 +81,22 @@ const buildMostLaunchesChart = (cores: Core[], launches: Launch[]) => {
   const customOptions: ChartOptions = {
     tooltips: {
       callbacks: {
-        label: (tooltipItem) => {
+        label: (tooltipItem) =>
+          tooltipItem.value && parseInt(tooltipItem.value) > 0
+            ? `Launches: ${parseInt(tooltipItem.value).toLocaleString()}`
+            : '',
+        afterBody: (tooltipItems) => {
+          const tooltipItem = tooltipItems[0];
           const currentCore = sortedCores.find(
             (core) => core.serial === tooltipItem.xLabel,
           )!;
-          const missions = getMissions(currentCore, launches)
-            .map((mission) => mission.name)
-            .join(', ');
+          const missions = getMissions(currentCore, launches).map(
+            (mission) => mission.name,
+          );
 
           return tooltipItem.value && parseInt(tooltipItem.value) > 0
-            ? `Launches: ${parseInt(
-                tooltipItem.value,
-              ).toLocaleString()} (${missions})`
-            : '';
+            ? missions
+            : [];
         },
       },
     },
