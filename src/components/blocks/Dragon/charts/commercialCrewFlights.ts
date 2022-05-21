@@ -8,7 +8,7 @@ import { getPayload } from 'utils/launch';
 
 export const getFlightTime = (launch: Launch, payloads: Payload[]) =>
   Math.floor(
-    (getPayload(launch, payloads).dragon.flight_time_sec ??
+    (getPayload(launch, payloads)?.dragon.flight_time_sec ??
       new Date().getTime() / 1000 - launch.date_unix) / 3600,
   );
 
@@ -17,8 +17,16 @@ export const buildCommercialCrewFlightsChart = (
   payloads: Payload[],
   crew: Crew[],
 ) => {
+  console.log({
+    dragonLaunches,
+    payload: [
+      getPayload(dragonLaunches[30], payloads),
+      getPayload(dragonLaunches[33], payloads),
+      getPayload(dragonLaunches[34], payloads),
+    ],
+  });
   const crewFlights = dragonLaunches.filter((launch) =>
-    getPayload(launch, payloads).type.includes('Crew Dragon'),
+    getPayload(launch, payloads)?.type.includes('Crew Dragon'),
   );
 
   const data = {
@@ -31,8 +39,7 @@ export const buildCommercialCrewFlightsChart = (
           if (launch.name.includes('Abort')) {
             return 1;
           }
-          const { customers } = getPayload(launch, payloads);
-          return customers[0].includes('NASA')
+          return getPayload(launch, payloads)?.customers[0].includes('NASA')
             ? getFlightTime(launch, payloads)
             : 0;
         }),
@@ -40,12 +47,11 @@ export const buildCommercialCrewFlightsChart = (
       {
         label: 'Tourists',
         backgroundColor: chartColors.orange,
-        data: crewFlights.map((launch) => {
-          const { customers } = getPayload(launch, payloads);
-          return !customers[0].includes('NASA')
+        data: crewFlights.map((launch) =>
+          !getPayload(launch, payloads)?.customers[0].includes('NASA')
             ? getFlightTime(launch, payloads)
-            : 0;
-        }),
+            : 0,
+        ),
       },
     ],
   };

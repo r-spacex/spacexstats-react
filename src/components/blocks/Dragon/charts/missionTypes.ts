@@ -11,11 +11,11 @@ export const buildMissionTypesChart = (
 ) => {
   const missions = {
     CRS: dragonLaunches.filter((launch) => {
-      const payloadName = getPayload(launch, payloads).name;
-      return payloadName.includes('COTS') || payloadName.includes('CRS');
+      const payloadName = getPayload(launch, payloads)?.name;
+      return payloadName?.includes('COTS') || payloadName?.includes('CRS');
     }).length,
     Crew: dragonLaunches.filter(
-      (launch) => getPayload(launch, payloads).type === 'Crew Dragon',
+      (launch) => getPayload(launch, payloads)?.type === 'Crew Dragon',
     ).length,
     DragonXL: 0,
   };

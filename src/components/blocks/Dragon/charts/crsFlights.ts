@@ -12,19 +12,21 @@ export const buildCrsFlightsChart = (
   payloads: Payload[],
 ) => {
   const crsFlights = dragonLaunches.filter((launch) => {
-    const payloadName = getPayload(launch, payloads).name;
-    return payloadName.includes('COTS') || payloadName.includes('CRS');
+    const payloadName = getPayload(launch, payloads)?.name;
+    return payloadName?.includes('COTS') || payloadName?.includes('CRS');
   });
 
   const data = {
-    labels: crsFlights.map((launch) => getPayload(launch, payloads).name),
+    labels: crsFlights.map(
+      (launch) => getPayload(launch, payloads)?.name ?? 'Unknown mission',
+    ),
     datasets: [
       {
         label: 'New Dragon 1',
         backgroundColor: chartColors.blue,
         data: crsFlights.map((launch) => {
-          const { type, reused } = getPayload(launch, payloads);
-          return type.includes('Dragon 1') && !reused
+          const payload = getPayload(launch, payloads);
+          return payload?.type.includes('Dragon 1') && !payload?.reused
             ? getFlightTime(launch, payloads)
             : 0;
         }),
@@ -33,8 +35,8 @@ export const buildCrsFlightsChart = (
         label: 'Reused Dragon 1',
         backgroundColor: chartColors.lightblue,
         data: crsFlights.map((launch) => {
-          const { type, reused } = getPayload(launch, payloads);
-          return type.includes('Dragon 1') && reused
+          const payload = getPayload(launch, payloads);
+          return payload?.type.includes('Dragon 1') && payload?.reused
             ? getFlightTime(launch, payloads)
             : 0;
         }),
@@ -43,8 +45,8 @@ export const buildCrsFlightsChart = (
         label: 'New Dragon 2',
         backgroundColor: chartColors.white,
         data: crsFlights.map((launch) => {
-          const { type, reused } = getPayload(launch, payloads);
-          return type.includes('Dragon 2.0') && !reused
+          const payload = getPayload(launch, payloads);
+          return payload?.type.includes('Dragon 2.0') && !payload?.reused
             ? getFlightTime(launch, payloads)
             : 0;
         }),
@@ -53,8 +55,8 @@ export const buildCrsFlightsChart = (
         label: 'Reused Dragon 2',
         backgroundColor: chartColors.green,
         data: crsFlights.map((launch) => {
-          const { type, reused } = getPayload(launch, payloads);
-          return type.includes('Dragon 2.0') && reused
+          const payload = getPayload(launch, payloads);
+          return payload?.type.includes('Dragon 2.0') && payload?.reused
             ? getFlightTime(launch, payloads)
             : 0;
         }),
@@ -68,7 +70,7 @@ export const buildCrsFlightsChart = (
         label: (tooltipItem) => {
           const launch = dragonLaunches.find(
             (launch) =>
-              getPayload(launch, payloads).name === tooltipItem.xLabel,
+              getPayload(launch, payloads)?.name === tooltipItem.xLabel,
           )!;
           if (
             tooltipItem.datasetIndex === undefined ||
@@ -88,21 +90,21 @@ export const buildCrsFlightsChart = (
         footer: (tooltipItems) => {
           const currentLaunch = dragonLaunches.find(
             (launch) =>
-              getPayload(launch, payloads).name === tooltipItems[0].xLabel,
+              getPayload(launch, payloads)?.name === tooltipItems[0].xLabel,
           )!;
           const currentPayload = getPayload(currentLaunch, payloads);
 
           if (
-            currentPayload.mass_kg === null ||
-            currentPayload.dragon.mass_returned_kg === null
+            currentPayload?.mass_kg === null ||
+            currentPayload?.dragon.mass_returned_kg === null
           ) {
             return '';
           }
 
           return `Transported: ${Math.floor(
-            currentPayload.mass_kg,
+            currentPayload?.mass_kg ?? 0,
           ).toLocaleString()}kg (up) and ${Math.floor(
-            currentPayload.dragon.mass_returned_kg,
+            currentPayload?.dragon.mass_returned_kg ?? 0,
           ).toLocaleString()}kg (down)`;
         },
       },

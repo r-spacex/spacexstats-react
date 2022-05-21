@@ -13,7 +13,7 @@ export interface ModelizedSectionData {
 }
 
 interface Hop {
-  date: Date | null;
+  date: Date | string | null;
   height: number;
   tentative?: boolean;
 }

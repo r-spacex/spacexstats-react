@@ -222,22 +222,22 @@ export const modelizer = ({
   const heaviestPayload = {
     mass: heaviestPayloadLaunch.mass,
     mission: heaviestPayloadLaunch.launch.name,
-    customers: getPayload(
-      heaviestPayloadLaunch.launch,
-      payloads,
-    ).customers.join(', '),
+    customers:
+      getPayload(heaviestPayloadLaunch.launch, payloads)?.customers.join(
+        ', ',
+      ) ?? 'Unknown customer',
   };
 
   const heaviestPayloadLaunchGTO = sortedLaunchMasses.filter(
-    ({ launch }) => getPayload(launch, payloads).orbit === Orbit.gto,
+    ({ launch }) => getPayload(launch, payloads)?.orbit === Orbit.gto,
   )[0];
   const heaviestPayloadGTO = {
     mass: heaviestPayloadLaunchGTO.mass,
     mission: heaviestPayloadLaunchGTO.launch.name,
-    customers: getPayload(
-      heaviestPayloadLaunchGTO.launch,
-      payloads,
-    ).customers.join(', '),
+    customers:
+      getPayload(heaviestPayloadLaunchGTO.launch, payloads)?.customers.join(
+        ', ',
+      ) ?? 'Unknown customer',
   };
 
   return {
@@ -246,7 +246,7 @@ export const modelizer = ({
     totalMass: Math.floor(
       launchMasses.reduce((sum, { mass }) => sum + mass, 0) / 1000,
     ),
-    heaviestPayload,
-    heaviestPayloadGTO,
+    heaviestPayload: heaviestPayload ?? 'Unknown payload',
+    heaviestPayloadGTO: heaviestPayloadGTO ?? 'Unknown payload',
   };
 };
