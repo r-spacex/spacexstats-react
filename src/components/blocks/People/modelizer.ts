@@ -13,10 +13,10 @@ export const modelizer = ({
   crew,
   roadster,
 }: SpaceXData): ModelizedSectionData => ({
-  dragonriders: crew.reduce((sum, currentCrew) => {
-    console.log(currentCrew);
-    return sum + currentCrew.launches.length;
-  }, 0),
+  dragonriders: crew.reduce(
+    (sum, currentCrew) => sum + currentCrew.launches.length,
+    0,
+  ),
   moonPopulation: 0,
   marsPopulation: 0,
   employees: company.employees,

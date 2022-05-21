@@ -17,14 +17,6 @@ export const buildCommercialCrewFlightsChart = (
   payloads: Payload[],
   crew: Crew[],
 ) => {
-  console.log({
-    dragonLaunches,
-    payload: [
-      getPayload(dragonLaunches[30], payloads),
-      getPayload(dragonLaunches[33], payloads),
-      getPayload(dragonLaunches[34], payloads),
-    ],
-  });
   const crewFlights = dragonLaunches.filter((launch) =>
     getPayload(launch, payloads)?.type.includes('Crew Dragon'),
   );
