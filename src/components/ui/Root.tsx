@@ -20,6 +20,14 @@ import StyleReset from 'components/ui/StyleReset';
 import { getScrollPercentage, scrollTo, updateSectionUrl } from 'utils/scroll';
 import { actions, sections, SectionId } from 'redux/navigation';
 import { SpaceXData, BlockProps } from 'types';
+import styled from 'styled-components';
+import { getSpacing, palette } from 'stylesheet';
+
+const Banner = styled.div`
+  background-color: ${palette.yellow};
+  color: white;
+  padding: ${getSpacing(3)};
+`;
 
 const Root: React.FC<SpaceXData> = (data) => {
   const dispatch = useDispatch();
@@ -79,6 +87,17 @@ const Root: React.FC<SpaceXData> = (data) => {
   return (
     <>
       <StyleReset />
+
+      <Banner>
+        As some of you already noticed and reported, the stats may be incorrect
+        in some places because the r/spacex API is winding down{' '}
+        <a href="https://github.com/r-spacex/SpaceX-API/issues/1243">
+          (more details on GitHub)
+        </a>
+        . I&apos;m currently working on a rewrite using the Launch Library 2 but
+        it will take some time. I hope to complete the rewrite by the end of the
+        year! Thanks again for your messages and support ❤️🚀
+      </Banner>
 
       {sectionComponents.map(({ id, Component }, index) => (
         <Component
