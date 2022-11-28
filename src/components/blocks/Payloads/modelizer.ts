@@ -31,28 +31,30 @@ export interface ModelizedSectionData {
 
 const buildCustomersChart = (pastLaunches: Launch[], payloads: Payload[]) => {
   const customers = { NASA: 0, Commercial: 0, SpaceX: 0, USAF: 0, NRO: 0 };
-
+  let numOfPayloadMissions = 0;
   pastLaunches.forEach((launch) => {
-    getPayloads(launch, payloads).forEach((payload) => {
+    const payload = getPayload(launch, payloads);
+    if (payload === null) {
+      return;
+    } else {
       if (payload.customers.length === 0) {
         return;
       }
-
-      // Only consider first customer
+      numOfPayloadMissions += 1;
       const customer = payload.customers[0];
 
       if (customer.includes('NASA')) {
         customers.NASA += 1;
-      } else if (
-        customer === 'SpaceX' ||
-        customer === 'USAF' ||
-        customer === 'NRO'
-      ) {
-        customers[customer] += 1;
+      } else if (customer.includes('SpaceX')) {
+        customers.SpaceX += 1;
+      } else if (customer.includes('USAF')) {
+        customers.USAF += 1;
+      } else if (customer.includes('NRO')) {
+        customers.NRO += 1;
       } else {
         customers.Commercial += 1;
       }
-    });
+    }
   });
 
   const data = {
@@ -86,7 +88,7 @@ const buildCustomersChart = (pastLaunches: Launch[], payloads: Payload[]) => {
 
           return `${customer}: ${launchCount} launches (${(
             (100 * launchCount) /
-            pastLaunches.length
+            numOfPayloadMissions
           ).toFixed(0)}%)`;
         },
       },
