@@ -19,7 +19,7 @@ import {
 import StyleReset from 'components/ui/StyleReset';
 import { getScrollPercentage, scrollTo, updateSectionUrl } from 'utils/scroll';
 import { actions, sections, SectionId } from 'redux/navigation';
-import { SpaceXData, BlockProps } from 'types';
+import { SpaceXStatsData, BlockProps } from 'types';
 import styled from 'styled-components';
 import { getSpacing, palette } from 'stylesheet';
 
@@ -29,7 +29,7 @@ const Banner = styled.div`
   padding: ${getSpacing(3)};
 `;
 
-const Root: React.FC<SpaceXData> = (data) => {
+const Root: React.FC<SpaceXStatsData> = (data) => {
   const dispatch = useDispatch();
 
   useEffect(() => {

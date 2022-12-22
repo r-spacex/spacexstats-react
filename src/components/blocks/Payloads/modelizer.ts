@@ -2,7 +2,7 @@ import settings from 'settings';
 import { chartColors } from 'stylesheet';
 import { ChartOptions, ChartData } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { SpaceXData, Launch, Orbit, Payload } from 'types';
+import { SpaceXStatsData, Launch, Orbit, Payload } from 'types';
 import orderBy from 'lodash/orderBy';
 import range from 'lodash/range';
 import { launchYear, getPayloads, getPayload } from 'utils/launch';
@@ -208,7 +208,7 @@ const buildUpmassPerYearChart = (
 export const modelizer = ({
   pastLaunches,
   payloads,
-}: SpaceXData): ModelizedSectionData => {
+}: SpaceXStatsData): ModelizedSectionData => {
   const launchMasses = pastLaunches.map((launch) => ({
     launch,
     mass: getPayloads(launch, payloads).reduce(

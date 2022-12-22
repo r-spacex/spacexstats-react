@@ -1,6 +1,6 @@
 import { ChartOptions, ChartData } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { SpaceXData, Starlink } from 'types';
+import { SpaceXStatsData, Starlink } from 'types';
 import endOfMonth from 'date-fns/endOfMonth';
 import eachMonthOfInterval from 'date-fns/eachMonthOfInterval';
 import { chartColors } from 'stylesheet';
@@ -153,7 +153,7 @@ export const buildLaunchRateChart = (starlinks: Starlink[]) => {
   return { data, options };
 };
 
-export const modelizer = ({ starlink }: SpaceXData) => ({
+export const modelizer = ({ starlink }: SpaceXStatsData) => ({
   inSpace: buildInSpaceChart(starlink),
   launchRate: buildLaunchRateChart(starlink),
   deorbited: starlink.filter(

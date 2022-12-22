@@ -1,4 +1,4 @@
-import { SpaceXData, LandingType, Landpad } from 'types';
+import { SpaceXStatsData, LandingType, Landpad } from 'types';
 import { ChartData, ChartOptions } from 'chart.js';
 import orderBy from 'lodash/orderBy';
 import { getPayloads } from 'utils/launch';
@@ -42,7 +42,7 @@ export const modelizer = ({
   pastLaunches,
   payloads,
   landpads,
-}: SpaceXData): ModelizedSectionData => {
+}: SpaceXStatsData): ModelizedSectionData => {
   const landedBoostersCount = pastLaunches.reduce(
     (sum, launch) =>
       sum +

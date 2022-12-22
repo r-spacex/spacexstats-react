@@ -4,7 +4,7 @@ import { fromUnix } from 'utils/date';
 import { launchYear, getPayloads, getPayload } from 'utils/launch';
 import {
   Launch,
-  SpaceXData,
+  SpaceXStatsData,
   LaunchDatePrecision,
   Rocket,
   Payload,
@@ -180,7 +180,7 @@ export const modelizer = ({
   rockets,
   payloads,
   launchpads,
-}: SpaceXData): ModelizedSectionData => {
+}: SpaceXStatsData): ModelizedSectionData => {
   const nextLaunches = upcomingLaunches.map((launch) => launch);
   nextLaunches.sort(sortLaunches);
 

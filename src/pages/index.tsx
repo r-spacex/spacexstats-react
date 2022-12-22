@@ -1,75 +1,22 @@
 import React from 'react';
-import { graphql } from 'gatsby';
 import Root from 'components/ui/Root';
 import SEO from 'components/ui/SEO';
-import {
-  Launch,
-  Launchpad,
-  Landpad,
-  Core,
-  Rocket,
-  Payload,
-  Crew,
-  Starlink,
-  Roadster,
-  Company,
-} from 'types';
+import { RSXAPIData } from 'api/r-spacex/types';
+import { RSXAPIAdapter } from 'api/r-spacex';
+// eslint-disable-next-line
+import { graphql } from 'gatsby';
 
 interface Props {
-  data: {
-    currentBuildDate: {
-      currentDate: string;
-    };
-    spacexdatalaunches: { launches: Launch[] };
-    spacexdatacores: { cores: Core[] };
-    spacexdatarockets: { rockets: Rocket[] };
-    spacexdatapayloads: { payloads: Payload[] };
-    spacexdatalaunchpads: { launchpads: Launchpad[] };
-    spacexdatalandpads: { landpads: Landpad[] };
-    spacexdatacrew: { crew: Crew[] };
-    spacexdatastarlink: { starlink: Starlink[] };
-    spacexdatacompany: { company: Company };
-    spacexdataroadster: { roadster: Roadster };
-  };
+  data: RSXAPIData;
 }
 
-const IndexPage: React.FC<Props> = ({
-  data: {
-    currentBuildDate: { currentDate },
-    spacexdatalaunches: { launches },
-    spacexdatacores: { cores },
-    spacexdatarockets: { rockets },
-    spacexdatapayloads: { payloads },
-    spacexdatalaunchpads: { launchpads },
-    spacexdatalandpads: { landpads },
-    spacexdatacrew: { crew },
-    spacexdatastarlink: { starlink },
-    spacexdatacompany: { company },
-    spacexdataroadster: { roadster },
-  },
-}) => {
-  const pastLaunches = launches.filter(
-    (launch) => !launch.upcoming && launch.success !== null,
-  );
-  const upcomingLaunches = launches.filter((launch) => launch.upcoming);
+const IndexPage: React.FC<Props> = ({ data }) => {
+  const spacexstatsData = RSXAPIAdapter.dataTransformer(data);
 
   return (
     <>
       <SEO />
-      <Root
-        buildDate={currentDate}
-        cores={cores}
-        pastLaunches={pastLaunches}
-        rockets={rockets}
-        payloads={payloads}
-        launchpads={launchpads}
-        landpads={landpads}
-        crew={crew}
-        starlink={starlink}
-        company={company}
-        roadster={roadster}
-        upcomingLaunches={upcomingLaunches}
-      />
+      <Root {...spacexstatsData} />
     </>
   );
 };
@@ -84,7 +31,6 @@ export const query = graphql`
     spacexdatalaunches {
       launches {
         id
-        flight_number
         name
         date_unix
         date_utc

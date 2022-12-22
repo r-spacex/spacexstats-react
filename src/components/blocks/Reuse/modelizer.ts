@@ -1,7 +1,7 @@
 import settings from 'settings';
 import { chartColors } from 'stylesheet';
 import { formatDuration } from 'utils/date';
-import { SpaceXData, Core, Launch, CoreStatus } from 'types';
+import { SpaceXStatsData, Core, Launch, CoreStatus } from 'types';
 import { ChartData, ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
 import orderBy from 'lodash/orderBy';
@@ -151,7 +151,7 @@ const getQuickestReuseTurnaround = (cores: Core[], pastLaunches: Launch[]) => {
 export const modelizer = ({
   pastLaunches,
   cores,
-}: SpaceXData): ModelizedSectionData => {
+}: SpaceXStatsData): ModelizedSectionData => {
   const reflownLaunchesCount = cores.reduce(
     (sum, currentCore) => (sum += currentCore.reuse_count),
     0,

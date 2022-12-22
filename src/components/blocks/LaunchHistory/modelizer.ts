@@ -1,5 +1,5 @@
 import { ChartOptions, ChartData } from 'chart.js';
-import { SpaceXData } from 'types';
+import { SpaceXStatsData } from 'types';
 import { buildLaunchesPerYearChart } from './charts/launchesPerYear';
 import { buildLaunchesPerRocketChart } from './charts/launchesPerRocket';
 import { buildLaunchesPerLaunchpadChart } from './charts/launchesPerLaunchpad';
@@ -28,7 +28,7 @@ export interface ModelizedSectionData {
 export const modelizer = ({
   pastLaunches,
   upcomingLaunches,
-}: SpaceXData): ModelizedSectionData => ({
+}: SpaceXStatsData): ModelizedSectionData => ({
   launchesPerYear: buildLaunchesPerYearChart(pastLaunches, upcomingLaunches),
   launchesPerRocket: buildLaunchesPerRocketChart(pastLaunches),
   launchesPerLaunchpad: buildLaunchesPerLaunchpadChart(pastLaunches),

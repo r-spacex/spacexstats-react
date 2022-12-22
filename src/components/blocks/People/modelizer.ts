@@ -1,4 +1,4 @@
-import { SpaceXData, Roadster } from 'types';
+import { SpaceXStatsData, Roadster } from 'types';
 
 export interface ModelizedSectionData {
   dragonriders: number;
@@ -12,7 +12,7 @@ export const modelizer = ({
   company,
   crew,
   roadster,
-}: SpaceXData): ModelizedSectionData => ({
+}: SpaceXStatsData): ModelizedSectionData => ({
   dragonriders: crew.reduce(
     (sum, currentCrew) => sum + currentCrew.launches.length,
     0,

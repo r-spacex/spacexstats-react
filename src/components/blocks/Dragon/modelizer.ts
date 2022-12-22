@@ -1,5 +1,5 @@
 import { ChartOptions, ChartData } from 'chart.js';
-import { SpaceXData } from 'types';
+import { SpaceXStatsData } from 'types';
 import { buildMissionTypesChart } from './charts/missionTypes';
 import { buildCrsFlightsChart } from './charts/crsFlights';
 import { buildCommercialCrewFlightsChart } from './charts/commercialCrewFlights';
@@ -26,7 +26,7 @@ export const modelizer = ({
   pastLaunches,
   payloads,
   crew,
-}: SpaceXData): ModelizedSectionData => {
+}: SpaceXStatsData): ModelizedSectionData => {
   const exclusionList = ['Dragon Qualification Unit'];
   const dragonLaunches = pastLaunches.filter((launch) => {
     const payload = getPayload(launch, payloads);

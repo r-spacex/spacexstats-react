@@ -1,4 +1,4 @@
-import { SpaceXData } from 'types';
+import { SpaceXStatsData } from 'types';
 import settings from 'settings';
 import { format } from 'date-fns';
 import { chartColors } from 'stylesheet';
@@ -83,6 +83,6 @@ const buildStarshipHopsChart = () => {
   return { data, options };
 };
 
-export const modelizer = (_: SpaceXData): ModelizedSectionData => ({
+export const modelizer = (_: SpaceXStatsData): ModelizedSectionData => ({
   starshipHops: buildStarshipHopsChart(),
 });
