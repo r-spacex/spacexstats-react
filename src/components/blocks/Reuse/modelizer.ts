@@ -33,7 +33,7 @@ const buildMostLaunchesChart = (cores: Core[], launches: Launch[]) => {
   const sortedCores = orderBy(
     cores,
     [
-      'reuse_count',
+      'reuseCount',
       (core) =>
         core.status === CoreStatus.active || core.status === CoreStatus.unknown
           ? 0
@@ -51,7 +51,7 @@ const buildMostLaunchesChart = (cores: Core[], launches: Launch[]) => {
         backgroundColor: chartColors.orange,
         data: sortedCores.map((core) =>
           core.status === CoreStatus.lost || core.status === CoreStatus.expended
-            ? core.reuse_count + 1
+            ? core.reuseCount + 1
             : 0,
         ),
       },
@@ -61,7 +61,7 @@ const buildMostLaunchesChart = (cores: Core[], launches: Launch[]) => {
         data: sortedCores.map((core) =>
           core.status === CoreStatus.inactive ||
           core.status === CoreStatus.retired
-            ? core.reuse_count + 1
+            ? core.reuseCount + 1
             : 0,
         ),
       },
@@ -71,7 +71,7 @@ const buildMostLaunchesChart = (cores: Core[], launches: Launch[]) => {
         data: sortedCores.map((core) =>
           core.status === CoreStatus.active ||
           core.status === CoreStatus.unknown
-            ? core.reuse_count + 1
+            ? core.reuseCount + 1
             : 0,
         ),
       },
@@ -113,7 +113,7 @@ const buildMostLaunchesChart = (cores: Core[], launches: Launch[]) => {
 };
 
 const getQuickestReuseTurnaround = (cores: Core[], pastLaunches: Launch[]) => {
-  const reusedCores = cores.filter((core) => core.reuse_count > 0);
+  const reusedCores = cores.filter((core) => core.reuseCount > 0);
 
   const turnarounds: Turnaround[] = [];
   reusedCores.forEach((core) => {
@@ -131,7 +131,7 @@ const getQuickestReuseTurnaround = (cores: Core[], pastLaunches: Launch[]) => {
         return;
       }
 
-      const turnaround = launch2.date_unix - launch1.date_unix;
+      const turnaround = launch2.date.getTime() - launch1.date.getTime();
 
       turnarounds.push({
         core: core.serial,
@@ -153,7 +153,7 @@ export const modelizer = ({
   cores,
 }: SpaceXStatsData): ModelizedSectionData => {
   const reflownLaunchesCount = cores.reduce(
-    (sum, currentCore) => (sum += currentCore.reuse_count),
+    (sum, currentCore) => (sum += currentCore.reuseCount),
     0,
   );
 

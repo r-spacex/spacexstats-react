@@ -2,7 +2,7 @@ import settings from 'settings';
 import { chartColors } from 'stylesheet';
 import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { RocketType, Launch } from 'types';
+import { Rocket, Launch } from 'types';
 import last from 'lodash/last';
 import range from 'lodash/range';
 import { launchYear } from 'utils/launch';
@@ -33,7 +33,7 @@ export const buildLaunchesPerYearChart = (
             pastLaunches.filter(
               (launch) =>
                 launchYear(launch) === year &&
-                launch.rocket === RocketType.f1 &&
+                launch.rocket === Rocket.f1 &&
                 launch.success,
             ).length,
         ),
@@ -46,7 +46,7 @@ export const buildLaunchesPerYearChart = (
             pastLaunches.filter(
               (launch) =>
                 launchYear(launch) === year &&
-                launch.rocket === RocketType.f9 &&
+                launch.rocket === Rocket.f9 &&
                 launch.success &&
                 !launch.cores[0].reused,
             ).length,
@@ -60,7 +60,7 @@ export const buildLaunchesPerYearChart = (
             pastLaunches.filter(
               (launch) =>
                 launchYear(launch) === year &&
-                launch.rocket === RocketType.f9 &&
+                launch.rocket === Rocket.f9 &&
                 launch.success &&
                 launch.cores[0].reused,
             ).length,
@@ -74,7 +74,7 @@ export const buildLaunchesPerYearChart = (
             pastLaunches.filter(
               (launch) =>
                 launchYear(launch) === year &&
-                launch.rocket === RocketType.fh &&
+                launch.rocket === Rocket.fh &&
                 launch.success,
             ).length,
         ),

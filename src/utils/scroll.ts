@@ -21,7 +21,7 @@ const updateHash = (hash: string) => {
 
 export const updateSectionUrl = () => {
   if (typeof window === 'undefined') {
-    return '';
+    return;
   }
   sections.forEach((sectionId) => {
     if (!isInViewport(sectionId)) {

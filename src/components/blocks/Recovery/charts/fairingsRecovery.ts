@@ -9,7 +9,7 @@ import { launchYear } from 'utils/launch';
 
 export const buildFairingsRecoveryChart = (pastLaunches: Launch[]) => {
   const recoveryAttempts = pastLaunches.filter(
-    (launch) => launch.fairings?.recovery_attempt,
+    (launch) => launch.fairings?.recoveryAttempt,
   );
 
   const yearsStart = launchYear(recoveryAttempts[0]);

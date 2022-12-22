@@ -3,22 +3,21 @@ import { chartColors } from 'stylesheet';
 import { formatDuration } from 'utils/date';
 import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { Crew, Launch, Payload } from 'types';
+import { Crew, Launch } from 'types';
 import { getPayload } from 'utils/launch';
 
-export const getFlightTime = (launch: Launch, payloads: Payload[]) =>
+export const getFlightTime = (launch: Launch) =>
   Math.floor(
-    (getPayload(launch, payloads)?.dragon.flight_time_sec ??
-      new Date().getTime() / 1000 - launch.date_unix) / 3600,
+    (getPayload(launch)?.dragon.flightTime ??
+      new Date().getTime() / 1000 - launch.date.getTime()) / 3600,
   );
 
 export const buildCommercialCrewFlightsChart = (
   dragonLaunches: Launch[],
-  payloads: Payload[],
   crew: Crew[],
 ) => {
   const crewFlights = dragonLaunches.filter((launch) =>
-    getPayload(launch, payloads)?.type.includes('Crew Dragon'),
+    getPayload(launch)?.type.includes('Crew Dragon'),
   );
 
   const data = {
@@ -31,8 +30,8 @@ export const buildCommercialCrewFlightsChart = (
           if (launch.name.includes('Abort')) {
             return 1;
           }
-          return getPayload(launch, payloads)?.customers[0].includes('NASA')
-            ? getFlightTime(launch, payloads)
+          return getPayload(launch)?.customers[0].includes('NASA')
+            ? getFlightTime(launch)
             : 0;
         }),
       },
@@ -40,8 +39,8 @@ export const buildCommercialCrewFlightsChart = (
         label: 'Tourists',
         backgroundColor: chartColors.orange,
         data: crewFlights.map((launch) =>
-          !getPayload(launch, payloads)?.customers[0].includes('NASA')
-            ? getFlightTime(launch, payloads)
+          !getPayload(launch)?.customers[0].includes('NASA')
+            ? getFlightTime(launch)
             : 0,
         ),
       },
@@ -67,7 +66,7 @@ export const buildCommercialCrewFlightsChart = (
           const dataset = data.datasets[tooltipItem.datasetIndex];
           const flightTime = launch.name.includes('Abort')
             ? '8 minutes 54 seconds'
-            : `${getFlightTime(launch, payloads).toLocaleString()} hours`;
+            : `${getFlightTime(launch).toLocaleString()} hours`;
           return `${dataset.label}: ${flightTime}`;
         },
         footer: (tooltipItems) => {
@@ -102,10 +101,7 @@ export const buildCommercialCrewFlightsChart = (
     options,
     totalFlightTime: formatDuration(
       Math.floor(
-        crewFlights.reduce(
-          (sum, launch) => sum + getFlightTime(launch, payloads),
-          0,
-        ),
+        crewFlights.reduce((sum, launch) => sum + getFlightTime(launch), 0),
       ),
     ),
   };

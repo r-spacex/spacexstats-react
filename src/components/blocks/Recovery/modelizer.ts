@@ -1,7 +1,12 @@
-import { SpaceXStatsData, LandingType, Landpad } from 'types';
+import {
+  SpaceXStatsData,
+  CoreLaunch,
+  Landpad,
+  isLandpadRTLS,
+  isLandpadASDS,
+} from 'types';
 import { ChartData, ChartOptions } from 'chart.js';
 import orderBy from 'lodash/orderBy';
-import { getPayloads } from 'utils/launch';
 import { buildLandingHistoryChart } from './charts/landingHistory';
 import { buildFairingsRecoveryChart } from './charts/fairingsRecovery';
 
@@ -22,49 +27,39 @@ export interface ModelizedSectionData {
   };
 }
 
-const formatLandingType = (landingType: LandingType, landpad: Landpad) => {
-  if (landingType === LandingType.ocean) {
+const formatLandingType = (coreLaunch: CoreLaunch) => {
+  if (coreLaunch.landing === Landpad.ocean) {
     return 'an ocean landing';
   }
 
-  if (landingType === LandingType.rtls) {
+  if (isLandpadRTLS(coreLaunch.landing)) {
     return 'an RTLS landing';
   }
 
-  if (landingType !== LandingType.asds) {
-    return 'Unexpected landing type!';
-  }
-
-  return `an ASDS landing on ${landpad.name}`;
+  return `an ASDS landing on ${coreLaunch.landing}`;
 };
 
 export const modelizer = ({
   pastLaunches,
-  payloads,
-  landpads,
 }: SpaceXStatsData): ModelizedSectionData => {
   const landedBoostersCount = pastLaunches.reduce(
     (sum, launch) =>
       sum +
       launch.cores.filter(
         (core) =>
-          core.landing_success &&
-          (core.landing_type === LandingType.rtls ||
-            core.landing_type === LandingType.asds),
+          core.landingSuccess &&
+          (isLandpadRTLS(core.landing) || isLandpadASDS(core.landing)),
       ).length,
     0,
   );
 
   const landingMasses = pastLaunches.map((launch) => ({
-    mass: getPayloads(launch, payloads).reduce(
-      (sum, payload) => (sum += payload.mass_kg ?? 0),
+    mass: launch.payloads.reduce(
+      (sum, payload) => (sum += payload.mass ?? 0),
       0,
     ),
     mission: launch.name,
-    landingType: formatLandingType(
-      launch.cores[0].landing_type,
-      landpads.find((landpad) => landpad.id === launch.cores[0].landpad)!,
-    ),
+    landingType: formatLandingType(launch.cores[0]),
   }));
   const sortedLandingMasses = orderBy(landingMasses, 'mass', 'desc');
 

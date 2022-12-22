@@ -2,17 +2,16 @@ import settings from 'settings';
 import { chartColors } from 'stylesheet';
 import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { RocketType, Launch } from 'types';
+import { Rocket, Launch } from 'types';
 
 export const buildLaunchesPerRocketChart = (pastLaunches: Launch[]) => {
   const launchesPerRocket = {
-    'Falcon 1': pastLaunches.filter(({ rocket }) => rocket === RocketType.f1)
+    'Falcon 1': pastLaunches.filter(({ rocket }) => rocket === Rocket.f1)
       .length,
-    'Falcon 9': pastLaunches.filter(({ rocket }) => rocket === RocketType.f9)
+    'Falcon 9': pastLaunches.filter(({ rocket }) => rocket === Rocket.f9)
       .length,
-    'Falcon Heavy': pastLaunches.filter(
-      ({ rocket }) => rocket === RocketType.fh,
-    ).length,
+    'Falcon Heavy': pastLaunches.filter(({ rocket }) => rocket === Rocket.fh)
+      .length,
     Starship: 0,
   };
 

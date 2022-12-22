@@ -59,6 +59,19 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
     curly: ['error', 'multi-line'],
+    // '@typescript-eslint/prefer-optional-chain': 'error',
+    // '@typescript-eslint/prefer-nullish-coalescing': 'error',
+    // '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
+    // '@typescript-eslint/strict-boolean-expressions': 'error',
+    // '@typescript-eslint/no-unnecessary-condition': 'error',
+    // '@typescript-eslint/no-unnecessary-type-arguments': 'error',
+    // '@typescript-eslint/prefer-string-starts-ends-with': 'error',
+    // '@typescript-eslint/switch-exhaustiveness-check': 'error',
+    // '@typescript-eslint/ban-types': 'error',
+    // '@typescript-eslint/consistent-type-assertions': [
+    //   'error',
+    //   { assertionStyle: 'never' },
+    // ],
   },
   settings: {
     react: {

@@ -20,21 +20,11 @@ export enum RSXAPIRocketType {
   starship = '5e9d0d96eda699382d09d1ee',
 }
 
-export interface RSXAPIRocket {
-  id: RSXAPIRocketType;
-  name: string;
-}
-
 export enum RSXAPILaunchpadType {
   kwajalein = '5e9e4502f5090995de566f86',
   slc40 = '5e9e4501f509094ba4566f84',
   vafb = '5e9e4502f509092b78566f87',
   lc39a = '5e9e4502f509094188566f88',
-}
-
-export interface RSXAPILaunchpad {
-  id: RSXAPILaunchpadType;
-  name: string;
 }
 
 export enum RSXAPILandpadType {
@@ -47,10 +37,6 @@ export enum RSXAPILandpadType {
   asog = '5e9e3033383ecb075134e7cd',
 }
 
-export interface RSXAPILandpad {
-  id: RSXAPILandpadType;
-  name: string;
-}
 export enum RSXAPILaunchDatePrecision {
   year = 'year',
   half = 'half',
@@ -70,7 +56,10 @@ export enum RSXAPIOrbit {
   esl1 = 'ES-L1',
   hco = 'HCO',
   heo = 'HEO',
+  beo = 'BEO',
   gto = 'GTO',
+  geo = 'GEO',
+  tli = 'TLI',
   iss = 'ISS',
   leo = 'LEO',
   meo = 'MEO',
@@ -78,7 +67,36 @@ export enum RSXAPIOrbit {
   sso = 'SSO',
   vleo = 'VLEO',
   // Unorminal
-  suborbital = 'so',
+  suborbital = 'SO',
+}
+export enum RSXAPICrewStatus {
+  active = 'active',
+  inactive = 'inactive',
+  retired = 'retired',
+  unknown = 'unknown',
+}
+
+export enum RSXAPICoreStatus {
+  active = 'active',
+  inactive = 'inactive',
+  lost = 'lost',
+  unknown = 'unknown',
+  expended = 'expended',
+  retired = 'retired',
+}
+
+export interface RSXAPILaunchpad {
+  id: RSXAPILaunchpadType;
+  name: string;
+}
+
+export interface RSXAPIRocket {
+  id: RSXAPIRocketType;
+  name: string;
+}
+export interface RSXAPILandpad {
+  id: RSXAPILandpadType;
+  name: string;
 }
 
 export interface RSXAPIPayload {
@@ -112,13 +130,6 @@ export interface RSXAPILaunchCore {
   reused: boolean;
 }
 
-export enum RSXAPICrewStatus {
-  active = 'active',
-  inactive = 'inactive',
-  retired = 'retired',
-  unknown = 'unknown',
-}
-
 export interface RSXAPICrew {
   id: string;
   name: string;
@@ -142,15 +153,6 @@ export interface RSXAPILaunch {
   cores: RSXAPILaunchCore[];
   fairings: RSXAPILaunchFairings;
   crew: string[];
-}
-
-export enum RSXAPICoreStatus {
-  active = 'active',
-  inactive = 'inactive',
-  lost = 'lost',
-  unknown = 'unknown',
-  expended = 'expended',
-  retired = 'retired',
 }
 
 export interface RSXAPICore {

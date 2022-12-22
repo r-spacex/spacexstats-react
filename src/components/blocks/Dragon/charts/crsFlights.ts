@@ -3,31 +3,28 @@ import { chartColors } from 'stylesheet';
 import { formatDuration } from 'utils/date';
 import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { Launch, Payload } from 'types';
+import { Launch } from 'types';
 import { getFlightTime } from './commercialCrewFlights';
 import { getPayload } from 'utils/launch';
 
-export const buildCrsFlightsChart = (
-  dragonLaunches: Launch[],
-  payloads: Payload[],
-) => {
+export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
   const crsFlights = dragonLaunches.filter((launch) => {
-    const payloadName = getPayload(launch, payloads)?.name;
+    const payloadName = getPayload(launch)?.name;
     return payloadName?.includes('COTS') || payloadName?.includes('CRS');
   });
 
   const data = {
     labels: crsFlights.map(
-      (launch) => getPayload(launch, payloads)?.name ?? 'Unknown mission',
+      (launch) => getPayload(launch)?.name ?? 'Unknown mission',
     ),
     datasets: [
       {
         label: 'New Dragon 1',
         backgroundColor: chartColors.blue,
         data: crsFlights.map((launch) => {
-          const payload = getPayload(launch, payloads);
+          const payload = getPayload(launch);
           return payload?.type.includes('Dragon 1') && !payload?.reused
-            ? getFlightTime(launch, payloads)
+            ? getFlightTime(launch)
             : 0;
         }),
       },
@@ -35,9 +32,9 @@ export const buildCrsFlightsChart = (
         label: 'Reused Dragon 1',
         backgroundColor: chartColors.lightblue,
         data: crsFlights.map((launch) => {
-          const payload = getPayload(launch, payloads);
+          const payload = getPayload(launch);
           return payload?.type.includes('Dragon 1') && payload?.reused
-            ? getFlightTime(launch, payloads)
+            ? getFlightTime(launch)
             : 0;
         }),
       },
@@ -45,9 +42,9 @@ export const buildCrsFlightsChart = (
         label: 'New Dragon 2',
         backgroundColor: chartColors.white,
         data: crsFlights.map((launch) => {
-          const payload = getPayload(launch, payloads);
+          const payload = getPayload(launch);
           return payload?.type.includes('Dragon 2.0') && !payload?.reused
-            ? getFlightTime(launch, payloads)
+            ? getFlightTime(launch)
             : 0;
         }),
       },
@@ -55,9 +52,9 @@ export const buildCrsFlightsChart = (
         label: 'Reused Dragon 2',
         backgroundColor: chartColors.green,
         data: crsFlights.map((launch) => {
-          const payload = getPayload(launch, payloads);
+          const payload = getPayload(launch);
           return payload?.type.includes('Dragon 2.0') && payload?.reused
-            ? getFlightTime(launch, payloads)
+            ? getFlightTime(launch)
             : 0;
         }),
       },
@@ -69,8 +66,7 @@ export const buildCrsFlightsChart = (
       callbacks: {
         label: (tooltipItem) => {
           const launch = dragonLaunches.find(
-            (launch) =>
-              getPayload(launch, payloads)?.name === tooltipItem.xLabel,
+            (launch) => getPayload(launch)?.name === tooltipItem.xLabel,
           )!;
           if (
             tooltipItem.datasetIndex === undefined ||
@@ -84,27 +80,25 @@ export const buildCrsFlightsChart = (
           const dataset = data.datasets[tooltipItem.datasetIndex];
           return `${dataset.label}: ${getFlightTime(
             launch,
-            payloads,
           ).toLocaleString()} hours`;
         },
         footer: (tooltipItems) => {
           const currentLaunch = dragonLaunches.find(
-            (launch) =>
-              getPayload(launch, payloads)?.name === tooltipItems[0].xLabel,
+            (launch) => getPayload(launch)?.name === tooltipItems[0].xLabel,
           )!;
-          const currentPayload = getPayload(currentLaunch, payloads);
+          const currentPayload = getPayload(currentLaunch);
 
           if (
-            currentPayload?.mass_kg === null ||
-            currentPayload?.dragon.mass_returned_kg === null
+            currentPayload?.mass === null ||
+            currentPayload?.dragon.massReturned === null
           ) {
             return '';
           }
 
           return `Transported: ${Math.floor(
-            currentPayload?.mass_kg ?? 0,
+            currentPayload?.mass ?? 0,
           ).toLocaleString()}kg (up) and ${Math.floor(
-            currentPayload?.dragon.mass_returned_kg ?? 0,
+            currentPayload?.dragon.massReturned ?? 0,
           ).toLocaleString()}kg (down)`;
         },
       },
@@ -126,7 +120,7 @@ export const buildCrsFlightsChart = (
     totalFlightTime: formatDuration(
       Math.floor(
         crsFlights.reduce(
-          (sum, launch) => sum + getFlightTime(launch, payloads) * 3600,
+          (sum, launch) => sum + getFlightTime(launch) * 3600,
           0,
         ),
       ),

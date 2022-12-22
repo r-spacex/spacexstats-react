@@ -39,7 +39,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat>2022</TextStat>
+            <TextStat>2023</TextStat>
           </SectionContent>
           <SectionDescription>
             {`SpaceX is already in talks with three potential customers for a
@@ -78,7 +78,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat>2023</TextStat>
+            <TextStat>2025</TextStat>
           </SectionContent>
           <SectionDescription>
             {`After having a successfuly reusable launch vehicule, the next
@@ -97,7 +97,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat>2024</TextStat>
+            <TextStat>2026</TextStat>
           </SectionContent>
           <SectionDescription>
             {`By 2026, Starship should have dozens of successful flights under its

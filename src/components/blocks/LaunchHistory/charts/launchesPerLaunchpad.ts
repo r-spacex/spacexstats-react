@@ -2,21 +2,21 @@ import settings from 'settings';
 import { chartColors } from 'stylesheet';
 import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
-import { Launch, LaunchpadType } from 'types';
+import { Launch, Launchpad } from 'types';
 
 export const buildLaunchesPerLaunchpadChart = (pastLaunches: Launch[]) => {
   const launchesPerRocket = {
     'Kwajalein Atoll': pastLaunches.filter(
-      ({ launchpad }) => launchpad === LaunchpadType.kwajalein,
+      ({ launchpad }) => launchpad === Launchpad.kwajalein,
     ).length,
     'Vandenberg AFB SLC 4E': pastLaunches.filter(
-      ({ launchpad }) => launchpad === LaunchpadType.vafb,
+      ({ launchpad }) => launchpad === Launchpad.vafb,
     ).length,
     'Cape Canaveral SLC 40': pastLaunches.filter(
-      ({ launchpad }) => launchpad === LaunchpadType.slc40,
+      ({ launchpad }) => launchpad === Launchpad.slc40,
     ).length,
     'KSC Historic LC 39A': pastLaunches.filter(
-      ({ launchpad }) => launchpad === LaunchpadType.lc39a,
+      ({ launchpad }) => launchpad === Launchpad.lc39a,
     ).length,
     'Boca Chica, Texas': 0,
   };

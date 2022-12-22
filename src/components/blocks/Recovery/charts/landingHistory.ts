@@ -1,6 +1,6 @@
 import settings from 'settings';
 import { chartColors } from 'stylesheet';
-import { LandingType, Launch, LaunchCore, LandpadType } from 'types';
+import { CoreLaunch, isLandpadRTLS, Landpad, Launch } from 'types';
 import { ChartOptions } from 'chart.js';
 import deepmerge from 'deepmerge';
 import last from 'lodash/last';
@@ -9,7 +9,7 @@ import { launchYear } from 'utils/launch';
 
 interface LandingAttempt {
   launch: Launch;
-  core: LaunchCore;
+  core: CoreLaunch;
 }
 
 export const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
@@ -19,7 +19,7 @@ export const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
       return;
     }
     launch.cores.forEach((core) => {
-      if (core.landing_type === null) {
+      if (core.landing === null) {
         return;
       }
       landingAttempts.push({
@@ -34,9 +34,9 @@ export const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
   const years = range(yearsStart, yearsEnd + 1);
 
   const successfulLandings = landingAttempts.filter(
-    ({ core }) => core.landing_success,
+    ({ core }) => core.landingSuccess,
   );
-  const failures = landingAttempts.filter(({ core }) => !core.landing_success);
+  const failures = landingAttempts.filter(({ core }) => !core.landingSuccess);
 
   const data = {
     labels: years,
@@ -48,8 +48,7 @@ export const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
           (year) =>
             successfulLandings.filter(
               ({ launch, core }) =>
-                launchYear(launch) === year &&
-                core.landing_type === LandingType.ocean,
+                launchYear(launch) === year && core.landing === Landpad.ocean,
             ).length,
         ),
       },
@@ -60,8 +59,7 @@ export const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
           (year) =>
             successfulLandings.filter(
               ({ launch, core }) =>
-                launchYear(launch) === year &&
-                core.landing_type === LandingType.rtls,
+                launchYear(launch) === year && isLandpadRTLS(core.landing),
             ).length,
         ),
       },
@@ -72,8 +70,7 @@ export const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
           (year) =>
             successfulLandings.filter(
               ({ launch, core }) =>
-                launchYear(launch) === year &&
-                core.landpad === LandpadType.ocisly,
+                launchYear(launch) === year && core.landing === Landpad.ocisly,
             ).length,
         ),
       },
@@ -85,8 +82,8 @@ export const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
             successfulLandings.filter(
               ({ launch, core }) =>
                 launchYear(launch) === year &&
-                (core.landpad === LandpadType.jrti ||
-                  core.landpad === LandpadType.jrtiv1),
+                (core.landing === Landpad.jrti ||
+                  core.landing === Landpad.jrtiv1),
             ).length,
         ),
       },
@@ -97,8 +94,7 @@ export const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
           (year) =>
             successfulLandings.filter(
               ({ launch, core }) =>
-                launchYear(launch) === year &&
-                core.landpad === LandpadType.asog,
+                launchYear(launch) === year && core.landing === Landpad.asog,
             ).length,
         ),
       },

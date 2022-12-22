@@ -24,23 +24,21 @@ export interface ModelizedSectionData {
 
 export const modelizer = ({
   pastLaunches,
-  payloads,
   crew,
 }: SpaceXStatsData): ModelizedSectionData => {
   const exclusionList = ['Dragon Qualification Unit'];
   const dragonLaunches = pastLaunches.filter((launch) => {
-    const payload = getPayload(launch, payloads);
+    const payload = getPayload(launch);
     return (
       payload?.type.includes('Dragon') && !exclusionList.includes(payload.type)
     );
   });
 
   return {
-    missions: buildMissionTypesChart(dragonLaunches, payloads),
-    crsFlights: buildCrsFlightsChart(dragonLaunches, payloads),
+    missions: buildMissionTypesChart(dragonLaunches),
+    crsFlights: buildCrsFlightsChart(dragonLaunches),
     commercialCrewFlights: buildCommercialCrewFlightsChart(
       dragonLaunches,
-      payloads,
       crew,
     ),
   };

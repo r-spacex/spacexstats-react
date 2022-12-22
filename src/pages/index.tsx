@@ -65,24 +65,6 @@ export const query = graphql`
         launches
       }
     }
-    spacexdatarockets {
-      rockets {
-        id
-        name
-      }
-    }
-    spacexdatalaunchpads {
-      launchpads {
-        id
-        name
-      }
-    }
-    spacexdatalandpads {
-      landpads {
-        id
-        name
-      }
-    }
     spacexdatacompany {
       company {
         id
