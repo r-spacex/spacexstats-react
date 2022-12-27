@@ -9,7 +9,12 @@ import { modelizer } from './modelizer';
 import { BlockProps } from 'types';
 
 const Timelines: React.FC<BlockProps> = ({ data, ...rest }) => {
-  const { elonMuskBet, gwynneShotwellBet, foundingDate } = modelizer(data);
+  const {
+    elonMuskBet,
+    gwynneShotwellBet,
+    foundingDate,
+    gwynneShotwellMarsBet,
+  } = modelizer(data);
 
   const tabs = [
     {
@@ -34,9 +39,9 @@ const Timelines: React.FC<BlockProps> = ({ data, ...rest }) => {
     },
     {
       id: 'gwynne-shotwell-bet',
-      label: "Gwynne Shotwell's Bet",
+      label: "Gwynne Shotwell's Earth-to-Earth Bet",
       background: 'gwynneshotwell.jpg',
-      title: "Gwynne Shotwell's Bet",
+      title: "Gwynne Shotwell's Earth-to-Earth Bet",
       render: (
         <>
           <SectionContent>
@@ -48,6 +53,24 @@ const Timelines: React.FC<BlockProps> = ({ data, ...rest }) => {
             system within ten years. The price would be a couple thousand
             dollars per person to fly New York to Shanghai. This countdown clock
             expires on 1 January 2029, at 00:00 UTC. No pressure, Gwynne.`}
+          </SectionDescription>
+        </>
+      ),
+    },
+    {
+      id: 'gwynne-shotwell-mars-bet',
+      label: "Gwynne Shotwell's Mars Bet",
+      background: 'gwynneshotwellmars.png',
+      title: "Gwynne Shotwell's Mars Bet",
+      render: (
+        <>
+          <SectionContent>
+            <TimeStat value={gwynneShotwellMarsBet} type="countdown" />
+          </SectionContent>
+          <SectionDescription>
+            {`On Tuesday, May 24, 2022, SpaceX's COO Gwynne Shotwell made a bet in a talk at Stanford
+            that SpaceX would put people on Mars within a decade. That's May 24, 2032, so good
+            luck, Gwynne!`}
           </SectionDescription>
         </>
       ),
