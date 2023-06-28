@@ -1,25 +1,23 @@
 // eslint-disable-next-line
 const fetch = require('node-fetch');
+// eslint-disable-next-line
+const launches = require('./launches.json');
 
-const OLD_API_URL = 'https://api.spacexdata.com/v4';
+// The LL API can be quite slow to answer
+// so we use local JSON files as a fallback to speed up development
+// Change this to false if you want to use the LL dev API in your
+// local dev environment
+const USE_JSON_FALLBACK = true;
 
-const oldApiGet = async (endpoint) => {
-  const response = await fetch(`${OLD_API_URL}${endpoint}`, {
-    mode: 'cors',
-  });
-  const data = await response.json();
-  return data;
-};
+// The prod API is rate limited to 15 calls/hour so be careful with it
+const USE_PROD_API = true;
 
-const API_V2_DEV_URL = 'https://lldev.thespacedevs.com/2.2.0/';
-const API_V2_PROD_URL = 'https://ll.thespacedevs.com/2.2.0/';
+const API_V2_DEV_URL = 'https://lldev.thespacedevs.com/2.2.0';
+const API_V2_PROD_URL = 'https://ll.thespacedevs.com/2.2.0';
 const SPACEX_AGENCY_ID = 121;
-const url =
-  process.env.NODE_ENV === 'production' ? API_V2_DEV_URL : API_V2_PROD_URL;
-const apiGet = async (endpoint) => {
-  const response = await fetch(`${endpoint}`, {
-    mode: 'cors',
-  });
+
+const apiGet = async (url) => {
+  const response = await fetch(url, { mode: 'cors' });
 
   return response.json();
 };
@@ -27,15 +25,40 @@ const apiGet = async (endpoint) => {
 const apiGetAllPages = async (endpoint) => {
   let data = [];
   let response = null;
+  let page = 1;
 
   while (response === null || response.next !== null) {
+    console.log(`[DEBUG] Fetching page ${page}`);
     response = await apiGet(response ? response.next : endpoint);
     data = data.concat(response.results);
+    page++;
   }
 
-  return data.filter(
-    (item) => item.launch_service_provider === SPACEX_AGENCY_ID,
+  const filteredResults = data.filter(
+    (item) => item.launch_service_provider.id === SPACEX_AGENCY_ID,
   );
+
+  console.log(`[DEBUG] Fetched ${filteredResults.length} results`);
+  return filteredResults;
+};
+
+const endpoints = {
+  launches: {
+    url: '/launch/?format=json&limit=100&search=SpaceX',
+    json: launches,
+  },
+};
+
+const fetchEndpointData = async (endpoint) => {
+  if (process.env.NODE_ENV === 'development' && USE_JSON_FALLBACK) {
+    console.log('[DEBUG] Using local JSON fallback for fetching data');
+    return endpoints[endpoint].json.results;
+  }
+
+  const fullUrl =
+    (USE_PROD_API ? API_V2_PROD_URL : API_V2_DEV_URL) + endpoints[endpoint].url;
+  console.log(`[DEBUG] Using remote API for fetching data (url: ${fullUrl})`);
+  return apiGetAllPages(fullUrl);
 };
 
 exports.sourceNodes = async ({
@@ -43,26 +66,10 @@ exports.sourceNodes = async ({
   createNodeId,
   createContentDigest,
 }) => {
-  const [launches, cores, payloads, crew, starlink, company, roadster] =
-    await Promise.all([
-      // apiGetAllPages(`${url}launch/?format=json&search=SpaceX&limit=100`),
-      oldApiGet('/launches'),
-      oldApiGet('/cores'),
-      oldApiGet('/payloads'),
-      oldApiGet('/crew'),
-      oldApiGet('/starlink'),
-      oldApiGet('/company'),
-      oldApiGet('/roadster'),
-    ]);
+  const [launches] = await Promise.all([fetchEndpointData('launches')]);
 
   const data = {
     launches,
-    cores,
-    payloads,
-    crew,
-    starlink,
-    company,
-    roadster,
   };
 
   const { createNode } = actions;

@@ -1,17 +1,16 @@
 import React from 'react';
 import Root from 'components/ui/Root';
 import SEO from 'components/ui/SEO';
-import { RSXAPIData } from 'api/r-spacex/types';
-import { RSXAPIAdapter } from 'api/r-spacex';
-// eslint-disable-next-line
 import { graphql } from 'gatsby';
+import { LLAPIAdapter } from 'data/launch-library';
+import { LLAPIData } from 'data/launch-library/types';
 
 interface Props {
-  data: RSXAPIData;
+  data: LLAPIData;
 }
 
 const IndexPage: React.FC<Props> = ({ data }) => {
-  const spacexstatsData = RSXAPIAdapter.dataTransformer(data);
+  const spacexstatsData = LLAPIAdapter.dataTransformer(data);
 
   return (
     <>
@@ -32,31 +31,34 @@ export const query = graphql`
       launches {
         id
         name
-        date_unix
-        date_utc
-        date_precision
-        rocket
-        launchpad
-        success
-        payloads
-        cores {
-          flight
-          landing_success
-          landing_attempt
-          landing_type
-          landpad
-          reused
+        net
+        failreason
+        rocket {
+          configuration {
+            id
+            name
+          }
         }
-        fairings {
-          recovery_attempt
-          recovered
-          reused
+        mission {
+          description
+          orbit {
+            id
+          }
         }
-        details
-        upcoming
+        status {
+          id
+        }
+        pad {
+          id
+          name
+        }
       }
     }
-    spacexdatacores {
+  }
+`;
+
+/*
+spacexdatacores {
       cores {
         id
         serial
@@ -116,5 +118,4 @@ export const query = graphql`
         }
       }
     }
-  }
-`;
+    */

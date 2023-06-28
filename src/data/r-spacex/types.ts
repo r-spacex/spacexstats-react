@@ -1,4 +1,4 @@
-import { BuildInfoData } from 'api/common';
+import { BuildInfoData } from 'data/common';
 
 export interface RSXAPIData extends BuildInfoData {
   spacexdatalaunches: { launches: RSXAPILaunch[] };

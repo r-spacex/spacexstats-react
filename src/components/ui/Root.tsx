@@ -4,14 +4,14 @@ import 'nprogress/nprogress.css';
 import ReactGA from 'react-ga';
 import { useDispatch } from 'react-redux';
 import {
-  Dragon,
+  // Dragon,
   Footer,
   LaunchHistory,
-  Payloads,
-  People,
-  Recovery,
-  Reuse,
-  Starlink,
+  // Payloads,
+  // People,
+  // Recovery,
+  // Reuse,
+  // Starlink,
   Starship,
   Timelines,
   Upcoming,
@@ -75,12 +75,12 @@ const Root: React.FC<SpaceXStatsData> = (data) => {
     { id: 'upcoming', Component: Upcoming },
     { id: 'starship', Component: Starship },
     { id: 'launchhistory', Component: LaunchHistory },
-    { id: 'recovery', Component: Recovery },
-    { id: 'reuse', Component: Reuse },
-    { id: 'payloads', Component: Payloads },
-    { id: 'starlink', Component: Starlink },
-    { id: 'dragon', Component: Dragon },
-    { id: 'people', Component: People },
+    // { id: 'recovery', Component: Recovery },
+    // { id: 'reuse', Component: Reuse },
+    // { id: 'payloads', Component: Payloads },
+    // { id: 'starlink', Component: Starlink },
+    // { id: 'dragon', Component: Dragon },
+    // { id: 'people', Component: People },
     { id: 'timelines', Component: Timelines },
   ];
 
@@ -89,14 +89,14 @@ const Root: React.FC<SpaceXStatsData> = (data) => {
       <StyleReset />
 
       <Banner>
-        As some of you already noticed and reported, the stats may be incorrect
-        in some places because the r/spacex API is winding down{' '}
+        SpaceXStats is back! After a long hiatus, I decided to publish a minimal
+        working version of the site. Some sections are still missing after the
+        r/spacex API shut down{' '}
         <a href="https://github.com/r-spacex/SpaceX-API/issues/1243">
-          (more details on GitHub)
-        </a>
-        . I&apos;m currently working on a rewrite using the Launch Library 2 but
-        it will take some time. I hope to complete the rewrite by the end of the
-        year! Thanks again for your messages and support ❤️🚀
+          (more details)
+        </a>{' '}
+        but will be added again, one after the other. Thanks again for your
+        messages and support ❤️🚀
       </Banner>
 
       {sectionComponents.map(({ id, Component }, index) => (

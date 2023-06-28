@@ -1,4 +1,4 @@
-import { APIAdapter } from 'api/common';
+import { APIAdapter } from 'data/common';
 import { transformAPIData } from './dataTransformers';
 import { RSXAPIData } from './types';
 

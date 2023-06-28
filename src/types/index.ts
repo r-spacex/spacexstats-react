@@ -4,7 +4,7 @@ import {
   RSXAPIStarlink,
   RSXAPICompany,
   RSXAPIRoadster,
-} from '../api/r-spacex/types';
+} from '../data/r-spacex/types';
 
 export enum Rocket {
   f1 = 'Falcon 1',
@@ -18,6 +18,8 @@ export enum Launchpad {
   slc40 = 'Cape Canaveral SLC 40',
   vafb = 'Vanderberg AFB SLC 4E',
   lc39a = 'KSC Historic LC 39A',
+  starbase = 'Boca Chica Launch Mount A',
+  unknown = 'Unknown',
 }
 
 export enum Landpad {
@@ -155,11 +157,11 @@ export interface SpaceXStatsData {
   buildDate: string;
   pastLaunches: Launch[];
   upcomingLaunches: Launch[];
-  cores: Core[];
-  crew: RSXAPICrew[];
-  starlink: RSXAPIStarlink[];
-  company: RSXAPICompany;
-  roadster: RSXAPIRoadster;
+  // cores: Core[];
+  // crew: RSXAPICrew[];
+  // starlink: RSXAPIStarlink[];
+  // company: RSXAPICompany;
+  // roadster: RSXAPIRoadster;
 }
 
 export interface BlockProps {

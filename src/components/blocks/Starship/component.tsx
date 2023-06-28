@@ -1,36 +1,13 @@
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
 import Section, {
   SectionContent,
   SectionDescription,
 } from 'components/ui/Section';
 import TextStat from 'components/ui/TextStat';
-import { modelizer } from './modelizer';
 import { BlockProps } from 'types';
 
-const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
-  const { starshipHops } = modelizer(data);
-
+const Starship: React.FC<BlockProps> = ({ ...rest }) => {
   const tabs = [
-    {
-      id: 'hop-tests',
-      label: 'Hop Tests',
-      background: 'bfshop.png',
-      title: 'Hop Tests',
-      render: (
-        <>
-          <SectionContent>
-            <Bar data={starshipHops.data} options={starshipHops.options} />
-          </SectionContent>
-          <SectionDescription>
-            {`SpaceX is conducting an experimental test program of its future
-            launch vehicle, the Super Heavy/Starship. Incremental hop tests
-            will serve to validate landing procedures for a reusable second stage
-            and a heat shielding technology.`}
-          </SectionDescription>
-        </>
-      ),
-    },
     {
       id: 'orbital-tests',
       label: 'Orbital Tests',
@@ -42,11 +19,8 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
             <TextStat>2023</TextStat>
           </SectionContent>
           <SectionDescription>
-            {`SpaceX is already in talks with three potential customers for a
-            commercial satellite launch in 2021. Before that, SpaceX will have
-            to reach orbit with the Starship second stage and the Super heavy
-            booster. They will also test orbital refueling, a technology
-            necessary to go to other distant bodies such as the Moon or Mars.`}
+            {`SpaceX is conducting an experimental test program of its future
+            launch vehicle, the Super Heavy/Starship. SpaceX already did an Integrated Flight Test that ended by an explosion 4 minutes into the flight. SpaceX is currently preparing for another test launch with the goal of reaching orbit with the Starship second stage and the Super heavy booster.`}
           </SectionDescription>
         </>
       ),
@@ -59,7 +33,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat>2024</TextStat>
+            <TextStat>2026</TextStat>
           </SectionContent>
           <SectionDescription>
             {`While Starship will be developed to enter mass production and
@@ -84,7 +58,7 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
             {`After having a successfuly reusable launch vehicule, the next
             challenge will be to develop the crewed version and send people with
             it. Yasuka Maezawa, a Japanese billionaire, has already bought the
-            first Starship crewed flight to go around Moon with artists in 2023.`}
+            first Starship crewed flight to go around Moon with artists.`}
           </SectionDescription>
         </>
       ),
@@ -97,12 +71,12 @@ const Starship: React.FC<BlockProps> = ({ data, ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat>2026</TextStat>
+            <TextStat>2028</TextStat>
           </SectionContent>
           <SectionDescription>
-            {`By 2026, Starship should have dozens of successful flights under its
+            {`By 2028, Starship should have dozens of successful flights under its
             belt in the near-Earth space. SpaceX's goal is to land two cargo and
-            two crewed Starships on Mars in five years. After that, the rest
+            two crewed Starships on Mars. After that, the rest
             should be history.`}
           </SectionDescription>
         </>
