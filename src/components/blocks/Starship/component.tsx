@@ -52,13 +52,12 @@ const Starship: React.FC<BlockProps> = ({ ...rest }) => {
       render: (
         <>
           <SectionContent>
-            <TextStat>2025</TextStat>
+            <TextStat>Cancelled</TextStat>
           </SectionContent>
           <SectionDescription>
-            {`After having a successfuly reusable launch vehicule, the next
-            challenge will be to develop the crewed version and send people with
-            it. Yasuka Maezawa, a Japanese billionaire, has already bought the
-            first Starship crewed flight to go around Moon with artists.`}
+            {`"Launch within 2023 became unfeasible, and without clear schedule
+             certainty in the near-term, it is with a heavy heart that Maezawa made
+             the unavoidable decision to cancel the project."`}
           </SectionDescription>
         </>
       ),
