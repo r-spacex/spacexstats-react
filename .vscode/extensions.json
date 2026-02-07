@@ -4,6 +4,6 @@
     "esbenp.prettier-vscode",
     "jpoissonnier.vscode-styled-components",
     "eamodio.gitlens",
-    "pflannery.vscode-versionlens"
+    "legalfina.npm-version-lens"
   ]
 }
