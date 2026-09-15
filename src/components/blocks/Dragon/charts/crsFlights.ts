@@ -24,7 +24,7 @@ export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
         data: crsFlights.map((launch) => {
           const payload = getPayload(launch);
           return payload?.type.includes('Dragon 1') && !payload?.reused
-            ? getFlightTime(launch)
+            ? getFlightTime(launch) ?? 0
             : 0;
         }),
       },
@@ -34,7 +34,7 @@ export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
         data: crsFlights.map((launch) => {
           const payload = getPayload(launch);
           return payload?.type.includes('Dragon 1') && payload?.reused
-            ? getFlightTime(launch)
+            ? getFlightTime(launch) ?? 0
             : 0;
         }),
       },
@@ -44,7 +44,7 @@ export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
         data: crsFlights.map((launch) => {
           const payload = getPayload(launch);
           return payload?.type.includes('Dragon 2.0') && !payload?.reused
-            ? getFlightTime(launch)
+            ? getFlightTime(launch) ?? 0
             : 0;
         }),
       },
@@ -54,7 +54,7 @@ export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
         data: crsFlights.map((launch) => {
           const payload = getPayload(launch);
           return payload?.type.includes('Dragon 2.0') && payload?.reused
-            ? getFlightTime(launch)
+            ? getFlightTime(launch) ?? 0
             : 0;
         }),
       },
@@ -78,9 +78,11 @@ export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
             return '';
           }
           const dataset = data.datasets[tooltipItem.datasetIndex];
-          return `${dataset.label}: ${getFlightTime(
-            launch,
-          ).toLocaleString()} hours`;
+          const hours = getFlightTime(launch);
+          if (hours === null) {
+            return `${dataset.label}: unknown flight time`;
+          }
+          return `${dataset.label}: ${hours.toLocaleString()} hours`;
         },
         footer: (tooltipItems) => {
           const currentLaunch = dragonLaunches.find(
@@ -120,7 +122,7 @@ export const buildCrsFlightsChart = (dragonLaunches: Launch[]) => {
     totalFlightTime: formatDuration(
       Math.floor(
         crsFlights.reduce(
-          (sum, launch) => sum + getFlightTime(launch) * 3600,
+          (sum, launch) => sum + (getFlightTime(launch) ?? 0) * 3600,
           0,
         ),
       ),

@@ -6,11 +6,27 @@ import deepmerge from 'deepmerge';
 import { Crew, Launch } from 'types';
 import { getPayload } from 'utils/launch';
 
-export const getFlightTime = (launch: Launch) =>
-  Math.floor(
-    (getPayload(launch)?.dragon.flightTime ??
-      new Date().getTime() / 1000 - launch.date.getTime()) / 3600,
-  );
+// The flight time reported for the payload is the only record of how long a
+// Dragon was up. When it is missing the mission length is simply unknown, so
+// this returns null rather than guessing.
+//
+// What stood here instead fell back to the time elapsed since launch, which is
+// only meaningful while a capsule is still in orbit. Nothing on a past launch
+// says whether its capsule has come home, so for a mission that has already
+// splashed down the figure grew without bound: CRS-23 was reported as 2,810
+// hours two months after it returned, because that is how long ago it had
+// launched (#87). The fallback had also stopped being self-consistent -
+// `getTime()` is in milliseconds, while the `date_unix` it replaced was in
+// seconds - so by now it produced large negative numbers.
+export const getFlightTime = (launch: Launch): number | null => {
+  const flightTimeInSeconds = getPayload(launch)?.dragon.flightTime;
+
+  if (flightTimeInSeconds === null || flightTimeInSeconds === undefined) {
+    return null;
+  }
+
+  return Math.floor(flightTimeInSeconds / 3600);
+};
 
 export const buildCommercialCrewFlightsChart = (
   dragonLaunches: Launch[],
@@ -31,7 +47,7 @@ export const buildCommercialCrewFlightsChart = (
             return 1;
           }
           return getPayload(launch)?.customers[0].includes('NASA')
-            ? getFlightTime(launch)
+            ? getFlightTime(launch) ?? 0
             : 0;
         }),
       },
@@ -40,7 +56,7 @@ export const buildCommercialCrewFlightsChart = (
         backgroundColor: chartColors.orange,
         data: crewFlights.map((launch) =>
           !getPayload(launch)?.customers[0].includes('NASA')
-            ? getFlightTime(launch)
+            ? getFlightTime(launch) ?? 0
             : 0,
         ),
       },
@@ -64,9 +80,12 @@ export const buildCommercialCrewFlightsChart = (
             return '';
           }
           const dataset = data.datasets[tooltipItem.datasetIndex];
+          const hours = getFlightTime(launch);
           const flightTime = launch.name.includes('Abort')
             ? '8 minutes 54 seconds'
-            : `${getFlightTime(launch).toLocaleString()} hours`;
+            : hours === null
+            ? 'unknown flight time'
+            : `${hours.toLocaleString()} hours`;
           return `${dataset.label}: ${flightTime}`;
         },
         footer: (tooltipItems) => {
@@ -101,7 +120,10 @@ export const buildCommercialCrewFlightsChart = (
     options,
     totalFlightTime: formatDuration(
       Math.floor(
-        crewFlights.reduce((sum, launch) => sum + getFlightTime(launch), 0),
+        crewFlights.reduce(
+          (sum, launch) => sum + (getFlightTime(launch) ?? 0) * 3600,
+          0,
+        ),
       ),
     ),
   };
