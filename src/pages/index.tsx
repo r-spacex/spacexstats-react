@@ -48,6 +48,9 @@ export const query = graphql`
         status {
           id
         }
+        net_precision {
+          id
+        }
         pad {
           id
           name

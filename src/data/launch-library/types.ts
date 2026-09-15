@@ -27,6 +27,7 @@ export enum LLAPILaunchpadType {
   lc39a = 87,
   lc39aStarshipPad = 203,
   starbase = 188,
+  starbaseOrbitalPad2 = 235,
   starbasetestpadA = 111,
   starbasetestpadB = 187,
   unknown1 = 54,
@@ -82,6 +83,30 @@ export enum RSXAPICoreStatus {
   retired = 'retired',
 }
 
+// https://ll.thespacedevs.com/2.2.0/config/netprecision/
+// The T-0 of an upcoming launch is rarely known to the minute: most are
+// announced to the month, quarter or year, and `net` is then the last instant
+// of that period rather than a real launch time.
+export enum LLAPINetPrecision {
+  second = 0,
+  minute = 1,
+  hour = 2,
+  morning = 3,
+  afternoon = 4,
+  day = 5,
+  week = 6,
+  month = 7,
+  quarter1 = 8,
+  quarter2 = 9,
+  quarter3 = 10,
+  quarter4 = 11,
+  yearHalf1 = 12,
+  yearHalf2 = 13,
+  year = 14,
+  fiscalYear = 15,
+  decade = 16,
+}
+
 export interface LLAPIRocket {
   configuration: {
     id: number;
@@ -110,6 +135,8 @@ export interface LLAPILaunch {
   status: {
     id: LLAPILaunchStatus;
   };
+  // Absent from older cached payloads, hence optional.
+  net_precision: { id: LLAPINetPrecision } | null;
   pad: LLAPILaunchpad;
   failreason: string;
 }
