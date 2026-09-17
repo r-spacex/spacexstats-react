@@ -199,6 +199,27 @@ const buildUpmassPerYearChart = (pastLaunches: Launch[]) => {
   return { data, options };
 };
 
+const UNKNOWN_HEAVIEST_PAYLOAD = {
+  mass: 0,
+  mission: 'Unknown payload',
+  customers: 'Unknown customer',
+};
+
+const describeHeaviestLaunch = (
+  heaviest: { launch: Launch; mass: number } | undefined,
+): ModelizedSectionData['heaviestPayload'] => {
+  if (!heaviest) {
+    return UNKNOWN_HEAVIEST_PAYLOAD;
+  }
+
+  return {
+    mass: heaviest.mass,
+    mission: heaviest.launch.name,
+    customers:
+      getPayload(heaviest.launch)?.customers.join(', ') ?? 'Unknown customer',
+  };
+};
+
 export const modelizer = ({
   pastLaunches,
 }: SpaceXStatsData): ModelizedSectionData => {
@@ -211,25 +232,18 @@ export const modelizer = ({
   }));
 
   const sortedLaunchMasses = orderBy(launchMasses, 'mass', 'desc');
-  const heaviestPayloadLaunch = sortedLaunchMasses[0];
-  const heaviestPayload = {
-    mass: heaviestPayloadLaunch.mass,
-    mission: heaviestPayloadLaunch.launch.name,
-    customers:
-      getPayload(heaviestPayloadLaunch.launch)?.customers.join(', ') ??
-      'Unknown customer',
-  };
 
-  const heaviestPayloadLaunchGTO = sortedLaunchMasses.filter(
-    ({ launch }) => getPayload(launch)?.orbit === Orbit.gto,
-  )[0];
-  const heaviestPayloadGTO = {
-    mass: heaviestPayloadLaunchGTO.mass,
-    mission: heaviestPayloadLaunchGTO.launch.name,
-    customers:
-      getPayload(heaviestPayloadLaunchGTO.launch)?.customers.join(', ') ??
-      'Unknown customer',
-  };
+  // Both of these can legitimately be missing. There may be no past launches at all,
+  // and every launch may carry no payload mass, which is the case today because the
+  // Launch Library transformer does not populate `payloads`. Indexing straight into
+  // the arrays threw a TypeError, and because the whole page is rendered at build
+  // time a throw here fails the build rather than just this section.
+  const heaviestPayload = describeHeaviestLaunch(sortedLaunchMasses[0]);
+  const heaviestPayloadGTO = describeHeaviestLaunch(
+    sortedLaunchMasses.find(
+      ({ launch }) => getPayload(launch)?.orbit === Orbit.gto,
+    ),
+  );
 
   return {
     customers: buildCustomersChart(pastLaunches),
@@ -237,7 +251,7 @@ export const modelizer = ({
     totalMass: Math.floor(
       launchMasses.reduce((sum, { mass }) => sum + mass, 0) / 1000,
     ),
-    heaviestPayload: heaviestPayload ?? 'Unknown payload',
-    heaviestPayloadGTO: heaviestPayloadGTO ?? 'Unknown payload',
+    heaviestPayload,
+    heaviestPayloadGTO,
   };
 };
