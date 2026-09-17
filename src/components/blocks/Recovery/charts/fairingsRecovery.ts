@@ -12,9 +12,16 @@ export const buildFairingsRecoveryChart = (pastLaunches: Launch[]) => {
     (launch) => launch.fairings?.recoveryAttempt,
   );
 
-  const yearsStart = launchYear(recoveryAttempts[0]);
-  const yearsEnd = launchYear(last(recoveryAttempts)!);
-  const years = range(yearsStart, yearsEnd + 1);
+  // No recovery attempts on record is a real state: the Launch Library transformer reports
+  // every launch with `recoveryAttempt: false`, so this array is currently always empty.
+  // Indexing into it threw, and the page is rendered at build time, so that failed the build.
+  const years =
+    recoveryAttempts.length === 0
+      ? []
+      : range(
+          launchYear(recoveryAttempts[0]),
+          launchYear(last(recoveryAttempts)!) + 1,
+        );
 
   const failures = recoveryAttempts.filter(
     (launch) => !launch.fairings?.recovered,

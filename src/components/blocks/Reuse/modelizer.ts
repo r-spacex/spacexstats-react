@@ -15,6 +15,21 @@ interface Turnaround {
   turnaroundTime: number;
 }
 
+/** Stands in when no core has flown twice, so the section renders instead of throwing. */
+const UNKNOWN_TURNAROUND: Turnaround = {
+  core: 'Unknown',
+  launch1: 'Unknown',
+  launch2: 'Unknown',
+  turnaround: 'Unknown',
+  turnaroundTime: 0,
+};
+
+/** Stands in when there is no core data to pick a most-flown booster from. */
+const UNKNOWN_MOST_REFLOWN_CORE = {
+  missions: 'Unknown',
+  serial: 'Unknown',
+};
+
 export interface ModelizedSectionData {
   reflownLaunchesCount: number;
   mostLaunches: {
@@ -145,7 +160,8 @@ const getQuickestReuseTurnaround = (cores: Core[], pastLaunches: Launch[]) => {
 
   const sortedTurnarounds = orderBy(turnarounds, 'turnaroundTime', 'asc');
 
-  return sortedTurnarounds[0];
+  // Declared as Turnaround, but there is nothing to return when no core has flown twice.
+  return sortedTurnarounds[0] ?? UNKNOWN_TURNAROUND;
 };
 
 export const modelizer = ({
@@ -167,12 +183,16 @@ export const modelizer = ({
   return {
     reflownLaunchesCount,
     mostLaunches,
-    mostReflownCore: {
-      serial: mostLaunchedCore.serial,
-      missions: getMissions(mostLaunchedCore, pastLaunches)
-        .map((launch) => launch.name)
-        .join(', '),
-    },
+    // `cores` is empty with the current Launch Library data, so there is no most-flown
+    // booster to describe. Reading through the undefined entry threw and failed the build.
+    mostReflownCore: mostLaunchedCore
+      ? {
+          serial: mostLaunchedCore.serial,
+          missions: getMissions(mostLaunchedCore, pastLaunches)
+            .map((launch) => launch.name)
+            .join(', '),
+        }
+      : UNKNOWN_MOST_REFLOWN_CORE,
     quickestReuseTurnaround: getQuickestReuseTurnaround(cores, pastLaunches),
     reflownFairingsCount,
   };

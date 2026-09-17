@@ -29,9 +29,17 @@ export const buildLandingHistoryChart = (pastLaunches: Launch[]) => {
     });
   });
 
-  const yearsStart = launchYear(landingAttempts[0].launch);
-  const yearsEnd = launchYear(last(landingAttempts)!.launch);
-  const years = range(yearsStart, yearsEnd + 1);
+  // No landing attempts at all is a real state, not an impossible one: the Launch Library
+  // transformer does not populate core landings, so every launch currently reaches here with
+  // `landing: null`. Indexing into the empty array threw, and because the page is rendered at
+  // build time that throw fails the build rather than this chart.
+  const years =
+    landingAttempts.length === 0
+      ? []
+      : range(
+          launchYear(landingAttempts[0].launch),
+          launchYear(last(landingAttempts)!.launch) + 1,
+        );
 
   const successfulLandings = landingAttempts.filter(
     ({ core }) => core.landingSuccess,
